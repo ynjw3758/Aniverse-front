@@ -1,0 +1,268 @@
+.NoteList_ListTag{
+    display: flex;
+    flex-direction: row;
+    margin-left: 7vw;
+
+}
+.NoteList_ListTag h3{
+    margin-right: 2vw;
+}
+.NoteList_ListTag h3:hover{
+    cursor: pointer;
+    color: burlywood;
+}
+
+.NoteList_Line hr{
+    margin-top: 0vh;
+    margin-left: 4.5vw;
+    width:94vw;
+    max-width: 94vw;
+    border-color: burlywood;
+}
+.NoteList_vertical hr{
+    margin-top: 0vh;
+    margin-left: 4.5vw;
+    width:94vw;
+    max-width: 94vw;
+
+}
+
+.movebox hr{
+    margin-top: 8vh;
+    width: 70%;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: burlywood;
+}
+/*
+.Mainshow{
+    position: relative;
+    left:51vw;
+
+}
+.Mainshow h3{
+    margin-left: 2vw;
+}
+
+.userinfo{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 1vw;
+}
+
+.userinfo h3{
+    margin-left: 1vw;
+    margin-top: 8vh;
+}
+.userinfo h4{
+    margin-left: 1vw;
+    margin-top: 3vh;
+}
+.userinfo img{
+    margin-left:2vw ;
+    border-radius: 30px;
+    width: 4vw;
+    height: 8vh;
+    margin-top: 1vh;
+}
+.userinfo p{
+    margin-left: 1vw;
+    margin-top: 3vh;
+}
+
+.userinfo button{
+    background-color: white;
+    margin-left: 0.7vw;
+    width: 4.5vw;
+    height: 4.5vh;
+    border: 1px solid darkgray;
+    margin-top: 2vh;
+}
+
+.userinfo button:hover{
+    background-color: white;
+    margin-left: 0.7vw;
+    width: 4.5vw;
+    height: 4.5vh;
+    border: 1px solid darkgray;
+    margin-top: 2vh;
+    cursor: pointer;
+}
+.infoline hr{
+    margin-top: 0vh;
+    margin-left: 1vw;
+    max-width: 47vw;
+}
+.ver hr{
+    position: fixed;
+    top:28vh;
+    left:52vw;
+    width: 1px;
+    height: 70vh;
+    margin-right: 0;
+}
+
+.content{
+    margin-left: 2vw;
+}
+
+.cpmodal{
+    width: 30vw;
+    height: 50vh;
+    position: fixed;
+    top: 15vh;
+    left: 35vw;
+    background-color:white;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    z-index: 20;
+    animation: slide-down 300ms ease-out forwards;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.cpmodal button,
+.cpmodal button:hover{
+    text-align: center;
+    background-color:rgb(0, 166, 255);
+    border-radius: 15px;
+    width: 15vw;
+    margin-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: white;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+*/
+
+    .NoteList_Mainshow{
+        position: relative;
+        left:54.5vw;
+        max-width: 43vw;
+        max-height: 43vh;
+        margin-left: 1vw;
+
+    }
+    .NoteList_Mainshow h3{
+        
+        width: fit-content;
+        margin-left: 2vw;
+    }
+    
+    .NoteList_userinfo{
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 1vw;
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .NoteList_userinfo h3{
+        margin-left: 1vw;
+        margin-top: 8vh;
+    }
+    .NoteList_userinfo h4{
+        margin-left: 1vw;
+        margin-top: 3vh;
+    }
+    .NoteList_userinfo img{
+        margin-left:2vw ;
+        border-radius: 30px;
+        width: 4vw;
+        height: 8vh;
+        margin-top: 1vh;
+    }
+    .NoteList_userinfo p{
+        margin-left: 1vw;
+        margin-top: 3vh;
+    }
+    
+    .NoteList_userinfo button{
+        background-color: white;
+        margin-left: 0.7vw;
+        width: 4.5vw;
+        height: 4.5vh;
+        border: 1px solid darkgray;
+        margin-top: 2vh;
+    }
+    
+    .NoteList_userinfo button:hover{
+        background-color: white;
+        margin-left: 0.7vw;
+        width: 4.5vw;
+        height: 4.5vh;
+        border: 1px solid darkgray;
+        margin-top: 2vh;
+        cursor: pointer;
+    }
+    .NoteList_infoline hr{
+        margin-top: -0.3vh;
+        margin-left: 0.5vw;
+        max-width: 44vw;
+    }
+    .NoteList_ver hr{
+        position: fixed;
+        top:32vh;
+        left:56.5vw;
+        width: 1px;
+        height: 63.5vh;
+        max-height: 63.5vh;
+        margin-right: 0;
+        background-color: aquaS;
+    }
+    
+    .NoteList_content{
+        margin-top: -1vh;
+        width: 41vw;
+        max-width: 41vw;
+        height: 41.5vh;
+        margin-left: 1.5vw;
+        text-wrap:wrap;
+        overflow-y: auto;
+    }
+    
+    .NoteList_cpmodal{
+        width: 30vw;
+        height: 50vh;
+        position: fixed;
+        top: 15vh;
+        left: 35vw;
+        background-color:white;
+        border-radius: 14px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+        z-index: 20;
+        animation: slide-down 300ms ease-out forwards;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .NoteList_cpmodal button,
+    .NoteList_cpmodal button:hover{
+        text-align: center;
+        background-color:rgb(0, 166, 255);
+        border-radius: 15px;
+        width: 15vw;
+        margin-left: 10px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        color: white;
+        margin-bottom: 10px;
+        cursor: pointer;
+    }
+    .NoteList_NoteSearch{
+        margin-left: 2vw;
+        margin-top: 1.5vh;
+    }
+    .NoteList_NoteSearch input{
+        border:2px solid #a1a1a1;
+        padding:10px 40px; 
+        background:#dddddd;
+        width:200px;
+        border-radius:25px;
+    }
+

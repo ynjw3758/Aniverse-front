@@ -1,0 +1,94 @@
+
+@media screen and (max-width:1540px) {
+    .SearchList_body{
+        display: flex;
+        flex-direction: row;
+        width: 345%;
+        margin-top: 1.5vh;
+
+
+    }
+    
+    .SearchList_body:hover{
+        display: flex;
+        flex-direction: row;
+        background-color:darkgrey;
+        width: 345%;
+        cursor: pointer;
+    }
+    .SearchList_body img{
+        width: 4vw;
+        height: 7vh;
+        border-radius: 50%;
+        margin-left: 1vw;
+        margin-top:2vh;
+    }
+    
+    
+    .Searchlist_Profiles{
+     display: flex;
+     flex-direction: column;
+     text-align: center;
+    
+    }
+    
+    .Searchlist_nickname h3{
+        margin-left: 1vw;
+        margin-bottom: -2.5vh;
+        
+    }
+    .Searchlist_id{
+        margin-left: 1vw;
+    }
+}
+@media screen and (max-width:1920px) {
+
+    @media screen and (min-width:1540px) {
+    .SearchList_body{
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        width: 345%;
+       margin-bottom: 1vh;
+
+    }
+    
+    .SearchList_body:hover{
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        background-color:darkgrey;
+        width: 345%;
+        margin-bottom: 1vh;
+        cursor: pointer;
+    }
+    .SearchList_body img{
+        width: 4vw;
+        height: 7vh;
+        border-radius: 50%;
+        margin-left: 0.5vw;
+        margin-top: 0.5vh;
+    }
+    
+    
+    .Searchlist_Profiles{
+     display: flex;
+     flex-direction: column;
+     text-align: center;
+    
+    }
+    
+    .Searchlist_nickname h3{
+        margin-left: 1vw;
+        margin-bottom: -2.5vh;
+        
+    }
+    .Searchlist_id{
+        margin-top: 1vh;
+        margin-left: 1vw;
+    }
+}
+}
+
+
+ 

@@ -1,0 +1,34 @@
+.nav{
+    cursor: pointer;
+    font: inherit;
+    border: none;
+    background-color:darkorange;
+    color:black;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 25px;
+    font-weight: bold;
+}
+.nav img{
+     padding: 1rem;
+     width: 4rem;
+     height: 4rem;
+     border-radius: 50px;
+     margin-right: 5px;
+}
+
+.dropdown{
+  margin-top: 5rem;
+  padding: 2rem;
+
+
+}
+.dropdown ul{
+    margin-top: 5rem;
+    padding: 5rem;
+    z-index: 10;
+    padding: 3rem;
+    border-radius: 40px;
+    background-color: aqua;
+}

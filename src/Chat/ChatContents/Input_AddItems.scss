@@ -1,0 +1,47 @@
+.AddChatItems_total{
+    display: flex;
+    flex-direction: column;
+}
+.AddChatItems_inputchat{
+position: absolute;
+top:87vh;
+left: 3vw;
+}
+.AddChatItems_date{
+    font-weight:bolder;
+    text-align: center;
+    margin-top: -1vh;
+}
+.AddChatItems_inputchat input{
+    padding-left: 1vw;
+    border-radius: 20px;
+    width: 55vw;
+    height: 7vh;
+    font-size: large;
+    font-weight: bolder;
+}
+.AddChatItems_AddContents{
+    display: flex;
+    flex-direction: row;
+    position:absolute;
+    top:89vh;
+    left: 50vw;
+}
+.AddChatItems_AddContents img{
+    width: 2vw;
+    height: 4vh;
+    margin-left: 1vw;
+}
+.AddChatItems_filelist{
+    position: absolute;
+    top:70vh;
+    left:3vw;
+    background-color:white;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    padding: 20px;
+    width: 53vw;    
+    max-width: 53vw;
+    overflow: auto;
+}
+

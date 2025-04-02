@@ -1,0 +1,73 @@
+
+
+
+.MultiPicture_Single{
+    display: flex;
+    flex-direction: row;
+    max-width:7vw;
+    width: 7vw;
+    max-height: 7vh;
+    height: 7vh;
+    margin-top: 1.5vh;
+
+}
+.MultiPicture_Single img{
+    width: 4vw;
+    height: 7vh;
+    margin-left: 1vw;
+    border-radius: 50%;
+}
+.MultiPicture_Two{
+    display: flex;
+    flex-direction: row;
+    max-width:7vw;
+    width: 7vw;
+    max-height: 7vh;
+    height: 7vh;
+    margin-top: 2.5vh;
+}
+.MultiPicture_Two img{
+    width: 2vw;
+    height: 6vh;
+    margin-left: 0.5vw;
+    border-radius: 50%;
+}
+.MultiPicture_Tree{
+    display: flex;
+    flex-direction: row;
+    max-width:7vw;
+    width: 7vw;
+    max-height: 7vh;
+    height: 7vh;
+    flex-wrap: wrap;
+    margin-top: 1.5vh;
+}
+.MultiPicture_Tree img{
+    width: 2vw;
+    height: 4vh;
+    margin-left: 0.5vw;
+    border-radius: 50%;
+}
+.MultiPicture_flex{
+    display: flex;
+    flex-direction: row;
+}
+
+
+.MultiPicture_multi{
+    display: flex;
+    flex-direction: row;
+    max-width:7vw;
+    width: 7vw;
+    max-height: 7vh;
+    height: 7vh;
+    flex-wrap: wrap;
+    margin-top: 1.5vh;
+}
+.MultiPicture_multi img{
+    width: 2vw;
+    height: 4vh;
+    margin-left: 0.5vw;
+    margin-top: 0.5vh;
+    border-radius: 50%;
+}

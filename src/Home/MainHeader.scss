@@ -1,0 +1,45 @@
+.Header{
+    font-size: xx-large;
+  }
+  
+.HeaderMain{
+    margin:0 auto;
+    padding: 1.5rem;  
+    display: flex;
+    justify-content: space-between;
+    z-index: 10;
+    width: 100%;
+    background: linear-gradient(to bottom, #faf8f1, #f5f5f5);
+ 
+}
+
+.login{
+    display: flex;
+    
+}
+.login button{
+  border-radius: 15px;
+  background-color:rgba(30, 150, 100, 0.5);
+    font-size: large;
+    padding-left: 50px;
+    padding-right: 2rem;
+    margin-left: -170px;
+    margin-bottom: -60px;
+    outline: none;
+    
+}
+.home{
+  color:black;
+  font-size: larger;
+}
+.nav ul{
+  display: flex;
+  list-style: none;
+  cursor: pointer;
+  margin-left: -140px;
+}
+.nav li{
+  font-size: large;
+  margin-bottom: -10px;
+
+}

@@ -1,0 +1,68 @@
+.NoteItems_kind{
+    margin-left: 6vw;
+    display: flex;
+    flex-direction: row;
+}
+.NoteItems_kind h3{
+    margin-left: -1vw;
+    font-size: larger;
+}
+.NoteItems_kind h4{
+    padding-left: 1vw;
+}
+.NoteItems_kind input{
+    width: 1.5%;
+    margin-right: 2vw;
+    margin-left: -0.2vw;
+}
+
+
+#NoteItems_btn{
+    height: 5vh;
+    width: 5vw;
+    margin-left: 31.5vw;
+    margin-top: 1vh;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    border:2px solid darkgray;
+
+}
+#NoteItems_btn:disabled{
+    height: 5vh;
+    width: 5vw;
+    margin-left: 31.5vw;
+    margin-top: 1vh;
+    background-color: white;
+    color: #666666;
+    cursor: not-allowed;
+    border: none;
+}
+#NoteItems_selbtn{
+    height: 5vh;
+    width: 5vw;
+    margin-top: 1vh;
+    margin-left: 26vw;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    border:2px solid darkgray;
+}
+
+#NoteItems_selbtn:disabled{
+    height: 5vh;
+    width: 5vw;
+    margin-top: 1vh;
+    margin-left: 26vw;
+    background-color: white;
+    color: #666666;
+    cursor: not-allowed;
+    border: none;
+}
+.NoteItems_select{
+position: relative;
+top:1vh;
+left: 25vw;
+width: 5vw;
+height: 5vh;
+}

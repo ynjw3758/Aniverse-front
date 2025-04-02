@@ -1,0 +1,23 @@
+
+
+.chatMember_List{
+    display: flex;
+    flex-direction: column;
+}
+.chatMember_List img{
+    margin-left: 1vw;
+    width: 3vw;
+    height: 6vh;
+    border-radius: 50px;
+}
+
+.chatMember_List p{
+    margin-top: 5px;
+    text-align: center;
+    font-size: 12px;
+    word-break: break-word;
+    max-width: 70px; 
+    min-height: 30px; 
+    white-space: normal;
+    margin-left: 13px;
+}

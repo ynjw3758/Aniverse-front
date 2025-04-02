@@ -1,0 +1,48 @@
+
+
+.BackDrop {
+    
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.75);
+    z-index: 40;
+  }
+
+
+
+  .modal {
+    position: fixed;
+    top:10vh;
+    width: 90%;
+    padding: 0.5rem;
+    border-radius: 14px;
+    background-color:white;
+    box-shadow: 0 200px 20px rgba(0, 0, 0, 0.25);
+    z-index: 999;
+    animation: slide-down 300ms ease-out forwards;
+  }
+  
+
+  
+  @media (max-width: 768px) {
+    .modal {
+      width: 20rem;
+      left: calc(50% - 10rem);
+  }
+}
+  
+  @keyframes slide-down {
+    from {
+      opacity: 0;
+      transform: translateY(-3rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  

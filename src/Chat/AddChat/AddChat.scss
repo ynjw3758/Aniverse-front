@@ -1,0 +1,208 @@
+.AddChat_total{
+    width: 30vw;
+    height: auto;
+    position: fixed;
+    top: 10vh;
+    left: 40vw;
+    background-color:white;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    z-index: 20;
+    animation: slide-down 300ms ease-out forwards;
+    display: flex;
+    flex-direction: column;
+    text-wrap: wrap;
+}
+.addtotal{
+    width: 30vw;
+    height: 70vh;
+    position: fixed;
+    top: 20vh;
+    left: 50vw;
+    background-color:white;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    z-index: 20;
+    animation: slide-down 300ms ease-out forwards;
+    display: flex;
+    flex-direction: column;
+    text-wrap: wrap;
+}
+
+
+.AddChat_header{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin-top: 4vh;
+    width: 100%;
+}
+.AddChat_header p{
+    margin-top: -3vh;
+}
+
+.AddChat_header hr{
+    margin-top: -1vh;
+    width:100%;
+    max-width: 100%;
+    border-color: burlywood;
+}
+.AddChat_search{
+    margin-top: -1vh;
+}
+.AddChat_search input{
+    
+    margin-left: 1vw;
+    width:25vw;
+    height: 3vh;
+    border-top: none;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    margin-top: 1vh;
+    outline: none;
+    padding: 10px;
+    background-color:#f0f0f0;
+}
+.AddChat_load{
+    padding-left: 12vw;
+    padding-top: 10vh;
+}
+.AddChat_btn{
+    display: flex;
+    flex-direction: row;
+    margin-left: 9vw;
+    margin-top: 3vh;
+}
+.AddChat_btn button,
+.AddChat_btn button:hover{
+    cursor: pointer;
+    height: 4vh;
+    width: 5vw;
+    margin-bottom: 5vh;
+    border-bottom: none;
+    border-right: none;
+    border-left: none;
+    border-top: none;
+    border-radius: 37px;
+    background-color: rgb(0, 217, 255);
+    margin-left: 1vw;
+}
+.AddChat_btn button:disabled{
+    cursor: not-allowed;
+}
+.AddChat_invitelist{
+   display: flex;
+   flex-direction: row;
+} 
+.listbox{
+    display: flex;
+    flex-direction: column;
+    margin-top: 2vh;
+}
+.image{
+   display: flex;
+   flex-direction: column;
+}
+.image img{
+    margin-left: 1vw;
+    margin-top: 1.5vh;
+    margin-bottom: 2vh;
+    width: 3vw;
+    height: 6vh;
+    border-radius: 50px;
+}
+
+.nickname{
+    display: flex;
+    flex-direction: column;
+}
+.AddChat_bigbox{
+    position: absolute;
+    width: 30vw;
+    height: 30vh;
+    z-index: 30;
+    top:-3vh;
+    background-color:white;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    animation: slide-down 300ms ease-out forwards;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-wrap: wrap;
+    margin-top: 3vh;
+    margin-bottom: 3vh;
+    
+}
+
+.AddChat_bigbox p{
+    font-size: medium;
+    font-weight: bold;
+    align-items: center;
+}
+
+.addchat_normalbox{
+    position: absolute;
+    width: 30vw;
+    height: 25vh;
+    z-index: 30;
+    top:-3vh;
+    background-color:white;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    animation: slide-down 300ms ease-out forwards;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-wrap: wrap;
+    
+}
+
+.addchat_normalbox p{
+    font-size: medium;
+    font-weight: bold;
+    align-items: center;
+}
+
+.matfollwer_list{
+    margin-left: 1vw;
+    font-size: medium;
+    font-weight: bold;
+}
+.isnot_matlist{
+    margin-left: 1vw;
+    font-size: medium;
+    font-weight: bold;
+}
+.search_empty{
+    margin-left: 1.4vw;
+    font-size:small;
+    font-weight: bold;
+    color:red;
+}
+.chat_member{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.Create_Room{
+    position: relative;
+    //margin-top: 25vh;
+    
+}
+.Create_Room button{
+    cursor: pointer;
+    height: 4vh;
+    width: 7vw;
+    border-bottom: none;
+    border-right: none;
+    border-left: none;
+    border-top: none;
+    border-radius: 37px;
+    background-color: rgb(0, 217, 255);
+    margin-left: 1vw;
+
+}
+

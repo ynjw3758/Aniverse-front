@@ -1,0 +1,40 @@
+.AddPerson_MultiImg_total{
+    display: flex;
+    flex-direction: column;
+    margin-top: -2vh;
+}
+.contents{
+    display: flex;
+    flex-direction: column;
+    margin-left: 0.5vw;
+
+
+}
+.contents p{
+    margin-top: 4.3vh;
+    font-weight: bolder;
+}
+.contents h4{
+    margin-top: 4.3vh;
+    margin-left: 0.4vw;
+}
+.info{
+    display: flex;
+    flex-direction: row;
+}
+.images{
+    display: flex;
+    flex-direction: column;
+    //flex-wrap: wrap;
+    /*
+    margin-top: 2vh;
+    max-width: 7vw;
+    width: 7vw;
+    height: 7vh;
+    max-height: 7vh;
+    */
+}
+.story p{
+    font-weight: lighter;
+    margin-top: -2vh;
+}

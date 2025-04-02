@@ -1,0 +1,65 @@
+.CancelFw_userinfo{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.CancelFw_userinfo h3{
+    margin-left: 7px;
+    font-weight: bold;
+}
+
+.CancelFw_userinfo img{
+    margin-top: 10px;
+    margin-left: 10px;
+    width:4vw;    
+    border-radius: 30px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+}
+.MainBackDrop{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+.CancelFw_Main{
+    width: 30vw;
+    position: fixed;
+    top: 20vh;
+    left: 35vw;
+    background-color:white;
+    border-radius: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    z-index: 20;
+    animation: slide-down 300ms ease-out forwards;
+    height: fit-content;
+  }
+  .CancelFw_btn{
+    display: flex;
+    flex-direction: column;
+    width: 30vw;
+  }
+
+  .CancelFw_btn button,
+  .CancelFw_btn button:hover{
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    text-align: center;
+    height: 7vh;   
+    background-color: white;
+    border-bottom-left-radius: 14px;
+    border-bottom-right-radius: 14px;
+    cursor: pointer;
+  }
+

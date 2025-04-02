@@ -1,0 +1,327 @@
+
+/*
+.MainItem{
+    display: flex;
+    flex-direction: row;
+    width: 48vw;
+    text-align: left;
+}
+.MainItem:hover{
+    display: flex;
+    flex-direction: row;
+    width: 48vw;
+    text-align: left;
+    background-color:darkgray;
+    color:white;
+    cursor: pointer;
+
+}
+
+.MainItem img{
+    margin-left:2vw ;
+    border-radius: 30px;
+    width: 3vw;
+    height: 6vh;
+    margin-bottom: 20px;
+    margin-top: 2vh;
+}
+
+.MainItem p{
+    margin-left: 0.8vw;
+    margin-top: 3.7vh;
+    color:burlywood;
+    font-weight:bolder;
+    width: 100%;
+
+}
+
+.MainItem h4{
+    margin-left: -2vw;
+    margin-top: 3.7vh;
+    font-weight:bolder;
+    width: 100%;
+}
+.MainItem h3{
+    font-size:medium;
+    margin-left: 4vw;
+    margin-top: 3.7vh;
+    font-weight:bolder;
+    width: 100%;
+}
+
+.change{
+    display: flex;
+    flex-direction: row;
+    width: 45vw;
+    text-align: left;
+    margin-top: -4vh;
+    margin-bottom: -1vh;
+}
+.change:hover{
+    display: flex;
+    flex-direction: row;
+    width: 45vw;
+    text-align: left;
+    background-color:darkgray;
+    color:white;
+    cursor: pointer;
+}
+
+.change img{
+    margin-left:2vw ;
+    border-radius: 30px;
+    width: 3vw;
+    height: 6vh;
+    margin-bottom: 20px;
+    margin-top: 2vh;
+}
+
+.change p{
+    margin-left: 0.8vw;
+    margin-top: 3.7vh;
+    color:burlywood;
+    font-weight:bolder;
+    width: 100%;
+
+}
+
+.change h4{
+    margin-left: -2vw;
+    margin-top: 3.7vh;
+    font-weight:bolder;
+    width: 100%;
+    color: #666666;
+}
+.change h3{
+    font-size:medium;
+    margin-left: 1vw;
+    margin-top: 3.7vh;
+    font-weight:bolder;
+    width: 100%;
+}
+
+.checkbox{
+    position: relative;
+    top:2.4vh;
+    width:fit-content;
+}
+*/
+@media  (max-width:1536px){
+    .NoteItem_MainItem{
+        display: flex;
+        flex-direction: row;
+        width: 50.5vw;
+        text-align: left;   
+    }
+    .NoteItem_MainItem:hover{
+        display: flex;
+        flex-direction: row;
+        width: 50.5vw;
+        text-align: left;
+        background-color:darkgray;
+        color:white;
+        cursor: pointer;
+    
+    }
+    
+    .NoteItem_MainItem img{
+        width: 2.5vw;
+        height: 5.5vh;  
+        border-radius: 50%;
+        margin-left:2vw ;
+        margin-bottom: 20px;
+        margin-top: 2vh;
+    }
+    
+    .NoteItem_MainItem p{
+        margin-left: 0.8vw;
+        margin-top: 3.7vh;
+        color:burlywood;
+        font-weight:bolder;
+        width: 100%;
+    
+    }
+    
+    .NoteItem_MainItem h4{
+        margin-left: -2vw;
+        margin-top: 3.7vh;
+        font-weight:bolder;
+        width: 100%;
+    }
+    .NoteItem_MainItem h3{
+        font-size:medium;
+        margin-left: 4vw;
+        margin-top: 3.7vh;
+        font-weight:bolder;
+        width: 100%;
+    }
+    .NoteItem_change{
+        display: flex;
+        flex-direction: row;
+        width: 50vw;
+        text-align: left;
+    }
+    .NoteItem_change:hover{
+        display: flex;
+        flex-direction: row;
+        width: 50vw;
+        text-align: left;
+        background-color:darkgray;
+        color:white;
+        cursor: pointer;
+    
+    }
+    
+    .NoteItem_change img{
+        margin-left:2vw ;
+        border-radius: 30px;
+        width: 3vw;
+        height: 6vh;
+        margin-bottom: 20px;
+        margin-top: 2vh;
+    }
+    
+    .NoteItem_change p{
+        margin-left: 0.8vw;
+        margin-top: 3.7vh;
+        color:burlywood;
+        font-weight:bolder;
+        width: 100%;
+    
+    }
+    
+    .NoteItem_change h4{
+        margin-left: -2vw;
+        margin-top: 3.7vh;
+        font-weight:bolder;
+        color: darkgrey;
+        width: 100%;
+    }
+    .NoteItem_change h3{
+        font-size:medium;
+        margin-left: 4vw;
+        margin-top: 3.7vh;
+        font-weight:bolder;
+        color: darkgrey;
+        width: 100%;
+    }
+    
+
+    .NoteItem_checkbox{
+        position: relative;
+        top:6.5vh;
+        width:fit-content;
+    }
+}
+
+@media (max-width:1921px){
+
+    .NoteItem_MainItem{
+        display: flex;
+        flex-direction: row;
+        width: 50.5vw;
+        text-align: left;   
+    }
+    .NoteItem_MainItem:hover{
+        display: flex;
+        flex-direction: row;
+        width: 50.5vw;
+        text-align: left;
+        background-color:darkgray;
+        color:white;
+        cursor: pointer;
+    
+    }
+    
+    .NoteItem_MainItem img{
+        width: 2.5vw;
+        height: 5.5vh;  
+        border-radius: 50%;
+        margin-left:2vw ;
+        margin-bottom: 20px;
+        margin-top: 2vh;
+    }
+    
+    .NoteItem_MainItem p{
+        margin-left: 0.8vw;
+        margin-top: 3.7vh;
+        color:burlywood;
+        font-weight:bolder;
+        width: 100%;
+    
+    }
+    
+    .NoteItem_MainItem h4{
+        margin-left: -2vw;
+        margin-top: 3.7vh;
+        font-weight:bolder;
+        width: 100%;
+    }
+    .NoteItem_MainItem h3{
+        font-size:medium;
+        margin-left: 4vw;
+        margin-top: 3.7vh;
+        font-weight:bolder;
+        width: 100%;
+    }
+    .NoteItem_change{
+        display: flex;
+        flex-direction: row;
+        width: 50vw;
+        text-align: left;
+    }
+    .NoteItem_change:hover{
+        display: flex;
+        flex-direction: row;
+        width: 50vw;
+        text-align: left;
+        background-color:darkgray;
+        color:white;
+        cursor: pointer;
+    
+    }
+    
+    .NoteItem_change img{
+        margin-left:2vw ;
+        border-radius: 30px;
+        width: 3vw;
+        height: 6vh;
+        margin-bottom: 20px;
+        margin-top: 2vh;
+    }
+    
+    .NoteItem_change p{
+        margin-left: 0.8vw;
+        margin-top: 3.7vh;
+        color:burlywood;
+        font-weight:bolder;
+        width: 100%;
+    
+    }
+    
+    .NoteItem_change h4{
+        margin-left: -2vw;
+        margin-top: 3.7vh;
+        font-weight:bolder;
+        color: darkgrey;
+        width: 100%;
+    }
+    .NoteItem_change h3{
+        font-size:medium;
+        margin-left: 4vw;
+        margin-top: 3.7vh;
+        font-weight:bolder;
+        color: darkgrey;
+        width: 100%;
+    }
+    
+
+    .NoteItem_checkbox{
+        position: relative;
+        top:6.5vh;
+        width:fit-content;
+    }
+
+}
+
+

@@ -1,0 +1,863 @@
+
+@media screen and (max-width:1920px) {
+.Main_side{
+    list-style: none;
+    display: block;
+    margin-top: 120px;
+    max-height: fit-content;
+}
+
+.Main_FItem{
+    position: fixed;
+    top:13vh;
+    left: 50px;
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    font: inherit;
+    border: none;
+    color:black;
+    font-weight: bold;
+    width: 12.5vw;
+    height: 70px;
+    margin-left: -33px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+    background-color: white;
+}
+.Main_FItem:hover{
+    background-color: darkgray;
+}
+
+
+.Main_FItem img{
+    padding: 20px;
+    width: 30px;
+    height: 30px;
+    border-radius: 100px;
+    margin-left: -15px;
+}
+.Main_FItem h3{
+    margin-top: 24px;
+}
+
+.Main_MItem{
+    position: fixed;
+    top:21vh;
+    left: 50px;
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    font: inherit;
+    border: none;
+    color:black;
+    font-weight: bold;
+    width: 12.5vw;
+    height: 70px;
+    margin-left: -33px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+    background-color: white;
+}
+.Main_MItem:hover{
+    background-color: darkgray;
+}
+
+
+.Main_MItem img{
+    padding: 20px;
+    width: 30px;
+    height: 30px;
+    border-radius: 100px;
+    margin-left: -15px;
+}
+.Main_MItem h3{
+    margin-top: 24px;
+}
+
+.Main_CItem{
+    position: fixed;
+    top:29vh;
+    left: 50px;
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    font: inherit;
+    border: none;
+    color:black;
+    font-weight: bold;
+    width: 12.5vw;
+    height: 70px;
+    margin-left: -33px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+    background-color: white;
+}
+.Main_CItem:hover{
+    background-color: darkgray;
+}
+
+
+.Main_CItem img{
+    padding: 20px;
+    width: 30px;
+    height: 30px;
+    border-radius: 100px;
+    margin-left: -15px;
+}
+.Main_CItem h3{
+    margin-top: 24px;
+}
+
+.Main_SItem{
+    position: fixed;
+    top:37vh;
+    left: 50px;
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    font: inherit;
+    border: none;
+    color:black;
+    font-weight: bold;
+    width: 12.5vw;
+    height: 70px;
+    margin-left: -33px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+    background-color: white;
+}
+.Main_SItem:hover{
+    background-color: darkgray;
+}
+
+
+.Main_SItem img{
+    padding: 20px;
+    width: 30px;
+    height: 30px;
+    border-radius: 100px;
+    margin-left: -15px;
+}
+.Main_SItem h3{
+    margin-top: 24px;
+}
+
+.Main_LItem{
+    position: fixed;
+    top:45vh;
+    left: 50px;
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    font: inherit;
+    border: none;
+    color:black;
+    font-weight: bold;
+    width: 12.5vw;
+    height: 70px;
+    margin-left: -33px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+    background-color: white;
+}
+.Main_LItem:hover{
+    background-color: darkgray;
+}
+
+
+.Main_LItem img{
+    padding: 20px;
+    width: 30px;
+    height: 30px;
+    border-radius: 100px;
+    margin-left: -15px;
+}
+.Main_LItem h3{
+    margin-top: 24px;
+}
+
+.Main_AItem{
+    position: fixed;
+    top:53vh;
+    left: 50px;
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    font: inherit;
+    border: none;
+    color:black;
+    font-weight: bold;
+    width: 12.5vw;
+    height: 70px;
+    margin-left: -33px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+    background-color: white;
+}
+.Main_AItem:hover{
+    background-color: darkgray;
+}
+
+
+.Main_AItem img{
+    padding: 20px;
+    width: 30px;
+    height: 30px;
+    border-radius: 100px;
+    margin-left: -15px;
+}
+.Main_AItem h3{
+    margin-top: 24px;
+}
+
+.Main_AlItem{
+    position: fixed;
+    top:61vh;
+    left: 50px;
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    font: inherit;
+    border: none;
+    color:black;
+    font-weight: bold;
+    width: 12.5vw;
+    height: 70px;
+    margin-left: -33px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+    background-color: white;
+}
+.Main_AlItem:hover{
+    background-color: darkgray;
+}
+.Main_AlItem img{
+    padding: 20px;
+    width: 30px;
+    height: 30px;
+    border-radius: 100px;
+    margin-left: -15px;
+}
+.Main_AlItem h3{
+    margin-top: 24px;
+}
+
+.Main_myinfo{
+    position: fixed;
+    top:69vh;
+    left:50px;
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    font: inherit;
+    border: none;
+    color:black;
+    font-weight: bold;
+    width: 12.5vw;
+    height: 70px;
+    margin-left: -42px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    background-color: white;
+}
+
+.Main_myinfo:hover{
+    background-color: darkgray;
+}
+
+.Main_myinfo img{
+    padding: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 100px;
+    margin-left: -10px;
+    margin-top: -5px;
+}
+.Main_myinfo h3{
+    margin-top: 25px;
+    margin-left: -10px;
+}
+
+.Main_side_vertical hr{
+    position: fixed;
+    top:-5px;
+    left: 250px;
+    width: 1px;
+    height: 100vh;
+    margin-right: 0;
+
+}
+
+
+@media screen and (max-width:900px) {
+    .FItem{
+        position: absolute;
+        top:30vh;
+        left: 8vw;
+    }
+    .FItem:hover{
+        background-color: darkgray;
+    }
+    
+    
+    .FItem img{
+        width: 40px;
+        height: 40px;
+    }
+    .FItem h3{
+        display: none;
+    }
+    
+    .MItem{
+        position: absolute;
+        top:40vh;
+        left: 8vw;
+    }
+    .MItem:hover{
+        background-color: darkgray;
+    }
+    
+    
+    .MItem img{
+        width: 40px;
+        height: 40px;
+    }
+    .MItem h3{
+       display: none;
+    }
+    
+    .CItem{
+        position: absolute;
+        top:50vh;
+        left: 8vw;
+    }
+    .CItem:hover{
+        background-color: darkgray;
+    }
+    
+    
+    .CItem img{
+        width: 40px;
+        height: 40px;
+    }
+    .CItem h3{
+        display: none;
+    }
+    
+    .SItem{
+        position: absolute;
+        top:60vh;
+        left: 8vw;
+    }
+    .SItem:hover{
+        background-color: darkgray;
+    }
+    
+    
+    .SItem img{
+        width: 40px;
+        height: 40px;
+    }
+    .SItem h3{
+        display: none;
+    }
+    
+    .LItem{
+        position: absolute;
+        top:70vh;
+        left: 8vw;
+    }
+    .LItem:hover{
+        background-color: darkgray;
+    }
+    
+    
+    .LItem img{
+        width: 40px;
+        height: 40px;
+    }
+    .LItem h3{
+        display: none;
+    }
+    
+    .AItem{
+        position: absolute;
+        top:80vh;
+        left: 8vw;
+    }
+    .AItem:hover{
+        background-color: darkgray;
+    }
+    
+    
+    .AItem img{
+        width: 40px;
+        height: 40px;
+    }
+    .AItem h3{
+        display: none;
+    }
+
+        
+
+    .Main{
+     position: absolute;
+     top:20vh;
+     left: 8vw;
+     
+    }
+    .Main img{
+        width: 40px;
+        height: 40px;
+    }
+    .Main h3{
+        display: none;
+    }
+    .Main:hover{
+        background-color: darkgray;
+    }
+
+    .vertical hr{
+        position: fixed;
+        top:-5px;
+        left: 70px;
+        width: 1px;
+        height: 100vh;
+        margin-right: 0;
+    
+    }
+    
+}
+}
+@media screen and (max-width:1536px) {
+    .Main_side{
+        list-style: none;
+        display: block;
+        margin-top: 120px;
+        max-height: fit-content;
+    }
+    
+    .Main_FItem{
+        position: fixed;
+        top:15vh;
+        left: 50px;
+        display: flex;
+        flex-direction: row;
+        cursor: pointer;
+        font: inherit;
+        border: none;
+        color:black;
+        font-weight: bold;
+        width: 12.5vw;
+        height: 70px;
+        margin-left: -33px;
+        margin-bottom: 20px;
+        border-radius: 20px;
+        background-color: white;
+    }
+    .Main_FItem:hover{
+        background-color: darkgray;
+    }
+    
+    
+    .Main_FItem img{
+        padding: 20px;
+        width: 30px;
+        height: 30px;
+        border-radius: 100px;
+        margin-left: -15px;
+    }
+    .Main_FItem h3{
+        margin-top: 24px;
+    }
+    
+    .Main_MItem{
+        position: fixed;
+        top:25vh;
+        left: 50px;
+        display: flex;
+        flex-direction: row;
+        cursor: pointer;
+        font: inherit;
+        border: none;
+        color:black;
+        font-weight: bold;
+        width: 12.5vw;
+        height: 70px;
+        margin-left: -33px;
+        margin-bottom: 20px;
+        border-radius: 20px;
+        background-color: white;
+    }
+    .Main_MItem:hover{
+        background-color: darkgray;
+    }
+    
+    
+    .Main_MItem img{
+        padding: 20px;
+        width: 30px;
+        height: 30px;
+        border-radius: 100px;
+        margin-left: -15px;
+    }
+    .Main_MItem h3{
+        margin-top: 24px;
+    }
+    
+    .Main_CItem{
+        position: fixed;
+        top:35vh;
+        left: 50px;
+        display: flex;
+        flex-direction: row;
+        cursor: pointer;
+        font: inherit;
+        border: none;
+        color:black;
+        font-weight: bold;
+        width: 12.5vw;
+        height: 70px;
+        margin-left: -33px;
+        margin-bottom: 20px;
+        border-radius: 20px;
+        background-color: white;
+    }
+    .Main_CItem:hover{
+        background-color: darkgray;
+    }
+    
+    
+    .Main_CItem img{
+        padding: 20px;
+        width: 30px;
+        height: 30px;
+        border-radius: 100px;
+        margin-left: -15px;
+    }
+    .Main_CItem h3{
+        margin-top: 24px;
+    }
+    
+    .Main_SItem{
+        position: fixed;
+        top:45vh;
+        left: 50px;
+        display: flex;
+        flex-direction: row;
+        cursor: pointer;
+        font: inherit;
+        border: none;
+        color:black;
+        font-weight: bold;
+        width: 12.5vw;
+        height: 70px;
+        margin-left: -33px;
+        margin-bottom: 20px;
+        border-radius: 20px;
+        background-color: white;
+    }
+    .Main_SItem:hover{
+        background-color: darkgray;
+    }
+    
+    
+    .Main_SItem img{
+        padding: 20px;
+        width: 30px;
+        height: 30px;
+        border-radius: 100px;
+        margin-left: -15px;
+    }
+    .Main_SItem h3{
+        margin-top: 24px;
+    }
+    
+    .Main_LItem{
+        position: fixed;
+        top:55vh;
+        left: 50px;
+        display: flex;
+        flex-direction: row;
+        cursor: pointer;
+        font: inherit;
+        border: none;
+        color:black;
+        font-weight: bold;
+        width: 12.5vw;
+        height: 70px;
+        margin-left: -33px;
+        margin-bottom: 20px;
+        border-radius: 20px;
+        background-color: white;
+    }
+    .Main_LItem:hover{
+        background-color: darkgray;
+    }
+    
+    
+    .Main_LItem img{
+        padding: 20px;
+        width: 30px;
+        height: 30px;
+        border-radius: 100px;
+        margin-left: -15px;
+    }
+    .Main_LItem h3{
+        margin-top: 24px;
+    }
+    
+    .Main_AItem{
+        position: fixed;
+        top:65vh;
+        left: 50px;
+        display: flex;
+        flex-direction: row;
+        cursor: pointer;
+        font: inherit;
+        border: none;
+        color:black;
+        font-weight: bold;
+        width: 12.5vw;
+        height: 70px;
+        margin-left: -33px;
+        margin-bottom: 20px;
+        border-radius: 20px;
+        background-color: white;
+    }
+    .Main_AItem:hover{
+        background-color: darkgray;
+    }
+    
+    
+    .Main_AItem img{
+        padding: 20px;
+        width: 30px;
+        height: 30px;
+        border-radius: 100px;
+        margin-left: -15px;
+    }
+    .Main_AItem h3{
+        margin-top: 24px;
+    }
+    
+    .Main_AlItem{
+        position: fixed;
+        top:75vh;
+        left: 50px;
+        display: flex;
+        flex-direction: row;
+        cursor: pointer;
+        font: inherit;
+        border: none;
+        color:black;
+        font-weight: bold;
+        width: 12.5vw;
+        height: 70px;
+        margin-left: -33px;
+        margin-bottom: 20px;
+        border-radius: 20px;
+        background-color: white;
+    }
+    .Main_AlItem:hover{
+        background-color: darkgray;
+    }
+    .Main_AlItem img{
+        padding: 20px;
+        width: 30px;
+        height: 30px;
+        border-radius: 100px;
+        margin-left: -15px;
+    }
+    .Main_AlItem h3{
+        margin-top: 24px;
+    }
+    
+    .Main_myinfo{
+        position: fixed;
+        top:85vh;
+        left:50px;
+        display: flex;
+        flex-direction: row;
+        cursor: pointer;
+        font: inherit;
+        border: none;
+        color:black;
+        font-weight: bold;
+        width: 12.5vw;
+        height: 70px;
+        margin-left: -42px;
+        border-radius: 20px;
+        margin-bottom: 10px;
+        background-color: white;
+    }
+    
+    .Main_myinfo:hover{
+        background-color: darkgray;
+    }
+    
+    .Main_myinfo img{
+        padding: 20px;
+        width: 40px;
+        height: 40px;
+        border-radius: 100px;
+        margin-left: -10px;
+        margin-top: -5px;
+    }
+    .Main_myinfo h3{
+        margin-top: 25px;
+        margin-left: -10px;
+    }
+    
+    .Main_side_vertical hr{
+        position: fixed;
+        top:-5px;
+        left: 250px;
+        width: 1px;
+        height: 100vh;
+        margin-right: 0;
+    
+    }
+    
+    
+    @media screen and (max-width:900px) {
+        .FItem{
+            position: absolute;
+            top:30vh;
+            left: 8vw;
+        }
+        .FItem:hover{
+            background-color: darkgray;
+        }
+        
+        
+        .FItem img{
+            width: 40px;
+            height: 40px;
+        }
+        .FItem h3{
+            display: none;
+        }
+        
+        .MItem{
+            position: absolute;
+            top:40vh;
+            left: 8vw;
+        }
+        .MItem:hover{
+            background-color: darkgray;
+        }
+        
+        
+        .MItem img{
+            width: 40px;
+            height: 40px;
+        }
+        .MItem h3{
+           display: none;
+        }
+        
+        .CItem{
+            position: absolute;
+            top:50vh;
+            left: 8vw;
+        }
+        .CItem:hover{
+            background-color: darkgray;
+        }
+        
+        
+        .CItem img{
+            width: 40px;
+            height: 40px;
+        }
+        .CItem h3{
+            display: none;
+        }
+        
+        .SItem{
+            position: absolute;
+            top:60vh;
+            left: 8vw;
+        }
+        .SItem:hover{
+            background-color: darkgray;
+        }
+        
+        
+        .SItem img{
+            width: 40px;
+            height: 40px;
+        }
+        .SItem h3{
+            display: none;
+        }
+        
+        .LItem{
+            position: absolute;
+            top:70vh;
+            left: 8vw;
+        }
+        .LItem:hover{
+            background-color: darkgray;
+        }
+        
+        
+        .LItem img{
+            width: 40px;
+            height: 40px;
+        }
+        .LItem h3{
+            display: none;
+        }
+        
+        .AItem{
+            position: absolute;
+            top:80vh;
+            left: 8vw;
+        }
+        .AItem:hover{
+            background-color: darkgray;
+        }
+        
+        
+        .AItem img{
+            width: 40px;
+            height: 40px;
+        }
+        .AItem h3{
+            display: none;
+        }
+    
+            
+    
+        .Main{
+         position: absolute;
+         top:20vh;
+         left: 8vw;
+         
+        }
+        .Main img{
+            width: 40px;
+            height: 40px;
+        }
+        .Main h3{
+            display: none;
+        }
+        .Main:hover{
+            background-color: darkgray;
+        }
+    
+        .vertical hr{
+            position: fixed;
+            top:-5px;
+            left: 70px;
+            width: 1px;
+            height: 100vh;
+            margin-right: 0;
+        
+        }
+        
+    }
+}

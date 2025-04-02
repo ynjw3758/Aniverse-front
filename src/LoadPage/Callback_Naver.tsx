@@ -1,0 +1,148 @@
+import {Oval} from "react-loader-spinner";
+import axios from "axios";
+import { useEffect , useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import "./Callback_Naver.scss";
+import user_info from "../Userdata/Userdata";
+
+
+interface ResponseDataType {
+    message: string;
+    code: number;
+    response:object;
+    resultdata:any;
+  }
+
+  interface ResponseDataTypetest {
+    resultcode:number;
+    resultdata:any;
+    resultmsg:string;
+
+  }
+
+const Callback_Naver =() =>{
+    const[isperist, setIsperist]=useState<boolean>(false);
+    const[userid, setUserid]=useState<string>("");
+    const isblur=isperist ? "Naver_Isblur " : "Naver_loding_main"; 
+    let Code = new URL(window.location.href).searchParams.get("code");
+    let state = new URL(window.location.href).searchParams.get("state");
+    const login_info = useContext(user_info);
+    const navigate = useNavigate();
+    useEffect(() =>{
+        let header:any="";
+        header =localStorage.getItem("a_id");
+          
+          console.log("access_token존재 : " , header);
+          if(header !== null){
+            console.log("엑세스 토큰 존재");
+           axios.defaults.headers.common['Authorization'] = header;
+           axios.get("http://localhost:8080/Pets-social/oauth/naver" , {params:{Code:Code, State:state}})
+           .then(response =>{
+               console.log("response : " , response);
+               if(response.status==201){
+                 console.log("기존 회원 로그인 토큰 재발급 후 로그인 성공");
+                 localStorage.setItem("p_exp" , response.data.resultdata.exp);
+                 localStorage.setItem("a_id" , response.headers.authorization);
+                 
+               }
+               login_info.addprofile(response.data.resultdata.profile_img);
+               login_info.addthumbnail(response.data.resultdata.thumbnail_img);
+               login_info.addeNickName(response.data.resultdata.nickname);
+               navigate("/main");
+               return ;
+   
+           }).catch(error =>{
+               if(axios.isAxiosError<ResponseDataType>(error)){
+                           console.log("error code: " , error.response?.data.resultdata);
+   
+                           if(error.code=="ERR_BAD_REQUEST"){
+                             navigate("/error");
+                             return;
+                           }
+                           if(error.code == "ERR_NETWORK"){
+                             console.log("네트워크 에러 ");
+                             return;
+                             
+                           }
+                           if(error.response?.status==401){
+                               console.log("승인되지 않은 로그인");
+                               navigate("/error/auth/");
+                               return;
+                           }
+                           else if(error.response?.status==301){
+                               console.log("카카오와 계정 연동");
+                               setIsperist(true);
+                               setUserid(error.response?.data.resultdata);
+                           }
+   
+                           
+                           console.log("error response: " , error.response?.data.response);
+                         }
+           })
+       }
+       else{
+           console.log("신규 회원");
+           axios.get("http://localhost:8080/Pets-social/oauth/naver" , {params:{Code:Code, State:state}})
+           .then(response =>{
+               console.log("status : " , response.status);
+               console.log("data : " , response.data.resultdata.id);
+               login_info.addprofile(response.data.resultdata.profile_img);
+               login_info.addthumbnail(response.data.resultdata.thumbnail_img);
+               login_info.addeNickName(response.data.resultdata.nickname);
+   
+               localStorage.setItem("a_id" , response.headers.authorization);
+               localStorage.setItem("p_exp" , response.data.resultdata.exp);
+               localStorage.setItem("id" , response.data.resultdata.id);
+   
+               navigate("/main");
+                return ;
+   
+           }).catch(error =>{
+               if(axios.isAxiosError<ResponseDataTypetest>(error)){
+                           console.log("error code: ", error.response?.data);
+                           if(error.response?.status==301){
+                             console.log("리다이랙트");
+                             console.log("결과값 : " , error.response.data.resultdata.kakao_info);
+                             login_info.addemail(error.response?.data.resultdata.email);
+                             login_info.addid(error.response?.data.resultdata.id);
+                             login_info.adddate(error.response?.data.resultdata.insert_date);
+                             login_info.addkakaoinfo(error.response.data.resultdata.kakao_info);
+                             navigate("/link");
+                             return;
+                           }
+                           if(error.code=="ERR_BAD_REQUEST"){
+                             navigate("/error");
+                           }
+                           if(error.code == "ERR_NETWORK"){
+                             console.log("네트워크 에러 ");
+                             
+                           }
+                           if(error.response?.status==401){
+                               console.log("승인되지 않은 로그인");
+   
+                           }
+                           
+                           //console.log("error response: " , error.response?.data);
+                         }
+           })
+           
+       }
+
+    })
+
+    return(<>
+            <div className={isblur}>
+                <h2>로그인 중입니다</h2>
+               <h3>잠시만 기다려주세요...</h3> 
+              <Oval 
+                      color="#ff0000" 
+                      height={100} 
+                      width={100}
+                   />
+            </div>
+    </>)
+
+}
+
+export default Callback_Naver;

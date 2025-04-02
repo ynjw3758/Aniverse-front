@@ -1,0 +1,402 @@
+
+@media screen and (max-width:1920px) {
+.OProfile_userinfo{
+    display: flex;
+    flex-direction: row;
+
+
+}
+.OProfile_userinfo h3{
+    margin-left: 0.6VW;
+    margin-top: 5vh;
+    font-weight: bolder;
+    font-size: large;
+}
+
+.OProfile_userinfo img{
+    width: 5vw;
+    height: 10vh;
+    border-radius: 50%;
+    margin-left: 1vw;
+    margin-top: 1vh;
+}
+.OProfile_userinfo img:hover{
+    cursor: pointer;
+    width: 5vw;
+    height: 10vh;
+    border-radius: 50%;
+    margin-left: 1vw;
+    margin-top: 1vh;
+}
+.OProfile_total_list{
+    display: flex;
+    flex-direction: row;
+    margin-top: 0.5vh;
+
+}
+
+.OProfile_Itemcontent{
+    display: flex;
+    flex-direction: column;
+    margin-left: 5vw;
+    margin-top: -1vh;
+}
+.OProfile_Itemcontent p{
+    margin-top: -20px;
+    margin-left: 20px;
+
+}
+.OProfile_Itemcontent h3{
+    margin-left: 40px;
+    margin-top: 1px;
+    font-size: larger;
+    font-weight: bolder;
+
+}
+
+.OProfile_Itemfollwers{
+    display: flex;
+    flex-direction: column;
+    margin-left: 1.5vw;
+    margin-top: -1vh;
+}
+.OProfile_Itemfollwers p{
+    margin-top: -20px;
+    margin-left: 20px;
+}
+.OProfile_Itemfollwers h3{
+
+    margin-left: 40px;
+    margin-top: 1px;
+    font-size: larger;
+}
+
+.OProfile_Itemfollwing{
+    display: flex;
+    flex-direction: column;
+    margin-left: 50px;
+    margin-top: -10px;
+}
+.OProfile_Itemfollwing p{
+
+    margin-top: -20px;
+    margin-left: 20px;
+
+}
+.OProfile_Itemfollwing h3{
+    margin-left: 40px;
+    margin-top: 1px;
+    font-size: larger;
+}
+
+.contentItem{
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    gap:10;
+}
+.contentItem img{
+    width: 10vw;
+    height: 20vh;
+}
+
+.contentItem video{
+    width: 10vw;
+    height: 20vh;
+}
+
+.image img{
+   width: 10vw;
+   height: 20vh;
+}
+
+.playing video{
+    width: 10vw;
+    height: 20vh;
+}
+.OProfile_fwbtn{
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.OProfile_fwbtn button{
+    text-align: center;
+    background-color:rgb(0, 166, 255);
+    border-radius: 15px;
+    width: 22vw;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: white;
+    margin-bottom: 10px;
+}
+.OProfile_fwbtn button:hover{
+    cursor: pointer;
+    text-align: center;
+    background-color:rgb(0, 166, 255);
+    border-radius: 15px;
+    width: 22vw;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.OProfile_flbtn{
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:10px;
+}
+
+#OProfile_send{
+    text-align: center;
+    background-color:rgb(0, 166, 255);
+    border-radius: 15px;
+    width: 15vw;
+    margin-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: white;
+    margin-bottom: 10px;
+}
+
+#OProfile_follwingbt{
+    background-color:gainsboro;
+    color: black;
+    border-radius: 15px;
+    width: 7vw;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+
+}
+#send:hover{
+    cursor: pointer;
+    text-align: center;
+    background-color:rgb(0, 166, 255);
+    border-radius: 15px;
+    width: 15vw;
+    margin-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: white;
+    margin-bottom: 10px;
+}
+
+#follwing:hover{
+    cursor: pointer;
+    background-color:gainsboro;
+    color: black;
+    border-radius: 15px;
+    width: 7vw;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+
+}
+}
+@media screen and (max-width:1536px) {
+    .OProfile_userinfo{
+        display: flex;
+        flex-direction: row;
+    
+    
+    }
+    .OProfile_userinfo h3{
+        margin-left: 0.6VW;
+        margin-top: 4vh;
+        font-weight: bolder;
+    }
+    
+    .OProfile_userinfo img{
+        margin-top: 10px;
+        margin-left: 10px;
+        width:4vw;    
+        border-radius: 30px;
+        border-radius: 20px;
+        margin-bottom: 10px;
+    }
+    .OProfile_userinfo img:hover{
+        cursor: pointer;
+        margin-top: 10px;
+        margin-left: 10px;
+        width:4vw;    
+        border-radius: 30px;
+        border-radius: 20px;
+        margin-bottom: 10px;
+    }
+    .OProfile_total_list{
+        display: flex;
+        flex-direction: row;
+    
+    }
+    
+    .OProfile_Itemcontent{
+        display: flex;
+        flex-direction: column;
+        margin-left: 30px;
+        margin-top: -10px;
+    }
+    .OProfile_Itemcontent p{
+        margin-top: -20px;
+        margin-left: 20px;
+    
+    }
+    .OProfile_Itemcontent h3{
+        margin-left: 40px;
+        margin-top: 1px;
+        font-size: larger;
+        font-weight: bolder;
+    
+    }
+    
+    .OProfile_Itemfollwers{
+        display: flex;
+        flex-direction: column;
+        margin-left: 50px;
+        margin-top: -10px;
+    }
+    .OProfile_Itemfollwers p{
+        margin-top: -20px;
+        margin-left: 20px;
+    }
+    .OProfile_Itemfollwers h3{
+    
+        margin-left: 40px;
+        margin-top: 1px;
+        font-size: larger;
+    }
+    
+    .OProfile_Itemfollwing{
+        display: flex;
+        flex-direction: column;
+        margin-left: 50px;
+        margin-top: -10px;
+    }
+    .OProfile_Itemfollwing p{
+    
+        margin-top: -20px;
+        margin-left: 20px;
+    
+    }
+    .OProfile_Itemfollwing h3{
+        margin-left: 40px;
+        margin-top: 1px;
+        font-size: larger;
+    }
+    
+    .contentItem{
+        display: flex;
+        flex-direction: row;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        gap:10;
+    }
+    .contentItem img{
+        width: 10vw;
+        height: 20vh;
+    }
+    
+    .contentItem video{
+        width: 10vw;
+        height: 20vh;
+    }
+    
+    .image img{
+       width: 10vw;
+       height: 20vh;
+    }
+    
+    .playing video{
+        width: 10vw;
+        height: 20vh;
+    }
+    .OProfile_fwbtn{
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    
+    }
+    .OProfile_fwbtn button{
+        text-align: center;
+        background-color:rgb(0, 166, 255);
+        border-radius: 15px;
+        width: 22vw;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        color: white;
+        margin-bottom: 10px;
+    }
+    .OProfile_fwbtn button:hover{
+        cursor: pointer;
+        text-align: center;
+        background-color:rgb(0, 166, 255);
+        border-radius: 15px;
+        width: 22vw;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        color: white;
+        margin-bottom: 10px;
+    }
+    
+    .OProfile_flbtn{
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap:10px;
+    }
+    
+    #OProfile_send{
+        text-align: center;
+        background-color:rgb(0, 166, 255);
+        border-radius: 15px;
+        width: 15vw;
+        margin-left: 10px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        color: white;
+        margin-bottom: 10px;
+    }
+    
+    #OProfile_follwingbt{
+        background-color:gainsboro;
+        color: black;
+        border-radius: 15px;
+        width: 7vw;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+    
+    }
+    #send:hover{
+        cursor: pointer;
+        text-align: center;
+        background-color:rgb(0, 166, 255);
+        border-radius: 15px;
+        width: 15vw;
+        margin-left: 10px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        color: white;
+        margin-bottom: 10px;
+    }
+    
+    #follwing:hover{
+        cursor: pointer;
+        background-color:gainsboro;
+        color: black;
+        border-radius: 15px;
+        width: 7vw;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+    
+    }
+
+}

@@ -1,0 +1,403 @@
+@media screen and (max-width:1920px) {
+    @media screen and (min-width:1540px) {
+.Loginmain{
+    width: 50%;
+    height: 1000px;
+    padding: 1.5rem;
+    margin: 1rem;
+    position:relative;
+    left: 50%;
+ 
+
+}
+.Loginmain h2{
+    width: 100%;
+    text-align:center;
+    color:black;
+    font-size: xx-large;
+    margin-left: 4vw;
+
+}
+.LoginInput{
+    display: block;
+    margin-top: 10px;
+}
+.LoginInput input{
+    width: 25vw;
+    margin-top: 10px;
+    padding: 15px;
+    border-radius: 15px;
+    margin-left: 165px;
+    margin-bottom: 10px;
+}
+
+.Loginimage img{
+    position:absolute;
+    top:20px;
+    left: -780px;
+   width: 800px;
+   height: 700px;
+}
+.Loginbtn{
+    position: absolute;
+    margin-left: 7vw;
+
+}
+.Loginbtn button{
+    overflow: hiddlen;
+    white-space: nowrap;
+    background: blueviolet;
+    font-size: larger;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 11.5rem;
+    padding-right: 11.5rem;
+    border: 2px;
+    border-radius: 15px;
+    color:white;
+    cursor: pointer;   
+    margin-left: 165px; 
+    margin-top: 10px;
+    width: 82%;
+}
+
+.Loginbtn button:disabled,
+.Loginbtn button:focus:disabled,
+.Loginbtn button:hover:disabled,
+.Loginbtn button:active:disabled{
+    background: #ccc;
+    border-color: #ccc;
+    color: #666666;
+    cursor: not-allowed;
+}
+.Login_sns{
+    position: absolute;
+    margin-top: 18vh;
+    margin-left: 17vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 40%;
+
+}
+.Login_sns img,
+.Login_sns img:hover{
+  width: 5vw;
+  height: 7vh;
+  cursor: pointer;
+
+}
+
+
+.Loginuserinfo{
+    position: absolute;
+    margin-top: 5vh;
+    margin-left: 6vw;
+}
+.Loginuserinfo ul{
+   display: flex;
+    list-style: none;
+    cursor: pointer;
+    margin-left: 240px; 
+
+}
+.Loginuserinfo ul li{
+    overflow: hiddlen;
+    white-space: nowrap;
+    font-size:larger;
+    margin: 2rem;
+    margin-bottom: 1rem;
+}
+.Loginuserinfo li a{
+    color:black;
+    font-size: medium;
+}
+    }
+}
+
+@media screen and (max-width:1710px) {
+    .login_loading{
+        position: absolute;
+        top:1vh;
+        left: 3vw;
+        z-index: 999;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .login_loading p{
+        margin-left: 1vw;
+        margin-top: 6vh;
+    }
+    .login_loading img{
+        width: 7vw;
+        height: 10vh;
+    }
+    .Loginmain_blur{
+        width: 50%;
+        height: 1000px;
+        padding: 1.5rem;
+        margin: 1rem;
+        position:relative;
+        left: 50%;
+        filter: blur(5px); /* 기본적으로 블러 효과 */
+        pointer-events: none; /* 클릭 방지 */
+        transition: filter 0.3s ease, pointer-events 0s ease 0.3s;
+    }
+    .fali_login{
+        color:red;
+        margin-top: 0.4vh;
+        margin-bottom: 0.4vh;
+        font-size: small;
+    }
+    .Loginmain{
+        width: 50%;
+        height: 1000px;
+        padding: 1.5rem;
+        margin: 1rem;
+        position:relative;
+        left: 50%;
+        fill: none;
+     
+    
+    }
+    .Loginmain h2{
+        width: 100%;
+        text-align:center;
+        color:black;
+        font-size: xx-large;
+        margin-left: 4vw;
+    
+    }
+    .LoginInput{
+        display: block;
+        margin-top: 10px;
+    }
+    .LoginInput input{
+        width: 25vw;
+        margin-top: 10px;
+        padding: 15px;
+        border-radius: 15px;
+        margin-left: 165px;
+        margin-bottom: 10px;
+    }
+    
+    .Loginimage img{
+        position:absolute;
+        top:20px;
+        left: -780px;
+       width: 800px;
+       height: 700px;
+    }
+    .Loginbtn{
+        position: absolute;
+        margin-left: 7vw;
+    
+    }
+    .Loginbtn button{
+        overflow: hiddlen;
+        white-space: nowrap;
+        background: blueviolet;
+        font-size: larger;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+        padding-left: 5rem;
+        padding-right: 5rem;
+        border: 2px;
+        border-radius: 15px;
+        color:white;
+        cursor: pointer;   
+        margin-left: 150px; 
+        margin-top: 10px;
+        width: 100%;
+    }
+    
+    .Loginbtn button:disabled,
+    .Loginbtn button:focus:disabled,
+    .Loginbtn button:hover:disabled,
+    .Loginbtn button:active:disabled{
+        background: #ccc;
+        border-color: #ccc;
+        color: #666666;
+        cursor: not-allowed;
+    }
+    .Loginkakao{
+        position: absolute;
+        margin-left: 6vw;
+        width: 73%;
+        margin-top: 16vh;
+    }
+    .Loginkakao button{
+        overflow: hiddlen;
+        white-space: nowrap;
+        background-color: yellow;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        padding-left: 11rem;
+        padding-right: 11rem;
+        border: 2px;
+        border-radius: 15px;
+        margin-left: 165px; 
+        cursor: pointer;
+        width: 71%;
+    }
+    .Loginuserinfo{
+        position: absolute;
+        margin-top: 8.5vh;
+        margin-left: 15vw;
+    }
+    .Loginuserinfo ul{
+       display: flex;
+       flex-direction: row;
+       justify-content: center;
+       align-items: center;
+        list-style: none;
+        cursor: pointer;
+        margin-top: 1vh;
+    
+    }
+    .Loginuserinfo ul li{
+        overflow: hiddlen;
+        white-space: nowrap;
+        font-size:larger;
+        margin-left: 4vw;
+    }
+    .Loginuserinfo li a{
+        color:black;
+        font-size: medium;
+    
+    }
+
+    .Login_sns{
+        position: absolute;
+        margin-top: 18vh;
+        margin-left: 17vw;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 40%;
+    
+    }
+    .Login_sns img,
+    .Login_sns img:hover{
+      width: 5vw;
+      height: 7vh;
+      cursor: pointer;
+    
+    }
+
+}
+
+/*
+@media screen and (max-width:900px) {
+    .main{
+        width: 50%;
+        height: 1000px;
+        padding: 1.5rem;
+        margin: 1rem;
+        position:relative;
+        left: 50%;
+    
+    }
+    .main h2{
+        width: 100%;
+        text-align:center;
+        color:black;
+        font-size: xx-large;
+    
+    }
+    .Input{
+        display: block;
+        margin-top: 10px;
+    }
+    .Input input{
+        width: 23vw;
+        margin-top: 10px;
+        padding: 15px;
+        border-radius: 15px;
+        margin-left: 165px;
+        margin-bottom: 10px;
+    }
+    
+    .image img{
+        position:absolute;
+        top:20px;
+        left: -780px;
+       width: 800px;
+       height: 700px;
+    }
+    .btn{
+        position: absolute;
+    
+    }
+    .btn button{
+        overflow: hiddlen;
+        white-space: nowrap;
+        background: blueviolet;
+        font-size: larger;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        padding-left: 11.5rem;
+        padding-right: 11.5rem;
+        border: 2px;
+        border-radius: 15px;
+        color:white;
+        cursor: pointer;   
+        margin-left: 165px; 
+        margin-top: 10px;
+        width: 72%;
+    }
+    
+    .btn button:disabled,
+    .btn button:focus:disabled,
+    .btn button:hover:disabled,
+    .btn button:active:disabled{
+        background: #ccc;
+        border-color: #ccc;
+        color: #666666;
+        cursor: not-allowed;
+    }
+    .kakao{
+        position: absolute;
+        margin-top: 130px;
+    }
+    .kakao button{
+        overflow: hiddlen;
+        white-space: nowrap;
+        background-color: yellow;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        padding-left: 11rem;
+        padding-right: 11rem;
+        border: 2px;
+        border-radius: 15px;
+        margin-left: 165px; 
+        cursor: pointer;
+        width: 71%;
+    }
+    .userinfo{
+        position: absolute;
+        margin-top: 40px;
+    }
+    .userinfo ul{
+       display: flex;
+        list-style: none;
+        cursor: pointer;
+        margin-left: 165px; 
+    
+    }
+    .userinfo ul li{
+        overflow: hiddlen;
+        white-space: nowrap;
+        font-size:larger;
+        margin: 2rem;
+        margin-bottom: 1rem;
+    }
+    .userinfo li a{
+        color:black;
+    
+    }
+}
+    */

@@ -1,0 +1,40 @@
+.Matitem_Items{
+    display: flex;
+    flex-direction: row;
+    margin-top: 2vh;
+}
+.Matitem_Items:hover{
+    display: flex;
+    flex-direction: row;
+    margin-top: 2vh;
+    background-color:darkgray;
+    color:white;
+    cursor: pointer;
+}
+
+.Matitem_Items img{
+    margin-left: 1vw;
+    margin-top: 1.5vh;
+    margin-bottom: 2vh;
+    width: 3vw;
+    height: 6vh;
+    border-radius: 50px;
+}
+.Matitem_Items p{
+    margin-top: 1.3vw;
+    margin-left: 0.8vw;
+}
+
+.Matitem_checkbox{
+    float: right;
+    padding-left: 10vw;
+    margin-bottom: 1vh;
+    align-items:center;
+    margin-left: 2vw;
+}
+.Matitem_Items input{
+    margin-top: 3vh;
+    margin-left:auto;
+    width: 2.5vw;
+    height: 2.5vh;
+}

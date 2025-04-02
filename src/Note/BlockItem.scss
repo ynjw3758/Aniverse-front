@@ -1,0 +1,27 @@
+.BlockItem_Item{
+    display: flex;
+    flex-direction: row;
+}
+.BlockItem_Item input{
+    margin-left: 0.3vw;
+    margin-top: -1vh;
+}
+.BlockItem_contents{
+    display: flex;
+    flex-direction: row;
+    text-align: left;
+    justify-content: flex-start;
+    width: 40vw;
+}
+.BlockItem_Item p{
+    margin-left: 0.2vw;
+    margin-top: 0.4vh;
+}
+
+.BlockItem_Item h4{
+  font-size:medium;
+  font-weight:normal;
+  margin-left: 12vw;
+  margin-top: 0.5vh;
+  width: 100%;
+}

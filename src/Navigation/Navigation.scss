@@ -1,0 +1,33 @@
+.Headernav{
+    font-weight: bold;
+    font-size: medium;
+}
+
+.Headerlogin{
+    color:black;
+    font-size: larger;
+    margin-right: 1rem;
+
+}
+
+.Headersign{
+    font-size: larger;
+    color:black;
+
+}
+.Headerhome{
+    color:black;
+    font-size: larger;
+}
+.Headernav ul{
+    display: flex;
+    list-style: none;
+    cursor: pointer;
+}
+.Headernav li{
+    font-size: large;
+    padding-left: 5px;
+    padding-right: 2rem;
+    margin-top: 5px;
+    margin-bottom: -9px;
+}

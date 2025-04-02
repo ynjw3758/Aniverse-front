@@ -1,0 +1,31 @@
+.AddChatPerson_Items{
+    display: flex;
+    flex-direction: column;
+    margin-top: 2vh;
+    justify-content: center;
+}
+.AddChatPerson_nick{
+    margin-left: 1.5vw;
+    margin-top: -0.8vh;
+}
+.AddChatPerson_nick p{
+    margin-left: 0.5vw;
+    //margin-top: -1vh;
+}
+.AddChatPerson_image{
+    margin-left: 0.5vw;
+    margin-top: -2vh;
+    width: 100%;
+    text-align: center;
+    
+}
+
+.AddChatPerson_image img{
+    margin-left: 1vw;
+     width: 3vw;
+     height: 6vh;
+     border-radius: 50px;
+
+}
+
+

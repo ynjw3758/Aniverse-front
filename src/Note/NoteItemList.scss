@@ -1,0 +1,113 @@
+/*
+.position{
+    position: absolute;
+    top:35vh;
+    left: 6vw;
+    width: 45vw;
+    height: 70vh;
+    max-height: 70vh;
+   overflow-y: auto;
+}
+
+.Listbox{
+    display: flex;
+    flex-direction: column;   
+    border-bottom: 1px solid black;
+}
+.title{
+    display: flex;
+    flex-direction: row;  
+}
+.title h4{
+    margin-top: 2vh;
+    font-size: medium;
+    margin-left: 13vw;
+}
+.title h3{
+    font-size: medium;
+}
+.title p{
+    margin-left: 7.7vw;
+}
+*/
+@media  (max-width:1540px){
+    .NoteItemList_position{
+        position: absolute;
+        top:35vh;
+        left: 6vw;
+        width: 50.5vw;
+        height: 70vh;
+        max-height: 70vh;
+       overflow-y: auto;
+    }
+    
+    .NoteItemList_Listbox{
+        display: flex;
+        flex-direction: column;   
+        border-bottom: 1px solid black;
+        margin-top: -3.5vh;
+    }
+    .NoteItemList_title{
+        display: flex;
+        flex-direction: row;  
+    }
+    .NoteItemList_title h4{
+        margin-top: 2vh;
+        font-size: medium;
+        margin-left: 10vw;
+    }
+    .NoteItemList_title h3{
+        font-size: medium;
+        margin-left: 1vw;
+    }
+    .NoteItemList_title p{
+        margin-left: 11vw;
+    }
+    .NoteItemList_loading{
+        position: relative;
+        top:5vh;
+        left: 10vw;
+    }
+}
+
+@media  (max-width:1921px){
+    .NoteItemList_position{
+        position: absolute;
+        top:35vh;
+        left: 6vw;
+        width: 50.5vw;
+        height: 70vh;
+        max-height: 70vh;
+       overflow-y: auto;
+    }
+    
+    .NoteItemList_Listbox{
+        display: flex;
+        flex-direction: column;   
+        border-bottom: 1px solid black;
+        margin-top: -3.5vh;
+    }
+    .NoteItemList_title{
+        display: flex;
+        flex-direction: row;  
+    }
+    .NoteItemList_title h4{
+        margin-top: 2vh;
+        font-size: medium;
+        margin-left: 10vw;
+    }
+    .NoteItemList_title h3{
+        font-size: medium;
+        margin-left: 1vw;
+    }
+    .NoteItemList_title p{
+        margin-left: 11vw;
+    }
+    .NoteItemList_loading{
+        position: relative;
+        top:5vh;
+        left: 10vw;
+    }
+}
+
+

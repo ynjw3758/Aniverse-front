@@ -1,0 +1,41 @@
+.kakao_loding_main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: xx-large;
+}
+
+.kakao_Isblur{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: xx-large;
+    filter: blur(5px); /* 기본적으로 블러 효과 */
+    pointer-events: none; /* 클릭 방지 */
+    transition: filter 0.3s ease, pointer-events 0s ease 0.3s;
+}
+.kakao_perist{
+    width: 38vw;
+    height: 40vh;
+    position: fixed;
+    top: 12vh;
+    left: 32vw;
+    background-color:white;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    z-index: 50;
+    animation: slide-down 300ms ease-out forwards;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.kakao_perist h3{
+    font-size: xx-large;
+    font-weight: bolder;
+    margin-top: 5vh;
+}
+.kakao_perist p{
+    font-weight: bolder;
+}

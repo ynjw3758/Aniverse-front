@@ -1,0 +1,68 @@
+.kind{
+    margin-left: 6vw;
+    display: flex;
+    flex-direction: row;
+}
+.kind h3{
+    margin-left: -1vw;
+    font-size: larger;
+}
+.kind h4{
+    padding-left: 1vw;
+}
+.kind input{
+    width: 1.5%;
+    margin-right: 2vw;
+    margin-left: -0.2vw;
+}
+
+
+#btn{
+    height: 5vh;
+    width: 5vw;
+    margin-left: 31.5vw;
+    margin-top: 1vh;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    border:2px solid darkgray;
+
+}
+#btn:disabled{
+    height: 5vh;
+    width: 5vw;
+    margin-left: 31.5vw;
+    margin-top: 1vh;
+    background-color: white;
+    color: #666666;
+    cursor: not-allowed;
+    border: none;
+}
+#selbtn{
+    height: 5vh;
+    width: 5vw;
+    margin-top: 1vh;
+    margin-left: 26vw;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    border:2px solid darkgray;
+}
+
+#selbtn:disabled{
+    height: 5vh;
+    width: 5vw;
+    margin-top: 1vh;
+    margin-left: 26vw;
+    background-color: white;
+    color: #666666;
+    cursor: not-allowed;
+    border: none;
+}
+.select{
+position: relative;
+top:1vh;
+left: 25vw;
+width: 5vw;
+height: 5vh;
+}

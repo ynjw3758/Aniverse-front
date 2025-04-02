@@ -1,0 +1,351 @@
+
+ @media screen and (max-width:1540px) {
+
+    .Agree_header{
+        display: block;
+        margin-bottom: 1rem;
+     }
+     .Agree_header img{
+         width: 500px;
+         height: 200px;
+     }
+     .text{
+         display: block;
+         justify-content: center;
+         text-align: center;
+         margin-top: 0.75rem;
+         margin-bottom: 0.75rem;
+     }
+     .text p{  
+         font-size: x-large;
+         font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+     }
+     .text h2{
+         margin-right: 3rem;
+         margin-top: 50px;
+         margin-bottom: 50px;
+     }
+     
+     .checkbox input{
+         display: block;
+         justify-content: center;
+         align-items: center;
+     }
+     
+     .all_check{
+         display: flex;
+         justify-content: center;
+         align-items: center;
+     }
+     .all_check input{
+        margin-left: -4vw;
+         //margin-left: -30.5rem;
+     
+     }
+     .all_check label{
+         font-size: larger;
+         margin-left: 5px;
+     }
+     .Agree_pserson_check{
+         display: flex;
+         flex-wrap: wrap;
+         justify-content: center;
+         align-items: center;
+     }
+     .Agree_pserson_check input{
+         margin-left: -18.2rem;
+         margin-top: -1rem;
+         margin-bottom: 0.75rem;
+     }
+     .Agree_pserson_check label{
+         font-size: larger;
+         margin-left: 5px;
+         margin-top: -1rem;
+         margin-bottom: 0.7rem;
+     }
+     .Aggree_solution_check{
+         display: flex;
+         flex-wrap: wrap;
+         justify-content: center;
+         align-items: center;
+     }
+     .Aggree_solution_check input{
+         margin-left: -18.2rem;
+         margin-bottom: 0.75rem;
+     
+     }
+     .Aggree_solution_check label{
+         font-size: larger;
+         margin-left: 5px;
+         margin-bottom: 0.75rem;
+     }
+     .Aggre_other_check{
+         display: flex;
+         flex-wrap: wrap;
+         justify-content: center;
+         align-items: center;
+     }
+     .Aggre_other_check input{
+         margin-left: -17.1rem;
+         margin-bottom: 0.75rem;
+     
+     }
+     .Aggre_other_check label{
+         font-size: larger;
+         margin-left: 5px;
+         margin-bottom: 0.75rem;
+     }
+     .Aggre_other_check{
+         display: flex;
+         flex-wrap: wrap;
+         justify-content: center;
+         align-items: center;
+     }
+     .marketing_check input{
+         margin-left: -24rem;
+         margin-bottom: 0.75rem;
+     
+     }
+     .marketing_check label{
+         font-size: larger;
+         margin-left: 5px;
+         margin-bottom: 0.75rem;
+     }
+     
+     .service_check{
+         display: flex;
+         flex-wrap: wrap;
+         justify-content: center;
+         align-items: center;
+     }
+     .service_check input{
+         margin-left: -21.5rem;
+         margin-bottom: 0.75rem;
+     
+     }
+     .service_check label{
+         font-size: larger;
+         margin-left: 5px;
+         margin-bottom: 0.75rem;
+     }
+     
+     .Horizantal{
+         margin-top: 20px;
+      margin-bottom: 30px;
+     }
+     .blue{
+         color: blue;
+         margin-left: 0.5rem;
+     }
+     .gray{
+         color:gray;
+     }
+     .Horizantal hr{
+         width:50%;
+     }
+     .Aggre_button{
+        display: flex;
+        flex-direction: row;
+        justify-content:center;
+        align-items: center;
+        margin-top: 2rem;
+     }
+     
+     .Aggre_button button{
+         font-size: large;
+         padding-left: 50px;
+         padding-right: 50px;
+         padding-top: 10px;
+         padding-bottom: 10px;
+         border-radius: 20px;
+         margin: 10px;
+         margin-right: 2rem;
+         background-color:rgba(30, 150, 100, 0.5);
+         color: white;
+         cursor: pointer;
+     
+     }
+     .Aggre_button button:disabled{
+         background: #ccc;
+         border-color: #ccc;
+         color: #666666;
+         cursor: not-allowed;
+     }
+ }
+ 
+ @media screen and (max-width:1920px) {
+
+    @media screen and (min-width:1536px) {
+        .Agree_header{
+            display: block;
+            margin-bottom: 1rem;
+         }
+         .Agree_header img{
+             width: 500px;
+             height: 200px;
+         }
+         .text{
+             display: block;
+             justify-content: center;
+             text-align: center;
+             margin-top: 0.75rem;
+             margin-bottom: 0.75rem;
+         }
+         .text p{  
+             font-size: x-large;
+             font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+         }
+         .text h2{
+             margin-right: 3rem;
+             margin-top: 50px;
+             margin-bottom: 50px;
+         }
+         
+         .checkbox input{
+             display: block;
+             justify-content: center;
+             align-items: center;
+         }
+         
+         .all_check{
+             display: flex;
+             justify-content: center;
+             align-items: center;
+         }
+         .all_check input{
+            margin-left: -4vw;
+             //margin-left: -30.5rem;
+         
+         }
+         .all_check label{
+             font-size: larger;
+             margin-left: 5px;
+         }
+         .Agree_pserson_check{
+             display: flex;
+             flex-wrap: wrap;
+             justify-content: center;
+             align-items: center;
+         }
+         .Agree_pserson_check input{
+             margin-left: -18.2rem;
+             margin-top: -1rem;
+             margin-bottom: 0.75rem;
+         }
+         .Agree_pserson_check label{
+             font-size: larger;
+             margin-left: 5px;
+             margin-top: -1rem;
+             margin-bottom: 0.7rem;
+         }
+         .Aggree_solution_check{
+             display: flex;
+             flex-wrap: wrap;
+             justify-content: center;
+             align-items: center;
+         }
+         .Aggree_solution_check input{
+             margin-left: -18.2rem;
+             margin-bottom: 0.75rem;
+         
+         }
+         .Aggree_solution_check label{
+             font-size: larger;
+             margin-left: 5px;
+             margin-bottom: 0.75rem;
+         }
+         .Aggre_other_check{
+             display: flex;
+             flex-wrap: wrap;
+             justify-content: center;
+             align-items: center;
+         }
+         .Aggre_other_check input{
+             margin-left: -17.1rem;
+             margin-bottom: 0.75rem;
+         
+         }
+         .Aggre_other_check label{
+             font-size: larger;
+             margin-left: 5px;
+             margin-bottom: 0.75rem;
+         }
+         .Aggre_other_check{
+             display: flex;
+             flex-wrap: wrap;
+             justify-content: center;
+             align-items: center;
+         }
+         .marketing_check input{
+             margin-left: -24rem;
+             margin-bottom: 0.75rem;
+         
+         }
+         .marketing_check label{
+             font-size: larger;
+             margin-left: 5px;
+             margin-bottom: 0.75rem;
+         }
+         
+         .service_check{
+             display: flex;
+             flex-wrap: wrap;
+             justify-content: center;
+             align-items: center;
+         }
+         .service_check input{
+             margin-left: -21.5rem;
+             margin-bottom: 0.75rem;
+         
+         }
+         .service_check label{
+             font-size: larger;
+             margin-left: 5px;
+             margin-bottom: 0.75rem;
+         }
+         
+         .Horizantal{
+             margin-top: 20px;
+          margin-bottom: 30px;
+         }
+         .blue{
+             color: blue;
+             margin-left: 0.5rem;
+         }
+         .gray{
+             color:gray;
+         }
+         .Horizantal hr{
+             width:50%;
+         }
+         .Aggre_button{
+            display: flex;
+            flex-direction: row;
+            justify-content:center;
+            align-items: center;
+            margin-top: 2rem;
+         }
+         
+         .Aggre_button button{
+             font-size: large;
+             padding-left: 50px;
+             padding-right: 50px;
+             padding-top: 10px;
+             padding-bottom: 10px;
+             border-radius: 20px;
+             margin: 10px;
+             margin-right: 2rem;
+             background-color:rgba(30, 150, 100, 0.5);
+             color: white;
+             cursor: pointer;
+         
+         }
+         .Aggre_button button:disabled{
+             background: #ccc;
+             border-color: #ccc;
+             color: #666666;
+             cursor: not-allowed;
+         }
+
+    }
+}

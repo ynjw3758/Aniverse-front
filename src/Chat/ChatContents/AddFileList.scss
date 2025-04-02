@@ -1,0 +1,54 @@
+.AddChatFileList_imgbox,
+.AddChatFileList_imgbox:hover{
+    width:75px;
+    height:75px;
+    overflow:hidden;
+    margin-left: 1vw;
+    cursor: pointer;
+}
+.AddChatFileList_imgbox img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    border-radius: 20%;
+}
+.AddChatFileList_videobox,
+.AddChatFileList_videobox:hover{
+    width:75px;
+    height:75px;
+    overflow:hidden;
+    margin-left: 1vw;
+    cursor: pointer;
+}
+
+.AddChatFileList_videobox video{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    border-radius: 20%;
+}
+.AddChatFileList_Cancel{
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    margin-left: 4vw;
+    z-index: 40;
+    background-color:floralwhite;
+    border-radius: 50%;
+}
+.AddChatFileList_Cancel img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    border-radius: 20%;
+
+}
+.body{
+    display: flex;
+    flex-direction: row;
+    width: 53vw;    
+    max-width: 53vw;
+    overflow: auto;
+}
+
+

@@ -1,0 +1,537 @@
+@media screen and (max-width:1540px) {
+.SendNote_Main{
+    width: 38vw;
+    height: 80vh;
+    position: fixed;
+    top: 5vh;
+    left: 32vw;
+    background-color:white;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    z-index: 20;
+    animation: slide-down 300ms ease-out forwards;
+    
+    
+  }
+  .MainBackDrop{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+.Content{
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+}
+.Content h4{
+    text-wrap: nowrap;
+}
+
+.Content button{
+    cursor: pointer;
+    height: 4vh;
+    width: 5vw;
+    margin-top: 2.8vh;
+    margin-left: 9vw;
+    border-bottom: none;
+    border-right: none;
+    border-left: none;
+    border-top: none;
+    border-radius: 37px;
+    background-color: rgb(0, 217, 255);
+}
+.SendNote_sendlist{
+    display: flex;
+    flex-direction:row;
+    margin-top: -2vh;
+}
+
+.SendNote_sendlist p{
+    margin-left: 0.5vw;
+    white-space: nowrap;
+}
+.SendNote_addList{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.aaa{
+    display: flex;
+    flex-direction: row;
+    border-radius: 20px;
+    color: rgb(0, 157, 255);
+    background-color:rgb(0, 229, 255);
+    height: 30px;
+    margin-top: 15px;
+    margin-left: 5px;
+    padding-right: 10px;
+}
+.aaa p:hover,
+.aaa p{
+    margin-top:5px;
+    cursor: pointer;
+}
+.aaa img,
+.aaa img:hover{
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    margin-left: 2px;
+    margin-top: 6px;
+}
+.test{
+    display: flex;
+    flex-direction: column;
+}
+.SendNote_vertical hr{
+    margin-top: 0px;
+    width:100%;
+}
+.SendNote_search{
+    margin-left: -10px;
+    margin-top: 10px;
+}
+.SendNote_search input{
+    margin-left: 1vw;
+    height: 3vh;
+    border-top: none;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    margin-top: 1vh;
+    outline: none;
+}
+.SendNote_search input:focus{
+    margin-left: 1vw;
+    height: 3vh;
+    border-top: none;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    margin-top: 1vh;
+    outline: none;
+}
+.SendNote_PersonList{
+    margin-top: -1.2vh;
+    border: 1px solid black;
+    height: 20vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow-y: auto;
+
+}
+.SendNote_sentents textarea{
+    outline: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    resize: none;
+    width: 36.5vw;
+    height: 70vh;
+    max-height: 60vh;
+    overflow-y: auto;
+    font-size: large;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 200px;
+    padding-left: 20px;
+   border-bottom-left-radius: 15px;
+   border-bottom-right-radius: 15px;
+}
+.SendNote_sentents_active textarea{
+    outline: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    resize: none;
+    width: 100%;
+    height: 45vh;
+    max-height: 45vh;
+    overflow-y: auto;
+    font-size: large;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 200px;
+   border-bottom-left-radius: 15px;
+   border-bottom-right-radius: 15px;
+}
+.picture{
+    cursor: pointer;
+    font: inherit;
+    height: 4vh;
+    width: 5vw;
+    border-radius: 37px;
+    margin-top: 2.8vh;
+    background-color: rgb(0, 217, 255);
+    margin-left: 1vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+}
+.picture p{
+    font-size: smaller;
+    
+}
+.AddImg{
+
+    border-bottom: 1px solid black;
+    display: flex;
+    flex-direction: row;
+    margin-top: -2vh;
+    justify-content: right;
+    flex-flow: row;
+}
+.AddImg p{
+    margin-right: 0.5vw;
+}
+
+.AddPicture{
+    border-bottom: 1px solid black;
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    flex-flow: row;
+}
+.AddPicture p{
+    margin-right: 0.5vw;
+    margin-top: 5vh;
+}
+
+.SendNote_impossible{
+   text-align: left;
+   color: red;
+   width: 50%;
+}
+.SendNote_impossible p{
+    margin-left: -8vw;
+}
+.SendNote_imagelist{
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    left: -3vw;
+    //margin-right: -3.5vw;
+}
+.image{
+    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-right: 1vw;
+}
+
+.image img{
+width: 7vw;
+height: 10vh;
+
+}
+.error{
+    position: absolute;
+    top:20vh;
+    left: 10vw;
+    width: 50%;
+    border: 2px solid black;
+    border-radius: 20px;
+    z-index: 60;
+    color: red;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+.error button{
+    cursor: pointer;
+    height: 4vh;
+    width: 5vw;
+    margin-bottom: 5vh;
+    border-bottom: none;
+    border-right: none;
+    border-left: none;
+    border-top: none;
+    border-radius: 37px;
+    background-color: rgb(0, 217, 255);
+}
+}
+@media screen and (max-width:1920px) {
+    @media screen and (min-width:1536px) {
+    .SendNote_Main{
+        width: 38vw;
+        height: 80vh;
+        position: fixed;
+        top: 5vh;
+        left: 32vw;
+        background-color:white;
+        border-radius: 14px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+        z-index: 20;
+        animation: slide-down 300ms ease-out forwards;
+        
+        
+      }
+      .MainBackDrop{
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 10;
+    }
+    .Content{
+        text-align: center;
+        display: flex;
+        flex-direction: row;
+        text-align: center;
+    }
+    .Content h4{
+        margin-left: 9.5vw;
+        text-wrap: nowrap;
+    }
+    
+    .Content button{
+        cursor: pointer;
+        height: 4vh;
+        width: 5vw;
+        margin-top: 2.8vh;
+        margin-left: 10.5vw;
+        border-bottom: none;
+        border-right: none;
+        border-left: none;
+        border-top: none;
+        border-radius: 37px;
+        background-color: rgb(0, 217, 255);
+        margin-top: 1.5vh;
+
+    }
+    .SendNote_sendlist{
+        display: flex;
+        flex-direction:row;
+        margin-top: -2vh;
+    }
+    
+    .SendNote_sendlist p{
+        margin-left: 0.5vw;
+        white-space: nowrap;
+    }
+    .SendNote_addList{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    .aaa{
+        display: flex;
+        flex-direction: row;
+        border-radius: 20px;
+        color: rgb(0, 157, 255);
+        background-color:rgb(0, 229, 255);
+        height: 30px;
+        margin-top: 15px;
+        margin-left: 5px;
+        padding-right: 10px;
+    }
+    .aaa p:hover,
+    .aaa p{
+        margin-top:5px;
+        cursor: pointer;
+    }
+    .aaa img,
+    .aaa img:hover{
+        cursor: pointer;
+        width: 20px;
+        height: 20px;
+        margin-left: 2px;
+        margin-top: 6px;
+    }
+    .test{
+        display: flex;
+        flex-direction: column;
+    }
+    .SendNote_vertical hr{
+        margin-top: 0px;
+        width:100%;
+    }
+    .SendNote_search{
+        margin-left: -10px;
+        margin-top: 10px;
+    }
+    .SendNote_search input{
+        margin-left: 1vw;
+        height: 3vh;
+        border-top: none;
+        border-bottom: none;
+        border-left: none;
+        border-right: none;
+        margin-top: 1vh;
+        outline: none;
+    }
+    .SendNote_search input:focus{
+        margin-left: 1vw;
+        height: 3vh;
+        border-top: none;
+        border-bottom: none;
+        border-left: none;
+        border-right: none;
+        margin-top: 1vh;
+        outline: none;
+    }
+    .SendNote_PersonList{
+        //margin-top: -1.2vh;
+        border: 1px solid black;
+        height: 20vh;
+        display: flex;
+        flex-direction: column;
+        margin-top: -1vh;
+        overflow-y: auto;
+    
+    }
+    .SendNote_sentents textarea{
+        outline: none;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        resize: none;
+        width: 36.7vw;
+        height: 63.5vh;
+        max-height: 63.5vh;
+        overflow-y: auto;
+        font-size: large;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-weight: 200px;
+        padding-left: 20px;
+       border-bottom-left-radius: 15px;
+       border-bottom-right-radius: 15px;
+    }
+    .SendNote_sentents_active textarea{
+        outline: none;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        resize: none;
+        width: 100%;
+        height: 45vh;
+        max-height: 45vh;
+        overflow-y: auto;
+        font-size: large;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-weight: 200px;
+       border-bottom-left-radius: 15px;
+       border-bottom-right-radius: 15px;
+    }
+    
+    .picture{
+        cursor: pointer;
+        font: inherit;
+        height: 4vh;
+        width: 7vw;
+        border-radius: 37px;
+        margin-top: 2.8vh;
+        background-color: rgb(0, 217, 255);
+        margin-left: 1vw;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        margin-top: 1.5vh;
+    }
+    .picture p{
+        font-size: smaller;
+        
+    }
+    .AddImg{
+    
+        border-bottom: 1px solid black;
+        display: flex;
+        flex-direction: row;
+        margin-top: -2vh;
+        justify-content: right;
+        flex-flow: row;
+    }
+    .AddImg p{
+        margin-right: 0.5vw;
+    }
+    
+    .AddPicture{
+        border-bottom: 1px solid black;
+        display: flex;
+        flex-direction: row;
+        justify-content: right;
+        flex-flow: row;
+    }
+    .AddPicture p{
+        margin-right: 0.5vw;
+        margin-top: 5vh;
+    }
+    
+    .SendNote_impossible{
+       text-align: left;
+       color: red;
+       width: 50%;
+    }
+    .SendNote_impossible p{
+        margin-left: -8vw;
+    }
+    .SendNote_imagelist{
+        display: flex;
+        flex-direction: row;
+        position: relative;
+        left: -3vw;
+        //margin-right: -3.5vw;
+    }
+    .image{
+        margin-bottom: 10px;
+        margin-top: 10px;
+        margin-right: 1vw;
+    }
+    
+    .image img{
+    width: 7vw;
+    height: 10vh;
+    
+    }
+    .error{
+        position: absolute;
+        top:20vh;
+        left: 10vw;
+        width: 50%;
+        border: 2px solid black;
+        border-radius: 20px;
+        z-index: 60;
+        color: red;
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    
+    }
+    .error button{
+        cursor: pointer;
+        height: 4vh;
+        width: 5vw;
+        margin-bottom: 5vh;
+        border-bottom: none;
+        border-right: none;
+        border-left: none;
+        border-top: none;
+        border-radius: 37px;
+        background-color: rgb(0, 217, 255);
+    }
+}
+}

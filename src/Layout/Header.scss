@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap');
+
+.Headers{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   color:black;
+}
+.Headers_log{
+    display: flex;
+}
+.Headers_log h2{
+    position: absolute;
+    top:0px;
+    width: 6vw;
+    height: 10vh;
+}
+.Headers_log img{
+    position:absolute;
+    top:1.5vh;
+    left: 2vw;
+    width: 6vw;
+    height: 10vh;
+    object-fit: cover;
+    
+}

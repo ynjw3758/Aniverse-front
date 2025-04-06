@@ -1,3 +1,4 @@
+@media screen and (max-width:1536px) {
 .profile{
     position: absolute;
     left: 30vw;
@@ -9,20 +10,20 @@
   }
   .jpgProfile{
       position: absolute;
-      left: 32vw;
+      left: 25vw;
       top:12vh;
       
   }
   .jpgProfile img{
       width: 15w;
       height: 18vh;
-      border-radius: 200px;
+      border-radius: 250px;
   }
   
   .Nickname{
       position: relative;
       top:-5vh;
-      left: 44.5vw;
+      left: 38vw;
       display: flex;
       flex-direction: row;
       width: 30%;
@@ -51,7 +52,7 @@
       flex-direction: row;
       position: absolute;
       top:20vh;
-      left: 45vw;
+      left: 13.5vw;
       gap: 4vw;
   }
   
@@ -107,3 +108,4 @@
       display: flex;
       flex-direction: row;
   }
+}

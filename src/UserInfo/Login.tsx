@@ -92,7 +92,9 @@ const Login:React.FC= (props : {})=>{
             {   
                 id: EnterId,
                 password: EnterPass
-            }
+                ,withCredentials: true
+            },
+            
         ).then(response =>{
             console.log("상태값 :" , response.status);
              let re_auth:string="";
@@ -100,21 +102,24 @@ const Login:React.FC= (props : {})=>{
              
              
              if(response.status==200){
-                console.log("로그인 성공");
-                localStorage.setItem("a_id" , response.data.access_token);
-                localStorage.setItem("id" , response.data.id);
+                console.log("로그인 성공 : " , response);
+                localStorage.setItem("a_id" , response.data.data.access_token);
+                localStorage.setItem("id" , response.data.data.id);
                 
                 let transe_time:Date = new Date(response.data.exp*1000);
                 let time:string="";
                 time =moment(transe_time).format('YYYY-MM-DD HH:mm').toString();
                 console.log("시간 변환 :" , time);
-                localStorage.setItem("p_exp" , response.data.exp);
+                localStorage.setItem("p_exp" , response.data.data.exp);
                 const cookies = new Cookies();
                 let access_token:string="";
+                let refresh_token:string="";
+                refresh_token = cookies.get("refresh_token");
+                console.log("리프레쉬 : " , refresh_token)
                 access_token = localStorage.getItem("a_id")!;
-                axios.defaults.headers.common['set-cookies'] = access_token;
+                axios.defaults.headers.common['Authorization'] = access_token;
                 axios.get("http://localhost:8080/Pets-social/valid-accesstoken" , {params:{id:EnterId}}).then(responses =>{
-                    //console.log("access token response : " , responses);
+                    console.log("access token response : " , responses);
                     if(responses.status== 200){
                         console.log("로그인 성공");
                         setIsloading(false);

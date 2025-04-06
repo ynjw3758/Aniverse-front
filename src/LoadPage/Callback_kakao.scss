@@ -39,3 +39,48 @@
 .kakao_perist p{
     font-weight: bolder;
 }
+.kakao_refresh_token_again_BackDrop{
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.kakao_refresh_token_again{
+    position: absolute;
+    top:25vh;
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    padding: 24px;
+    width: 100%;
+    max-width: 360px;
+    height: 160px;
+    text-align: center;
+    animation: fadeIn 0.3s ease-in-out;
+}
+.kakao_refresh_token_again h2{
+    font-size: 20px;
+    font-weight: bold;
+    color: #333333;
+    margin-bottom: 12px;
+}
+.kakao_refresh_token_again p{
+    font-size: 14px;
+    color: #666666;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+.kakao_refresh_token_again button{
+    background-color: #2563eb;
+    color: #ffffff;
+    border: none;
+    padding: 10px 16px;
+    font-size: 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}

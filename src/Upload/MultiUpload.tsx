@@ -364,28 +364,17 @@ const MultiUpload =(props:upload_data) =>{
               {(leftactive == true && rightactive == false) && (<div className="slide_left">
                <img src="/image/slideleft.png" onClick={SlidebeforeHandler} id={left_active} />
               </div>)}
-              <div style={{width:"40vw" ,height:"73vh",
-              display:"flex", flexDirection:"row", marginTop:"-5px", overflow:"hidden"}}>
+              <div className="Multi_slide_stand_upload">
 
-                {preview.map((img, id) =>(<div style={{width:"40vw" ,height:"72vh",
-              transition:"all 0.3s ease-in-out" ,
-              transform:`translateX(${(pagenumber-1)* -40+"vw"})`, marginTop:"-5px"}}>
-                <img src={img} key={id} style={{width:"40vw" ,height:"72.5vh" , objectFit:"fill" 
-                ,borderBottomLeftRadius:"20px"/*,borderBottomRightRadius:"20px"*/
-                }}/>
+                {preview.map((img, id) =>(<div style={{transition:"all 0.3s ease-in-out" ,
+              transform:`translateX(${(pagenumber-1)* -40+"vw"})`}}>
+                <img src={img} key={id} />
                 </div>))}
-                {videolist.map((video ,id) =>(<div style={{width:"40vw" ,height:"72vh",
-              transition:"all 0.3s ease-in-out" ,
-              transform:`translateX(${(pagenumber-1)* -40+"vw"})`,
-               marginTop:"-5px"}}>
-                <video src={video} key={id} style={{width:"40vw" ,height:"73.5vh" , objectFit:"fill" ,
-                  borderBottomLeftRadius:"20px" 
-                }} ref={(element) => list.current[id] = element} controls/>
+                {videolist.map((video ,id) =>(<div style={{transition:"all 0.3s ease-in-out" ,
+              transform:`translateX(${(pagenumber-1)* -40+"vw"})`}}>
+                <video src={video} key={id}  ref={(element) => list.current[id] = element} controls/>
                 </div>))}
              </div>
-              <div className="Last_vertical">
-                <hr />
-              </div>
               <div className="upload_side">
               <img src ={props.img} />
               <h3>{props.nickname}</h3>
@@ -446,24 +435,17 @@ const MultiUpload =(props:upload_data) =>{
               {(leftactive == true && rightactive == false) && (<div className="slide_left">
                <img src="/image/slideleft.png" onClick={SlidebeforeHandler} id={left_active} />
               </div>)}
-              <div style={{width:"40vw" ,height:"72vh",
-              display:"flex", flexDirection:"row", marginTop:"-5px", overflow:"hidden"}}>
+              <div className="Multi_slide_stand">
 
-                {preview.map((img, id) =>(<div style={{width:"40vw" ,height:"72vh",
-              transition:"all 0.3s ease-in-out" ,
-              transform:`translateX(${(pagenumber-1)* -40+"vw"})`, marginTop:"-5px"}}>
-                <img src={img} key={id} style={{width:"40vw" ,height:"72vh" , objectFit:"fill" ,
-                  borderBottomLeftRadius:"20px",borderBottomRightRadius:"20px"
-                }}/>
+                {preview.map((img, id) =>(<div style={{transition:"all 0.3s ease-in-out" ,
+              transform:`translateX(${(pagenumber-1)* -40+"vw"})`}}>
+                <img src={img} key={id} />
                 </div>))}
                 
-                {videolist.map((video ,id) =>(<div style={{width:"40vw" ,height:"72vh",
-              transition:"all 0.3s ease-in-out" ,
+                {videolist.map((video ,id) =>(<div style={{transition:"all 0.3s ease-in-out" ,
               transform:`translateX(${(pagenumber-1)* -40+"vw"})`,
-               marginTop:"-5px"}}>
-                <video  src={video} key={id} style={{width:"40vw" ,height:"72vh" , objectFit:"fill" ,
-                  borderBottomLeftRadius:"20px",borderBottomRightRadius:"20px"
-                }}
+               }}>
+                <video  src={video} key={id} 
                   ref={(element) => list.current[id] = element}
                   controls
                  />

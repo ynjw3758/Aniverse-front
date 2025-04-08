@@ -759,12 +759,12 @@ const Video =(props:video_data) =>{
                      isopen={isSecondmodal}
                      isinitila={initialpage}/>)}
                {nextpage && (<>               
-                    <div className="upload">
-                       <div className="upload_img">
+                    <div className="video_upload">
+                       <div className="video_upload_img">
                         <img src="/image/left_arrow.png" onClick={second_backHandler}/>
                        </div>
                        <h2>업로드</h2>
-                    <div className="upload_btn">
+                    <div className="video_upload_btn">
                       <button type="submit"  onClick={Upload}>공유하기</button>
                     </div>
                 </div>   
@@ -772,7 +772,7 @@ const Video =(props:video_data) =>{
                       <hr />
                   </div>
                   <div className="view">
-                    {(list_size == false) && (video.map((video, id) =>( <div className="Firstvideo" key={id}>   
+                    {(list_size == false) && (video.map((video, id) =>( <div className="Firstvideo_upload" key={id}>   
                       <video  autoPlay loop ref={videoref}  src={video} >
                      </video>
                       </div>)))}
@@ -791,24 +791,17 @@ const Video =(props:video_data) =>{
               {(leftactive == true && rightactive == false) && (<div className="slide_left">
                <img src="/image/slideleft.png" onClick={last_Slidebefore}/>
               </div>)}
-              <div style={{width:"40vw" ,height:"73.3vh",
-              display:"flex", flexDirection:"row", marginTop:"-1vh", overflow:"hidden"}}>
+              <div className="Video_slide_stand_upload">
                 
-                {video.map((video ,id) =>(<div style={{width:"40vw" ,height:"72vh",
-              transition:"all 0.3s ease-in-out" ,
-              transform:`translateX(${(pagenumber-1)* -40+"vw"})`,
-               marginTop:"-1vh"}}>
-                <video  src={video} key={id} style={{width:"40vw" ,height:"71.5vh" , objectFit:"fill" ,
-                  /*borderBottomLeftRadius:"15px",*/ marginTop:"6px"
-                }}
+                {video.map((video ,id) =>(<div style={{transition:"all 0.3s ease-in-out" ,
+              transform:`translateX(${(pagenumber-1)* -40+"vw"})`,}}>
+                <video  src={video} key={id} 
                   ref={(element) => list.current[id] = element}
                  />
                 </div>))}
                 </div>
                   </div>)}
-                      <div className="second_vertical">
-                         <hr />
-                      </div>
+
                       <div className="upload_side">
                       <img src ={props.img} />
                       <h3>{props.nickname}</h3>
@@ -847,7 +840,7 @@ const Video =(props:video_data) =>{
                     <div className="first_img">
                         <img src="/image/left_arrow.png" onClick={first_backHandler}/>
                     </div>
-                     <h2>자르기</h2>
+                     <h2>동영상</h2>
                     <div className="first_btn">
                       <button type="button"  onClick={NextHandler}>다음</button>
                     </div>
@@ -865,7 +858,7 @@ const Video =(props:video_data) =>{
                     <div className="first_img">
                         <img src="/image/left_arrow.png" onClick={first_backHandler}/>
                     </div>
-                     <h2>자르기</h2>
+                     <h2>동영상</h2>
                     <div className="first_btn">
                       <button type="button"  onClick={NextHandler}>다음</button>
                     </div>
@@ -888,16 +881,11 @@ const Video =(props:video_data) =>{
               {(leftactive == true && rightactive == false) && (<div className="slide_left">
                <img src="/image/slideleft.png" onClick={SlidebeforeHandler}/>
               </div>)}
-              <div style={{width:"40vw" ,height:"72vh",
-              display:"flex", flexDirection:"row", marginTop:"-5px", overflow:"hidden"}}>
+              <div className="Video_slide_stand">
                 
-                {video.map((video ,id) =>(<div style={{width:"40vw" ,height:"72vh",
-              transition:"all 0.3s ease-in-out" ,
-              transform:`translateX(${(pagenumber-1)* -40+"vw"})`,
-               marginTop:"-5px"}}>
-                <video  src={video} key={id} style={{width:"40vw" ,height:"72vh" , objectFit:"fill" ,
-                  borderBottomLeftRadius:"20px",borderBottomRightRadius:"20px", marginTop:"6px"
-                }}
+                {video.map((video ,id) =>(<div style={{ transition:"all 0.3s ease-in-out" ,
+              transform:`translateX(${(pagenumber-1)* -40+"vw"})`}}>
+                <video  src={video} key={id} 
                   ref={(element) => list.current[id] = element}
                  />
                 </div>

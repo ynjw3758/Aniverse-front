@@ -90,6 +90,11 @@ const Callback_Naver =() =>{
                                         .then(
                                         response =>{
                                           console.log("응답 결과 :" , response)
+                                          if(response.status == 200){
+                                            localStorage.setItem("p_exp" ,response.data.data.exp);
+                                            localStorage.setItem("a_id" ,response.data.data.access_token);
+                                            navigate("/main");
+                                          }
                                         }
                                       ).catch(error =>{
                                         if(axios.isAxiosError<ResponseDataType>(error)){

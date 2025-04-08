@@ -6,34 +6,86 @@
     margin-top: -20px;
 
 }
+.first_headers{
+    font-size:large;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin-top: -15px;
+    margin-bottom: -5px;
+    display: flex;
+    justify-content:space-between;
+  }
+  .first_headers h2{
+    margin-left: 8vw;
+    margin-top: 3vh;
+    font-size: medium;
+    
+  }
+  
+  .first_img{
+    margin-top:22px;
+    margin-left: 5px;
+  }
+  .first_img img,   
+  .first_img img:hover{
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+  }
+  
+  .first_btn{
+      margin-top: 22px;
+      font-size:large;
+      margin-left: 160px;
+      
+      
+  
+  }
+  .first_btn button ,
+  .first_btn button:hover{
+      border:none;
+      background-color: white;
+      cursor: pointer;
+      font-size:large;
+      border-radius: 10px;
+      color: lightskyblue;
+  }
+  
+  .first_Horizantal hr{
+   width: 99.5%;
+   margin-top: 0px;
+   margin-bottom: 0px;
+  }
+
+
 .second_headers{
     font-size:large;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    margin-top: 0px;
+    margin-top: -15px;
+    margin-bottom: -5px;
     display: flex;
     justify-content:space-between;
-    margin-bottom: 0px;
-    
-
 }
 
+
+.second_headers h2{
+    margin-left: 2vw;
+    font-size: medium;
+}
 .Second_img{
-  margin-top: 1.5vh;
-  margin-left: 0.3vw;
+    margin-top:22px;
+    margin-left: 5px;
 }
 .Second_img img, 
 .Second_img img:hover{
-    margin-top: 1.5vh;
-    margin-left: 0.3vw;
-    width: 30px;
+    width:30px;
     height: 30px;
     cursor: pointer;
 }
 
 .Second_btn{
-    margin-top: 3vh;
-    margin-left: 3vw;
+    margin-top: 22px;
     font-size:large;
+    margin-left: 160px;
 }
 .Second_btn button ,
 .Second_btn button:hover{
@@ -45,70 +97,83 @@
     color: lightskyblue;
 }
 
+.Image_slide_stand{
+    margin-top: -0.2vh;
+    width: 40vw;
+    height: 73.7vh;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    
+  }
+  .Image_slide_stand img{
+    width: 40vw;
+    height: 73.7vh;
+    object-fit: cover;
+  }
+  .Image_slide_stand_upload{
+    width: 40vw;
+    height: 79vh;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+  }
+  .Image_slide_stand_upload img{
+    width: 40vw;
+    height: 79vh;
+    object-fit: fill;
+  }
 
-.second_headers h2{
-    margin-top: 2vh;
-    font-size:large;
 
-}
-.upload{
-    font-size:large;
+.Image_upload{
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    //margin-top: -20px;
-    margin-top: 2vh;
     display: flex;
     justify-content:space-between;
     width: 100%;
 
 }
-.upload h2{
-    margin-top: 25px;
-    margin-left: 10px;
-    font-size:large;
+.Image_upload h2{
+font-size:smaller;
 }
 
-.upload_img{
-    margin-top: 21px;
-    margin-left: 5px;
+.Image_upload_img{
+    padding-top: 1vh;
+    margin-left: 0.5vw;
 }
-.upload_img img, 
-.upload_img img:hover{
-    width: 30px;
-    height: 30px;
+.Image_upload_img img, 
+.Image_upload_img img:hover{
+    width: 25px;
+    height: 25px;
     cursor: pointer;
 }
 
-.upload_btn{
-    margin-top: 25px;
-    font-size:large;
-
-}
-.upload_btn button ,
-.upload_btn button:hover{
+.Image_upload_btn button ,
+.Image_upload_btn button:hover{
+    margin-top: 1vh;
     border:none;
     background-color: white;
     cursor: pointer;
-    font-size:large;
+    font-size:smaller;
     border-radius: 10px;
+    color: lightskyblue;
 
 }
 
 
-.upload_Horizantal hr{
-    margin-top: 0px;
+.Image_upload_Horizantal hr{
     width:100%;
 }
 .textbody{
     background-color: white;
-    width: 50%;
-    height: 70vh; 
     display: flex;
     flex-direction: row;
-    margin-top: -3.2vh;
+    margin-top: -1.3vh;
 }
 .textbody img{
     width: 40vw;
-    height: 71.7vh;
+    height: 74.4vh;
     border-bottom-left-radius: 14px;
 }
 
@@ -192,17 +257,6 @@
     border:2px solid black;
   }
 
-.Last_vertical hr{
-    //border: 1px solid black;
-    width: 1;
-    height: 70vh;
-    //margin-top: -1vh;
-    //margin-top: -8px;
-    //margin-left: 7px;
-    
-}
-
-
 .totalimg img{
     margin-top: -1vh;
     width: 40vw;
@@ -213,8 +267,7 @@
 
 
 .Contents_headers h2{
-    padding-top: 7px;
-    padding-bottom: 5px;
+    padding-top: 10px;
     text-align: center;
     font-size:large;
 }
@@ -269,13 +322,13 @@ justify-content: center;
     margin-left: 200px;
 }
 .Nimg{
-  width: 80vw;
+  width: 40vw;
+  height: 74.4vh; 
     
 }
 .Nimg img{
-    cursor: pointer;
-    //margin-left: -50px;
-    height: 70vh;
+    width: 40vw;
+    height: 74.4vh; 
 }
 
 
@@ -306,8 +359,6 @@ justify-content: center;
 
     
     .openlist{
-     
-        //margin-top: 5px;
         border:  2px solid black;
         z-index: 40;
         margin-left: 50px;
@@ -498,16 +549,15 @@ justify-content: center;
     }
     .one_img{
         width: 100%;
-        height: 70vh; 
+        height: 73.7vh;
         overflow: hidden;
-        margin-top: -3.2vh;
-        border-bottom-left-radius: 14px;
-        border-bottom-right-radius: 14px;
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
    }
    .one_img img{
        cursor: pointer;
        width: 100%;
-       height: 72vh;
+       height: 73.7vh;
    }
    .image{
     width: 100%;
@@ -671,6 +721,96 @@ justify-content: center;
         margin-top: -20px;
     
     }
+    .first_headers{
+        font-size:large;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        margin-top: -15px;
+        margin-bottom: -5px;
+        display: flex;
+        justify-content:space-between;
+      }
+      .first_headers h2{
+        margin-left: 8vw;
+        margin-top: 3vh;
+        font-size: medium;
+        
+      }
+      
+      .first_img{
+        margin-top:22px;
+        margin-left: 5px;
+      }
+      .first_img img,   
+      .first_img img:hover{
+          width: 30px;
+          height: 30px;
+          cursor: pointer;
+      }
+      
+      .first_btn{
+          margin-top: 22px;
+          font-size:large;
+          margin-left: 160px;
+          
+          
+      
+      }
+      .first_btn button ,
+      .first_btn button:hover{
+          border:none;
+          background-color: white;
+          cursor: pointer;
+          font-size:large;
+          border-radius: 10px;
+          color: lightskyblue;
+      }
+      
+      .first_Horizantal hr{
+       width: 99.5%;
+       margin-top: 0px;
+       margin-bottom: 0px;
+      }
+
+      .Image_upload{
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        display: flex;
+        justify-content:space-between;
+        width: 100%;
+    
+    }
+    .Image_upload h2{
+    font-size:smaller;
+    }
+    
+    .Image_upload_img{
+        padding-top: 1vh;
+        margin-left: 0.5vw;
+    }
+    .Image_upload_img img, 
+    .Image_upload_img img:hover{
+        width: 25px;
+        height: 25px;
+        cursor: pointer;
+    }
+    
+    .Image_upload_btn button ,
+    .Image_upload_btn button:hover{
+        margin-top: 1vh;
+        border:none;
+        background-color: white;
+        cursor: pointer;
+        font-size:smaller;
+        border-radius: 10px;
+        color: lightskyblue;
+    
+    }
+    
+    
+    .Image_upload_Horizantal hr{
+        margin-top: -0.5vh;
+        width:100%;
+    }
+
     .second_headers{
         font-size:large;
         font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -755,6 +895,7 @@ justify-content: center;
         cursor: pointer;
         font-size:large;
         border-radius: 10px;
+        color: lightskyblue;
     
     }
     
@@ -769,15 +910,12 @@ justify-content: center;
     }
     .textbody{
         background-color: white;
-        width: 50%;
-        height: 70vh; 
         display: flex;
         flex-direction: row;
-        margin-top: -1.2vh;
     }
     .textbody img{
         width: 40vw;
-        height: 71.7vh;
+        height: 74.4vh;
         border-bottom-left-radius: 14px;
     }
     
@@ -820,7 +958,8 @@ justify-content: center;
         padding-left: 20px;
         padding-top:20px;
         padding-bottom: 20px;
-        margin-left: -0.7vw;
+        margin-left: -4px;
+        margin-right: -10px;
         border-left: none;
         border-right: none;
         border-top: none;
@@ -876,8 +1015,7 @@ justify-content: center;
     
     
     .Contents_headers h2{
-        padding-top: 7px;
-        padding-bottom: 5px;
+        padding-top: 10px;
         text-align: center;
         font-size:large;
     }
@@ -932,14 +1070,14 @@ justify-content: center;
         margin-left: 200px;
     }
     .Nimg{
-      width: 80vw;
-        
-    }
-    .Nimg img{
-        cursor: pointer;
-        //margin-left: -50px;
-        height: 70vh;
-    }
+        width: 40vw;
+        height: 74vh; 
+          
+      }
+      .Nimg img{
+          width: 40vw;
+          height: 74vh; 
+      }
  
 .open{
           display: flex;
@@ -1031,6 +1169,7 @@ justify-content: center;
             position: fixed;
             top: 15vh;
             left: 20vw;
+            overflow: hidden;
             background-color:white;
             border-radius: 14px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
@@ -1162,16 +1301,15 @@ justify-content: center;
         }
         .one_img{
             width: 100%;
-            height: 70vh; 
+            height: 74vh; 
             overflow: hidden;
-            margin-top: -3.2vh;
             border-bottom-left-radius: 14px;
             border-bottom-right-radius: 14px;
        }
        .one_img img{
            cursor: pointer;
            width: 100%;
-           height: 72vh;
+           height: 74vh;
        }
        .image{
         width: 100%;

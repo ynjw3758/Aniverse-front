@@ -87,6 +87,11 @@ const Callbackkakao =() =>{
                                      .then(
                                      response =>{
                                        console.log("응답 결과 :" , response)
+                                       if(response.status == 200){
+                                        localStorage.setItem("p_exp" ,response.data.data.exp);
+                                        localStorage.setItem("a_id" ,response.data.data.access_token);
+                                        navigate("/main");
+                                      }
                                      }
                                    ).catch(error =>{
                                      if(axios.isAxiosError<ResponseDataType>(error)){
@@ -210,6 +215,10 @@ const Callbackkakao =() =>{
       axios.defaults.headers.common['Authorization'] = header;
 
     }
+
+    const movelogin =() =>{
+      navigate("/login")
+    }
 /*
     {!isperist && (<>
       <div className="kakao_perist">
@@ -230,7 +239,7 @@ const Callbackkakao =() =>{
             <p>
             오랜 시간이 지나 자동으로 로그아웃되었어요.<br />
             보안을 위해 다시 로그인해 주세요.</p>
-            <button  type="button">로그인 페이지 이동</button>
+            <button  type="button" onClick={movelogin}>로그인 페이지 이동</button>
             </div>
            </div>)}
         <div className={isblur}>

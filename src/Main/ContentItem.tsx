@@ -7,12 +7,10 @@
 //                             +--------------------
 //-----------------------------+  외부라이브러리
 //                             +--------------------
-
 import {useEffect, useState ,useRef , useContext, useSyncExternalStore, ReactNode} from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
-
 
 //                             +--------------------
 //-----------------------------+   Module
@@ -22,19 +20,13 @@ import OtherProfile from "./OtherProfile";
 import user_info from "../Userdata/Userdata";
 import CancelFollower from "./CancleFollower";
 import Modal from "../Modal/Modal";
-
 //#endregion
 
 
-//                                        +=====================
-//========================================+   타입
-//                                        +=====================
-//#region Type
 //                             +--------------------
 //-----------------------------+   Type
 //                             +--------------------
-
-
+//#region
 type content_info = {
   nickname:any,
   profile:any,
@@ -44,14 +36,16 @@ type content_info = {
   UserId:any,
   MyImg:string,
   index:number,
+  Like:string,
+  Commnets:string,
   ondeactivate:(check:boolean) => void
 }
+//#endregion
 
 //                             +--------------------
 //-----------------------------+   인터페이스
 //                             +--------------------
-
-
+//#region
 interface ResponseDataType {
   message: string;
   code: number;
@@ -64,6 +58,10 @@ interface ResponseDataType {
 
 const ContentItem =(props:content_info) =>{
 
+//                             +--------------------
+//-----------------------------+   상태 관리리
+//                             +--------------------
+//#region
     const[leftactive, setLeftactive]=useState<boolean>(false);
     const[rightactive, setRightactive]=useState<boolean>(false);
     const[checkheart , setCheckheart]=useState<boolean>(false);
@@ -77,6 +75,12 @@ const ContentItem =(props:content_info) =>{
     const[multi, setMulti]=useState<boolean>(false);
     const[mute,setMute]=useState<boolean>(true);
     const[isonlyone, setIsonlyone]=useState<boolean>(false);
+    const[ispost, setIspost]=useState<boolean>(false);
+    const[isemoji, setIsemoji]=useState<boolean>(false);
+    const [isshow ,setIsshow]=useState<boolean>(false);
+    const[iscommet, setIscommet]=useState<boolean>(false);
+    const[ismore, setIsmore]=useState<boolean>(false);
+    const [isExpanded, setiSExpanded]=useState<boolean>(false);
     
     const[file , setFile]=useState<string[]>(props.files);
     const[img, setImg]=useState<string[]>([]);
@@ -93,37 +97,35 @@ const ContentItem =(props:content_info) =>{
     const[hearticon,setHearticon]=useState<string>("/image/heart.png");
     const[priflelist , setProfilelist]=useState<string>(props.profile);
     const[muteicon,setMuteicon]=useState<string>("/image/muted.png");
+    const[connectid, setConnectid]=useState<string>("");
+    const[userid, setUserid]=useState<string>("");
+    const[nickname, setNickname]=useState<string>("");
 
-    const[heart , setHeart]=useState<number>(0);
+    const[heart , setHeart]=useState<number>(props.heart);
     const[refcount, setRefcount]=useState<number>(0);
     const[smallfollowers ,setSmallfollowers]=useState<number>(0);
     const[smallfollowing ,setSmallfollowing]=useState<number>(0);
     const[pagenumber , setPagenumber]=useState<number>(1);
     const[mousepoint, setMousepoint]=useState<number>(0);
     const[emojiindex, setEmojiindex]=useState<number>()
-
-    const[ispost, setIspost]=useState<boolean>(false);
-    const[isemoji, setIsemoji]=useState<boolean>(false);
   
     const [followcheck,  setFollowcheck]=useState<any>({
      isCancel:false, //팔로워 취소 버튼 활성화 유무
      CancelFollower:false, //팔로우 취소 유무
     })
+//#endregion
 
 //#region 변수초기화
 const login_info = useContext(user_info);
 const navigate = useNavigate();
-//#endregion
-
-
 const imgref= useRef<HTMLImageElement>(null);
 const left_active = leftactive ? "left_active" : "left_unactive";
 const right_active = rightactive ? "right_active" : "right_unactive";
+const DIVref = useRef<HTMLDivElement>(null); 
+const list:any=useRef<null | HTMLVideoElement[]>([]);
+//#endregion
 
 
-    //ref
-    const DIVref = useRef<HTMLDivElement>(null); 
-    const list:any=useRef<null | HTMLVideoElement[]>([]);
 
 
     useEffect(() =>{
@@ -152,6 +154,21 @@ const right_active = rightactive ? "right_active" : "right_unactive";
 
      },[leftactive , rightactive , pagenumber, refcount])
    
+    useEffect(() =>{//최초 로딩시 좋아요 갯수를 가져오는 것
+      if(props.Like == "N"){
+        setHearticon("/image/heart.png");
+      }
+      else{
+        setHearticon("/image/redheart.png");
+      }
+      if(props.Commnets !==''){
+        setIscommet(true);
+        if(props.Commnets.length > 20){
+          setIsmore(true);
+        }
+      }
+    },[])
+
 
 
 
@@ -266,12 +283,23 @@ const right_active = rightactive ? "right_active" : "right_unactive";
       console.log("하트 :" , heart);
       console.log("체크 :" , checkheart);
       if(checkheart == false){
-         setHeart((prenum)=>prenum-1);
-         console.log("num : " ,heart)
-         if(heart == 1){
-          setCheckheart(true)
+        if(props.Like == "O"){//이미 내가 누른 상태
+          setHeart((prenum)=>prenum-1);
+          console.log("num : " ,heart)
           setHearticon("/image/heart.png")
-         }
+        }
+        else{
+          if(heart > 0){
+            setHeart((prenum)=>prenum+1);
+            console.log("num : " ,heart)
+            setHearticon("/image/redheart.png");
+          }
+          else if(heart == 1){
+            setCheckheart(true)
+            setHearticon("/image/heart.png")
+          }
+
+        }
       }
       else{
         setHeart((preNum) =>preNum+1);
@@ -540,11 +568,7 @@ const right_active = rightactive ? "right_active" : "right_unactive";
     const closeModal =() =>{
      setIsBlock(false);
     }
-    const [test ,setTest]=useState<boolean>(false);
-    const[isloading, setIsloading]=useState<boolean>(false);
-    const[connectid, setConnectid]=useState<string>("");
-    const[userid, setUserid]=useState<string>("");
-    const[nickname, setNickname]=useState<string>("");
+
     useEffect(() =>{
       setConnectid(props.conntetid);
       setUserid(props.UserId);
@@ -603,12 +627,13 @@ const right_active = rightactive ? "right_active" : "right_unactive";
      useEffect(() =>{
 
        if((img.length !=0 || vid.length !=0) && connectid != "" && nickname != "" && userid != ""){
-         setTest(true);
+        setIsshow(true);
          props.ondeactivate(true);
        }
      },[img, connectid, nickname, userid, vid])
 
      useEffect(() =>{
+      console.log("글자 수 :" , emoticon.length)
       if(emoticon.length == 0){
         setIspost(false);
       }
@@ -632,12 +657,17 @@ const right_active = rightactive ? "right_active" : "right_unactive";
      }
 
      const onClickHandler =(emojiData:EmojiClickData) =>{
-      setEmoticon((prev)=>prev+emojiData);
+      console.log("이모티콘 :" , emojiData);
+      setEmoticon((prev)=>prev+emojiData.emoji);
 
        }
+
+    const CommentHandler =() =>{
+
+    }
     return(<>
 
-      {test && (<div id={props.conntetid} ref={DIVref}>     
+      {isshow && (<div id={props.conntetid} ref={DIVref}>     
       <div className="Mainpage_Content_userinfo" onMouseOver={SmallProfile}  
       onMouseLeave={Mouseout} onMouseMove={MouseMoveHandler}>
          <img src={priflelist}  id={props.UserId} ref={imgref} onClick={PeopleProfile}/>
@@ -668,11 +698,22 @@ const right_active = rightactive ? "right_active" : "right_unactive";
         </h3>
         </>)}
         <div className="Mainpage_Content_imoticon">
+        <div className="MainPage_Comments">
+          {iscommet && (<div className="Content_MyComment">
+         <h3>{props.nickname}</h3>
+         <p>{props.Commnets}</p>
+         {isExpanded && <>
+         <p>더 보기...</p>
+         </>}
+        </div>)}
+        </div>
+        <div className="MainPage_Comment_input">
         <input type="text" placeholder="댓글 달기" onChange={commentHandler} value={emoticon}/>  
         <img src={"/image/emoticon.png"}  onClick={EmojiHandler}/>
            {ispost && (<div className="Mainpage_Content_commnet_post">
-            <p >게시</p>
+            <p onClick={CommentHandler}>게시</p>
         </div>)}
+        </div>
         </div>
        </div>   
       </>)}
@@ -722,11 +763,22 @@ const right_active = rightactive ? "right_active" : "right_unactive";
         </h3>
         </>)}
         <div className="Mainpage_Content_imoticon">
+          <div className="MainPage_Comments">
+            {iscommet && (<div className="Content_MyComment">
+             <h3>{props.nickname}</h3>
+             <p>{props.Commnets}</p>
+             {isExpanded && <>
+              <p>더 보기...</p>
+              </>}
+            </div>)}
+            </div>
+            <div className="MainPage_Comment_input">
         <input type="text" placeholder="댓글 달기" onChange={commentHandler} value={emoticon}/>  
         <img src={"/image/emoticon.png"}  onClick={EmojiHandler}/>
            {ispost && (<div className="Mainpage_Content_commnet_post">
-            <p >게시</p>
+            <p onClick={CommentHandler}>게시</p>
         </div>)}
+        </div>
         {(emojiindex === props.index && isemoji == true) &&(        
           <div className="Mainpage_Content_emojiopen">
           <EmojiPicker onEmojiClick={onClickHandler} className="EmojiPickerReact"/>
@@ -737,6 +789,7 @@ const right_active = rightactive ? "right_active" : "right_unactive";
        <div className="Mainpage_Content_vertical">
         <hr />
        </div>
+
        {mousecheck && (<div className="Mainpage_Content_smallprofile"
        onMouseOver={Mouseover} > 
         <OtherProfile nickname={smallnickname} 
@@ -744,8 +797,10 @@ const right_active = rightactive ? "right_active" : "right_unactive";
       following={smallfollowing} checkfl={smallcheckfl} id={otherId} 
       CancelFollower={CancelHandler} Onclose={profileHandler} Oncomplete={Notecompplete} onBlock={BlockRecept} />
       </div>)}
+
       {followcheck.isCancel && (<CancelFollower  id={otherId} nickname={smallnickname} 
       profile={smallprofile} onClose={CancelModelHandler}/>)}
+
      {complete && (<Modal onClose={ModalClose}>
                <p>쪽지가 전송되었습니다.</p>
      </Modal>)}

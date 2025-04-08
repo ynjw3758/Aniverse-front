@@ -57,6 +57,25 @@
         padding-bottom: 5px;
         cursor: pointer;
     }
+    .upload_story{
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        top:7vh;
+        left: 40vw;
+    }
+    .upload_story p{
+        margin-top: 3vh;
+        color:darkgrey;
+        font-size: large;
+        font-weight: bolder;
+        margin-left: 2vw;
+    }
+    .upload_story img{
+        margin-top: 5vh;
+        width: 20vw;
+        height: 20vh;
+    }
 
 }
 

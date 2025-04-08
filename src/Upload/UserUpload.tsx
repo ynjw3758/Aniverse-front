@@ -595,16 +595,16 @@ const UserUpload=(props:user_info) =>{
             sizecheck={sizecheck} close={CloseHandler} Initilalize={videoInitial}/>)}
            
             {(check == true && checkmu== true)  && (<Fragment>
-                  <div className="second_headers">
-                    <div className="Second_img">
+                  <div className="first_headers">
+                    <div className="first_img">
                   <img src="/image/left_arrow.png" onClick={backHandler}/>
                   </div>
                   <h2>사진</h2>
-                  <div className="Second_btn">
+                  <div className="first_btn">
                   <button type="button" onClick={nextHandler}>다음</button>
                   </div>
                   </div>
-                  <div className="second_Horizantal">
+                  <div className="first_Horizantal">
                     <hr />
                   </div>
           
@@ -626,31 +626,27 @@ const UserUpload=(props:user_info) =>{
                       {(leftactive == true && rightactive == false) && (<div className="second_slide_left">
                         <img src="/image/slideleft.png" onClick={SlidebeforeHandler} id={left_active} />
                        </div>)}
-                      <div style={{width:"40vw" ,height:"72vh",
-                         display:"flex", flexDirection:"row", marginTop:"-5px", overflow:"hidden"}}>
+                      <div className="Image_slide_stand">
 
-                     {preview.map((img, id) =>(<div style={{width:"40vw" ,height:"72vh",
-              transition:"all 0.3s ease-in-out" ,
-              transform:`translateX(${(pagenumber-1)* -40+"vw"})`, marginTop:"-5px"}}>
-                <img src={img} key={id} style={{width:"40vw" ,height:"72vh" , objectFit:"fill" ,
-                  borderBottomLeftRadius:"20px",borderBottomRightRadius:"20px"
-                }}/>
+                     {preview.map((img, id) =>(<div style={{transition:"all 0.3s ease-in-out" ,
+              transform:`translateX(${(pagenumber-1)* -40+"vw"})`}}>
+                <img src={img} key={id} />
                 </div>))}
                 </div>
                      </>                    
                      </Fragment>)}
       {(oneimg == true && checkone == true ) && one_before}
       {next && ( <>
-        <div className="upload">
-          <div className="upload_img">
+        <div className="Image_upload">
+          <div className="Image_upload_img">
               <img src="/image/left_arrow.png" onClick={secondbackHandler}/>
            </div>
             <h2>올리기</h2>
-            <div className="upload_btn">
+            <div className="Image_upload_btn">
               <button type="submit"  onClick={upload}>공유하기</button>
             </div>                     
         </div>
-            <div className="upload_Horizantal">
+            <div className="Image_upload_Horizantal">
               <hr />
             </div>
         <div className="textbody">
@@ -658,38 +654,32 @@ const UserUpload=(props:user_info) =>{
             <img src={previewImg} /> 
               </>)}
           {nextmu && (<div className="Nimg">
-            {(leftactive == false && rightactive == true) && ( <div className="second_slide_right">
+            {(leftactive == false && rightactive == true) && ( <div className="slide_right">
               <img src="/image/slideright.png" onClick={SlidenextHandler} id={right_active} />
               </div>)}
               {(leftactive == true && rightactive == true) && ( <>
-              <div className="second_slide_left">
+              <div className="slide_left">
                <img src="/image/slideleft.png" onClick={SlidebeforeHandler} id={left_active} />
               </div>
-              <div className="second_slide_right">
+              <div className="slide_right">
               <img src="/image/slideright.png" onClick={SlidenextHandler} id={right_active} />
               </div>
               </>)}
-              {(leftactive == true && rightactive == false) && (<div className="second_slide_left">
+              {(leftactive == true && rightactive == false) && (<div className="slide_left">
                <img src="/image/slideleft.png" onClick={SlidebeforeHandler} id={left_active} />
               </div>)}
-              {(leftactive == true && rightactive == false) && (<div className="second_slide_left">
+              {(leftactive == true && rightactive == false) && (<div className="slide_left">
                <img src="/image/slideleft.png" onClick={SlidebeforeHandler} id={left_active} />
               </div>)}
-              <div style={{width:"40vw" ,height:"72vh",
-              display:"flex", flexDirection:"row", marginTop:"-5px", overflow:"hidden"}}>
+              <div className="Image_slide_stand_upload">
 
-                {preview.map((img, id) =>(<div style={{width:"40vw" ,height:"72vh",
-              transition:"all 0.3s ease-in-out" ,
-              transform:`translateX(${(pagenumber-1)* -40+"vw"})`, marginTop:"-5px",}}>
-                <img src={img} key={id} style={{width:"40vw" ,height:"72vh" , objectFit:"fill" ,
-                  borderBottomLeftRadius:"20px",borderBottomRightRadius:"20px"
-                }}/>
+                {preview.map((img, id) =>(<div style={{transition:"all 0.3s ease-in-out" ,
+              transform:`translateX(${(pagenumber-1)* -40+"vw"})`}}>
+                <img src={img} key={id} />
                 </div>))}
                 </div>
           </div>)}
-          <div className="Last_vertical">
-              <hr />
-          </div>
+
           </div> 
           {/* 병신아 */}
             <div className="upload_side"> 
@@ -731,18 +721,18 @@ const UserUpload=(props:user_info) =>{
       isopen={isSecondmodal} 
       isinitila={initialpage}/>)}
       {(oneimg == true && checkone == false ) && (<>
-        <div className="second_headers">
-          <div className="Second_img">
-        <img src="/image/left_arrow.png" onClick={backHandler}/>
+        <div className="first_headers">
+          <div className="first_img">
+            <img src="/image/left_arrow.png" onClick={backHandler}/>
+          </div>
+            <h2>사진</h2>
+          <div className="first_btn">
+            <button type="button" onClick={nextHandler}>다음</button>
+          </div>
         </div>
-        <h2>사진</h2>
-        <div className="Second_btn">
-        <button type="button" onClick={nextHandler}>다음</button>
+        <div className="first_Horizantal">
+          <hr />
         </div>
-      </div>
-       <div className="second_Horizantal">
-        <hr />
-       </div>
       <div className="one_img">
       <img src={previewImg} 
         draggable="true" 
@@ -750,44 +740,40 @@ const UserUpload=(props:user_info) =>{
       </div>
       </>)}
       {(check == true && checkmu== false)  && ((<>
-        <div className="second_headers">
-          <div className="Second_img">
-        <img src="/image/left_arrow.png" onClick={backHandler}/>
+        <div className="first_headers">
+          <div className="first_img">
+            <img src="/image/left_arrow.png" onClick={backHandler}/>
+          </div>
+            <h2>사진</h2>
+          <div className="first_btn">
+            <button type="button" onClick={nextHandler}>다음</button>
+          </div>
         </div>
-        <h2>사진</h2>
-        <div className="Second_btn">
-        <button type="button" onClick={nextHandler}>다음</button>
+        <div className="first_Horizantal">
+          <hr />
         </div>
-      </div>
-      <div className="second_Horizantal">
-        <hr />
-       </div>
-       {(leftactive == false && rightactive == true) && ( <div className="Upload_slide_right">
+       {(leftactive == false && rightactive == true) && ( <div className="slide_right">
               <img src="/image/slideright.png" onClick={SlidenextHandler} id={right_active} />
               </div>)}
               {(leftactive == true && rightactive == true) && ( <>
-              <div className="Upload_slide_left">
+              <div className="slide_left">
                <img src="/image/slideleft.png" onClick={SlidebeforeHandler} id={left_active} />
               </div>
-              <div className="Upload_slide_right">
+              <div className="slide_right">
               <img src="/image/slideright.png" onClick={SlidenextHandler} id={right_active} />
               </div>
               </>)}
-              {(leftactive == true && rightactive == false) && (<div className="Upload_slide_left">
+              {(leftactive == true && rightactive == false) && (<div className="slide_left">
                <img src="/image/slideleft.png" onClick={SlidebeforeHandler} id={left_active} />
               </div>)}
-              {(leftactive == true && rightactive == false) && (<div className="Upload_slide_left">
+              {(leftactive == true && rightactive == false) && (<div className="slide_left">
                <img src="/image/slideleft.png" onClick={SlidebeforeHandler} id={left_active} />
               </div>)}
-              <div style={{width:"40vw" ,height:"72vh",
-              display:"flex", flexDirection:"row", marginTop:"-1vh", overflow:"hidden"}}>
+              <div className="Image_slide_stand">
 
-                {preview.map((img, id) =>(<div style={{width:"40vw" ,height:"72vh",
-              transition:"all 0.3s ease-in-out" ,
-              transform:`translateX(${(pagenumber-1)* -40+"vw"})`, marginTop:"-1vh"}}>
-                <img src={img} key={id} style={{width:"40vw" ,height:"72vh" , objectFit:"fill" ,
-                  borderBottomLeftRadius:"20px",borderBottomRightRadius:"20px"
-                }}/>
+                {preview.map((img, id) =>(<div style={{ transition:"all 0.3s ease-in-out" ,
+              transform:`translateX(${(pagenumber-1)* -40+"vw"})`}}>
+                <img src={img} key={id} />
                 </div>))}
                 </div>
            </>))}

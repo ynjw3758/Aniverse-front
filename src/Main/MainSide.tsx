@@ -23,8 +23,6 @@ const MainSide =(props:user_infos) =>{
 
   const Myprofile =() =>{
     console.log("마이 프로필로 이동");
-    props.onside(true);
-    navigate(`/main/${props.id}`);
     props.onProfile();
   }
   const NoteHandler =() =>{

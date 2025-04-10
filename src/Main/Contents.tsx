@@ -6,7 +6,7 @@ import ContentItem from "./ContentItem";
 type Content ={
     Img:string,
     contents:string[],
-    disActive : (data:boolean) =>void
+    disActive : (data:object) =>void
 }
 
 const Contents =(props:Content) =>{
@@ -86,7 +86,7 @@ const Contents =(props:Content) =>{
 
     },[props.contents]);
 
-    const DiActive =(data:boolean) =>{
+    const DiActive =(data:object) =>{
         props.disActive(data);
     }    
     return(<Fragment>

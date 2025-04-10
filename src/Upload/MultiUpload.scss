@@ -1,4 +1,4 @@
-@media screen and (max-width:1920px) {
+@media (min-width: 1550px) and (max-width: 1920px) {
 
 .upload{
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -85,7 +85,7 @@
     left: 40vw;
     display: flex;
     flex-direction: row;
-    margin-top: 5px;
+    margin-top: 1vh;
     width: 16vw;
   
   }
@@ -162,31 +162,29 @@
     cursor: not-allowed;
 }
 
-.openlist{
-     
-    //margin-top: 5px;
+.Multi_openlist{
     border:  2px solid black;
     z-index: 40;
-    margin-left: 50px;
-    width: 80%;
-    border-radius: 30px;
-    background-color: darkgrey;
-    padding-bottom: -20px;
+    margin-left: 0vw;
+    width: 100%;
+    //border-radius: 30px;
+    //background-color: darkgrey;
+    //padding-bottom: -20px;
 }
-.openlist ul{
+.Multi_openlist ul{
     list-style: none;
     float:left;
     margin-bottom: 0px;
     margin-left: -10px;
     margin-right: -30px;
 }
-.openlist li{
+.Multi_openlist li{
     font-size: smaller;
     margin-bottom: 10px;
     
 }
 
-.openlist li:hover{
+.Multi_openlist li:hover{
     font-size: smaller;
     background-color: white;
     margin-bottom: 10px;
@@ -253,50 +251,90 @@
   }
 }
 
-@media screen and (max-width:1536px) {
-    .upload{
+@media (min-width: 1200px) and (max-width: 1540px) {
+
+        
+    .Multi_first_headers{
         font-size:large;
         font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-        margin-top: -20px;
+        margin-top: -15px;
+        margin-bottom: -5px;
+        display: flex;
+        justify-content:space-between;
+      }
+      .Multi_first_headers h2{
+        margin-left: 5vw;
+        margin-top: 3vh;
+        font-size: medium;
+      }
+      
+      .Multi_first_img{
+        margin-top: 1.5vh;
+        margin-left: 0.3vw;
+      }
+      .Multi_first_img img,   
+      .Multi_first_img img:hover{
+        margin-top: 1.5vh;
+        margin-left: 0.3vw;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+      }
+      
+      .Multi_first_btn{
+        margin-top: 2.5vh;
+        margin-left: 3vw;
+      }
+      .Multi_first_btn button ,
+      .Multi_first_btn button:hover{
+        border:none;
+        background-color: white;
+        cursor: pointer;
+        font-size:smaller;
+        border-radius: 10px;
+        color: lightskyblue;
+      
+      }
+      
+      .Multi_first_Horizantal hr{
+        margin-top: -1vh;
+        width:100%;
+      }
+    .Multi_upload{
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
         display: flex;
         justify-content:space-between;
         width: 100%;
-    
     }
-    .upload h2{
-        margin-left: 10px;
-        font-size:medium
+    .Multi_upload h2{
+        font-size:smaller;
     }
     
-    .upload_img{
-        margin-top: 21px;
-        margin-left: 5px;
+    .Multi_upload_img{
+        padding-top: 1vh;
+        margin-left: 0.5vw;
     }
-    .upload_img img, 
-    .upload_img img:hover{
+    .Multi_upload_img img, 
+    .Multi_upload_img img:hover{
         width: 25px;
         height: 25px;
         cursor: pointer;
     }
-    
-    .upload_btn{
-        margin-top: 2.5vh;
-    
-    }
-    .upload_btn button ,
-    .upload_btn button:hover{
+    .Multi_upload_btn button ,
+    .Multi_upload_btn button:hover{
+        margin-top: 1vh;
         border:none;
         background-color: white;
         cursor: pointer;
-        font-size:medium;
+        font-size:smaller;
         border-radius: 10px;
         color: lightskyblue;
     
     }
     
     
-    .upload_Horizantal hr{
-        margin-top: 0px;
+    .Multi_upload_Horizantal hr{
+        margin-top: -0.5vh;
         width:100%;
     }
     .slide_right{
@@ -322,14 +360,14 @@
         width: 4vw;
         height: 8vh;
       }
-    .textbody{
+    .Multi_textbody{
         background-color: white;
         width: 40vw;
         height: 70vh; 
         display: flex;
         flex-direction: row;
         border-bottom-left-radius: 20px;
-        
+        margin-top: -1.3vh;
     }
     
     .Last_vertical hr{
@@ -340,7 +378,7 @@
     .upload_side{
         position: absolute;
         top:5vh;
-        left: 40vw;
+        left: 41vw;
         display: flex;
         flex-direction: row;
         margin-top: 5px;
@@ -349,14 +387,14 @@
       }
       .upload_side img{
         margin-right: 0.3vw;
-        margin-top: 1.5vh;
+        margin-top: 0.5vh;
         width: 30px;
         height: 30px;
         border-radius: 25px;
       }
       .upload_side h3{
         font-size: small;
-        margin-top: 2vh;
+        margin-top: 1vh;
         margin-left: 0.2vw;
       }
       .insert_contents{
@@ -420,31 +458,28 @@
         cursor: not-allowed;
     }
     
-    .openlist{
-         
-        //margin-top: 5px;
+    .Multi_openlist{
         border:  2px solid black;
         z-index: 40;
-        margin-left: 50px;
-        width: 80%;
-        border-radius: 30px;
+        margin-left: ovw;
+        width: 100%;
+        border-radius: 10px;
         background-color: darkgrey;
-        padding-bottom: -20px;
     }
-    .openlist ul{
+    .Multi_openlist ul{
         list-style: none;
         float:left;
         margin-bottom: 0px;
-        margin-left: -10px;
+        margin-left: -1.5vw;
         margin-right: -30px;
     }
-    .openlist li{
+    .Multi_openlist li{
         font-size: smaller;
         margin-bottom: 10px;
         
     }
     
-    .openlist li:hover{
+    .Multi_openlist li:hover{
         font-size: smaller;
         background-color: white;
         margin-bottom: 10px;
@@ -470,6 +505,43 @@
           padding: 10px;
           text-align: center;
           font-size: small;
+      }
+      .Multi_slide_stand{
+        margin-top: -1.5vh;
+        width: 40vw;
+        height: 73.7vh;
+        display: flex;
+        flex-direction: row;
+        overflow: hidden;
+        border-bottom-right-radius: 15px;
+        border-bottom-left-radius: 15px;
+      }
+      .Multi_slide_stand video{
+        width: 40vw;
+        height: 73.7vh;
+        object-fit: fill;
+      }
+      .Multi_slide_stand img{
+        width: 40vw;
+        height: 73.7vh;
+        object-fit: fill;
+      }
+      .Multi_slide_stand_upload{
+        width: 40vw;
+        height: 75vh;
+        display: flex;
+        flex-direction: row;
+        overflow: hidden;
+      }
+      .Multi_slide_stand_upload video{
+        width: 40vw;
+        height: 74.3vh;
+        object-fit: fill;
+      }
+      .Multi_slide_stand_upload img{
+        width: 40vw;
+        height: 74.3vh;
+        object-fit: fill;
       }
 
 }

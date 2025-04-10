@@ -1,4 +1,4 @@
-@media screen and (max-width:1920px) {
+@media (min-width: 1550px) and (max-width: 1920px) {
 .Contents_headers{
     text-align:left;
     font-size:large;
@@ -358,7 +358,7 @@ justify-content: center;
     }
 
     
-    .openlist{
+    .Image_openlist{
         border:  2px solid black;
         z-index: 40;
         margin-left: 50px;
@@ -367,20 +367,20 @@ justify-content: center;
         background-color: darkgrey;
         padding-bottom: -20px;
     }
-    .openlist ul{
+    .Image_openlist ul{
         list-style: none;
         float:left;
         margin-bottom: 0px;
         margin-left: -10px;
         margin-right: -30px;
     }
-    .openlist li{
+    .Image_openlist li{
         font-size: smaller;
         margin-bottom: 10px;
         
     }
 
-    .openlist li:hover{
+    .Image_openlist li:hover{
         font-size: smaller;
         background-color: white;
         margin-bottom: 10px;
@@ -712,7 +712,7 @@ justify-content: center;
 
 }
 }
-@media screen and (max-width:1536px) {
+@media (min-width: 1200px) and (max-width: 1540px) {
 
     .Contents_headers{
         text-align:left;
@@ -908,15 +908,16 @@ justify-content: center;
         margin-top: 5vh;
         width:100%;
     }
-    .textbody{
+    .Image_textbody{
         background-color: white;
         display: flex;
         flex-direction: row;
     }
-    .textbody img{
+    .Image_textbody img{
         width: 40vw;
         height: 74.4vh;
         border-bottom-left-radius: 14px;
+        margin-top: -1.4vh;
     }
     
     .insert_contents{
@@ -926,9 +927,6 @@ justify-content: center;
         margin-top: 10px;
         display: flex;
         flex-direction: column;
-        //margin-left: 10px;
-        
-    
     }
     .insert_contents textarea{
         outline: none;
@@ -1085,7 +1083,7 @@ justify-content: center;
           
 }
 .bts{
-    margin-top: 1vh;
+    margin-top: -0.1vh;
     margin-left: -2vw;
 }
     
@@ -1105,37 +1103,32 @@ justify-content: center;
         }
     
         
-    .openlist{
-            border:  1px solid black;
-            z-index: 40;
-            margin-left: -20vw;
-            width: 80%;
-            border-radius: 30px;
-            background-color: darkgrey;
-            padding-bottom: -20px;
+    .Image_openlist{
+        border:  2px solid black;
+        z-index: 40;
+        margin-left: ovw;
+        width: 100%;
+        border-radius: 10px;
+        background-color: darkgrey;
        }
-    .openlist ul{
-            list-style: none;
-            float:left;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 0px;
-            margin-left: -1vw;
-            margin-right: -30px;
+    .Image_openlist ul{
+        list-style: none;
+        float:left;
+        margin-bottom: 0px;
+        margin-left: -1.5vw;
+        margin-right: -30px;
      }
-    .openlist li{
-            font-size: smaller;
-            margin-bottom: 10px;
+    .Image_openlist li{
+        font-size: smaller;
+        margin-bottom: 10px;
             
      }
     
-    .openlist li:hover{
-            font-size: smaller;
-            background-color: white;
-            margin-bottom: 10px;
-            cursor: pointer;
+    .Image_openlist li:hover{
+        font-size: smaller;
+        background-color: white;
+        margin-bottom: 10px;
+        cursor: pointer;
      }
     
         .Contents_Main{

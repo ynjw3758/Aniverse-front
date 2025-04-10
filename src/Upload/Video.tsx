@@ -753,6 +753,9 @@ const Video =(props:video_data) =>{
           setNextpage(false);
       }
      }
+     const MapClose =() =>{
+      setLocation(false);
+    }
 
     return(<Fragment>
          {modal && (<SecondModals  onClose={cancelHandler} ondelete={closeModalHandler} 
@@ -768,7 +771,7 @@ const Video =(props:video_data) =>{
                       <button type="submit"  onClick={Upload}>공유하기</button>
                     </div>
                 </div>   
-                  <div className="upload_Horizantal">
+                  <div className="Video_upload_Horizantal">
                       <hr />
                   </div>
                   <div className="view">
@@ -809,7 +812,7 @@ const Video =(props:video_data) =>{
                <div className="bts">
                  <button type="button" onClick={opendkind}>{openkind}</button>
                 </div>
-              {openactive && (<div className="openlist">
+              {openactive && (<div className="Video_openlist">
                <ul>
                 {opendlist.map((list) =>(<>
                 <li onClick={clicklist} key={list}>{list}</li>
@@ -834,7 +837,7 @@ const Video =(props:video_data) =>{
                      </div>
                      
                   </>)}
-               {location && (<KaMap onData={LocationdataHandler}/>)}
+               {location && (<KaMap onData={LocationdataHandler} onclose={MapClose}/>)}
                {(firstpage == true  && list_size == false) && (<>
                  <div className="first_headers">
                     <div className="first_img">

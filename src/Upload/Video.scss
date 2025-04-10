@@ -1,4 +1,4 @@
-@media screen and (max-width:1920px) {
+@media (min-width: 1550px) and (max-width: 1920px)  {
 .sidecontent{
     position: absolute;
     top:20px;
@@ -341,7 +341,7 @@ background-color: white;
     font-size: small;
 }
 
-.openlist{
+.Video_openlist{
   border:  2px solid black;
   z-index: 40;
   margin-left: 50px;
@@ -350,20 +350,20 @@ background-color: white;
   background-color: darkgrey;
   padding-bottom: -20px;
 }
-.openlist ul{
+.Video_openlist ul{
   list-style: none;
   float:left;
   margin-bottom: 0px;
   margin-left: -10px;
   margin-right: -30px;
 }
-.openlist li{
+.Video_openlist li{
   font-size: smaller;
   margin-bottom: 10px;
   
 }
 
-.openlist li:hover{
+.Video_openlist li:hover{
   font-size: smaller;
   background-color: white;
   margin-bottom: 10px;
@@ -428,7 +428,7 @@ margin-top: 1vh;
 
 }
 }
-@media screen and (max-width:1536px) {
+@media (min-width: 1200px) and (max-width: 1540px) {
   .sidecontent{
     position: absolute;
     top:20px;
@@ -479,11 +479,13 @@ margin-top: 1vh;
    cursor: pointer;
    font-size:smaller;
    border-radius: 10px;
+   color: lightskyblue;
 
 }
 
 
-.upload_Horizantal hr{
+.Video_upload_Horizantal hr{
+  margin-top: 0vh;
    width:100%;
 }
 .first_headers{
@@ -791,31 +793,29 @@ background-color: white;
     text-align: center;
 }
 
-.openlist{
-     
-  //margin-top: 5px;
+.Video_openlist{
+
   border:  2px solid black;
   z-index: 40;
-  margin-left: 50px;
-  width: 80%;
-  border-radius: 30px;
+  margin-left: ovw;
+  width: 100%;
+  border-radius: 10px;
   background-color: darkgrey;
-  padding-bottom: -20px;
 }
-.openlist ul{
+.Video_openlist ul{
   list-style: none;
   float:left;
   margin-bottom: 0px;
-  margin-left: -10px;
+  margin-left: -1.5vw;
   margin-right: -30px;
 }
-.openlist li{
+.Video_openlist li{
   font-size: smaller;
   margin-bottom: 10px;
   
 }
 
-.openlist li:hover{
+.Video_openlist li:hover{
   font-size: smaller;
   background-color: white;
   margin-bottom: 10px;

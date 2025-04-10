@@ -46,6 +46,7 @@ interface ResponseDataType {
       const[socket, setSocket]=useState<number>(0);
       const[isloading ,setIsloading]=useState<boolean>(false);
       const[isready, setIsready]=useState<boolean>(true);
+      const[isMyprofile, setIsMyprofile]=useState<boolean>(false);
       
 
       const navigate = useNavigate();
@@ -351,10 +352,15 @@ interface ResponseDataType {
         setContentitem(data);
       }
 
-      const ContentDisActive =(data:boolean) =>{
-        setContentitem(data);
+      const ContentDisActive =(data:any) =>{
+        const ischeck: boolean = data.isDisactive; 
+        const user_id:string= data.userid;
+        setContentitem(ischeck);
+        navigate(`/main/${user_id}`);
       }
       const contentHandler =() =>{
+        const Myid= localStorage.getItem("id");
+        navigate(`/main/${Myid}`);
         setContentitem(false);
       }
       const [dataloaded,setDataLoaded]= useState<boolean>(false);
@@ -362,19 +368,21 @@ interface ResponseDataType {
         setDataLoaded(true); // 데이터 로딩 완료
         setIsloading(false); // 로딩 화면 해제
       };
-      console.log("브라우저 넓이 :" , window.innerWidth);
     return(<div >
 
                     <div className="MainPage_log" onClick={MainClick}>
                        <img src="/image/log_test.jpg" alt="애완멀" ></img>
                        <h3>ALL_Pets</h3>
                        </div>
-          <MainSide img={profile}  nickname={NickName} id={id} onside={SideHandler} onProfile={contentHandler} isReady={isready}/>         
+          <MainSide img={profile}  nickname={NickName} id={id} onside={SideHandler} onProfile={() =>{
+            contentHandler();
+          }} isReady={isready}/>         
           <Outlet />
           {contentitem && (<div>
             <MainContentsx img={profile}  nickname={NickName} content={content} onDisActive={ContentDisActive} onload={handleDataLoaded}/>
             </div>)}
           {dropdow===true && dropblur === false ?  (<DropDownItem img={profile}  nickname={NickName} />):<></>}
+
          
     </div>)
 }

@@ -13,7 +13,7 @@ type user_info ={
     nickname:string,
     content:string[],
     onload:() => void,
-    onDisActive:(data:boolean) => void
+    onDisActive:(data:object) => void
 }
 
 const MainContentsx=(props:user_info) =>{
@@ -43,13 +43,13 @@ const MainContentsx=(props:user_info) =>{
         setComplete(false);
     }
 
-    const DisAvtive =(data:boolean) =>{
+    const DisAvtive =(data:object) =>{
      props.onDisActive(data);
      setIshow(true);
+     setIsdata(true);
      setIsloading(true);
     }
     useEffect(() =>{  
-     console.log("메인 페이지 리로딩 : ",props.content);
        if(props.content.length > 0 ){
         console.log("not null");
            setIsdata(true);
@@ -63,12 +63,32 @@ const MainContentsx=(props:user_info) =>{
 
     console.log("isdate : ", isdata)
     console.log("isshow : ", isshow)
-    const show =() =>{
-       return;
+    const show =(data:object) =>{
+        console.log("메인 컨텐츠 : " , data)
+        props.onDisActive(data);
     }
-
+    /*
+                    {!isloading && (<div className="login_loading">
+                <img src="/image/login_loading.png"/>
+                <p>로딩 중</p>
+            </div>)}
+            */
+/*
+        {(isdata == true && isshow ==false) && (<div className="Maincontents_body_blur">
+            <Contents  contents={props.content} disActive={DisAvtive} Img={props.img}/>
+        </div>)}
+        {(isdata == true && isshow ==true) && (<div className="Main_Contents">
+            <Contents  contents={props.content} disActive={show} Img={props.img}/>
+        </div>)}
+        */
+       /*
+               <div className="Main_Contents">
+            <Contents  contents={props.content} disActive={DisAvtive} Img={props.img}/>
+        </div>
+        */
+       
     return(<Fragment>
-                {!isloading && (<div className="login_loading">
+            {!isloading && (<div className="login_loading">
                 <img src="/image/login_loading.png"/>
                 <p>로딩 중</p>
             </div>)}
@@ -84,6 +104,7 @@ const MainContentsx=(props:user_info) =>{
         {(isdata == true && isshow ==true) && (<div className="Main_Contents">
             <Contents  contents={props.content} disActive={show} Img={props.img}/>
         </div>)}
+
         {!isdata && (<div className="upload_story">
             <img src="/image/no_data.png"/>
             <p>당신의 이야기를 올려보세요...</p>

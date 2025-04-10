@@ -331,25 +331,29 @@ const MultiUpload =(props:upload_data) =>{
         //props.Initilalize(true);
       }
 
+    const MapClose =() =>{
+      setLocation(false);
+    }
+
     return(<>
     
     {modal && (<SecondModals  onClose={cancelHandler} ondelete={closeModalHandler} 
       isopen={isSecondmodal}
       isinitila={initialpage}/>)}
     {secondpage && (<Fragment>
-        <div className="upload">
-          <div className="upload_img">
+        <div className="Multi_upload">
+          <div className="Multi_upload_img">
               <img src="/image/left_arrow.png" onClick={secondbackHandler}/>
            </div>
             <h2>올리기</h2>
-            <div className="upload_btn">
+            <div className="Multi_upload_btn">
               <button type="button" onClick={Upload}>공유하기</button>
             </div>                     
         </div>
-            <div className="upload_Horizantal">
+            <div className="Multi_upload_Horizantal">
               <hr />
             </div>
-            <div className="textbody">
+            <div className="Multi_textbody">
             {(leftactive == false && rightactive == true) && ( <div className="slide_right">
               <img src="/image/slideright.png" onClick={SlidenextHandler} id={right_active} />
               </div>)}
@@ -382,7 +386,7 @@ const MultiUpload =(props:upload_data) =>{
                <div className="bts">
                  <button type="button" onClick={opendkind}>{openkind}</button>
                 </div>
-              {openactive && (<div className="openlist">
+              {openactive && (<div className="Multi_openlist">
                <ul>
                 {opendlist.map((list) =>(<>
                 <li onClick={clicklist} key={list}>{list}</li>
@@ -404,18 +408,18 @@ const MultiUpload =(props:upload_data) =>{
            </div>
             </div>
     </Fragment>)}
-    {location && (<KaMap onData={LocationdataHandler}/>)}
+    {location && (<KaMap onData={LocationdataHandler} onclose={MapClose}/>)}
     {!secondpage && (<Fragment>
-        <div className="upload">
-          <div className="upload_img">
+        <div className="Multi_first_headers">
+          <div className="Multi_first_img">
               <img src="/image/left_arrow.png" onClick={Firtst_backHandler}/>
            </div>
             <h2>파일</h2>
-            <div className="upload_btn">
+            <div className="Multi_first_btn">
               <button type="button" onClick={NextHandler}>다음</button>
             </div>                     
         </div>
-            <div className="upload_Horizantal">
+            <div className="Multi_first_Horizantal">
               <hr />
             </div>
             <div style={{display:"flex", flexDirection:"row", 

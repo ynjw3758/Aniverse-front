@@ -582,6 +582,9 @@ const UserUpload=(props:user_info) =>{
            setVideo(false);
            setVideolist([]);
             }
+            const MapClose =() =>{
+              setLocation(false);
+            }
 
     return(<div className="MainBackDrop" onClick={CancelHandler}>
             <div className={main} onClick={(e) => e.stopPropagation()}>
@@ -649,7 +652,7 @@ const UserUpload=(props:user_info) =>{
             <div className="Image_upload_Horizantal">
               <hr />
             </div>
-        <div className="textbody">
+        <div className="Image_textbody">
            {nextone && (<>
             <img src={previewImg} /> 
               </>)}
@@ -689,7 +692,7 @@ const UserUpload=(props:user_info) =>{
                <div className="bts">
                  <button type="button" onClick={opendkind}>{openkind}</button>
               </div>
-              {openactive && (<div className="openlist">
+              {openactive && (<div className="Image_openlist">
                <ul>
                 {opendlist.map((list) =>(<>
                 <li onClick={clicklist} key={list}>{list}</li>
@@ -710,7 +713,7 @@ const UserUpload=(props:user_info) =>{
            <input placeholder="지인 추가 검색"/>
            </div>
         </>)}
-       {location && (<KaMap onData={LocationdataHandler}/>)}
+       {location && (<KaMap onData={LocationdataHandler} onclose={MapClose}/>)}
        {final && (<SecondModals onClose={secondHandler} ondelete={closeModalHandler} 
       isopen={isSecondmodal}
       isinitila={initialpage}/>)}

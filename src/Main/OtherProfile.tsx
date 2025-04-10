@@ -71,10 +71,8 @@ const OtherProfile =(props:Samll_profile) =>{
    //#endregion
 
     useEffect(() =>{    
-        console.log("닉네임 : " , props.nickname);
-        console.log("프로필 :" , props.checkfl);
+
         if(props.checkfl == true){
-           console.log("팔로워 확인");
            setCheck({follower:true});
            
         }
@@ -107,12 +105,10 @@ const OtherProfile =(props:Samll_profile) =>{
 
     //팔로워 신청 함수
     const FollowerHandler =() =>{
-      console.log("팔로워 신청");
       let access_token:string="";
       let Userid:any;
       let Myid:any;
       Myid = localStorage.getItem("id");
-      console.log("유저 아이디 :" , props.id)
       Userid=props.id;
       access_token =localStorage.getItem("a_id")!;
       axios.defaults.headers.common['Authorization'] = access_token;
@@ -120,7 +116,6 @@ const OtherProfile =(props:Samll_profile) =>{
       .then((response) =>{
          console.log("응답 결과 :" , response.status);
          if(response.status == 200){
-            console.log("팔로우 신청 완료");
             setCheck({following:false});
             setCheck({follower:true});
          }
@@ -151,7 +146,6 @@ const OtherProfile =(props:Samll_profile) =>{
     }
 
     const CancelFollowerHandler =() =>{
-      console.log("팔로워 취소");
       props.CancelFollower(true);
 
     }
@@ -176,7 +170,6 @@ const OtherProfile =(props:Samll_profile) =>{
     setSend({isClick:false});
    props.onBlock(data);
    }
-   console.log("다른 사람 프로파일 :" , props.profile);
 
     return(<Fragment >
       {!send.isClick && (<> <div className="OProfile_userinfo"  ref={divRef}>

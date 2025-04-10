@@ -38,7 +38,7 @@ type content_info = {
   index:number,
   Like:string,
   Commnets:string,
-  ondeactivate:(check:boolean) => void
+  ondeactivate:(chage_data:object) => void
 }
 //#endregion
 
@@ -524,12 +524,11 @@ const list:any=useRef<null | HTMLVideoElement[]>([]);
       console.log("다른 사람 페이지 이동");
       login_info.addid(props.UserId);
       login_info.addcheck(true);
-      props.ondeactivate(false);
-      navigate(`/main/${otherId}`);
+      const new_profile={isDisactive:false, userid:props.UserId}
+      props.ondeactivate(new_profile);
     }
 
     const CancelHandler =(isCancel:boolean) =>{
-       console.log("취소 유무:" , isCancel);
        setMousecheck(false);
        setFollowcheck({isCancel:true});
     }
@@ -548,7 +547,6 @@ const list:any=useRef<null | HTMLVideoElement[]>([]);
       setComplete(false);
     }
     const BlockRecept=(data:string[]) =>{
-      console.log("쪽지 차단 :" , data.length);
       if(data.length ==1){
         setMousecheck(false);
         setComplete(false);
@@ -606,14 +604,12 @@ const list:any=useRef<null | HTMLVideoElement[]>([]);
        })
   
        if(props.files.length == 1){
-        console.log("파일 한 개 ");
         setOne(true);
         setMulti(false);
         setRightactive(false);
         setLeftactive(false);
        }
        else{
-        console.log("파일 다수 ");
         setMulti(true);
         setOne(false);
         setRightactive(true);
@@ -628,12 +624,12 @@ const list:any=useRef<null | HTMLVideoElement[]>([]);
 
        if((img.length !=0 || vid.length !=0) && connectid != "" && nickname != "" && userid != ""){
         setIsshow(true);
-         props.ondeactivate(true);
+        const new_profile={isDisactive:true, userid:""}
+         props.ondeactivate(new_profile);
        }
      },[img, connectid, nickname, userid, vid])
 
      useEffect(() =>{
-      console.log("글자 수 :" , emoticon.length)
       if(emoticon.length == 0){
         setIspost(false);
       }
@@ -657,7 +653,6 @@ const list:any=useRef<null | HTMLVideoElement[]>([]);
      }
 
      const onClickHandler =(emojiData:EmojiClickData) =>{
-      console.log("이모티콘 :" , emojiData);
       setEmoticon((prev)=>prev+emojiData.emoji);
 
        }

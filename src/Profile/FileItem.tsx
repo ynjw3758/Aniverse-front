@@ -46,8 +46,6 @@ const FileItem =(props:file_list) =>{
 
     },[props.files]);
 
-    console.log("비디오 :" , vid);
-
     return(<>
     <div className="Item">
     {img.map((data) =>(<>

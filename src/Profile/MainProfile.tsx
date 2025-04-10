@@ -21,6 +21,7 @@ const MainProfile =() =>{
     const[contentItem, setContentItem]=useState<string[]>([]);
     const[checkimg, setCheckmg]=useState<boolean>(false);
     const[imgtype, setImgtype]=useState<boolean>(false);
+    const[isempty, setIsempty]=useState<boolean>(true);
     const[person, setPerson] =useState<any>({
       isMypage:false,
       isOtherpage:false,
@@ -35,19 +36,16 @@ const MainProfile =() =>{
     const navigate = useNavigate();
     const login_info = useContext(user_info);
     const ImageType = imgtype ? "jpgProfile" :"profile";
-
-
+    const Search_id= param.userid!;
     useEffect(() =>{
       let access_token:string="";
       let id:any;
       id=localStorage.getItem("id");
       //const userid:string = login_info.UserId;
-      3322793526
-      const userid:string =param.userid! ;
+      const userid:string =param.userid!;
       let UserId:string="";
       let kind:string="";
-      console.log("유저 아이디 :" , userid  , "localstorage :" , id);
-      
+      const my = localStorage.getItem("id");
       if(userid != id){
         console.log("다른 사람 페이지");
         id=localStorage.getItem("id");
@@ -59,7 +57,6 @@ const MainProfile =() =>{
         kind="My";
       }
         
-      console.log("type :" , person);
         access_token =localStorage.getItem("a_id")!;
         axios.defaults.headers.common['Authorization'] = access_token;
         axios.get("http://localhost:8080/Pets-social/SearchProfile" , {params:{Id:id , type:kind , Userid:UserId}})
@@ -68,8 +65,14 @@ const MainProfile =() =>{
 
 
             if(response.data.resultdata.profile_img == "null"){
-                console.log("프로파일 없음");
                 setProfile("/image/baseimg.png");
+                if(response.data.resultdata.content_info.length==0){
+                  console.log("00")
+                  //setContentItem([]);
+                }
+                else{
+                  setContentItem(response.data.resultdata.content_info);
+                }
             }
             else{
               const Profile:string = response.data.resultdata.profile_img;
@@ -81,25 +84,30 @@ const MainProfile =() =>{
                 setImgtype(false);
               }
               setProfile(response.data.resultdata.profile_img);
+              if(response.data.resultdata.content_info.length==0){
+                console.log("00")
+                //setContentItem([]);
+              }
+              else{
+                console.log("이걸 보내자")
+                setContentItem(response.data.resultdata.content_info);
+              }
               
             }
             if(response.data.resultdata.private_check == "true"){
-              console.log("비공개 계정 :" );
               setAccount({isPrivate:true});
               
             }
             else{
               setAccount({isPublic:true});
-              setContentItem(response.data.resultdata.content_info);
             }
-            
+
             setNickname(response.data.resultdata.nickname);
             setId(response.data.resultdata.id);
-            navigate(`/main/${param.userid}`);
-
+            console.log("결국 :" ,isempty)
         }).catch(error =>{
             if(axios.isAxiosError<ResponseDataType>(error)){
-                        console.log("error code: " , error.response?.status);
+
                         
                         if(error.code=="ERR_BAD_REQUEST"){
                           navigate("/error");
@@ -120,13 +128,13 @@ const MainProfile =() =>{
                         console.log("error response: " , error.response?.data);
                       }
         })
-    },[])
+    },[Search_id])
       const test:number=0;
- 
+    
     return(<>
-    <div className={ImageType}>
-    <img src={profile}/>
-     </div>
+    <div className="MainProfile">
+        <img src={profile}/>
+    </div>
      <div className="Nickname">
         <h3>{`${nickname}(${id})`}</h3>
         {person.isMypage&& (<>
@@ -156,13 +164,13 @@ const MainProfile =() =>{
         <button>게시물</button>
         <button>릴즈</button>
         <button>태그</button>
+        <button></button>
       </>)}
       </div>
-      <Filelist Item={contentItem} />
+     <Filelist Item={contentItem} />
       </>)}
     {account.isPrivate && (<Private />)}
-      
-      
+  
 </>)
 }
 

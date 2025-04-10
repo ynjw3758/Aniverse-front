@@ -13,7 +13,6 @@ const Filelist =(props:file_list) =>{
 
 
     useEffect(() =>{
-        console.log("list 컴포넌트 테스트 ");
         const content:string[] = props.Item;
         console.log("item 길이 :" , content.length);
         let contentid:string[]=[...id];
@@ -38,8 +37,8 @@ const Filelist =(props:file_list) =>{
 
 
     return(<>
-     <div className="content">
-     {id.map((value, i) =>(<div className="list" id={value}>
+     <div className="content_List">
+     {id.map((value, i) =>(<div  id={value}>
      <FileItem files={item[i]}/>
      </div>))}    
      </div>

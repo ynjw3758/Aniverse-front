@@ -5,8 +5,6 @@ import "./Private.scss";
 const Private =() =>{
 
 
-    console.log("활성화되라");
-
     return(<>
     <div className="TotalArea">
         <img src="/image/private.png"/>

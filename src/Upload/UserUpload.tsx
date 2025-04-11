@@ -412,7 +412,8 @@ const UserUpload=(props:user_info) =>{
                   console.log("최종 위치 데이타 :" , info.content);
                   setLocaldata(info);
                   setUploadlocal(info.content);
-                      }
+                  setIslocalform(true);
+                }
 
                 const localHandler =() =>{
                   setLocation(true);
@@ -584,6 +585,7 @@ const UserUpload=(props:user_info) =>{
             }
             const MapClose =() =>{
               setLocation(false);
+              setIslocalform(true);
             }
 
     return(<div className="MainBackDrop" onClick={CancelHandler}>

@@ -12,6 +12,7 @@ import KaMap from "./KaMap"; //추후에 끌것이다
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import SecondModals from "./SecondModals";
+import AddTagPeople from "./AddTag/SearchTagPeople";
 
 interface video_data{
     Next :(extend:boolean) => void;
@@ -63,6 +64,7 @@ const Video =(props:video_data) =>{
     const[modal, setModal]=useState<boolean>(false);
     const[isSecondmodal , setIsSecondmodal]=useState<boolean>(false);
     const[initialpage,setInitialpage]=useState<boolean>(true);
+    const[isActivSearch , setIsActivSearch] = useState<boolean>(false);
 
 
     const list:any=useRef<null | HTMLVideoElement[]>([]);
@@ -436,6 +438,7 @@ const Video =(props:video_data) =>{
         console.log("최종 위치 데이타 :" , info.content);
         setLocaldata(info);
         setUploadlocal(info.content);
+        setIslocalform(true);
             }
       const clicklist =(event:React.MouseEvent<HTMLLIElement>) =>{
               console.log("click :" , event.currentTarget.innerText);
@@ -755,6 +758,10 @@ const Video =(props:video_data) =>{
      }
      const MapClose =() =>{
       setLocation(false);
+      setIslocalform(true);
+    }
+    const AddPeopleSearch =() =>{
+      setIsActivSearch(true);
     }
 
     return(<Fragment>
@@ -832,7 +839,8 @@ const Video =(props:video_data) =>{
                       id="local"
                       
                      />
-                    <input placeholder="지인 추가 검색"/>
+                      {!isActivSearch && (<button onClick={AddPeopleSearch}>태그 검색</button>)}
+                      {isActivSearch && (<AddTagPeople />)}
                       </div>
                      </div>
                      

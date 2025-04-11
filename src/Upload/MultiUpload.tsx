@@ -5,6 +5,7 @@ import SecondModals from "./SecondModals";
 import KaMap from "./KaMap";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import AddTagPeople from "./AddTag/SearchTagPeople";
 
 
 interface upload_data{
@@ -31,29 +32,33 @@ const opendlist:string[]=["전체 공개" , "지인 공개" , "광고 공개"];
 
 const MultiUpload =(props:upload_data) =>{
 
-      const[preview , setPreview]=useState<string[]>(props.Img_List);
-      const[videolist , setVideolist]=useState<string[]>(props.Video_List);
-      const[multilist , setMultilist]=useState<string[]>(props.Multi_List);
-      const[origin,setOrigin]=useState<string[]>(props.origin);
-      const[pagenumber , setPagenumber]=useState<number>(1);
+
       const[leftactive, setLeftactive]=useState<boolean>(false);
       const[rightactive, setRightactive]=useState<boolean>(false);
       const[isSecondmodal , setIsSecondmodal]=useState<boolean>(false);
       const[modal, setModal]=useState<boolean>(false);
       const[initialpage,setInitialpage]=useState<boolean>(true);
       const[secondpage , setSecondpage]=useState<boolean>(false);
+      const[openactive , setOpenavtive]=useState<boolean>(false);
+      const [location, setLocation]=useState<boolean>(false);
+      const[islocalform , setIslocalform]=useState<boolean>(false);
+      const[isActivSearch , setIsActivSearch] = useState<boolean>(false);
+
       const[localdata , setLocaldata] = useState<any[]>([]);
       const[textArea , setTextArea]=useState<string>("");
-      const [location, setLocation]=useState<boolean>(false);
       const[uploadlocal ,setUploadlocal]=useState<string>("");
-      const[islocalform , setIslocalform]=useState<boolean>(false);
       const[openkind ,setOpenkind]=useState<string>("전체 공개");
-      const[openactive , setOpenavtive]=useState<boolean>(false);
+      const[preview , setPreview]=useState<string[]>(props.Img_List);
+      const[videolist , setVideolist]=useState<string[]>(props.Video_List);
+      const[multilist , setMultilist]=useState<string[]>(props.Multi_List);
+
       const[refcount, setRefcount]=useState<number>(0);
+      const[pagenumber , setPagenumber]=useState<number>(1);
       
      //ref
       const inputref= useRef<HTMLInputElement>(null);
       const list:any=useRef<null | HTMLVideoElement[]>([]);
+      let origin:string[] =props.Multi_List 
 
       const left_active = leftactive ? "left_active" : "left_unactive";
       const right_active = rightactive ? "right_active" : "right_unactive";
@@ -232,6 +237,7 @@ const MultiUpload =(props:upload_data) =>{
         console.log("최종 위치 데이타 :" , info.content);
         setLocaldata(info);
         setUploadlocal(info.content);
+        setIslocalform(true);
             }
 
       const clicklist =(event:React.MouseEvent<HTMLLIElement>) =>{
@@ -335,6 +341,12 @@ const MultiUpload =(props:upload_data) =>{
       setLocation(false);
     }
 
+    const AddPeopleSearch =() =>{
+      console.log("검색창 활성화");
+      setIsActivSearch(true);
+
+    }
+
     return(<>
     
     {modal && (<SecondModals  onClose={cancelHandler} ondelete={closeModalHandler} 
@@ -404,7 +416,8 @@ const MultiUpload =(props:upload_data) =>{
            disabled={islocalform}
            id="local"
           />
-           <input placeholder="지인 추가 검색"/>
+           {!isActivSearch && (<button onClick={AddPeopleSearch}>태그 검색</button>)}
+           {isActivSearch && (<AddTagPeople />)}
            </div>
             </div>
     </Fragment>)}

@@ -1,5 +1,5 @@
 
-@media screen and (max-width:1920px) {
+@media (min-width: 1550px) and (max-width:1920px) {
 .Main_side{
     list-style: none;
     display: block;
@@ -280,7 +280,7 @@
 }
 
 .Main_side_vertical hr{
-    position: fixed;
+    position: absolute;
     top:-5px;
     left: 250px;
     width: 1px;
@@ -430,7 +430,7 @@
     
 }
 }
-@media screen and (max-width:1536px) {
+@media screen and (max-width:1540px) {
     .Main_side{
         list-style: none;
         display: block;
@@ -712,9 +712,9 @@
     
     .Main_side_vertical hr{
         position: fixed;
-        top:-5px;
-        left: 250px;
-        width: 1px;
+        top:0vh;
+        left: 15vw;
+        width: 0vw;
         height: 100vh;
         margin-right: 0;
     

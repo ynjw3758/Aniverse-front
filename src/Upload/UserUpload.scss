@@ -205,13 +205,7 @@ font-size:smaller;
     margin-left: -4px;
 
 }
-#local:disabled,
-#local:focus:disabled,
-#local:hover:disabled,
-#local:active:disabled{
-    cursor: not-allowed;
-}
-.insert_contents input{
+#local{
     cursor: pointer;
     padding-left: 20px;
     padding-top:20px;
@@ -223,7 +217,29 @@ font-size:smaller;
     border-top: none;
     font-size: large;
     font-weight: bolder;
+
 }
+#local:disabled,
+#local:focus:disabled,
+#local:hover:disabled,
+#local:active:disabled{
+    background-color: #f5f5f5;   
+    color: #999;                 
+    border: 1px solid #e0e0e0;   
+    cursor: not-allowed;         
+    opacity: 0.7; 
+    padding-top:20px;
+    padding-bottom: 20px;
+    width: 18.8vw;
+    margin-left: -4px;
+    margin-right: -10px;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    font-size: medium;
+}
+
+
 .upload_side{
     position: absolute;
     top:5vh;
@@ -712,7 +728,7 @@ justify-content: center;
 
 }
 }
-@media (min-width: 1200px) and (max-width: 1540px) {
+@media /*(min-width: 1200px) and */(max-width: 1540px) {
 
     .Contents_headers{
         text-align:left;
@@ -945,13 +961,7 @@ justify-content: center;
         margin-left: -4px;
     
     }
-    #local:disabled,
-    #local:focus:disabled,
-    #local:hover:disabled,
-    #local:active:disabled{
-        cursor: not-allowed;
-    }
-    .insert_contents input{
+    #local{
         cursor: pointer;
         padding-left: 20px;
         padding-top:20px;
@@ -964,13 +974,34 @@ justify-content: center;
         font-size: large;
         font-weight: bolder;
     }
-    .upload_side{
+    #local:disabled,
+    #local:focus:disabled,
+    #local:hover:disabled,
+    #local:active:disabled{
+        background-color: #f5f5f5;   
+        color: #999;                 
+        border: 1px solid #e0e0e0;   
+        cursor: not-allowed;         
+        opacity: 0.7; 
+        padding-top:20px;
+        padding-bottom: 20px;
+        width: 18.8vw;
+        margin-left: -4px;
+        margin-right: -10px;
+        border-left: none;
+        border-right: none;
+        border-top: none;
+        font-size: medium;
+    }
+
+
+.upload_side{
         position: absolute;
         display: flex;
         flex-direction: row;
         width: 16vw;
     
-    }
+}
     .upload_side img{
         padding-top: 1vh;
         width: 30px;
@@ -993,13 +1024,8 @@ justify-content: center;
       }
     
     .Last_vertical hr{
-        //border: 1px solid black;
         width: 1;
         height: 70vh;
-        //margin-top: -1vh;
-        //margin-top: -8px;
-        //margin-left: 7px;
-        
     }
     
     

@@ -79,7 +79,7 @@
 
 }
 
-@media screen and (max-width:1536px) {
+@media screen and (max-width:1540px) {
     .login_loading{
         position: absolute;
         top:1vh;
@@ -115,6 +115,8 @@
         margin-left: 33vw;
         margin-bottom: 2vh;
         width: 30vw;
+        width: max-content;
+        height: max-content;
        
     }
     
@@ -124,16 +126,20 @@
         color: chocolate;
         margin-top: -3vh;
         margin-bottom: 4vh;
+        //margin-left: 3vw;
+        
+
     }
     
     .Main_Contents input{
-        margin-top: -10px;
-        width: 500px;
+        margin-left: -3vw;
+        width: 30vw;
         height: 45px;
         border-radius: 30px;
         padding-left: 15px;
         padding-top: 5px;
         padding-bottom: 5px;
+        padding-right: 100px;
         cursor: pointer;
     }
 

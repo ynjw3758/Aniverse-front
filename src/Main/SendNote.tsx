@@ -153,44 +153,78 @@ const SendNote =(props:Note) =>{
     useEffect(() =>{
       console.log("실제로 검색되는 문자 :" , search);
       if(sendcheck == true ){
-      axios.get("http://localhost:8088/Pets-social/Search/Person" , {params:{Word:search}})
-      .then((response) =>{
-        console.log("아니 ㅅㅂ :" , response );
-
-         if(response.status == 200 && response.data.length !==0){
-           setUserinfo(response.data);
-           setLoading(true);
-           setVercount(0);
-         }
-         else if(response.status == 200 && response.data.length ==0){
-           setUserinfo([]);
-           setVercount(0);
-           setLoading(true);
-         }
-           
-
-      }).catch((error) =>{
-         if(axios.isAxiosError<ResponseDataType>(error)){
-             console.log("error code: " , error.response?.status);
-             
-             if(error.code=="ERR_BAD_REQUEST"){
-               navigate("/error");
-             }
-             if(error.code == "ERR_NETWORK"){
-               console.log("네트워크 에러 ");
+        let access_token:string="";
+        access_token =localStorage.getItem("a_id")!;
+        console.log("access : " , access_token);
+        axios.defaults.headers.common['Authorization'] = access_token;
+        axios.get("http://localhost:8080/Pets-social/acccheck")
+        .then(response =>{
+           console.log("응답 결과 확인 " , response.data);
+          if(response.status == 200){
+            console.log("토큰 인증 성공");
+            axios.get("http://localhost:8088/Pets-social/Search/Person" , {params:{Word:search}})
+            .then((response) =>{
+              console.log("아니 ㅅㅂ :" , response );
+      
+               if(response.status == 200 && response.data.length !==0){
+                 setUserinfo(response.data);
+                 setLoading(true);
+                 setVercount(0);
+               }
+               else if(response.status == 200 && response.data.length ==0){
+                 setUserinfo([]);
+                 setVercount(0);
+                 setLoading(true);
+               }
+                 
+      
+            }).catch((error) =>{
+               if(axios.isAxiosError<ResponseDataType>(error)){
+                   console.log("error code: " , error.response?.status);
+                   
+                   if(error.code=="ERR_BAD_REQUEST"){
+                     navigate("/error");
+                   }
+                   if(error.code == "ERR_NETWORK"){
+                     console.log("네트워크 에러 ");
+                     
+                   }
+                   if(error.response?.status==401){
+                       console.log("승인되지 않은 로그인");
+                   }
+                   if(error.response?.status==500){
+                     console.log("서버 에러발생");
+                     navigate("/error/se-error")
+                   }
+                   
+                   console.log("error response: " , error.response?.data);
+                 }
+            })
+          }
+        }).catch((error) =>{
+           if(axios.isAxiosError<ResponseDataType>(error)){
+               console.log("error code: " , error.response?.status);
                
+               if(error.code=="ERR_BAD_REQUEST"){
+                 navigate("/error");
+               }
+               if(error.code == "ERR_NETWORK"){
+                 console.log("네트워크 에러 ");
+                 
+               }
+               if(error.response?.status==401){
+                   console.log("승인되지 않은 로그인");
+               }
+               if(error.response?.status==500){
+                 console.log("서버 에러발생");
+                 navigate("/error/se-error")
+               }
+               
+               console.log("error response: " , error.response?.data);
              }
-             if(error.response?.status==401){
-                 console.log("승인되지 않은 로그인");
-             }
-             if(error.response?.status==500){
-               console.log("서버 에러발생");
-               navigate("/error/se-error")
-             }
-             
-             console.log("error response: " , error.response?.data);
-           }
-      })
+        })
+
+     
     }
     else return;
     

@@ -13,7 +13,6 @@
 .Search_total_content{
     display: flex;
     flex-direction: column;  
-    
 }
 .Search_empty{
 display: flex;
@@ -32,7 +31,6 @@ margin-top:  1vh;
 
 @media screen and (max-width:1920px) {
 
-    @media screen and (min-width:1536px) {
         .Search_position{
             position: relative;
             //left: -13vw;
@@ -61,4 +59,4 @@ margin-top:  1vh;
             font-weight: bolder;
         }
     }
-        }
+        

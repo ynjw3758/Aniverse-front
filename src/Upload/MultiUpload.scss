@@ -126,17 +126,7 @@
     margin-left: -4px;
 
 }
-.insert_contents input{
-    cursor: pointer;
-    padding-top:20px;
-    padding-bottom: 20px;
-    width: 18.8vw;
-    margin-left: -4px;
-    margin-right: -10px;
-    border-left: none;
-    border-right: none;
-    border-top: none;
-}
+
 .test{
  position: absolute;
  top:20vh;
@@ -154,12 +144,37 @@
     left:400px;
     z-index: 40;
 }
+#local{
+  cursor: pointer;
+  padding-top:20px;
+  padding-bottom: 20px;
+  width: 18.8vw;
+  margin-left: -4px;
+  margin-right: -10px;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+}
+
 
 #local:disabled,
 #local:focus:disabled,
 #local:hover:disabled,
 #local:active:disabled{
-    cursor: not-allowed;
+  background-color: #f5f5f5;   
+  color: #999;                 
+  border: 1px solid #e0e0e0;   
+  cursor: not-allowed;         
+  opacity: 0.7; 
+  padding-top:20px;
+  padding-bottom: 20px;
+  width: 18.8vw;
+  margin-left: -4px;
+  margin-right: -10px;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  font-size: medium;
 }
 
 .Multi_openlist{
@@ -167,9 +182,7 @@
     z-index: 40;
     margin-left: 0vw;
     width: 100%;
-    //border-radius: 30px;
-    //background-color: darkgrey;
-    //padding-bottom: -20px;
+
 }
 .Multi_openlist ul{
     list-style: none;
@@ -251,7 +264,7 @@
   }
 }
 
-@media (min-width: 1200px) and (max-width: 1540px) {
+@media  (max-width: 1540px) {
 
         
     .Multi_first_headers{
@@ -422,17 +435,8 @@
         margin-left: -4px;
     
     }
-    .insert_contents input{
-        cursor: pointer;
-        padding-top:20px;
-        padding-bottom: 20px;
-        width: 18.8vw;
-        margin-left: -4px;
-        margin-right: -10px;
-        border-left: none;
-        border-right: none;
-        border-top: none;
-    }
+
+
     .test{
      position: absolute;
      top:20vh;
@@ -450,12 +454,36 @@
         left:400px;
         z-index: 40;
     }
+    #local{
+      cursor: pointer;
+      padding-top:20px;
+      padding-bottom: 20px;
+      width: 18.8vw;
+      margin-left: -4px;
+      margin-right: -10px;
+      border-left: none;
+      border-right: none;
+      border-top: none;
+    }
     
     #local:disabled,
     #local:focus:disabled,
     #local:hover:disabled,
     #local:active:disabled{
-        cursor: not-allowed;
+      background-color: #f5f5f5;   
+      color: #999;                 
+      border: 1px solid #e0e0e0;   
+      cursor: not-allowed;         
+      opacity: 0.7; 
+      padding-top:20px;
+      padding-bottom: 20px;
+      width: 18.8vw;
+      margin-left: -4px;
+      margin-right: -10px;
+      border-left: none;
+      border-right: none;
+      border-top: none;
+      font-size: medium;
     }
     
     .Multi_openlist{

@@ -1,7 +1,7 @@
 
 import { Map , MapMarker} from 'react-kakao-maps-sdk';
 import "./KaMap.scss";
-import { Fragment, useState ,useEffect, useRef} from "react";
+import { Fragment, useState ,useEffect, useRef, useSyncExternalStore} from "react";
 interface LOcationData {
   onData :(Location_info:any) => void;
   onclose : () => void
@@ -80,10 +80,7 @@ useEffect(() => {
       }
           }
 
-    const selectlocation = (info:any) =>{
-      console.log("위치 검색 데이터 메인 컴포넌트로 전송");
-      props.onData(info);
-    }
+
 
   const EnterSearch=(event: React.KeyboardEvent<HTMLInputElement>) =>{
 
@@ -240,42 +237,43 @@ useEffect(() => {
         <img src="/image/Map_Cancel.png" onClick={CancelHandler}/>
        </div>
         {checksearch && (<div className="item_list" >
-          {markers.map(({ marker, content, address, phone, position}, idx) =>(<div  key={idx} className="Kamp_list" onMouseOver={() =>{ 
- if (!mapRef1.current) return;
+          {markers.map(({content, address, phone, position}, idx) =>(<div  key={idx} className="Kamp_list" onMouseOver={() =>{ 
+              if (!mapRef1.current) return;
 
- if (infoRef.current instanceof kakao.maps.CustomOverlay) {
-   infoRef.current.setMap(null);
- }
+              if (infoRef.current instanceof kakao.maps.CustomOverlay) {
+                infoRef.current.setMap(null);
+              }
 
- const latLng = new kakao.maps.LatLng(position.lat, position.lng);
+              const latLng = new kakao.maps.LatLng(position.lat, position.lng);
 
- const overlayContent = `
-   <div style="
-     background: #3182f6;
-     color: white;
-     font-size: 14px;
-     padding: 6px 10px;
-     border-radius: 999px;
-     border: 2px solid white;
-     box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-     white-space: nowrap;
-     font-weight: bold;
-   ">
-     ${content}
-   </div>
- `;
+              const overlayContent = `
+                <div style="
+                  background: #3182f6;
+                  color: white;
+                  font-size: 14px;
+                  padding: 6px 10px;
+                  border-radius: 999px;
+                  border: 2px solid white;
+                  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+                  white-space: nowrap;
+                  font-weight: bold;
+                ">
+                  ${content}
+                </div>
+              `;
 
- const customOverlay = new kakao.maps.CustomOverlay({
-   position: latLng,
-   content: overlayContent,
-   yAnchor: 2,
- });
+              const customOverlay = new kakao.maps.CustomOverlay({
+                position: latLng,
+                content: overlayContent,
+                yAnchor: 2,
+              });
 
- customOverlay.setMap(mapRef1.current);
- infoRef.current = customOverlay;
+              customOverlay.setMap(mapRef1.current);
+              infoRef.current = customOverlay;
            }}
            onClick={() =>{
-            selectlocation(idx);
+            const location_data = {content, address, phone, position};
+            props.onData(location_data);
            }}>
             <h3>{content}</h3>
            <p>{address}</p>

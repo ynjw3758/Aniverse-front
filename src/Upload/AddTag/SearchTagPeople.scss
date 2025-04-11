@@ -1,0 +1,33 @@
+.AddTagPeople_Stand{
+    width: 20vw;
+    height: 27.5vh;
+    margin-left: -0.5vw;
+}
+.AddTagPeople_Stand input::placeholder{
+    font-size: 12px;
+}
+.AddTagPeople_Stand input{
+    margin-top: 1vh;
+    margin-left: 1vw;
+    width: 100px;
+    height: 24px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 10px;
+    padding-right: 170px;
+    border: 1px solid black;
+    font-size: 12px;
+    font-weight: 0px;
+    line-height: 1;
+    border-radius: 4px;
+    z-index: 10;
+}
+.SearchTag_Stand{
+    width: 20vw;
+    height: 22.5vh;
+    overflow-y: scroll;
+}
+.Tag_Loding{
+    margin-top: 10vh;
+    margin-left: 10vw;
+}

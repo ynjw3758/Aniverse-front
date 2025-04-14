@@ -1,4 +1,4 @@
-@media (min-width: 1200px) and (max-width: 1540px){
+@media (max-width: 1540px){
 .KMap_main{
     position:absolute;
     top:-1.5vh;
@@ -113,4 +113,122 @@ margin-left: 0.5vw;
     background-repeat: no-repeat;
     
 }
+}
+@media (min-width: 1550px) and (max-width: 1920px) {
+    .KMap_main{
+        position:absolute;
+        top:-1.5vh;
+        left:15vw;
+        width: 63vw;
+        border: 1px solid black;
+        text-align: center;
+    }
+    
+    .Kmap_search{
+        position:absolute;
+        top:0vh;
+        left: 37vw;
+        z-index: 9999;
+        display: flex;
+        flex-direction: row;
+    
+    }
+    .Kmap_search input{
+        margin-bottom: 20px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 20px;
+        padding-right: 20px;
+        border-radius: 25px;
+        width: 20vw;
+        margin-top: -1.2vh;
+    }
+    .Kmap_search img,
+    .Kmap_search img:hover{
+        margin-top: -1.5vh;
+        margin-left: 16.9vw;
+        width: 2vw;
+        height: 4vh;
+        cursor: pointer;
+    
+    }
+    .Position_Mapo{
+        position: absolute;
+        top:10vh;
+        left: 20vw;
+    }
+    
+    .item_list{
+        position: absolute;
+        top:-2vh;
+        width:15vw;
+        background-color:white;  
+        max-height: 81.5vh;
+        overflow-y: auto;
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none;  /* IE & Edge */
+        border-right: 2px solid black;
+    }
+    .item_list::-webkit-scrollbar{
+        display: none;
+    }
+    
+    .item_list ul{
+        list-style: none;
+    }
+    .Kamp_list{
+    width:14vw;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    border :1px solid black;
+    border-radius: 15px;
+    margin-bottom: 1vh;
+    margin-top: 3vh;
+    margin-left: 0.5vw;
+    }
+    .Kamp_list h3{
+        padding-left: 1vw;
+        font-weight: bold;
+    }
+    .Kamp_list p{
+        padding-left: 1vw;
+        margin-top: -1vh;
+    }
+    .Kamp_list:hover{
+        width:14vw;
+        height: fit-content;
+        display: flex;
+        flex-direction: column;
+        border :1px solid black;
+        border-radius: 15px;
+        margin-bottom: 1vh;
+        margin-top: 3vh;
+        margin-left: 0.5vw;
+        background-color: #d0ebff;
+        transition: background-color 0.2s ease;
+        cursor: pointer;
+    
+        
+    }
+    
+    .list h3{
+        font-size: medium;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        font-weight: 300px;
+    }
+    
+    .markerinfo{
+        margin: 10px;
+        font-size: small;
+        color: red;
+    }
+    
+    #input_id{
+        background-image: url("https://cdn-icons-png.freepik.com/256/2311/2311526.png?ga=GA1.1.687570470.1709256290&");
+        background-position:-2px center;
+        background-size:25px;
+        background-repeat: no-repeat;
+        
+    }
 }

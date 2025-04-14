@@ -129,23 +129,23 @@ const list:any=useRef<null | HTMLVideoElement[]>([]);
 
 
     useEffect(() =>{
-      //console.log("포인트 이펙트!");
+      
       if(pagenumber == 1){
-       console.log("처음 페이지");
+       
        setLeftactive(false);
        setRightactive(true);
        
       }
       
       else if(pagenumber == item.length){
-       console.log("마지막 페이지");
+       
        setRightactive(false);
        setLeftactive(true);
        
       }
       
       else if(pagenumber !== item.length && pagenumber !== 1){
-       console.log("페이지 중간");
+       
        setLeftactive(true);
        setRightactive(true);
        
@@ -173,21 +173,21 @@ const list:any=useRef<null | HTMLVideoElement[]>([]);
 
 
     const SlidenextHandler =() =>{
-      console.log("pagenumber :" , pagenumber , ", item :" , item.length);
+      
       if(pagenumber-1 !== item.length-1){
         setPagenumber((preNum) => preNum+1);
-        console.log("next :" , pagenumber , img.length);
+        
         if(pagenumber ==item.length){
-          console.log("0번째 동영상 재생");
+          
           if(vid.length == 1){
-          console.log("영상이 1개인 경우");
+          
           setMute(true);
           setMuteicon("/image/muted.png");
           list.current[refcount].play();
           return ;
           }
           else{
-              console.log("영상이 N개인 경우 :", refcount);
+              
               setMute(true);
               setMuteicon("/image/muted.png");
               list.current[refcount].play();
@@ -494,10 +494,7 @@ const list:any=useRef<null | HTMLVideoElement[]>([]);
 
     }
     const Mouseout =(event:React.MouseEvent<HTMLDivElement>) =>{
-      console.log("포인트 :" , mousepoint);
-      console.log("현재 좌표 :" , event.clientY);
       if(mousepoint > event.clientY){
-        console.log("위로 마우스 커서 이동");
         setMousecheck(false);
       }
       else{
@@ -521,7 +518,6 @@ const list:any=useRef<null | HTMLVideoElement[]>([]);
 
    
     const PeopleProfile =() =>{
-      console.log("다른 사람 페이지 이동");
       login_info.addid(props.UserId);
       login_info.addcheck(true);
       const new_profile={isDisactive:false, userid:props.UserId}
@@ -579,7 +575,6 @@ const list:any=useRef<null | HTMLVideoElement[]>([]);
       }
       let image:string[]=[...img];
       let video:string[]=[...vid];
-      console.log("data :" , file.length);
       file.forEach((data) =>{
         
        Object.entries(data).map((key) =>{

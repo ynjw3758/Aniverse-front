@@ -1,22 +1,16 @@
-import "./UserUpload.scss";
 
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState ,  useRef, Fragment} from "react";
 import React from 'react';
-//import SwiperCore, { Navigation, Scrollbar, Autoplay ,Pagination} from 'swiper';
-// swiper bundle styles
-// swiper core styles
-import 'swiper/swiper-bundle.min.css'
-import 'swiper/components/navigation/navigation.min.css';
-import 'swiper/swiper.min.css'
-// modules styles
-import 'swiper/components/navigation/navigation.min.css'
-import 'swiper/components/pagination/pagination.min.css'
+
 import SecondModals from "./SecondModals";
 import KaMap from "./KaMap"; //추후에 끌것이다
 import Video from "./Video";
 import MultiUpload from "./MultiUpload";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import "./UserUpload.scss";
+import TagList from "./Taglist/TagList";
+import AddTagPeople from "./AddTag/SearchTagPeople";
 
 
 
@@ -48,6 +42,8 @@ const UserUpload=(props:user_info) =>{
   const[one_before , setOne_before]=useState(<p></p>);
   const[mu_before , setMu_before]=useState(<p></p>);
 
+  const[isCreateThum, setIsCreateThum]=useState<boolean>(false);
+  const[islocalform , setIslocalform]=useState<boolean>(false);
   const [video, setVideo] = useState<boolean>(false);
   const [isimg, setIsimg] = useState<boolean>(false);
   const [check, setCheck] = useState<boolean>(false);
@@ -72,6 +68,10 @@ const UserUpload=(props:user_info) =>{
   const[openkind ,setOpenkind]=useState<string>("전체 공개");
   const[openactive , setOpenavtive]=useState<boolean>(false);
   const[openlist ,setOpenlist]=useState<string[]>([]);
+  const[tagbasic, setTagbasic]=useState<boolean>(true);
+  const[tagList, setTagList]=useState<boolean>(false);
+  const[isActivSearch , setIsActivSearch] = useState<boolean>(false);
+  const[tagItems, setTagItems]=useState<any[]>([]);
 
 
   const left_active = leftactive ? "left_active" : "left_unactive";
@@ -79,15 +79,11 @@ const UserUpload=(props:user_info) =>{
   const max_size=1024*1024*100;
   const navigate = useNavigate();
 
+
   const onChangeImg = (event: React.ChangeEvent<HTMLInputElement>) => {
-/*
-    const 콘텐츠영역 = {
-      color= "Red"
-    }
-      */
+
     const array :any=event.target.files;
-    console.log("array :" , array);
-    console.log("다수 이미지 업로드 :" , array.length);
+
     let file_list:string[]=[...preview];
     let video_list:string[]=[...videolist];
     let multi_list:string[]=[...multilist];
@@ -97,8 +93,6 @@ const UserUpload=(props:user_info) =>{
     let total_size:number=0;
     //let oringin:string[]=[...originmulti];
     for(let count =0; count<array.length;count++){
-      console.log("이미지 미리보기 만들기");
-     
       if (array[count] !== null) {
           const file = array[count];
           upload_list.push(file);
@@ -116,22 +110,22 @@ const UserUpload=(props:user_info) =>{
             const currentimg = URL.createObjectURL(file);
             console.log("url :" , currentimg);
             file_list.push(currentimg);
-              console.log("멀티 파일 업로드");
+              
               multi_list.push(currentimg);
               setMultilist(multi_list);
-              //setUploadFile(multi_list);
+        
             if(array.length === 1){
-              console.log("단일 사진 업로드");
+              
               setOneimg(true);
-              console.log("타겟 : " , event.target.files);
+              
               let filereader = new FileReader();
               if(event.target.files !== null){
                 const files = event.target.files[0];
                 filereader.readAsDataURL(files);
-                console.log("file name : " , filereader);
+                
                 filereader.onload =() =>{
                   const preview =filereader.result;
-                  console.log("preview :" , preview); 
+                  
                   if(preview){
                       setPreviewImg([...previewImg, preview])
                       
@@ -139,7 +133,7 @@ const UserUpload=(props:user_info) =>{
                 }
               }
               else{
-                  console.log("파일을 선택하지 않았습니다");
+                  
                   return;
               }
               return;
@@ -147,20 +141,21 @@ const UserUpload=(props:user_info) =>{
              }
              else{     
               setPreview(file_list);
-              console.log("file_list : " ,file_list );
+              
               setCheck(true);}
 
           } else {
             setImgFile(null);
            }
            if(file && file.type.substring(0, 5) === "video"){
-             console.log("비디오 파일 업로드 ");
+             
              upload_videolist.push(file);
              setUploadvideo(upload_videolist);
              const create_url = URL.createObjectURL(file);
+  
              video_list.push(create_url);
                       
-              console.log("비디오 파일 추가");
+              
               multi_list.push(create_url);
               setMultilist(multi_list);
 
@@ -174,7 +169,7 @@ const UserUpload=(props:user_info) =>{
   }
    }
    if(file_list.length !== 0 && video_list.length !== 0){
-    console.log("사진 및 동영상 섞어서 업로드");
+    
     setMutiload(true);
     setVideo(false);
     setCheck(false);
@@ -183,6 +178,8 @@ const UserUpload=(props:user_info) =>{
   }
 
 
+  
+   
 
           const ExtendHandler =(data:boolean) =>{
             setExtend(data);
@@ -334,16 +331,16 @@ const UserUpload=(props:user_info) =>{
                 console.log("단일");
                 setCheckone(true);
                 setOne_before(<Fragment>
-                  <div className="second_headers">
-                    <div className="Second_img">
+                  <div className="first_headers">
+                    <div className="first_img">
                   <img src="/image/left_arrow.png" onClick={backHandler}/>
                   </div>
                   <h2>사진</h2>
-                  <div className="Second_btn">
+                  <div className="first_btn">
                   <button type="button" onClick={nextHandler}>다음</button>
                   </div>
                   </div>
-                  <div className="second_Horizantal">
+                  <div className="first_Horizantal">
                     <hr />
                   </div>
                 <div className="one_img" ref={containRef}>
@@ -367,37 +364,9 @@ const UserUpload=(props:user_info) =>{
                 setNext(false);
               }
              }
-             /*
-                                  <Swiper
-                       centeredSlides={true} //가운데 정렬
-                       slidesPerView={1} //한 슬라이드에 보여줄 갯수
-                       spaceBetween={0} //슬라이드간 거리
-                       navigation // 이동 화살표
-                       scrollbar={{ draggable: true }}
-                      pagination={{
-                       clickable: true,
-                      }}
-                    >
-                     {preview.map((image , id) => (
-                    <SwiperSlide key={id}><img  src={image}></img></SwiperSlide>
-                    ))}
-                    </Swiper>
-                    */
-             //{addimg && ((<Multipicture img={previewImg} add_img={addimgHandler}/>))}
-             /*
-                               <div className={Clesses.pluspicture}>
-                            <img onClick={addimagHandler} src="/image/add_picture.png"/>
-                            </div>
-          
-                            <img src={previewImg} //onMouseMove={imgDrag} 
-                            //onMouseDown={mouseDown}
-                            //onMouseUp={mouseSetup}     
-                            //onClick={imageclick}
-                            draggable="true"     
-                            />
-                            */
-                const[islocalform , setIslocalform]=useState<boolean>(false);
-                const local_search = islocalform ? "se_possible": "se_impassible";
+
+                
+                
 
                 useEffect(() =>{
                   console.log("위치 검색 완료 ");
@@ -553,7 +522,7 @@ const UserUpload=(props:user_info) =>{
              filedata.append("id" , id);
 
              axios.post("http://localhost:8081/Pets-social/Fileupload" , filedata,
-             {headers:{"Content-Type": "multipart/form-data", /*"Authorization":access_token ,*/"processData":false , "contentType":false} })
+             {headers:{"Content-Type": "multipart/form-data","processData":false , "contentType":false} })
              .then((response) =>{
                console.log("response :" , response);
                props.onComplete();
@@ -586,6 +555,30 @@ const UserUpload=(props:user_info) =>{
             const MapClose =() =>{
               setLocation(false);
               setIslocalform(true);
+            }
+            const AddPeopleSearch =() =>{
+              console.log("검색창 활성화");
+              setIsActivSearch(true);
+        
+            }
+            const TagList_Active =(data:any) =>{
+              const isDuplicate = tagItems.some(item => item.Id === data.Id);
+        
+              if(!isDuplicate){
+                setIsActivSearch(false);
+                setTagList(true);
+                let infos:object[] = [...tagItems];
+                infos.push(data);
+                setTagItems(infos);
+              }
+              else{
+                console.log("이밎 추가된 유저입니다");
+              }
+            }
+        
+            const BackSearch =() =>{
+              setTagList(false);
+              setIsActivSearch(true)
             }
 
     return(<div className="MainBackDrop" onClick={CancelHandler}>
@@ -655,10 +648,10 @@ const UserUpload=(props:user_info) =>{
               <hr />
             </div>
         <div className="Image_textbody">
-           {nextone && (<>
+           {nextone && (<div className="One_Image">
             <img src={previewImg} /> 
-              </>)}
-          {nextmu && (<div className="Nimg">
+              </div>)}
+          {nextmu && (<>
             {(leftactive == false && rightactive == true) && ( <div className="slide_right">
               <img src="/image/slideright.png" onClick={SlidenextHandler} id={right_active} />
               </div>)}
@@ -683,7 +676,7 @@ const UserUpload=(props:user_info) =>{
                 <img src={img} key={id} />
                 </div>))}
                 </div>
-          </div>)}
+          </>)}
 
           </div> 
           {/* 병신아 */}
@@ -703,16 +696,17 @@ const UserUpload=(props:user_info) =>{
               </div>)}
               </div>
             </div>
-            <div className="insert_contents">
+            <div className="Image_insert_contents">
            <textarea placeholder="당신의 일상을 올려보세요" onChange={textHandler}/>
            <input  placeholder="위치 검색"
            ref={inputref}
            onClick={localHandler}
            value={uploadlocal}
            disabled={islocalform}
-           id="local"
           />
-           <input placeholder="지인 추가 검색"/>
+            {tagbasic && (<button onClick={AddPeopleSearch} >태그 검색</button>)}
+            {isActivSearch && (<AddTagPeople  AddTag={TagList_Active}/>)}
+            {tagList && (<TagList Item={tagItems} Back_Search={BackSearch}/>)}
            </div>
         </>)}
        {location && (<KaMap onData={LocationdataHandler} onclose={MapClose}/>)}

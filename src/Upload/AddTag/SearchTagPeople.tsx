@@ -14,9 +14,10 @@
     //                            +--------------------
     //#region type     
     import "./SearchTagPeople.scss";
-    import TagList from "./TagList";
     import SearchTagItem from "./SearchTagItem";
     //#endregion
+
+
 
 
     //                            +--------------------
@@ -30,14 +31,20 @@
     resultdata:string[]
     }
     //#endregion
-    const SearchTagPeople =() =>{
+
+    //                            +--------------------
+    //-----------------------------+   props 인터페이스
+    //                             +--------------------
+    //#region type
+    interface TagInfo{
+    AddTag:(data: object) => void
+  }
+    const SearchTagPeople =(props:TagInfo) =>{
     const[keycheck, setKeycheck]=useState<boolean>(false);
     const[sendcheck, setSendcheck]=useState<boolean>(false);
     const[isSearch, setIsSearch]=useState<boolean>(false);
     const[search, setSearch]=useState<string>("");
     const[userinfo ,setUserinfo]=useState<object[]>([]);
-    const[listActive, setListActive]=useState<boolean>(false);
-    const[showdata, setShowdata]=useState<boolean>(false);
     const[isloading, setIsloading]=useState<boolean>(false);
     const[iskeyboard, setIskeyboard]=useState<boolean>(false);
 
@@ -49,7 +56,6 @@
     const navigate = useNavigate();
     let Input_Search = useRef<string |null>(null);
     let keyboard_valid= useRef<boolean | null | undefined >(false);
-    let keyboard_valid1= useRef<boolean | null | undefined >(false);
     //#endregion
 
     //입력 후 700ms동안 이벤트 발생하는지 않는지 체크키
@@ -146,10 +152,18 @@
 
     },[sendcheck])
 
-
-
-
-
+    useEffect(() =>{
+      if(search == "" && keyboard_valid.current ===false) return;
+      else if(search =="" && Input_Search.current?.length ===1 && 
+        keyboard_valid.current ===true
+      ){
+        setIsSearch(false);
+        setUserinfo([]);
+        setIskeyboard(false);
+        
+      }
+      keyboard_valid.current= false;
+      },[search])
 
     //키보드 땟을 때 이벤트
     const KeyupHandler =(event:React.KeyboardEvent<HTMLInputElement>) =>{
@@ -167,20 +181,10 @@
       setSearch(event.target.value);
     }
 
-    useEffect(() =>{
-    if(search == "" && keyboard_valid.current ===false) return;
-    else if(search =="" && Input_Search.current?.length ===1 && 
-      keyboard_valid.current ===true
-    ){
-      setIsSearch(false);
-      setUserinfo([]);
-      setIskeyboard(false);
-      
-    }
-    keyboard_valid.current= false;
-    },[search])
 
-    const AddHandler =(data:string, profile:string) =>{
+    const AddHandler =(data:object) =>{
+      console.log("태그 추가 정보 :" ,data);
+      props.AddTag(data);
     }
 
     return(<div className="AddTagPeople_Stand">
@@ -195,7 +199,7 @@
           />
       </div>)}
     {isSearch && ( <div className="SearchTag_Stand">
-      <SearchTagItem List={userinfo} addName={AddHandler} />
+      <SearchTagItem List={userinfo} addTaginfo={AddHandler} />
     </div>)}
 
 

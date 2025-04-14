@@ -42,7 +42,6 @@ const Contents =(props:Content) =>{
                 setNickname(nicknames);
             }
             else if(key.at(0) == "profile"){
-                console.log("프로파일 좀보자 :" , key.at(1));
                 if(key.at(1) == "null"){
                     prfile.push("/image/baseimg.png");
 

@@ -20,7 +20,7 @@ import SearchTagList from "./SearchTagList";
 //#region type
 type Searchlist = {
     List:object[],
-    addName:(data:string, profile:string) =>void
+    addTaginfo:(data:object) =>void
     }
 //#endregion
 const SearchTagItem =(props:Searchlist) =>{
@@ -76,8 +76,8 @@ const SearchTagItem =(props:Searchlist) =>{
         
     },[props.List])
 
-    const Choose =(data:string, profile:string) =>{
-    props.addName(data, profile);
+    const Choose =(data:object) =>{
+    props.addTaginfo(data);
     }
     const showdata =() =>{
       console.log("데이터를 보내준다");
@@ -100,11 +100,11 @@ return(<>
             <p>계정을 찾을 수 없습니다</p>
           </div>)}  
           {(isdata == true && isloading == true) && (<>
-            {userid.map((value , i) =>{return (<div className="SearchTagItem_body_blur" id={value} >
+            {userid.map((value , i) =>{return (<>
             <SearchTagList Nickname={nickname[i]} Profile={profile[i]} 
             Userid={userid[i]} OnChoose={Choose} 
             count={i} total_size={total}/*focuse={props.Count}*/ onComplete={showdata}/>
-            </div>)}    
+            </>)}    
             )} 
           </>)}
           {(isdata == true && isloading == false) && (<>

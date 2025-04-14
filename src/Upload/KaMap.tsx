@@ -121,6 +121,7 @@ useEffect(() => {
                       map: mapRef1.current,
                       position,
                     });
+                    console.log("위치 정보 : " ,data[i]);
                    marker_array.push({
                       marker,
                       position: { lat, lng },
@@ -128,8 +129,8 @@ useEffect(() => {
                       id: data[i].id,
                       address: data[i].road_address_name,
                       phone: data[i].phone,
-                      isaddress: data[i].road_address_name !== "",
-                      isphone: data[i].phone !== "",
+                      isaddress: !!data[i].road_address_name,
+                      isphone: !!data[i].phone,
                     });
 
                     let iwPosition= new kakao.maps.LatLng(data[i].y, data[i].x)//인포윈도우 표시 위치입니다
@@ -237,7 +238,9 @@ useEffect(() => {
         <img src="/image/Map_Cancel.png" onClick={CancelHandler}/>
        </div>
         {checksearch && (<div className="item_list" >
-          {markers.map(({content, address, phone, position}, idx) =>(<div  key={idx} className="Kamp_list" onMouseOver={() =>{ 
+          {markers.map(({content, address, phone, position, isaddress,isphone,id
+
+          }, idx) =>(<div  key={idx} className="Kamp_list" onMouseOver={() =>{ 
               if (!mapRef1.current) return;
 
               if (infoRef.current instanceof kakao.maps.CustomOverlay) {
@@ -272,7 +275,7 @@ useEffect(() => {
               infoRef.current = customOverlay;
            }}
            onClick={() =>{
-            const location_data = {content, address, phone, position};
+            const location_data = {content, address, phone, position ,isaddress, isphone, id};
             props.onData(location_data);
            }}>
             <h3>{content}</h3>

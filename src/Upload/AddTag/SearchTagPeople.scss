@@ -1,3 +1,4 @@
+@media(max-width: 1540px) {
 .AddTagPeople_Stand{
     width: 20vw;
     height: 27.5vh;
@@ -9,7 +10,7 @@
 .AddTagPeople_Stand input{
     margin-top: 1vh;
     margin-left: 1vw;
-    width: 100px;
+    width: 5vw;
     height: 24px;
     padding-top: 2px;
     padding-bottom: 2px;
@@ -30,4 +31,40 @@
 .Tag_Loding{
     margin-top: 10vh;
     margin-left: 10vw;
+}
+}
+@media (min-width: 1550px) and (max-width: 1920px){
+    .AddTagPeople_Stand{
+        width: 20vw;
+        height: 27.5vh;
+        margin-left: -0.5vw;
+    }
+    .AddTagPeople_Stand input::placeholder{
+        font-size: 12px;
+    }
+    .AddTagPeople_Stand input{
+        margin-top: 1vh;
+        margin-left: 3vw;
+        width: 13.5vw;
+        height: 24px;
+        padding-top: 2px;
+        padding-bottom: 2px;
+        padding-left: 10px;
+        padding-right: 0.5vw;
+        border: 1px solid black;
+        font-size: 12px;
+        font-weight: 0px;
+        line-height: 1;
+        border-radius: 4px;
+        z-index: 10;
+    }
+    .SearchTag_Stand{
+        width: 20vw;
+        height: 22.5vh;
+        overflow-y: scroll;
+    }
+    .Tag_Loding{
+        margin-top: 10vh;
+        margin-left: 10vw;
+    }
 }

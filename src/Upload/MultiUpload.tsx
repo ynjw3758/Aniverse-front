@@ -6,6 +6,7 @@ import KaMap from "./KaMap";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import AddTagPeople from "./AddTag/SearchTagPeople";
+import TagList from "./Taglist/TagList";
 
 
 interface upload_data{
@@ -43,6 +44,8 @@ const MultiUpload =(props:upload_data) =>{
       const [location, setLocation]=useState<boolean>(false);
       const[islocalform , setIslocalform]=useState<boolean>(false);
       const[isActivSearch , setIsActivSearch] = useState<boolean>(false);
+      const[tagbasic, setTagbasic]=useState<boolean>(true);
+      const[tagList, setTagList]=useState<boolean>(false);
 
       const[localdata , setLocaldata] = useState<any[]>([]);
       const[textArea , setTextArea]=useState<string>("");
@@ -54,6 +57,8 @@ const MultiUpload =(props:upload_data) =>{
 
       const[refcount, setRefcount]=useState<number>(0);
       const[pagenumber , setPagenumber]=useState<number>(1);
+
+      const[tagItems, setTagItems]=useState<any[]>([]);
       
      //ref
       const inputref= useRef<HTMLInputElement>(null);
@@ -346,6 +351,25 @@ const MultiUpload =(props:upload_data) =>{
       setIsActivSearch(true);
 
     }
+    const TagList_Active =(data:any) =>{
+      const isDuplicate = tagItems.some(item => item.Id === data.Id);
+
+      if(!isDuplicate){
+        setIsActivSearch(false);
+        setTagList(true);
+        let infos:object[] = [...tagItems];
+        infos.push(data);
+        setTagItems(infos);
+      }
+      else{
+        console.log("이밎 추가된 유저입니다");
+      }
+    }
+
+    const BackSearch =() =>{
+      setTagList(false);
+      setIsActivSearch(true)
+    }
 
     return(<>
     
@@ -407,17 +431,18 @@ const MultiUpload =(props:upload_data) =>{
               </div>)}
               </div>
             </div>
-            <div className="insert_contents">
+            <div className="Multi_insert_contents">
            <textarea placeholder="당신의 일상을 올려보세요" onChange={textHandler}/>
            <input  placeholder="위치 검색"
            ref={inputref}
            onClick={localHandler}
            value={uploadlocal}
            disabled={islocalform}
-           id="local"
+          
           />
-           {!isActivSearch && (<button onClick={AddPeopleSearch}>태그 검색</button>)}
-           {isActivSearch && (<AddTagPeople />)}
+                      {tagbasic && (<button onClick={AddPeopleSearch} >태그 검색</button>)}
+                      {isActivSearch && (<AddTagPeople  AddTag={TagList_Active}/>)}
+                      {tagList && (<TagList Item={tagItems} Back_Search={BackSearch}/>)}
            </div>
             </div>
     </Fragment>)}

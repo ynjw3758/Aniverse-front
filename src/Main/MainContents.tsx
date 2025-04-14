@@ -61,10 +61,8 @@ const MainContentsx=(props:user_info) =>{
        }
     },[props.content])
 
-    console.log("isdate : ", isdata)
-    console.log("isshow : ", isshow)
     const show =(data:object) =>{
-        console.log("메인 컨텐츠 : " , data)
+
         props.onDisActive(data);
     }
     /*

@@ -21,8 +21,7 @@ type list = {
     Userid:any,
     count:number,
     total_size:number,
-    //focuse:number,
-    OnChoose :(name:string , profile:string) => void,
+    OnChoose :(data:object) => void,
     onComplete :() => void
      }
  //#endregion
@@ -38,25 +37,24 @@ useEffect(() =>{
    if(props.count== props.total_size-1){
     console.log("이제 화면을 바꾸자 하지만 바로 바꾸면 그럴수 있으니 타임을 걸어놓고 ")
     props.onComplete();
-    /*
+    
     setTimeout(() => {
         props.onComplete();
     }, Timeout);
-    */
+    
    }
    else return;
 },[props.count])
     const ChooseHandler =() =>{
     console.log("사람 추가");
-    props.OnChoose(props.Nickname, props.Profile);
+    if(props.Profile === "/image/baseimg.png"){
+        
     }
-    /*
- <div className="SearchTagList_nickname">
- </div>
- <div className="SearchTagList_id">
- </div>  
- */
-return(<div className="SearchTagList_Stand" id={divId} ref={curserRef} onClick={ChooseHandler}>
+    const user_infos:object ={Nickname:props.Nickname , Id:props.Userid, Profile:props.Profile}
+    props.OnChoose(user_infos);
+    }
+
+return(<div className="SearchTagList_Stand" id={props.Userid} ref={curserRef} onClick={ChooseHandler}>
              <img src={props.Profile}/>
            <div className="SearchTagList_Profiles"> 
                <h3>{props.Nickname}</h3>

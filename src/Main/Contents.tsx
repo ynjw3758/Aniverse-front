@@ -6,6 +6,7 @@ import ContentItem from "./ContentItem";
 type Content ={
     Img:string,
     contents:string[],
+    Nickname:string,
     disActive : (data:object) =>void
 }
 
@@ -93,7 +94,7 @@ const Contents =(props:Content) =>{
             {contentid.map((value , i) =>{return (<div className="MainContents_total_content" id={value}>
             <ContentItem nickname={nickname[i]} profile={profile[i]} 
             files={files[i]} heart={favorite[i]} conntetid={value} UserId={userid[i]} Like={like[i]} Commnets={comment[i]}
-            ondeactivate={DiActive} MyImg={props.Img} index={i}/>
+            ondeactivate={DiActive} MyImg={props.Img} index={i} MyNick={props.Nickname}/>
             </div>)}    
             )}   
           </div>

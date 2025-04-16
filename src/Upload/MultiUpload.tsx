@@ -7,6 +7,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import AddTagPeople from "./AddTag/SearchTagPeople";
 import TagList from "./Taglist/TagList";
+import {Cookies} from 'react-cookie';
+import LoginExp from "../LginExpiration/LoginExp";
 
 
 interface upload_data{
@@ -28,6 +30,12 @@ interface ResponseDataType {
   response:object
 }
 
+interface tokenRenewal {
+  message: string;
+  code: number;
+  data:string
+}
+
 
 const opendlist:string[]=["전체 공개" , "지인 공개" , "광고 공개"];
 
@@ -46,6 +54,8 @@ const MultiUpload =(props:upload_data) =>{
       const[isActivSearch , setIsActivSearch] = useState<boolean>(false);
       const[tagbasic, setTagbasic]=useState<boolean>(true);
       const[tagList, setTagList]=useState<boolean>(false);
+      const[isfirst, setIsfirst]=useState<boolean>(false);
+      const[againlogin, setAgainlogin]=useState<boolean>(false);
 
       const[localdata , setLocaldata] = useState<any[]>([]);
       const[textArea , setTextArea]=useState<string>("");
@@ -54,11 +64,14 @@ const MultiUpload =(props:upload_data) =>{
       const[preview , setPreview]=useState<string[]>(props.Img_List);
       const[videolist , setVideolist]=useState<string[]>(props.Video_List);
       const[multilist , setMultilist]=useState<string[]>(props.Multi_List);
+      const[userid, setUserid]=useState<string>("");
 
       const[refcount, setRefcount]=useState<number>(0);
       const[pagenumber , setPagenumber]=useState<number>(1);
 
       const[tagItems, setTagItems]=useState<any[]>([]);
+
+
       
      //ref
       const inputref= useRef<HTMLInputElement>(null);
@@ -72,6 +85,8 @@ const MultiUpload =(props:upload_data) =>{
       let currentchunk:any=0;
       let chunkcount:any=0;
       const navigate = useNavigate();
+      const cookies = new Cookies();
+      let refresh_token:string ="";
 
 
       const cancelHandler  =() =>{
@@ -257,8 +272,7 @@ const MultiUpload =(props:upload_data) =>{
        } 
 
       const Upload =() =>{
-        console.log("파일 업로드 일상공유하기");
-        console.log("파일 업로드 submit");
+
 
         let check:boolean= false;
         if(chunkcount != 0 || currentchunk !=0){
@@ -276,7 +290,55 @@ const MultiUpload =(props:upload_data) =>{
              console.log("응답 결과 확인 " , response.data);
             if(response.status == 200){
               console.log("토큰 인증 성공");
-              //setTokencheck(true);
+              const filedata = new FormData();
+              console.log("오리지널 파일 :" , origin);
+             if(origin !== null && origin !== undefined){
+              console.log("length :" , multilist.length);
+              for(let count=0; count<origin.length;count++){
+                filedata.append("UploadFile" , origin[count]);
+              }
+             }
+                let local:any=localdata;
+                const location_info:any=JSON.stringify(local);
+                const taglist:any =JSON.stringify(tagItems);
+                let id:any;
+                id=localStorage.getItem("id");
+                  filedata.append("text" ,textArea);
+                  filedata.append("location" , location_info);
+                  filedata.append("opendkind" , openkind);
+                  filedata.append("id" , id);
+                  filedata.append("Taginfo", taglist)
+     
+            let access_token:string="";          
+            access_token = localStorage.getItem("a_id")!;
+            console.log("access token :" , access_token);
+            axios.post("http://localhost:8081/Pets-social/Fileupload" , filedata,
+            {headers:{"Content-Type": "multipart/form-data", /*"Authorization":access_token ,*/"processData":false , "contentType":false} })
+            .then((response) =>{
+              console.log("response :" , response);
+               
+              if(response.status == 200){
+               console.log("업로드 완료");
+               props.close();
+               return;
+              }
+            }).catch(error =>{
+             if(axios.isAxiosError<ResponseDataType>(error)){
+                         console.log("error code: " , error.response?.status);
+                         
+                         if(error.code=="ERR_BAD_REQUEST"){
+                           navigate("/error");
+                         }
+     
+                         if(error.response?.status==500){
+                           console.log("서버 에러발생");
+                           navigate("/error/se-error")
+                         }
+                         
+                         console.log("error response: " , error.response?.data);
+                       }
+         })
+             
             }
     }).catch(error =>{
       if(axios.isAxiosError<ResponseDataType>(error)){
@@ -292,7 +354,60 @@ const MultiUpload =(props:upload_data) =>{
                   }
                   if(error.response?.status==401){
                       console.log("승인되지 않은 로그인");
-                      navigate("/login");
+                      Object.entries(error.response?.data).map(key =>{
+                        if(key.at(0) == "errorcode"){
+                          if(key.at(1) == "00"){
+                            navigate("/error/auth/");
+                            return;
+                          }
+                          
+                          else if(key.at(1) == "01"){
+                            console.log("토큰 시간 만료 refresh token을 보낸다");
+                            refresh_token= cookies.get('refresh_token');
+                            const id= localStorage.getItem("id");
+                            axios.post("http://localhost:8080/Pets-social/token/refresh", {
+                              refresh_token : refresh_token,
+                              id : id})
+                              .then(
+                              response =>{
+                                console.log("응답 결과 :" , response)
+                                if(response.status == 200){
+                                  localStorage.setItem("p_exp" ,response.data.data.exp);
+                                  localStorage.setItem("a_id" ,response.data.data.access_token);
+                                  navigate("/main");
+                                }
+                              }
+                            ).catch(error =>{
+                              if(axios.isAxiosError<tokenRenewal>(error)){
+                                          console.log("error code: " , error.response?.status);
+                  
+                                          if(error.response?.status==400){
+                                            navigate("/error");
+                                            return;
+                                          }
+                                          else if(error.code == "ERR_NETWORK"){
+                                            console.log("네트워크 에러 ");
+                                            return;
+                                            
+                                          }
+                                          else if(error.response?.status == 401){
+                                              console.log("다시 로그인해야 된다.");
+                                              localStorage.clear();
+                                              setAgainlogin(true);
+
+               
+                                          }
+                                          else if(error.response?.status==301){
+                                              console.log("기존 아이디 존재");
+                                              setIsfirst(true);
+                                              setUserid(error.response?.data.data);
+                                          }
+                                        }
+                          })
+                            
+                          }
+                        }
+                      })
                   }
                   if(error.response?.status==500){
                     console.log("서버 에러발생");
@@ -304,38 +419,6 @@ const MultiUpload =(props:upload_data) =>{
   })
 
         }
-
-        const filedata = new FormData();
-         console.log("오리지널 파일 :" , origin);
-        if(origin !== null && origin !== undefined){
-         console.log("length :" , multilist.length);
-         for(let count=0; count<origin.length;count++){
-           filedata.append("UploadFile" , origin[count]);
-         }
-        }
-           let local:any=localdata;
-           const location_info:any=JSON.stringify(local);
-           let id:any;
-           id=localStorage.getItem("id");
-             filedata.append("text" ,textArea);
-             filedata.append("location" , location_info);
-             filedata.append("opendkind" , openkind);
-             filedata.append("id" , id);
-
-       let access_token:string="";          
-       access_token = localStorage.getItem("a_id")!;
-       console.log("access token :" , access_token);
-       axios.post("http://localhost:8081/Pets-social/Fileupload" , filedata,
-       {headers:{"Content-Type": "multipart/form-data", /*"Authorization":access_token ,*/"processData":false , "contentType":false} })
-       .then((response) =>{
-         console.log("response :" , response);
-          
-         if(response.status == 200){
-          console.log("업로드 완료");
-          props.close();
-          return;
-         }
-       })
       }
       const Firtst_backHandler =() =>{
         setModal(true);
@@ -372,7 +455,7 @@ const MultiUpload =(props:upload_data) =>{
     }
 
     return(<>
-    
+    {againlogin && (<LoginExp />)}
     {modal && (<SecondModals  onClose={cancelHandler} ondelete={closeModalHandler} 
       isopen={isSecondmodal}
       isinitila={initialpage}/>)}

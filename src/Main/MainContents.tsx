@@ -97,10 +97,10 @@ const MainContentsx=(props:user_info) =>{
           onClick={ModalHandler}/>
         </div>
         {(isdata == true && isshow ==false) && (<div className="Maincontents_body_blur">
-            <Contents  contents={props.content} disActive={DisAvtive} Img={props.img}/>
+            <Contents  contents={props.content} disActive={DisAvtive} Img={props.img} Nickname={props.nickname}/>
         </div>)}
         {(isdata == true && isshow ==true) && (<div className="Main_Contents">
-            <Contents  contents={props.content} disActive={show} Img={props.img}/>
+            <Contents  contents={props.content} disActive={show} Img={props.img} Nickname={props.nickname}/>
         </div>)}
 
         {!isdata && (<div className="upload_story">

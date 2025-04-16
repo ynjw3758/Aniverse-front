@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 import SecondModals from "./SecondModals";
 import AddTagPeople from "./AddTag/SearchTagPeople";
 import TagList from "./Taglist/TagList";
+import {Cookies} from 'react-cookie';
+import LoginExp from "../LginExpiration/LoginExp";
 
 interface video_data{
     Next :(extend:boolean) => void;
@@ -23,7 +25,13 @@ interface video_data{
 interface ResponseDataType {
   message: string;
   code: number;
-  response:object
+  data:object
+}
+
+interface tokenRenewal {
+  message: string;
+  code: number;
+  data:string
 }
 
 const opendlist:string[]=["전체 공개" , "지인 공개" , "광고 공개"];
@@ -34,7 +42,6 @@ const Video =(props:video_data) =>{
     const[list_size , setList_size]=useState<boolean>(false); 
     const[firstpage,  setFirstpage]=useState<boolean>(false);
     const[nextpage,  setNextpage]=useState<boolean>(false);
-    const[edit, setEdit]=useState<boolean>(false);
     const[isplaying, setIsplaying]=useState<boolean>(false);
     const[leftactive, setLeftactive]=useState<boolean>(false);
     const[rightactive, setRightactive]=useState<boolean>(false);
@@ -50,7 +57,9 @@ const Video =(props:video_data) =>{
     const[tagbasic, setTagbasic]=useState<boolean>(true);
     const[tagList, setTagList]=useState<boolean>(false);
     const[isActivSearch , setIsActivSearch] = useState<boolean>(false);
-    const[dupleTag , setDupleTag]=useState<boolean>(false);
+    const[againlogin, setAgainlogin]=useState<boolean>(false);
+    const[userid, setUserid]=useState<string>("");
+    const[isfirst, setIsfirst]=useState<boolean>(false);
     
 
     const [video, setVideo] = useState<string[]>(props.Video_List);
@@ -88,6 +97,8 @@ const Video =(props:video_data) =>{
     let currentchunk:any=0;
     let chunkcount:any=0;
     const navigate = useNavigate();
+    const cookies = new Cookies();
+    let refresh_token:string =""
 
 
 
@@ -287,31 +298,7 @@ const Video =(props:video_data) =>{
         props.Next(false);
     }
 
-/*
-             {!load && (preview.map((video, id) =>(<div className={Clesses.video} key={id}>   
-                <video  autoPlay loop controls>
-                    <source src={video}  type="video/mp4" />
-                    </video>
-            </div>)))}
-            {load && (<div className={Clesses.load}>
-                 <h3>영상 미리보기 로딩 중....</h3> 
-               </div>)}
-               */
 
-      /*
-                          <input type="range"  min="0" max="80" list="tickmarks" step="1"/>
-                    <datalist id="tickmarks" className={Clesses.test}>
-                       <option value="0">0s</option>
-                       <option value="10" />
-                       <option value="20" />
-                       <option value="30" />
-                       <option value="40" />
-                       <option value="50">1</option>
-                       <option value="60" />
-                       <option value="70" />
-                       <option value="80">2</option>
-                    </datalist>
-*/
 
  const clickHandler =(e:any) =>{
    if(playtime !==videoref.current?.duration && isplaying == false){
@@ -511,11 +498,6 @@ const Video =(props:video_data) =>{
                                   formData.append("opendkind" , openkind);
                                   formData.append("chunklist" , list);
                                   formData.append("chunkcount" , count);
-                  /*
-                                  let access_token:string="";          
-                                  access_token = localStorage.getItem("a_id")!;
-                                  console.log("access token :" , access_token);
-                  */
                                   axios.post("http://localhost:8081/Pets-social/LargeUpload" , formData,
                                     {headers:{"Content-Type": "multipart/form-data", /*"Authorization":access_token ,*/"processData":false , "contentType":false} })
                                     .then((response) =>{
@@ -671,9 +653,63 @@ const Video =(props:video_data) =>{
                             
                             
                           }
-                          if(error.response?.status==401){
+                          if(error.response?.status == 401){
                               console.log("승인되지 않은 로그인");
-                              navigate("/login");
+                              Object.entries(error.response?.data).map(key =>{
+                                if(key.at(0) == "errorcode"){
+                                  if(key.at(1) == "00"){
+                                    navigate("/error/auth/");
+                                    return;
+                                  }
+                                  
+                                  else if(key.at(1) == "01"){
+                                    console.log("토큰 시간 만료 refresh token을 보낸다");
+                                    refresh_token= cookies.get('refresh_token');
+                                    const id= localStorage.getItem("id");
+                                    axios.post("http://localhost:8080/Pets-social/token/refresh", {
+                                      refresh_token : refresh_token,
+                                      id : id})
+                                      .then(
+                                      response =>{
+                                        console.log("응답 결과 :" , response)
+                                        if(response.status == 200){
+                                          localStorage.setItem("p_exp" ,response.data.data.exp);
+                                          localStorage.setItem("a_id" ,response.data.data.access_token);
+                                          navigate("/main");
+                                        }
+                                      }
+                                    ).catch(error =>{
+                                      if(axios.isAxiosError<tokenRenewal>(error)){
+                                                  console.log("error code: " , error.response?.status);
+                          
+                                                  if(error.response?.status==400){
+                                                    navigate("/error");
+                                                    return;
+                                                  }
+                                                  else if(error.code == "ERR_NETWORK"){
+                                                    console.log("네트워크 에러 ");
+                                                    return;
+                                                    
+                                                  }
+                                                  else if(error.response?.status == 401){
+                                                      console.log("다시 로그인해야 된다.");
+                                                      localStorage.clear();
+                                                      setAgainlogin(true);
+
+                       
+                                                  }
+                                                  else if(error.response?.status==301){
+                                                      console.log("기존 아이디 존재");
+                                                      setIsfirst(true);
+                                                      setUserid(error.response?.data.data);
+                                                  }
+                                                }
+                                  })
+                                    
+                                  }
+                                }
+                              })
+                              
                               
                           }
                           if(error.response?.status==500){
@@ -741,7 +777,8 @@ const Video =(props:video_data) =>{
   }
 
     return(<Fragment>
-         {modal && (<SecondModals  onClose={cancelHandler} ondelete={closeModalHandler} 
+               {againlogin && (<LoginExp />)}
+               {modal && (<SecondModals  onClose={cancelHandler} ondelete={closeModalHandler} 
                      isopen={isSecondmodal}
                      isinitila={initialpage}/>)}
                {nextpage && (<>               
@@ -883,10 +920,6 @@ const Video =(props:video_data) =>{
                 </div>
                </>)};
                <div>
-                {video.map((value, id) =>(<>
-                  <video ref={videoRef} style={{ display: 'none' }} muted />
-                  <canvas ref={canvasRef} style={{ display: 'none' }} />
-                </>))}
                </div>
                
     </Fragment>)

@@ -90,10 +90,12 @@
         align-items: center;
         justify-content: center;
     }
-    .Mainpage_Content_commnet_post p{
+    .Mainpage_Content_commnet_post p,
+    .Mainpage_Content_commnet_post p:hover{
         font-size: medium;
         color:#007AFF;
         font-weight: 600;
+        cursor: pointer;
     }
     .Mainpage_Content_subItem{
         margin-top: -5px;
@@ -215,10 +217,12 @@
         align-items: center;
         justify-content: center;
     }
-    .Mainpage_Content_commnet_post p{
+    .Mainpage_Content_commnet_post p,
+    .Mainpage_Content_commnet_post p:hover{
         font-size: medium;
         color:#007AFF;
         font-weight: 600;
+        cursor: pointer;
     }
 
     .Mainpage_Content_imoticon{
@@ -251,6 +255,7 @@
         margin-top: -2.2vh;
         padding: 0px;
         width: 100%;
+        margin-left: 0vw;
     }
     .Mainpage_Content_subItem input:focus{
         outline: none;
@@ -293,6 +298,52 @@
     .MainPage_Comment_input{
         display: flex;
         flex-direction: row;
+    }
+    .Comments_loading{
+        margin-top: 0vh;
+        margin-left: 15vw;
+    }
+    .Comments_text_show{
+        width: max-content;
+        height: max-content;
+        padding: 0px;
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: -4vh;
+    }
+    .Comments_text_show p{
+        font-size: small;
+        font-weight: bolder;
+    }
+    .Note_Complete_SendBackDrop{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        z-index: 30;
+        background-color: rgba(0, 0, 0, 0.75);
+    }
+    .Note_Complete_Main{
+        width: 30vw;
+        height: 20vh;
+        position: fixed;
+        top: 10vh;
+        left: 32vw;
+        background-color:white;
+        border-radius: 14px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+        z-index: 50;
+        animation: slide-down 300ms ease-out forwards;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+
+    }
+    .Note_Complete_Main p{
+        font-size: medium;
+        font-weight: bolder;
     }
 }
 

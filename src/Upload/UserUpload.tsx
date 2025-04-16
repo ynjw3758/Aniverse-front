@@ -11,6 +11,8 @@ import MultiUpload from "./MultiUpload";
 import "./UserUpload.scss";
 import TagList from "./Taglist/TagList";
 import AddTagPeople from "./AddTag/SearchTagPeople";
+import {Cookies} from 'react-cookie';
+import LoginExp from "../LginExpiration/LoginExp";
 
 
 
@@ -25,6 +27,12 @@ interface ResponseDataType {
   message: string;
   code: number;
   response:object
+}
+
+interface tokenRenewal {
+  message: string;
+  code: number;
+  data:string
 }
 
 const opendlist:string[]=["전체 공개" , "지인 공개" , "광고 공개"];
@@ -42,7 +50,6 @@ const UserUpload=(props:user_info) =>{
   const[one_before , setOne_before]=useState(<p></p>);
   const[mu_before , setMu_before]=useState(<p></p>);
 
-  const[isCreateThum, setIsCreateThum]=useState<boolean>(false);
   const[islocalform , setIslocalform]=useState<boolean>(false);
   const [video, setVideo] = useState<boolean>(false);
   const [isimg, setIsimg] = useState<boolean>(false);
@@ -71,6 +78,11 @@ const UserUpload=(props:user_info) =>{
   const[tagbasic, setTagbasic]=useState<boolean>(true);
   const[tagList, setTagList]=useState<boolean>(false);
   const[isActivSearch , setIsActivSearch] = useState<boolean>(false);
+  const[againlogin, setAgainlogin]=useState<boolean>(false);
+  const[userid, setUserid]=useState<string>("");
+  const[isfirst, setIsfirst]=useState<boolean>(false);
+
+
   const[tagItems, setTagItems]=useState<any[]>([]);
 
 
@@ -78,6 +90,8 @@ const UserUpload=(props:user_info) =>{
   const right_active = rightactive ? "right_active" : "right_unactive";
   const max_size=1024*1024*100;
   const navigate = useNavigate();
+  const cookies = new Cookies();
+  let refresh_token:string =""
 
 
   const onChangeImg = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -476,7 +490,46 @@ const UserUpload=(props:user_info) =>{
               .then(response =>{
                  console.log("응답 결과 확인 " , response.data);
                 if(response.status == 200){
-                  console.log("토큰 인증 성공");
+                  const filedata = new FormData();
+               
+                  if(uploadFile !== null && uploadFile !== undefined){
+                   console.log("length :" , uploadFile.length);
+                   for(let count=0; count<uploadFile.length;count++){
+                     filedata.append("UploadFile" , uploadFile[count]);
+                   }
+                  }
+                  let local:any=localdata;
+                  const location_info:any=JSON.stringify(local);
+                  let id:any;
+                  id=localStorage.getItem("id");
+                  const taglist:any =JSON.stringify(tagItems);
+    
+                 filedata.append("text" ,textArea);
+                 filedata.append("location" , location_info);
+                 filedata.append("opendkind" , openkind);
+                 filedata.append("id" , id);
+                 filedata.append("Taginfo", taglist)
+    
+                 axios.post("http://localhost:8081/Pets-social/Fileupload" , filedata,
+                 {headers:{"Content-Type": "multipart/form-data","processData":false , "contentType":false} })
+                 .then((response) =>{
+                   console.log("response :" , response);
+                   props.onComplete();
+                 }).catch(error =>{
+                  if(axios.isAxiosError<ResponseDataType>(error)){
+                              console.log("error code: " , error.response?.status);
+                              
+                              if(error.code=="ERR_BAD_REQUEST"){
+                                navigate("/error");
+                              }
+                              else if(error.response?.status==500){
+                                console.log("서버 에러발생");
+                                navigate("/error/se-error")
+                              }
+                              
+                              console.log("error response: " , error.response?.data);
+                            }
+              })
                   
                 }
         }).catch(error =>{
@@ -493,7 +546,60 @@ const UserUpload=(props:user_info) =>{
                       }
                       if(error.response?.status==401){
                           console.log("승인되지 않은 로그인");
-                          navigate("/login");
+                          Object.entries(error.response?.data).map(key =>{
+                            if(key.at(0) == "errorcode"){
+                              if(key.at(1) == "00"){
+                                navigate("/error/auth/");
+                                return;
+                              }
+                              
+                              else if(key.at(1) == "01"){
+                                console.log("토큰 시간 만료 refresh token을 보낸다");
+                                refresh_token= cookies.get('refresh_token');
+                                const id= localStorage.getItem("id");
+                                axios.post("http://localhost:8080/Pets-social/token/refresh", {
+                                  refresh_token : refresh_token,
+                                  id : id})
+                                  .then(
+                                  response =>{
+                                    console.log("응답 결과 :" , response)
+                                    if(response.status == 200){
+                                      localStorage.setItem("p_exp" ,response.data.data.exp);
+                                      localStorage.setItem("a_id" ,response.data.data.access_token);
+                                      navigate("/main");
+                                    }
+                                  }
+                                ).catch(error =>{
+                                  if(axios.isAxiosError<tokenRenewal>(error)){
+                                              console.log("error code: " , error.response?.status);
+                      
+                                              if(error.response?.status==400){
+                                                navigate("/error");
+                                                return;
+                                              }
+                                              else if(error.code == "ERR_NETWORK"){
+                                                console.log("네트워크 에러 ");
+                                                return;
+                                                
+                                              }
+                                              else if(error.response?.status == 401){
+                                                  console.log("다시 로그인해야 된다.");
+                                                  localStorage.clear();
+                                                  setAgainlogin(true);
+
+                   
+                                              }
+                                              else if(error.response?.status==301){
+                                                  console.log("기존 아이디 존재");
+                                                  setIsfirst(true);
+                                                  setUserid(error.response?.data.data);
+                                              }
+                                            }
+                              })
+                                
+                              }
+                            }
+                          })
                       }
                       if(error.response?.status==500){
                         console.log("서버 에러발생");
@@ -503,30 +609,7 @@ const UserUpload=(props:user_info) =>{
                       console.log("error response: " , error.response?.data);
                     }
       })
-              const filedata = new FormData();
-               
-              if(uploadFile !== null && uploadFile !== undefined){
-               console.log("length :" , uploadFile.length);
-               for(let count=0; count<uploadFile.length;count++){
-                 filedata.append("UploadFile" , uploadFile[count]);
-               }
-              }
-              let local:any=localdata;
-              const location_info:any=JSON.stringify(local);
-              let id:any;
-              id=localStorage.getItem("id");
 
-             filedata.append("text" ,textArea);
-             filedata.append("location" , location_info);
-             filedata.append("opendkind" , openkind);
-             filedata.append("id" , id);
-
-             axios.post("http://localhost:8081/Pets-social/Fileupload" , filedata,
-             {headers:{"Content-Type": "multipart/form-data","processData":false , "contentType":false} })
-             .then((response) =>{
-               console.log("response :" , response);
-               props.onComplete();
-             })
             }
             const textHandler =(e:React.ChangeEvent<HTMLTextAreaElement>) =>{
               console.log("text :" , e.target.value)
@@ -581,9 +664,10 @@ const UserUpload=(props:user_info) =>{
               setIsActivSearch(true)
             }
 
-    return(<div className="MainBackDrop" onClick={CancelHandler}>
-            <div className={main} onClick={(e) => e.stopPropagation()}>
-            
+    return(<>
+    {againlogin && (<LoginExp />)}
+           <div className="MainBackDrop" onClick={CancelHandler}>
+            <div className={main} onClick={(e) => e.stopPropagation()}> 
             {multiupload && (<MultiUpload Img_List={preview} Video_List={videolist} 
             Multi_List={multilist} Initilalize={FirstPageHandler}
             Next={ExtendHandler} nickname={props.nickname} img={props.img} origin={uploadFile} 
@@ -801,7 +885,8 @@ const UserUpload=(props:user_info) =>{
           </label>
            </>)}
             </div>
-           </div>)
+           </div>
+           </>)
 
 }
 

@@ -64,6 +64,7 @@ const SendNote =(props:Note) =>{
     const[limitsize, setLimitsize]=useState<boolean>(false);
     const[fileerror, setFileerror]=useState<boolean>(false);
     const[isnick, setIsnick]=useState<boolean>(false);
+    const[iskeyboard, setIskeyboard]=useState<boolean>(false);
     
     const[sendimage, setSendimage]=useState<string[]>([]);
     const [preview, setPreview] = useState<string[]>([]);
@@ -83,6 +84,8 @@ const SendNote =(props:Note) =>{
     const restruct = addImage ? "AddPicture" : "AddImg";
     const profile = useContext(user_info);
     const file_size = useRef(0);
+    let Input_Search = useRef<string |null>(null);
+    let keyboard_valid= useRef<boolean | null | undefined >(false);
 //#endregion
 
     useEffect(() =>{
@@ -111,17 +114,22 @@ const SendNote =(props:Note) =>{
     const CancelHandler =() =>{
      props.Onclose();
     }
+    useEffect(() =>{
+      if(search == "" && keyboard_valid.current ===false) return;
+      else if(search =="" && Input_Search.current?.length ===1 && 
+        keyboard_valid.current ===true
+      ){
+        setUserinfo([]);
+        setIskeyboard(false);
+        
+      }
+      keyboard_valid.current= false;
+      },[search])
+
 
     const SendPerson =(event:React.ChangeEvent<HTMLInputElement>) =>{
-        setSearch(event.target.value);
-        if(event.target.value ==""){
-          setLoading(false);
-          setUserinfo([]);
-        }
-        else if(search == event.target.value){
-          console.log("변호 이벤트 감지 :" , event.target.value);
-          return;
-        }
+      Input_Search.current = search;
+      setSearch(event.target.value);
     }
     
     const ListDelete =() =>{
@@ -230,42 +238,7 @@ const SendNote =(props:Note) =>{
     
     },[sendcheck])
 
-    //서버에 데이터 전송
-    useEffect(() =>{
-     let access_token:string="";
-     access_token =localStorage.getItem("a_id")!;
-     console.log("access : " , access_token);
-     axios.defaults.headers.common['Authorization'] = access_token;
-     axios.get("http://localhost:8080/Pets-social/acccheck")
-     .then(response =>{
-        console.log("응답 결과 확인 " , response.data);
-       if(response.status == 200){
-         console.log("토큰 인증 성공");
 
-       }
-     }).catch((error) =>{
-        if(axios.isAxiosError<ResponseDataType>(error)){
-            console.log("error code: " , error.response?.status);
-            
-            if(error.code=="ERR_BAD_REQUEST"){
-              navigate("/error");
-            }
-            if(error.code == "ERR_NETWORK"){
-              console.log("네트워크 에러 ");
-              
-            }
-            if(error.response?.status==401){
-                console.log("승인되지 않은 로그인");
-            }
-            if(error.response?.status==500){
-              console.log("서버 에러발생");
-              navigate("/error/se-error")
-            }
-            
-            console.log("error response: " , error.response?.data);
-          }
-     })
-    },[])
 
     //키보드 땟을 때 이벤트
     const KeyupHandler =(event:React.KeyboardEvent<HTMLInputElement>) =>{
@@ -273,6 +246,10 @@ const SendNote =(props:Note) =>{
     }
     //키보드 눌럿을 때 이벤트
     const KeyDOWNHandler =(event:React.KeyboardEvent<HTMLInputElement>) =>{
+      keyboard_valid.current = true;
+      setKeycheck(true);
+      setIskeyboard(true);
+      /*
         setKeycheck(true);
         console.log("키 이벤트  :" , event);
         if(userinfo.length ==0){
@@ -297,7 +274,7 @@ const SendNote =(props:Note) =>{
           }
           
         }
-
+*/
     }
     const AddHandler =(data:string, profile:string) =>{
      const isValue:boolean = sendList.includes(data);

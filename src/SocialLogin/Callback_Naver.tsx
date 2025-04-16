@@ -7,6 +7,7 @@ import {Cookies} from 'react-cookie';
 
 import "./Callback_Naver.scss";
 import user_info from "../Userdata/Userdata";
+import LoginExp from "../LginExpiration/LoginExp";
 
 
 interface ResponseDataType {
@@ -187,16 +188,16 @@ const Callback_Naver =() =>{
                              navigate("/link");
                              return;
                            }
-                           if(error.code=="ERR_BAD_REQUEST"){
+                           else if(error.code=="ERR_BAD_REQUEST"){
                              navigate("/error");
+                             return ;
                            }
-                           if(error.code == "ERR_NETWORK"){
-                             console.log("네트워크 에러 ");
+                           else if(error.code == "ERR_NETWORK"){
+                             return;
                              
                            }
-                           if(error.response?.status==401){
-                               console.log("승인되지 않은 로그인 : " ,error.response.data);
-   
+                           else if(error.response?.status==401){
+                                  return;
                            }
                            
                            //console.log("error response: " , error.response?.data);
@@ -294,15 +295,7 @@ const Callback_Naver =() =>{
     }
 
     return(<>
-           {againlogin && (<div className="Naver_refresh_token_again_BackDrop">
-            <div className="Naver_refresh_token_again">
-            <h2>세션 만료</h2>
-            <p>
-            오랜 시간이 지나 자동으로 로그아웃되었어요.<br />
-            보안을 위해 다시 로그인해 주세요.</p>
-            <button onClick={movelogin} type="button">로그인 페이지 이동</button>
-            </div>
-           </div>)}
+           {againlogin && (<LoginExp />)}
            {isfirst && (<div className="Callback_naver_nicksetting">
             <p>자기의 개성을 드러내는 닉네임을 사용해보세요</p>
             <div className="callback_naver_dupl">

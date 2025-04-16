@@ -68,6 +68,7 @@ const Search =(props:Searchlist) =>{
     },[props.List])
 
     const Choose =(data:string, profile:string) =>{
+      console.log("누구나")
     props.addName(data, profile);
     }
   return(<Fragment>

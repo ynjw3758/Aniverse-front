@@ -11,6 +11,7 @@ import {useEffect, useState ,useRef , useContext, useSyncExternalStore, ReactNod
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
+import {Oval} from "react-loader-spinner";
 
 //                             +--------------------
 //-----------------------------+   Module
@@ -38,6 +39,7 @@ type content_info = {
   index:number,
   Like:string,
   Commnets:string,
+  MyNick:string,
   ondeactivate:(chage_data:object) => void
 }
 //#endregion
@@ -81,6 +83,8 @@ const ContentItem =(props:content_info) =>{
     const[iscommet, setIscommet]=useState<boolean>(false);
     const[ismore, setIsmore]=useState<boolean>(false);
     const [isExpanded, setiSExpanded]=useState<boolean>(false);
+    const[showComment, setShowComment]=useState<boolean>(false);
+    const[isloading, setIsloading]=useState<boolean>(false);
     
     const[file , setFile]=useState<string[]>(props.files);
     const[img, setImg]=useState<string[]>([]);
@@ -100,6 +104,7 @@ const ContentItem =(props:content_info) =>{
     const[connectid, setConnectid]=useState<string>("");
     const[userid, setUserid]=useState<string>("");
     const[nickname, setNickname]=useState<string>("");
+    const[text, setText]=useState<string>("")
 
     const[heart , setHeart]=useState<number>(props.heart);
     const[refcount, setRefcount]=useState<number>(0);
@@ -500,17 +505,7 @@ const list:any=useRef<null | HTMLVideoElement[]>([]);
       else{
         setMousecheck(true);
       }
-      
-      /*
-      if(event.clientY >279 && event.clientX> 302){
 
-        setMousecheck(true);
-      }
-      else{
-
-        setMousecheck(false);
-      }
-*/
     }
     const Mouseover =() =>{
       setMousecheck(true);
@@ -652,8 +647,71 @@ const list:any=useRef<null | HTMLVideoElement[]>([]);
 
        }
 
-    const CommentHandler =() =>{
+    const CommentUpload =() =>{
+     console.log("댓글 달기");
+     setIsloading(true);
+     setText(emoticon)
+     let access_token:string="";
+     let UserId:string= "";
+     access_token = localStorage.getItem("a_id")!;
+     UserId = localStorage.getItem("id")!;
+     axios.defaults.headers.common['Authorization'] = access_token;
 
+     axios.get("http://localhost:8080/Pets-social/acccheck").then((response) =>{
+
+      if(response.status == 200){
+        
+      axios.post("http://localhost:8090/Pets-social/comment/Create", {UserId :UserId ,Comments:emoticon ,
+        contentid:props.conntetid, profile:props.MyImg, nickname:props.MyNick
+      }).then((response) =>{
+          console.log("응답 :" , response);
+          setIspost(false);
+          setShowComment(true);
+          setIsloading(false);
+          setEmoticon("");
+      }).catch((error) =>{
+        if(axios.isAxiosError<ResponseDataType>(error)){
+          console.log("error code: " , error.response?.status);
+          
+          if(error.code=="ERR_BAD_REQUEST"){
+            navigate("/error");
+          }
+          if(error.response?.status==500){
+            console.log("서버 에러발생");
+            navigate("/error/se-error")
+          }
+          
+          console.log("error response: " , error.response?.data);
+        }
+      })}
+
+     }).catch((error) =>{
+        if(axios.isAxiosError<ResponseDataType>(error)){
+          console.log("error code: " , error.response?.status);
+          
+          if(error.code=="ERR_BAD_REQUEST"){
+            navigate("/error");
+          }
+          if(error.code == "ERR_NETWORK"){
+            console.log("네트워크 에러 ");
+            
+          }
+          if(error.response?.status==401){
+              console.log("승인되지 않은 로그인");
+          }
+          if(error.response?.status==500){
+            console.log("서버 에러발생");
+            navigate("/error/se-error")
+          }
+          
+          console.log("error response: " , error.response?.data);
+        }
+      })
+
+    }
+
+    const CompleteModal_Close =() =>{
+      setComplete(false);
     }
     return(<>
 
@@ -696,13 +754,25 @@ const list:any=useRef<null | HTMLVideoElement[]>([]);
          <p>더 보기...</p>
          </>}
         </div>)}
+        {showComment && (<div className="Comments_text_show">
+              <p>{text}</p>
+            </div>)}
         </div>
         <div className="MainPage_Comment_input">
-        <input type="text" placeholder="댓글 달기" onChange={commentHandler} value={emoticon}/>  
+        {isloading && (<>
+          <Oval 
+                  color="#ff0000" 
+                  height={20} 
+                  width={20}
+               />
+        </>)}
+        {!isloading && (<>
+          <input type="text" placeholder="댓글 달기" onChange={commentHandler} value={emoticon}/>  
         <img src={"/image/emoticon.png"}  onClick={EmojiHandler}/>
            {ispost && (<div className="Mainpage_Content_commnet_post">
-            <p onClick={CommentHandler}>게시</p>
+            <p onClick={CommentUpload}>게시</p>
         </div>)}
+        </>)}
         </div>
         </div>
        </div>   
@@ -761,13 +831,25 @@ const list:any=useRef<null | HTMLVideoElement[]>([]);
               <p>더 보기...</p>
               </>}
             </div>)}
+            {showComment && (<div className="Comments_text_show">
+              <p>{text}</p>
+            </div>)}
             </div>
             <div className="MainPage_Comment_input">
-        <input type="text" placeholder="댓글 달기" onChange={commentHandler} value={emoticon}/>  
+            {isloading && (<div className="Comments_loading">
+          <Oval 
+                  color="#ff0000" 
+                  height={30} 
+                  width={30}
+               />
+        </div>)}
+        {!isloading && (<>
+          <input type="text" placeholder="댓글 달기" onChange={commentHandler} value={emoticon}/>  
         <img src={"/image/emoticon.png"}  onClick={EmojiHandler}/>
            {ispost && (<div className="Mainpage_Content_commnet_post">
-            <p onClick={CommentHandler}>게시</p>
+            <p onClick={CommentUpload}>게시</p>
         </div>)}
+        </>)}
         </div>
         {(emojiindex === props.index && isemoji == true) &&(        
           <div className="Mainpage_Content_emojiopen">
@@ -791,9 +873,11 @@ const list:any=useRef<null | HTMLVideoElement[]>([]);
       {followcheck.isCancel && (<CancelFollower  id={otherId} nickname={smallnickname} 
       profile={smallprofile} onClose={CancelModelHandler}/>)}
 
-     {complete && (<Modal onClose={ModalClose}>
+     {complete && (<div className="Note_Complete_SendBackDrop" onClick={CompleteModal_Close}>
+                    <div className="Note_Complete_Main">
                <p>쪽지가 전송되었습니다.</p>
-     </Modal>)}
+     </div>
+    </div>)}
      {isBlock && (<div className="Mainpage_Content_cpmodal">
       {blockList.map((data) =>(<>
       <p>{data}님이 차단상태입니다</p>

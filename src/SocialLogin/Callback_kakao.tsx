@@ -5,6 +5,7 @@ import { useEffect , useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import user_info from "../Userdata/Userdata";
 import { Cookies } from "react-cookie";
+import LoginExp from "../LginExpiration/LoginExp";
 
 interface ResponseDataType {
     message: string;
@@ -233,15 +234,7 @@ const Callbackkakao =() =>{
       </>)}
       */
     return(<>
-               {againlogin && (<div className="Kakao_refresh_token_again_BackDrop">
-            <div className="Kakao_refresh_token_again">
-            <h2>세션 만료</h2>
-            <p>
-            오랜 시간이 지나 자동으로 로그아웃되었어요.<br />
-            보안을 위해 다시 로그인해 주세요.</p>
-            <button  type="button" onClick={movelogin}>로그인 페이지 이동</button>
-            </div>
-           </div>)}
+        {againlogin && (<LoginExp />)}
         <div className={isblur}>
             <h2>로그인 중입니다</h2>
            <h3>잠시만 기다려주세요...</h3> 

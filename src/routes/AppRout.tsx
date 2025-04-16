@@ -6,7 +6,7 @@ import Login from "../UserInfo/Login";
 import Agree from "../Agree/Agree";
 import Sign from "../UserInfo/Sign";
 import MapinPage from "../Main/MainPage";
-import Callbackkakao from "../LoadPage/Callback_kakao";
+import Callbackkakao from "../SocialLogin/Callback_kakao";
 import Not_found from "../Error_Page/Not_Found";
 import Loginfind from "../Loginfind/Loginfind";
 import Resetpassword from "../Loginfind/Resetpassword";
@@ -21,7 +21,7 @@ import MainNote from "../Note/MainNote";
 import Network from "../Error_Page/Network";
 import ChatMain from "../Chat/ChatMain";
 import Server_Error from "../Error_Page/Server_Error";
-import Callback_Naver from "../LoadPage/Callback_Naver";
+import Callback_Naver from "../SocialLogin/Callback_Naver";
 
 const router = createBrowserRouter([
   {

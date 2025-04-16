@@ -517,6 +517,32 @@
     
     }
 
+  .Multi_insert_contents button,
+  .Multi_insert_contents button:hover{
+    cursor: pointer;
+    background-color: white;
+    outline: none;
+    border-top: none;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    padding-left: 1vw;
+    padding-right: 1vw;
+  }
+  .Multi_insert_contents input{
+    cursor: pointer;
+    padding-left: 20px;
+    padding-top:20px;
+    padding-bottom: 20px;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    font-size: large;
+    font-weight: bolder;
+  }
+
 
     .test{
      position: absolute;

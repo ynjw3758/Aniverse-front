@@ -16,8 +16,8 @@ import axios from "axios";
 //                            +--------------------
 //#region type 
  import DropDownItem from "../Dropdow/DropDownItem";
- import MainSide from "./MainSide";
- import MainContentsx from "./MainContents";
+ import MainSide from "./Side/MainSide";
+ import MainContentsx from "./Contents/MainContents";
  import "./MainPage.scss";
  import user_info from "../Userdata/Userdata";
  //#endregion

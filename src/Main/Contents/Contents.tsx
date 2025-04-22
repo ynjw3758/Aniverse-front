@@ -20,6 +20,9 @@ const Contents =(props:Content) =>{
     const[userid ,setUserid]=useState<string[]>([]);
     const[like, setLike]=useState<string[]>([]);
     const[comment, setComment]=useState<string[]>([]);
+    const[commnet_cnt, setComment_cnt]=useState<number[]>([]);
+    const[local, setLocal]=useState<string[]>([])
+    const[create, setCreate]=useState<string[]>([])
 
 
     
@@ -35,6 +38,9 @@ const Contents =(props:Content) =>{
      let favories:number[]=[...favorite];
      let likes:string[]=[...like];
      let comments:string[]=[...comment];
+     let Comment_cnt:number[]=[...commnet_cnt];
+     let localName:string[]=[...local];
+     let ct_date:string[]=[...create];
      contents.map((data) =>{
         Object.entries(data).map((key) =>{
 
@@ -52,6 +58,15 @@ const Contents =(props:Content) =>{
                 }
                 
                 setProfile(prfile);
+            }
+            else if(key.at(0) =="CreateDate"){
+                ct_date.push(key[1]);
+                setCreate(ct_date);
+
+            }
+            else if(key.at(0) == "local_content"){
+                localName.push(key[1])
+                setLocal(localName);
             }
             else if(key.at(0) == "content_id"){
                 content_id.push(key[1]);
@@ -79,6 +94,12 @@ const Contents =(props:Content) =>{
                 comments.push(key[1]);
                 setComment(comments);
             }
+            else if(key.at(0) == "comment_cnt"){
+                const cnt:number= Number(key[1]);
+                Comment_cnt.push(cnt);
+                setComment_cnt(Comment_cnt);
+            }
+            
             
 
         })
@@ -93,8 +114,9 @@ const Contents =(props:Content) =>{
         <div className="MainContents_position">
             {contentid.map((value , i) =>{return (<div className="MainContents_total_content" id={value}>
             <ContentItem nickname={nickname[i]} profile={profile[i]} 
-            files={files[i]} heart={favorite[i]} conntetid={value} UserId={userid[i]} Like={like[i]} Commnets={comment[i]}
-            ondeactivate={DiActive} MyImg={props.Img} index={i} MyNick={props.Nickname}/>
+            files={files[i]} heart={favorite[i]} UserId={userid[i]} Like={like[i]} Commnets={comment[i]} 
+            index={i} Commnet_cnt={commnet_cnt[i]}  Local ={local[i]} Ct_date={create[i]} conntetid={value} ondeactivate={DiActive} 
+            MyImg={props.Img} MyNick={props.Nickname}/>
             </div>)}    
             )}   
           </div>

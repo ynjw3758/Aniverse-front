@@ -2,10 +2,10 @@ import { Fragment, useState ,useContext, useEffect} from "react";
 import "./MainContents.scss";
 import React from "react";
 
-import user_info from "../Userdata/Userdata";
-import UserUpload from "../Upload/UserUpload";
+import user_info from "../../Userdata/Userdata";
+import UserUpload from "../../Upload/UserUpload";
 import Contents from "./Contents";
-import UploadComplate from "../Layout/UploadComplete";
+import UploadComplate from "../../Layout/UploadComplete";
 
 
 type user_info ={

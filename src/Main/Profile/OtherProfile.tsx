@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 //#region Module
 import "./OtherProfile.scss";
 import Item from "./Item";
-import SendNote from "./SendNote";
+import SendNote from "../SendNote/SendNote";
 //#endregion
 
 

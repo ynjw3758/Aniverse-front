@@ -100,15 +100,18 @@ const UserUpload=(props:user_info) =>{
 
     let file_list:string[]=[...preview];
     let video_list:string[]=[...videolist];
-    let multi_list:string[]=[...multilist];
+    //let multi_list:string[]=[...multilist];
     let upload_list:string[]=[...uploadFile];
     let upload_videolist:string[]=[...uploadvideo];
     let url_list:string[] = [...urlList];
     let total_size:number=0;
+    let files:string[]=[...multilist];
     //let oringin:string[]=[...originmulti];
     for(let count =0; count<array.length;count++){
       if (array[count] !== null) {
           const file = array[count];
+          files.push(file);
+          setMultilist(files);
           upload_list.push(file);
           setUploadFile(upload_list);
           total_size+=file.size;
@@ -125,8 +128,8 @@ const UserUpload=(props:user_info) =>{
             console.log("url :" , currentimg);
             file_list.push(currentimg);
               
-              multi_list.push(currentimg);
-              setMultilist(multi_list);
+              //multi_list.push(currentimg);
+             setMultilist(file);
         
             if(array.length === 1){
               
@@ -170,8 +173,8 @@ const UserUpload=(props:user_info) =>{
              video_list.push(create_url);
                       
               
-              multi_list.push(create_url);
-              setMultilist(multi_list);
+              //multi_list.push(create_url);
+              //setMultilist(multi_list);
 
              setVideolist(video_list);
              setVideo(true);
@@ -641,12 +644,13 @@ const UserUpload=(props:user_info) =>{
             }
             const AddPeopleSearch =() =>{
               console.log("검색창 활성화");
+              setTagbasic(false);
               setIsActivSearch(true);
         
             }
             const TagList_Active =(data:any) =>{
               const isDuplicate = tagItems.some(item => item.Id === data.Id);
-        
+
               if(!isDuplicate){
                 setIsActivSearch(false);
                 setTagList(true);
@@ -661,15 +665,16 @@ const UserUpload=(props:user_info) =>{
         
             const BackSearch =() =>{
               setTagList(false);
-              setIsActivSearch(true)
+              setIsActivSearch(true);
             }
-
+        console.log("multilist :" , multilist);
+        console.log("upload :" , uploadFile);
     return(<>
     {againlogin && (<LoginExp />)}
            <div className="MainBackDrop" onClick={CancelHandler}>
             <div className={main} onClick={(e) => e.stopPropagation()}> 
             {multiupload && (<MultiUpload Img_List={preview} Video_List={videolist} 
-            Multi_List={multilist} Initilalize={FirstPageHandler}
+            Multi_List={uploadFile} Initilalize={FirstPageHandler}
             Next={ExtendHandler} nickname={props.nickname} img={props.img} origin={uploadFile} 
             close={CloseHandler}/>)}
             {video && (<Video  Next={ExtendHandler} Video_List={videolist} img={props.img} 
@@ -782,16 +787,21 @@ const UserUpload=(props:user_info) =>{
             </div>
             <div className="Image_insert_contents">
            <textarea placeholder="당신의 일상을 올려보세요" onChange={textHandler}/>
+
            <input  placeholder="위치 검색"
            ref={inputref}
            onClick={localHandler}
            value={uploadlocal}
            disabled={islocalform}
           />
-            {tagbasic && (<button onClick={AddPeopleSearch} >태그 검색</button>)}
-            {isActivSearch && (<AddTagPeople  AddTag={TagList_Active}/>)}
-            {tagList && (<TagList Item={tagItems} Back_Search={BackSearch}/>)}
+          {tagbasic && (<button onClick={AddPeopleSearch} >태그 검색</button>)}
+          {isActivSearch && (<AddTagPeople  AddTag={TagList_Active}/>)}
+          {tagList && (<TagList Item={tagItems} Back_Search={BackSearch}/>)}
+
            </div>
+            <div>
+
+            </div>
         </>)}
        {location && (<KaMap onData={LocationdataHandler} onclose={MapClose}/>)}
        {final && (<SecondModals onClose={secondHandler} ondelete={closeModalHandler} 

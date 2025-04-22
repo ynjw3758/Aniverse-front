@@ -1,0 +1,154 @@
+
+
+@media screen and (max-width:1536px) {
+.Comments_List_Main{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+   overflow: hidden;
+}
+
+.Comments_List_Owner{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.Comments_Owner_info{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+.Comments_Owner_info > p{
+    font-size: 12px;
+    margin-left: 0.4vw;
+    margin-top: 1vh;
+}
+.Comments_List_Owner img{
+    width: 2vw;
+    height: 4vh;
+    border-radius: 50px;
+    margin-left: 1vw;
+}
+.Comments_List_Owner h4{
+    font-size: small;
+    margin-left: 0.4vw;
+    margin-top: 0.8vh;
+}
+.Comments_List_Owner h3{
+    font-size: small;
+    margin-left: 0.4vw;
+    margin-top: 0.8vh;
+}
+.Comments_List_Owner > p{
+    font-size: 12px;
+    margin-left: 0.4vw;
+    margin-top: 1vh;
+}
+.Comments_List_MyTextFull{
+    width: 25.5vw;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: -1.5vh;
+    margin-left: 1vw;
+}
+.Comments_List_MyTextFull p{
+    font-size: 12px;
+    margin-top: 0.5vh;
+    margin-left: 0.4vw;
+    line-height: 2.5vh;
+}
+.Comments_List_CM_List{
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; /* 스크롤은 유지 */
+    scrollbar-width: none; /* Firefox에서 스크롤바 숨기기 */
+    -ms-overflow-style: none; /* IE에서 스크롤바 숨기기 */
+    width: 100%;
+    height: 60vh;
+    max-height: 60vh;
+    margin-top: 1vh;
+    position: relative;
+}
+.Comments_List_CM_List::-webkit-scrollbar {
+    display: none;
+}
+
+
+}
+@media (min-width:1550px) and (max-width:1920px) {
+    .Comments_List_Main{
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        width: 100%;
+       overflow: hidden;
+    }
+    
+    .Comments_List_Owner{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    .Comments_Owner_info{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+    }
+    .Comments_Owner_info > p{
+        font-size: 12px;
+        margin-left: 0.4vw;
+        margin-top: 1vh;
+    }
+    .Comments_List_Owner img{
+        width: 2vw;
+        height: 4vh;
+        border-radius: 50px;
+        margin-left: 1vw;
+    }
+    .Comments_List_Owner h4{
+        font-size: small;
+        margin-left: 0.4vw;
+        margin-top: 0.8vh;
+    }
+    .Comments_List_Owner h3{
+        font-size: small;
+        margin-left: 0.4vw;
+        margin-top: 0.8vh;
+    }
+    .Comments_List_Owner > p{
+        font-size: 12px;
+        margin-left: 0.4vw;
+        margin-top: 1vh;
+    }
+    .Comments_List_MyTextFull{
+        width: 25.5vw;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        margin-top: -1.5vh;
+        margin-left: 1vw;
+    }
+    .Comments_List_MyTextFull p{
+        font-size: 12px;
+        margin-top: 2vh;
+        margin-left: 0.4vw;
+        line-height: 2.5vh;
+    }
+    .Comments_List_CM_List{
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto; /* 스크롤은 유지 */
+        scrollbar-width: none; /* Firefox에서 스크롤바 숨기기 */
+        -ms-overflow-style: none; /* IE에서 스크롤바 숨기기 */
+        width: 100%;
+        height: 60vh;
+        max-height: 60vh;
+        margin-top: 3vh;
+        position: relative;
+    }
+    .Comments_List_CM_List::-webkit-scrollbar {
+        display: none;
+    }
+}

@@ -1,0 +1,51 @@
+@media (min-width: 1550px) and (max-width: 1920px)  {
+.Slide_right{
+    position: absolute;
+    top:40vh;
+    left: 32VW;
+    z-index: 1;
+    cursor: pointer;
+  }
+.Slide_right img{
+    width: 4vw;
+    height: 8vh;
+  }
+  
+.Slide_left{
+    position: absolute;
+    top:40vh;
+    left: 2VW;
+    z-index: 1;
+    cursor: pointer;
+  }
+.Slide_left img{
+    width: 4vw;
+    height: 8vh;
+  }
+}
+@media screen and (max-width:1540px) {
+    .Slide_right{
+        position: absolute;
+        top:38vh;
+        left: 32VW;
+        z-index: 1;
+        cursor: pointer;
+      }
+    .Slide_right img{
+        width: 4vw;
+        height: 8vh;
+      }
+      
+    .Slide_left{
+        position: absolute;
+        top:38vh;
+        left: 2VW;
+        z-index: 1;
+        cursor: pointer;
+      }
+    .Slide_left img{
+        width: 4vw;
+        height: 8vh;
+      }
+
+}

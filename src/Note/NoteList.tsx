@@ -16,7 +16,7 @@ import Item from "./Item";
 import user_info from "../Userdata/Userdata";
 import NoteItemList from "./NoteItemList";
 import BlockList from "./BlockList";
-import SendNote from "../Main/SendNote";
+import SendNote from "../Main/SendNote/SendNote";
 //#endregion
 
 //                             +--------------------

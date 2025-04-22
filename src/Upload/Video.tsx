@@ -78,8 +78,7 @@ const Video =(props:video_data) =>{
     const[filesize, setFilesize]=useState<any[]>([]);
 
     const[tagItems, setTagItems]=useState<any[]>([]);
-  
-    const[thumbNails, setThumbNails]=useState<string[][]>([]);
+
 
 
 
@@ -88,11 +87,8 @@ const Video =(props:video_data) =>{
 
     //추후에 영상 다듬기에 필요한 기능들
     const[playtime , setPlaytime]=useState<number>(0);
-    const [test,setTest]=useState<any[]>([]);
     const videoref = useRef<HTMLVideoElement>(null);
     const secondvideoref = useRef<HTMLVideoElement>(null);
-    const videoRef = useRef<HTMLVideoElement>(null);  
-    const canvasRef = useRef<HTMLCanvasElement>(null);
     const utilsize = 1024*1024*10;
     let currentchunk:any=0;
     let chunkcount:any=0;
@@ -773,7 +769,7 @@ const Video =(props:video_data) =>{
 
   const BackSearch =() =>{
     setTagList(false);
-    setIsActivSearch(true)
+    setIsActivSearch(true);
   }
 
     return(<Fragment>

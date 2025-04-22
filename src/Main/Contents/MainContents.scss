@@ -1,4 +1,4 @@
-
+/*
 .Main_Contents{
     display: flex;
     flex-direction: column;
@@ -17,7 +17,7 @@
     margin-bottom: 4vh;
 }
 
-.Main_Contents input{
+.Main_Contents > input{
     margin-top: -10px;
     width: 500px;
     height: 45px;
@@ -27,7 +27,8 @@
     padding-bottom: 5px;
     cursor: pointer;
 }
-@media screen and (max-width:1920px) {
+    */
+@media  (min-width:1550px) and (max-width:1920px) {
 
     .Main_Contents{
         display: flex;
@@ -47,7 +48,7 @@
         margin-bottom: 4vh;
     }
     
-    .Main_Contents input{
+    .Main_Contents >input{
         margin-top: -10px;
         width: 620px;
         height: 45px;
@@ -79,7 +80,7 @@
 
 }
 
-@media screen and (max-width:1540px) {
+@media screen and (max-width:1536px) {
     .login_loading{
         position: absolute;
         top:1vh;
@@ -131,7 +132,7 @@
 
     }
     
-    .Main_Contents input{
+    .Main_Contents > input{
         margin-left: -3vw;
         width: 30vw;
         height: 45px;

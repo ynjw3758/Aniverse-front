@@ -1,0 +1,186 @@
+@media (min-width: 1550px) and (max-width: 1920px)  {
+.Comments_Item_Main{
+
+    display: flex;
+    flex-direction: row;
+    width: 27vw;
+    height: 10vh;
+    margin-left: 2vw;
+}
+.Comments_Item_Uerinfo_Stand{
+    display: flex;
+    flex-direction: row;
+    margin-left: -1vw;
+}
+.Comments_Item_Uerinfo_Stand img,
+.Comments_Item_Uerinfo_Stand img:hover
+{
+    cursor: pointer;
+    width: 2vw;
+    height: 4vh;
+    border-radius: 50px;
+}
+.Comments_Item_contents{
+    display: flex;
+    flex-direction: column;
+    width: 10vw;
+    height: 10vh;
+}
+.Comments_Item_contents h4{
+    font-size:small;
+    font-weight: bolder;
+}
+.Comments_Item_content_row{
+    display: flex;
+    flex-direction: row;
+    margin-left: 0.4vw;
+    width: max-content;
+    margin-top: -2.5vh;
+}
+.Comments_Item_content_row img,
+.Comments_Item_content_row img:hover{
+    cursor: pointer;
+    width: 1vw;
+    height: 2vh;
+}
+.Comments_Item_content_row p{
+    margin-left: 0.3vw;
+    font-size: 15px;
+    margin-top: 0vh;
+
+}
+.Comments_Item_content_row h3,
+.Comments_Item_content_row h3:hover{
+    cursor: pointer;
+    margin-left: 0.4vw;
+    margin-top: 0.3vh;
+    font-size: 11px;
+    font-weight: bold;
+}
+.Comments_Item_change{
+    display: flex;
+    flex-direction: row;
+    width: max-content;
+}
+.Comments_Item_change h4,
+.Comments_Item_change h4:hover{
+    cursor: pointer;
+    margin-left: 0.3vw;
+    margin-top: -0.2vh;
+}
+.Comments_Item_change h3{
+    margin-left: 0.3vw;
+    margin-top: -0.2vh;
+    font-size: 12px;
+}
+.Comments_Item_Content{
+    width: 23.5vw;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    font-size: 12px;
+    margin-top: -2.6vh;
+    margin-left: 0.4vw;
+    margin-bottom: 1vh;
+    line-height: 2vh;
+
+}
+.Comments_Item_Content p{
+    font-size: medium;
+    margin-top: 1vh;
+}
+}
+
+@media screen and (max-width:1540px) {
+    .Comments_Item_Main{
+
+        display: flex;
+        flex-direction: row;
+        width: 27vw;
+        height: 10vh;
+        margin-left: 2vw;
+    }
+    .Comments_Item_Uerinfo_Stand{
+        display: flex;
+        flex-direction: row;
+        margin-left: -1vw;
+    }
+    .Comments_Item_Uerinfo_Stand img,
+    .Comments_Item_Uerinfo_Stand img:hover{
+        cursor: pointer;
+        width: 2vw;
+        height: 4vh;
+        border-radius: 50px;
+    }
+    .Comments_Item_contents{
+        display: flex;
+        flex-direction: column;
+        width: 10vw;
+        height: 10vh;
+    }
+    .Comments_Item_contents h4{
+        font-size:small;
+        font-weight: bolder;
+    }
+    .Comments_Item_content_row{
+        display: flex;
+        flex-direction: row;
+        margin-left: 0.4vw;
+        width: max-content;
+        margin-top: -2.5vh;
+    }
+    .Comments_Item_content_row img,
+    .Comments_Item_content_row img:hover{
+        width: 1vw;
+        height: 2vh;
+    }
+    .Comments_Item_content_row p{
+        cursor: pointer;
+        margin-left: 0.3vw;
+        font-size: 13px;
+        margin-top: -0.2vh;
+    
+    }
+    .Comments_Item_content_row h3,
+    .Comments_Item_content_row h3:hover{
+        cursor: pointer;
+        margin-left: 0.4vw;
+        margin-top: 0vh;
+        font-size: 11px;
+        font-weight: bold;
+    }
+
+    .Comments_Item_change{
+        display: flex;
+        flex-direction: row;
+        width: max-content;
+    }
+    .Comments_Item_change h4,
+    .Comments_Item_change h4:hover{
+        cursor: pointer;
+        margin-left: 0.3vw;
+        margin-top: -0.2vh;
+        font-size: 10px;
+    }
+    .Comments_Item_change h3{
+        margin-left: 0.3vw;
+        margin-top: -0.2vh;
+        font-size: 10px;
+    }
+    .Comments_Item_Content{
+        width: 23.5vw;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        font-size: 12px;
+        margin-top: -2.6vh;
+        margin-left: 0.4vw;
+        margin-bottom: 1vh;
+        line-height: 2vh;
+    
+    }
+    .Comments_Item_Content p{
+        font-size: small;
+        margin-top: 1vh;
+    }
+}

@@ -14,7 +14,7 @@ import Layout_Page from "../Error_Page/Layout_Page";
 import Authorization_Page from "../Error_Page/Authorization_Page";
 import PersionPage from "../Persion/PersionPage";
 import MainPerson from "../Persion/MainPerson";
-import MainContentsx from "../Main/MainContents";
+import MainContentsx from "../Main/Contents/MainContents";
 import Kconnet from "../Loginfind/Kconnet";
 import MainProfile from"../Profile/MainProfile";
 import MainNote from "../Note/MainNote";

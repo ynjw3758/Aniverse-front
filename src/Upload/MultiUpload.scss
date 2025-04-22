@@ -226,7 +226,7 @@
   padding-left: 1vw;
   padding-right: 1vw;
 }
-.Multi_insert_contents input{
+.Multi_insert_contents > input{
   cursor: pointer;
   padding-left: 20px;
   padding-top:20px;
@@ -531,7 +531,7 @@
     padding-left: 1vw;
     padding-right: 1vw;
   }
-  .Multi_insert_contents input{
+  .Multi_insert_contents > input{
     cursor: pointer;
     padding-left: 20px;
     padding-top:20px;

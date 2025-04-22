@@ -8,7 +8,7 @@
 import { Fragment ,useState , useEffect, useRef, useContext} from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import user_info from "../Userdata/Userdata";
+import user_info from "../../Userdata/Userdata";
  //#endregion
 
 //                            +--------------------
@@ -17,7 +17,7 @@ import user_info from "../Userdata/Userdata";
 //#region type               
 import "./SendNote.scss";
 import Search from "./Search";
-import Addimage from "./Addimage";
+import Addimage from "../skips/Addimage";
  //#endregion
 
 
@@ -193,14 +193,7 @@ const SendNote =(props:Note) =>{
                    if(error.code=="ERR_BAD_REQUEST"){
                      navigate("/error");
                    }
-                   if(error.code == "ERR_NETWORK"){
-                     console.log("네트워크 에러 ");
-                     
-                   }
-                   if(error.response?.status==401){
-                       console.log("승인되지 않은 로그인");
-                   }
-                   if(error.response?.status==500){
+                   else if(error.response?.status==500){
                      console.log("서버 에러발생");
                      navigate("/error/se-error")
                    }
@@ -216,14 +209,10 @@ const SendNote =(props:Note) =>{
                if(error.code=="ERR_BAD_REQUEST"){
                  navigate("/error");
                }
-               if(error.code == "ERR_NETWORK"){
-                 console.log("네트워크 에러 ");
-                 
-               }
-               if(error.response?.status==401){
+               else if(error.response?.status==401){
                    console.log("승인되지 않은 로그인");
                }
-               if(error.response?.status==500){
+               else if(error.response?.status==500){
                  console.log("서버 에러발생");
                  navigate("/error/se-error")
                }

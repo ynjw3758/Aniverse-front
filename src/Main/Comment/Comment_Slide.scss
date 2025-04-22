@@ -1,0 +1,51 @@
+@media (min-width: 1550px) and (max-width: 1920px)  {
+    .Comments_Slide_right{
+        position: absolute;
+        top:40vh;
+        left: 29VW;
+        z-index: 1;
+        cursor: pointer;
+      }
+    .Comments_Slide_right img{
+        width: 4vw;
+        height: 8vh;
+      }
+      
+    .Comments_Slide_left{
+        position: absolute;
+        top:40vh;
+        left: 0VW;
+        z-index: 1;
+        cursor: pointer;
+      }
+    .Comments_Slide_left img{
+        width: 4vw;
+        height: 8vh;
+      }
+    }
+@media screen and (max-width:1540px) {
+    .Comments_Slide_right{
+        position: absolute;
+        top:38vh;
+        left: 29VW;
+        z-index: 1;
+        cursor: pointer;
+        }
+    .Comments_Slide_right img{
+        width: 4vw;
+        height: 8vh;
+        }
+        
+    .Comments_Slide_left{
+        position: absolute;
+        top:38vh;
+        left: 0VW;
+        z-index: 1;
+        cursor: pointer;
+        }
+    .Comments_Slide_left img{
+        width: 4vw;
+        height: 8vh;
+        }
+
+}

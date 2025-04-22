@@ -293,7 +293,7 @@ background-color: white;
   padding-left: 1vw;
   padding-right: 1vw;
 }
-.Video_insert_contents input{
+.Video_insert_contents > input{
   cursor: pointer;
   padding-left: 20px;
   padding-top:20px;
@@ -787,7 +787,7 @@ background-color: white;
   margin-left: -1vw;
 }
 
-.Video_insert_contents input{
+.Video_insert_contents > input{
   cursor: pointer;
   padding-left: 20px;
   padding-top:20px;

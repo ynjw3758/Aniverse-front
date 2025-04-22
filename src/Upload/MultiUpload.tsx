@@ -293,11 +293,13 @@ const MultiUpload =(props:upload_data) =>{
               const filedata = new FormData();
               console.log("오리지널 파일 :" , origin);
              if(origin !== null && origin !== undefined){
-              console.log("length :" , multilist.length);
+              
               for(let count=0; count<origin.length;count++){
+                console.log("length :" , origin[count]);
                 filedata.append("UploadFile" , origin[count]);
               }
              }
+             
                 let local:any=localdata;
                 const location_info:any=JSON.stringify(local);
                 const taglist:any =JSON.stringify(tagItems);
@@ -308,7 +310,7 @@ const MultiUpload =(props:upload_data) =>{
                   filedata.append("opendkind" , openkind);
                   filedata.append("id" , id);
                   filedata.append("Taginfo", taglist)
-     
+                  console.log("파일 업로드 :" , filedata);
             let access_token:string="";          
             access_token = localStorage.getItem("a_id")!;
             console.log("access token :" , access_token);
@@ -431,6 +433,7 @@ const MultiUpload =(props:upload_data) =>{
 
     const AddPeopleSearch =() =>{
       console.log("검색창 활성화");
+      setTagbasic(false);
       setIsActivSearch(true);
 
     }

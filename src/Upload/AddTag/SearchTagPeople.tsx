@@ -125,68 +125,8 @@
               if(error.code=="ERR_BAD_REQUEST"){
                 navigate("/error");
               }
-              if(error.code == "ERR_NETWORK"){
-                console.log("네트워크 에러 ");
-                
-              }
-              if(error.response?.status==401){
-                  console.log("승인되지 않은 로그인");
-                  Object.entries(error.response?.data).map(key =>{
-                    if(key.at(0) == "errorcode"){
-                      if(key.at(1) == "00"){
-                        navigate("/error/auth/");
-                        return;
-                      }
-                      
-                      else if(key.at(1) == "01"){
-                        console.log("토큰 시간 만료 refresh token을 보낸다");
-                        refresh_token= cookies.get('refresh_token');
-                        const id= localStorage.getItem("id");
-                        axios.post("http://localhost:8080/Pets-social/token/refresh", {
-                          refresh_token : refresh_token,
-                          id : id})
-                          .then(
-                          response =>{
-                            console.log("응답 결과 :" , response)
-                            if(response.status == 200){
-                              localStorage.setItem("p_exp" ,response.data.data.exp);
-                              localStorage.setItem("a_id" ,response.data.data.access_token);
-                              navigate("/main");
-                            }
-                          }
-                        ).catch(error =>{
-                          if(axios.isAxiosError<tokenRenewal>(error)){
-                                      console.log("error code: " , error.response?.status);
-              
-                                      if(error.response?.status==400){
-                                        navigate("/error");
-                                        return;
-                                      }
-                                      else if(error.code == "ERR_NETWORK"){
-                                        console.log("네트워크 에러 ");
-                                        return;
-                                        
-                                      }
-                                      else if(error.response?.status == 401){
-                                          console.log("다시 로그인해야 된다.");
-                                          localStorage.clear();
-                                          setAgainlogin(true);
 
-           
-                                      }
-                                      else if(error.response?.status==301){
-                                          console.log("기존 아이디 존재");
-                                          setIsfirst(true);
-                                          setUserid(error.response?.data.data);
-                                      }
-                                    }
-                      })
-                        
-                      }
-                    }
-                  })
-              }
-              if(error.response?.status==500){
+              else if(error.response?.status==500){
                 console.log("서버 에러발생");
                 navigate("/error/se-error")
               }
@@ -202,6 +142,63 @@
           if(error.code=="ERR_BAD_REQUEST"){
             navigate("/error");
           }
+          else if(error.response?.status==401){
+            console.log("승인되지 않은 로그인");
+            Object.entries(error.response?.data).map(key =>{
+              if(key.at(0) == "errorcode"){
+                if(key.at(1) == "00"){
+                  navigate("/error/auth/");
+                  return;
+                }
+                
+                else if(key.at(1) == "01"){
+                  console.log("토큰 시간 만료 refresh token을 보낸다");
+                  refresh_token= cookies.get('refresh_token');
+                  const id= localStorage.getItem("id");
+                  axios.post("http://localhost:8080/Pets-social/token/refresh", {
+                    refresh_token : refresh_token,
+                    id : id})
+                    .then(
+                    response =>{
+                      console.log("응답 결과 :" , response)
+                      if(response.status == 200){
+                        localStorage.setItem("p_exp" ,response.data.data.exp);
+                        localStorage.setItem("a_id" ,response.data.data.access_token);
+                        navigate("/main");
+                      }
+                    }
+                  ).catch(error =>{
+                    if(axios.isAxiosError<tokenRenewal>(error)){
+                                console.log("error code: " , error.response?.status);
+        
+                                if(error.response?.status==400){
+                                  navigate("/error");
+                                  return;
+                                }
+                                else if(error.code == "ERR_NETWORK"){
+                                  console.log("네트워크 에러 ");
+                                  return;
+                                  
+                                }
+                                else if(error.response?.status == 401){
+                                    console.log("다시 로그인해야 된다.");
+                                    localStorage.clear();
+                                    setAgainlogin(true);
+
+     
+                                }
+                                else if(error.response?.status==301){
+                                    console.log("기존 아이디 존재");
+                                    setIsfirst(true);
+                                    setUserid(error.response?.data.data);
+                                }
+                              }
+                })
+                  
+                }
+              }
+            })
+        }
 
           else if(error.response?.status==500){
             console.log("서버 에러발생");

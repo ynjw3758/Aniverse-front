@@ -278,6 +278,7 @@ margin-left: -30vw;
         margin-top: -0.2vh;
         margin-left: 0vw;
         border-top: 1px solid black;
+        position:relative;
     }
     .ShowComments_Input input,
     .ShowComments_Input input:hover,
@@ -341,5 +342,23 @@ margin-left: -30vw;
         background: white;
         box-shadow: 0 0 10px rgba(0,0,0,0.1);
     
+    }
+
+    .ShowComments_commnet_post{
+        display: flex;
+        flex-direction: row;
+        position: absolute;
+        top:1vh;
+        left: 23.5vw;
+        width: 3vw;
+        align-items: center;
+        justify-content: center;
+    }
+    .ShowComments_commnet_post p,
+    .ShowComments_commnet_post p:hover{
+        font-size: medium;
+        color:#007AFF;
+        font-weight: 600;
+        cursor: pointer;
     }
 }

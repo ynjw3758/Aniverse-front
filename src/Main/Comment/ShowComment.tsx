@@ -8,6 +8,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import {Cookies} from 'react-cookie';
 import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
+import debounce from 'lodash/debounce';
 
 //#endregion
 
@@ -107,6 +108,7 @@ const ShowComment =({ShowData, Owner, OnClose}:showcomments_info) =>{
     const[againlogin, setAgainlogin]=useState<boolean>(false);
     const[isperist, setIsperist]=useState<boolean>(false);
     const[isemoji, setIsemoji]=useState<boolean>(false);
+    const[ispost, setIspost]=useState<boolean>(false);
     
     
 
@@ -121,6 +123,7 @@ const ShowComment =({ShowData, Owner, OnClose}:showcomments_info) =>{
     const[hearticon,setHearticon]=useState<string>(ShowData.check_heart);
     const[favorite, setFavorite]=useState<number>(ShowData.heart_ct);
     const[emoticon, setEmoticon]=useState<string>("");
+    const[commentid, setCommentid]=useState<string>("");
 
 
     const[comments_list, setComments_list]=useState<Commentslist[]>([{
@@ -310,7 +313,15 @@ const ShowComment =({ShowData, Owner, OnClose}:showcomments_info) =>{
        })
 
     },[isComments])
-
+    
+    useEffect(() =>{
+      if(emoticon.length == 0){
+        setIspost(false);
+      }
+      else{
+        setIspost(true);
+      }
+    },[emoticon])
 
     useEffect(() =>{
       
@@ -431,7 +442,108 @@ const ShowComment =({ShowData, Owner, OnClose}:showcomments_info) =>{
   const SendCommentHandler =(data:cm_userinfo) =>{
     const values = `@${data.nickname}`;
     setEmoticon(values);
+    setCommentid(data.commentdid);
+    setIspost(true);
   } 
+
+  const sendcomment =() =>{
+    let access_token:string="";          
+    let id:string="";
+    id=localStorage.getItem("id")!;
+    access_token = localStorage.getItem("a_id")!;
+    axios.defaults.headers.common['Authorization'] = access_token;
+    axios.get("http://localhost:8080/Pets-social/acccheck").then(
+      response =>{
+        if(response.status === 200){
+            if(commentid == ""){
+              console.log("root 댓글을 단다");
+
+            }
+            else{
+              console.log("대댓글을 단다.");
+        
+            }
+        }
+
+      }
+    ).catch((error) =>{
+      if(axios.isAxiosError<ResponseDataType>(error)){
+          console.log("error code: " , error.response?.status);
+          
+          if(error.code=="ERR_BAD_REQUEST"){
+            navigate("/error");
+          }
+          else if(error.response?.status==401){
+            console.log("승인되지 않은 로그인");
+            Object.entries(error.response?.data).map(key =>{
+              if(key.at(0) == "errorcode"){
+                if(key.at(1) == "00"){
+                  navigate("/error/auth/");
+                  return;
+                }
+                else if(key.at(1) == "01"){
+                    console.log("토큰 시간 만료 refresh token을 보낸다");
+                    let refresh_token:string="";
+                    refresh_token= cookies.get('refresh_token');
+                    const id= localStorage.getItem("id");
+                    axios.post("http://localhost:8080/Pets-social/token/refresh", {
+                      refresh_token : refresh_token,
+                      id : id})
+                      .then(
+                      response =>{
+                        console.log("응답 결과 :" , response)
+                        if(response.status == 200){
+                          localStorage.setItem("p_exp" ,response.data.data.exp);
+                          localStorage.setItem("a_id" ,response.data.data.access_token);
+                          navigate("/main");
+                        }
+                      }
+                    ).catch(error =>{
+                      if(axios.isAxiosError<ResponseDataType>(error)){
+                                  console.log("error code: " , error.response?.status);
+          
+                                  if(error.response?.status==400){
+                                    navigate("/error");
+                                    return;
+                                  }
+                                  else if(error.code == "ERR_NETWORK"){
+                                    console.log("네트워크 에러 ");
+                                    return;
+                                    
+                                  }
+                                  else if(error.response?.status == 401){
+                                      console.log("다시 로그인해야 된다.");
+                                      localStorage.clear();
+                                      setAgainlogin(true);
+
+       
+                                  }
+                                  else if(error.response?.status==301){
+                                      console.log("기존 아이디 존재");
+                                      setIsperist(true);
+                                      setUserid(error.response?.data.resultdata);
+                                  }
+          
+                                  
+                                  console.log("error response: " , error.response?.data.response);
+                                }
+                  })
+                    
+
+                }
+              }
+             })
+        }
+          else if(error.response?.status==500){
+            console.log("서버 에러발생");
+            navigate("/error/se-error")
+          }
+          
+          console.log("error response: " , error.response?.data);
+        }
+       })
+
+  }
 //#endregion
 
     return(<div className="ShowAllComments_BackDrop" onClick={CloseHandler}>
@@ -492,6 +604,9 @@ const ShowComment =({ShowData, Owner, OnClose}:showcomments_info) =>{
                  <div className="ShowComments_Input">
                    <input type="text" placeholder="댓글 달기..." onChange={commentHandler} value={emoticon}/>
                    <img src={"/image/emoticon.png"}  onClick={EmojiHandler}/>
+                   {ispost && (<div className="ShowComments_commnet_post">
+                    <p onClick={sendcomment}>게시</p>
+                   </div>)}
                  </div>
                  {isemoji && (<div className="ShowComments_Input_Emoji">
                     <EmojiPicker onEmojiClick={onClickHandler}  

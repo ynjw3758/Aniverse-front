@@ -7,7 +7,7 @@
 //                             +--------------------
 //-----------------------------+  외부라이브러리
 //                             +--------------------
-import {useEffect, useState ,useRef , useContext, useSyncExternalStore, ReactNode} from "react";
+import {useEffect, useState ,useRef , useContext, useSyncExternalStore, ReactNode, useMemo} from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
@@ -15,6 +15,9 @@ import {Oval} from "react-loader-spinner";
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/ko';
 import dayjs from 'dayjs';
+import {Cookies} from 'react-cookie';
+import debounce from 'lodash/debounce';
+    
 //                             +--------------------
 //-----------------------------+   Module
 //                             +--------------------
@@ -24,6 +27,7 @@ import user_info from "../../Userdata/Userdata";
 import CancelFollower from "../Modal/CancleFollower";
 import ShowComment from "../Comment/ShowComment";
 import Slide from "../Slide/Slide";
+import AddMentionMain from "../Mention/AddMentionMain";
 //#endregion
 
 
@@ -60,8 +64,23 @@ interface ResponseDataType {
   code: number;
   response:object
 }
+
+interface tokenRenewal { //토큰 생긴 인터페이스
+  message: string;
+  code: number;
+  data:string
+}
 //#endregion
 
+//                             +--------------------
+//-----------------------------+   타입
+//                             +--------------------
+//#region
+type user_info ={
+  id:string,
+  nickname:string,
+  img:string
+}
 
 
 
@@ -97,6 +116,9 @@ const ContentItem =(props:content_info) =>{
     const[isready, setIsready]=useState<boolean>(false);
     const[isnormal, setIsnormal]=useState<boolean>(false);
     const[isfull, setIsfull]=useState<boolean>(false);
+    const[searchLoading, setSearchLoading]=useState<boolean>(false);
+    const[iskeyboard,setIskeyboard]=useState<boolean>(false);
+
     
     
     const[file , setFile]=useState<string[]>(props.files);
@@ -120,6 +142,7 @@ const ContentItem =(props:content_info) =>{
     const[istype, setIstype]=useState<string>("");
     const[showcommenttext, setShowcommenttext]=useState<string>("");
     const[ct_date, setCt_date]=useState<string>("");
+    const[textmention, setTextmention]=useState<string>("");
 
     const[heart , setHeart]=useState<number>(props.heart);
     const[refcount, setRefcount]=useState<number>(0);
@@ -153,6 +176,13 @@ const ContentItem =(props:content_info) =>{
     Profile:"",
     Nickname:""
   })
+
+  const[userinfo ,setUserinfo]=useState<user_info[]>([{
+    id:"",
+    nickname:"",
+    img:""
+  }]);
+  
 //#endregion
 
 //#region 변수초기화
@@ -164,6 +194,8 @@ const list:any=useRef<null | HTMLVideoElement[]>([]);
 const video_idx = useRef<number>(0);
 const input_tag_position = iscomcnt ? "MainPage_Comment_input_extend":"MainPage_Comment_input";
 const comment_cnt_position = fullText ? "MainContent_Comment_cnt_extend" : "MainContent_Comment_cnt";
+const Timeout = 200;
+const cookies = new Cookies();
 //#endregion
 
 //                             +--------------------
@@ -208,14 +240,10 @@ const comment_cnt_position = fullText ? "MainContent_Comment_cnt_extend" : "Main
     if(props.files.length == 1){
       setOne(true);
       setMulti(false);
-      //setRightactive(false);
-      //setLeftactive(false);
     }
     else{
       setMulti(true);
       setOne(false);
-      //setRightactive(true);
-
     }
     })
     dayjs.extend(relativeTime);
@@ -476,10 +504,144 @@ const comment_cnt_position = fullText ? "MainContent_Comment_cnt_extend" : "Main
     }
 
    
-
+    const test = useRef<string>("");
      const commentHandler =(event:React.ChangeEvent<HTMLInputElement>) =>{
+
+      const findgoal = event.target.value.lastIndexOf("@");
+      console.log("iskeyboard:" , iskeyboard);
+      console.log("마지막 인덱스 :" , findgoal);
+      console.log("마지막 event.target.value :" , event.target.value);
+      if(event.target.value.length-1 ==findgoal && iskeyboard === true){
+        if(searchLoading === true) setSearchLoading(false);
+        console.log("그냥 넘어간다");
+      }else{
+        console.log("아니 뭐여 :" ,event.target.value);
+        if(event.target.value.length >0 && event.target.value.includes("@") && iskeyboard === true) {
+          const idx:number =event.target.value.lastIndexOf("@"); 
+          const values =event.target.value.slice(idx+1 ,event.target.value.length);
+          Searchbound(values)
+        }
+        
+      }
+      if(event.target.value == ""){
+        setSearchLoading(false);
+        setEmoticon("");
+      }
       setEmoticon(event.target.value);
      }
+    const ta = useRef<string>("");
+     const Searchbound =useMemo(() => debounce((values:string) =>{
+      setTextmention(values);
+      
+      console.log("검색 :" , values)
+      let access_token:string="";
+      access_token =localStorage.getItem("a_id")!;
+      console.log("access : " , access_token);
+      axios.defaults.headers.common['Authorization'] = access_token;
+      axios.get("http://localhost:8080/Pets-social/acccheck")
+      .then(response =>{
+        if(response.status == 200){
+          console.log("토큰 인증 성공");
+          axios.get("http://localhost:8088/Pets-social/Search/Person" , {params:{Word:values}})
+          .then((response) =>{
+                console.log("검색 결과 :", response.data)
+              if(response.status == 200 && response.data.length !==0){
+                setUserinfo(response.data);
+              }
+              else if(response.status == 200 && response.data.length ==0){
+                setUserinfo([]);
+              }
+              setIskeyboard(false);
+              setSearchLoading(true);
+          }).catch((error) =>{
+              if(axios.isAxiosError<ResponseDataType>(error)){
+                  console.log("error code: " , error.response?.status);
+                  
+                  if(error.code=="ERR_BAD_REQUEST"){
+                    navigate("/error");
+                  }
+    
+                  else if(error.response?.status==500){
+                    console.log("서버 에러발생");
+                    navigate("/error/se-error")
+                  }
+                  
+                  console.log("error response: " , error.response?.data);
+                }
+          })
+        }
+      }).catch((error) =>{
+        if(axios.isAxiosError<ResponseDataType>(error)){
+            console.log("error code: " , error.response?.status);
+            
+            if(error.code=="ERR_BAD_REQUEST"){
+              navigate("/error");
+            }
+            else if(error.response?.status==401){
+              console.log("승인되지 않은 로그인");
+              Object.entries(error.response?.data).map(key =>{
+                if(key.at(0) == "errorcode"){
+                  if(key.at(1) == "00"){
+                    navigate("/error/auth/");
+                    return;
+                  }
+                  
+                  else if(key.at(1) == "01"){
+                    let refresh_token:string="";
+                    console.log("토큰 시간 만료 refresh token을 보낸다");
+                    refresh_token= cookies.get('refresh_token');
+                    const id= localStorage.getItem("id");
+                    axios.post("http://localhost:8080/Pets-social/token/refresh", {
+                      refresh_token : refresh_token,
+                      id : id})
+                      .then(
+                      response =>{
+                        console.log("응답 결과 :" , response)
+                        if(response.status == 200){
+                          localStorage.setItem("p_exp" ,response.data.data.exp);
+                          localStorage.setItem("a_id" ,response.data.data.access_token);
+                          navigate("/main");
+                        }
+                      }
+                    ).catch(error =>{
+                      if(axios.isAxiosError<tokenRenewal>(error)){
+                                  console.log("error code: " , error.response?.status);
+          
+                                  if(error.response?.status==400){
+                                    navigate("/error");
+                                    return;
+                                  }
+                                  else if(error.code == "ERR_NETWORK"){
+                                    console.log("네트워크 에러 ");
+                                    return;
+                                    
+                                  }
+                                  else if(error.response?.status == 401){
+                                      console.log("다시 로그인해야 된다.");
+                                      localStorage.clear();
+                                      //setAgainlogin(true);
+  
+       
+                                  }
+                                  else if(error.response?.status==301){
+                                      console.log("기존 아이디 존재");
+                                      //setIsfirst(true);
+                                      //setUserid(error.response?.data.data);
+                                  }
+                                }
+                  })
+                    
+                  }
+                }
+              })
+          }
+  
+            else if(error.response?.status==500){
+              navigate("/error/se-error")
+            }
+          }
+      })
+     },Timeout),[textmention])
      const EmojiHandler =() =>{
       if(isemoji == true){
         setIsemoji(false);
@@ -523,9 +685,39 @@ const comment_cnt_position = fullText ? "MainContent_Comment_cnt_extend" : "Main
         setPage(data);
         setIstype(type);
       }
+      const[mentionsize, setMentionsize]=useState<string[]>([]);
+      const InsertMention =(data:user_info) =>{
+        if(mentionsize.length ==0) {
+          let add_name:string=`@${data.nickname}`;
+          setEmoticon(add_name);
+          setSearchLoading(false);
+          setTextmention("");
+        }
+        else{
+          let before_text ="";
+          mentionsize.forEach((values) =>{
+            before_text+=`@${values}`;
+          })
+          
+          let add_name:string=before_text+`@${data.nickname}`;
+          setEmoticon(add_name);
+          setSearchLoading(false);
+          setTextmention("");
+        }
+        
+        let size = [...mentionsize]
+        size.push(data.nickname)
+        setMentionsize(size);
+        setIskeyboard(false);
+      }
+          //키보드 눌럿을 때 이벤트
+    const KeyDOWNHandler =(event:React.KeyboardEvent<HTMLInputElement>) =>{
+      console.log("아니 ㅅㅂ 뭔데")
+     setIskeyboard(true);
+  }
 
 
-      //                             +--------------------
+//                             +--------------------
 //-----------------------------+   Axios
 //                             +--------------------
 //#region
@@ -820,12 +1012,15 @@ const comment_cnt_position = fullText ? "MainContent_Comment_cnt_extend" : "Main
                />
         </>)}
         {!isloading && (<>
-          <input type="text" placeholder="댓글 달기" onChange={commentHandler} value={emoticon}/>  
+          <input type="text" placeholder="댓글 달기" onChange={commentHandler} value={emoticon} onKeyDown={KeyDOWNHandler}/>  
         <img src={"/image/emoticon.png"}  onClick={EmojiHandler}/>
            {ispost && (<div className="Mainpage_Content_commnet_post">
             <p onClick={CommentUpload}>게시</p>
         </div>)}
         </>)}
+        {searchLoading && (<div>
+          <AddMentionMain Userinfo={userinfo} AddMentionData={InsertMention}/>
+        </div>)}
         </div>
         </div>
        </div>   
@@ -894,12 +1089,15 @@ const comment_cnt_position = fullText ? "MainContent_Comment_cnt_extend" : "Main
                />
         </div>)}
         {!isloading && (<>
-          <input type="text" placeholder="댓글 달기" onChange={commentHandler} value={emoticon}/>  
+          <input type="text" placeholder="댓글 달기" onChange={commentHandler} value={emoticon} onKeyDown={KeyDOWNHandler}/>  
         <img src={"/image/emoticon.png"}  onClick={EmojiHandler}/>
            {ispost && (<div className="Mainpage_Content_commnet_post">
             <p onClick={CommentUpload}>게시</p>
         </div>)}
-        </>)}
+        </>)} 
+        {searchLoading && (<div>
+          <AddMentionMain Userinfo={userinfo} AddMentionData={InsertMention}/>
+        </div>)}
         </div>
         {(emojiindex === props.index && isemoji == true) &&(        
           <div className="Mainpage_Content_emojiopen">

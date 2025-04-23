@@ -319,6 +319,7 @@
         margin-top: -2vh;
     }
     .MainPage_Comment_input_extend{
+        position:relative;
         display: flex;
         flex-direction: row;
         width: 100%;
@@ -339,6 +340,7 @@
 
     }
     .MainPage_Comment_input{
+        position:relative;
         display: flex;
         flex-direction: row;
         width: 100%;
@@ -622,6 +624,7 @@
         width: max-content;
     }
     .MainPage_Comment_input{
+        position:relative;
         display: flex;
         flex-direction: row;
         width: 100%;
@@ -643,6 +646,7 @@
 
     }
         .MainPage_Comment_input_extend{
+        position: relative;
         display: flex;
         flex-direction: row;
         width: 100%;

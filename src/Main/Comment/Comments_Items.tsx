@@ -4,12 +4,13 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/ko';
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useViewTransitionState } from "react-router-dom";
 import {Cookies} from 'react-cookie';
 
 
 import "./Comments_Items.scss";
 import LoginExp from "../../LginExpiration/LoginExp";
+import MentionList from "./MentionList";
 
 //                             +--------------------
 //-----------------------------+   인터페이스
@@ -46,13 +47,19 @@ type comment_Items={
     profile:string,
     userid:string,
     like_status:string,
-    cm_date:string
+    cm_date:string,
+    mentions:mention_user[]
 }
 
 type cm_userinfo={
   userid:string,
   nickname:string,
   commentdid:string
+}
+type mention_user={
+    id:string,
+    nickname:string,
+    commentid:string
 }
 //#endregion
 
@@ -64,9 +71,11 @@ const Comments_Items =({comment_Items ,SendComments}:props) =>{
     const[iszero, setIszero]=useState<boolean>(false);
     const[againlogin, setAgainlogin]=useState<boolean>(false);
     const[isperist, setIsperist]=useState<boolean>(false);
+    const[ismention, setIsmention]=useState<boolean>(false);
 
     const[difdte, setDifdate]=useState<string>("");
     const[userid, setUserid]=useState<string>("");
+    const[mentionName, setMentionName]=useState<any[]>([])
 
     const[fa_cnt, setFa_cnt]=useState<number>(comment_Items.cm_favorite);
 
@@ -74,8 +83,9 @@ const Comments_Items =({comment_Items ,SendComments}:props) =>{
     const navigate = useNavigate();
     const cookies = new Cookies();
 
-
     useEffect(() =>{
+        if(comment_Items.mentions.length >0) setIsmention(true);
+         console.log("comment_Items.mentioninfo : " ,comment_Items.mentions)
     dayjs.extend(relativeTime);
     const fromNow = dayjs(comment_Items.cm_date).locale('ko').fromNow(); 
     setDifdate(fromNow);
@@ -206,7 +216,12 @@ const Comments_Items =({comment_Items ,SendComments}:props) =>{
              <h3>{difdte}</h3>
            </div>
            <div className="Comments_Item_Content">
-            <p>{comment_Items.comment_text}</p>
+            {ismention && (<>
+                <MentionList infos={comment_Items.mentions} text={comment_Items.comment_text}/>
+            </>)}
+            {!ismention && (<>
+                <p>{comment_Items.comment_text}</p>
+            </>)}
            </div>
           <div className="Comments_Item_content_row">
             {baselike && (<>

@@ -52,3 +52,56 @@
     }
     
 }
+
+@media (min-width:1550px) and (max-width:1920px) {
+    .MentionItems_Main_Stand{
+        display: flex;
+        flex-direction: row;
+        margin-left: 0.5vw;
+        margin-top: 0vh;
+        border-bottom: 1px solid black;
+        height: 10vh;
+        width: 18vw;
+        padding-bottom: 1vh;
+       }
+       .MentionItems_Main_Stand:hover{
+        display: flex;
+        flex-direction: row;
+        margin-left: 0.5vw;
+        margin-top: 0vh;
+        border-bottom: 1px solid black;
+        height: 10vh;
+        width: 18vw;
+        padding-bottom: 1vh;
+        cursor: pointer;
+        background-color: darkgray;
+       }
+       .MentionItems_Main_Stand img{
+        width: 3vw;
+        height: 6vh;
+        border-radius: 50px;
+        margin-top: 1.5vh;
+       }
+    
+        .MentionItems_Main_ids{
+            margin-top: 1vh;
+            margin-left: 1vw;
+            display: flex;
+            flex-direction: column;
+            width: 10vh;
+        }
+        .MentionItems_Main_ids h3{
+            margin-top: 0vh;
+            width: max-content;
+            height: max-content;
+            font-size: small;
+            font-weight: bolder;
+        }
+        .MentionItems_Main_ids p{
+            margin-top: -1vh;
+            width: max-content;
+            height: max-content;
+            font-weight: normal;
+            font-size: small;
+        }
+}

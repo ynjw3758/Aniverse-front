@@ -1,0 +1,15 @@
+
+@media (min-width: 1550px) and (max-width: 1920px)  {
+.MentionItem_stand p,
+.MentionItem_stand p:hover{
+ font-weight: bolder;
+ font-size: 14px;
+}
+}
+@media (max-width: 1540px)  {
+    .MentionItem_stand p,
+    .MentionItem_stand p:hover{
+        font-weight: bolder;
+        font-size: 14px;
+       }
+}

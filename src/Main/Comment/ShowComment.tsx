@@ -68,6 +68,7 @@ type Commentslist={
   userid:string,
   like_status:string,
   cm_date:string
+  mentions:mention_user[]
 }
 type Owner={
   Text:string,
@@ -80,6 +81,11 @@ type Owner={
     userid:string,
     nickname:string,
     commentdid:string
+  }
+  type mention_user={
+    id:string,
+    nickname:string,
+    commentid:string
   }
 //#endregion
 
@@ -135,8 +141,8 @@ const ShowComment =({ShowData, Owner, OnClose}:showcomments_info) =>{
       profile:"",
       userid:"",
       like_status:"",
-      cm_date:""
-
+      cm_date:"",
+      mentions:[]
     }]);
     const[owner_info, setOwner_info]=useState<Owner>({
       Text:"",

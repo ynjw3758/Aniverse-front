@@ -32,7 +32,42 @@
     flex-direction: column;
     width: 100%;
     height: 15vh;
-    
+
 }
 
 }
+@media (min-width:1550px) and (max-width:1920px) {.AddMentionMain_Stand{
+    width: 20vw;
+    height: 30vh;
+    max-height: 30vh;
+    position: absolute;
+    top: -29vh;
+    left: 0vw;
+    background-color:white;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    z-index: 50;
+    animation: slide-down 300ms ease-out forwards;
+    overflow-y: scroll;
+}
+.AddMentionMain_empty {
+    margin-top: 14vh;
+    margin-left: 4vw;
+    width: max-content;
+
+}
+.AddMentionMain_empty p{
+    font-size: medium;
+    font-weight: bolder;
+}
+.AddMentionMain_Loading{
+    margin-top: 10vh;
+    margin-left: 8vw;
+}
+.ddMentionMain_Show{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 15vh;
+
+}}

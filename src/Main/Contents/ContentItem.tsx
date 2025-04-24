@@ -28,6 +28,7 @@ import CancelFollower from "../Modal/CancleFollower";
 import ShowComment from "../Comment/ShowComment";
 import Slide from "../Slide/Slide";
 import AddMentionMain from "../Mention/AddMentionMain";
+import { set } from "lodash";
 //#endregion
 
 
@@ -143,6 +144,8 @@ const ContentItem =(props:content_info) =>{
     const[showcommenttext, setShowcommenttext]=useState<string>("");
     const[ct_date, setCt_date]=useState<string>("");
     const[textmention, setTextmention]=useState<string>("");
+    const[mentionsize, setMentionsize]=useState<string[]>([]);
+
 
     const[heart , setHeart]=useState<number>(props.heart);
     const[refcount, setRefcount]=useState<number>(0);
@@ -182,7 +185,9 @@ const ContentItem =(props:content_info) =>{
     nickname:"",
     img:""
   }]);
-  
+
+  const[mentioninfo, setMentioninfo]=useState<object[]>([])
+
 //#endregion
 
 //#region 변수초기화
@@ -502,21 +507,24 @@ const cookies = new Cookies();
     const closeModal =() =>{
      setIsBlock(false);
     }
-
-   
-    const test = useRef<string>("");
+    let before=useRef<string>("");
+    let current=useRef<string>("");
+    let IsSearchCheck=useRef<boolean | null | undefined>(false);
      const commentHandler =(event:React.ChangeEvent<HTMLInputElement>) =>{
-
+      before.current = emoticon;
+      current.current = event.target.value;
+      console.log("이전 :" , before.current)
+      console.log("현재재 :" , current.current)
+      
       const findgoal = event.target.value.lastIndexOf("@");
-      console.log("iskeyboard:" , iskeyboard);
-      console.log("마지막 인덱스 :" , findgoal);
-      console.log("마지막 event.target.value :" , event.target.value);
       if(event.target.value.length-1 ==findgoal && iskeyboard === true){
         if(searchLoading === true) setSearchLoading(false);
         console.log("그냥 넘어간다");
+        IsSearchCheck.current=true;
       }else{
-        console.log("아니 뭐여 :" ,event.target.value);
-        if(event.target.value.length >0 && event.target.value.includes("@") && iskeyboard === true) {
+        console.log("아니 뭐여 :" ,emoticon);
+        if(event.target.value.length >0 && event.target.value.includes("@") && 
+            iskeyboard === true &&IsSearchCheck.current===true  ) {
           const idx:number =event.target.value.lastIndexOf("@"); 
           const values =event.target.value.slice(idx+1 ,event.target.value.length);
           Searchbound(values)
@@ -524,8 +532,11 @@ const cookies = new Cookies();
         
       }
       if(event.target.value == ""){
+        console.log("모두 지워졌다");
         setSearchLoading(false);
         setEmoticon("");
+        setMentionsize([]);
+        IsSearchCheck.current=false;
       }
       setEmoticon(event.target.value);
      }
@@ -685,8 +696,12 @@ const cookies = new Cookies();
         setPage(data);
         setIstype(type);
       }
-      const[mentionsize, setMentionsize]=useState<string[]>([]);
+
       const InsertMention =(data:user_info) =>{
+        let infos:object[]=[...mentioninfo];
+        infos.push(data);
+        setMentioninfo(infos);
+
         if(mentionsize.length ==0) {
           let add_name:string=`@${data.nickname}`;
           setEmoticon(add_name);
@@ -709,6 +724,7 @@ const cookies = new Cookies();
         size.push(data.nickname)
         setMentionsize(size);
         setIskeyboard(false);
+        IsSearchCheck.current=false;
       }
           //키보드 눌럿을 때 이벤트
     const KeyDOWNHandler =(event:React.KeyboardEvent<HTMLInputElement>) =>{
@@ -811,9 +827,8 @@ const cookies = new Cookies();
 
       
     }
-
     const CommentUpload =() =>{
-     console.log("댓글 달기");
+      console.log("댓글 달기 : " , mentioninfo);
      setIsloading(true);
      setText(emoticon)
      let access_token:string="";
@@ -827,7 +842,7 @@ const cookies = new Cookies();
       if(response.status == 200){
         
       axios.post("http://localhost:8090/Pets-social/comment/Create", {UserId :UserId ,Comments:emoticon ,
-        contentid:props.conntetid, profile:props.MyImg, nickname:props.MyNick
+        contentid:props.conntetid, profile:props.MyImg, nickname:props.MyNick, MentionInfos:mentioninfo
       }).then((response) =>{
           console.log("응답 :" , response);
           setIspost(false);
@@ -1012,7 +1027,8 @@ const cookies = new Cookies();
                />
         </>)}
         {!isloading && (<>
-          <input type="text" placeholder="댓글 달기" onChange={commentHandler} value={emoticon} onKeyDown={KeyDOWNHandler}/>  
+          <input type="text" placeholder="댓글 달기" onChange={commentHandler} value={emoticon} 
+          onKeyDown={KeyDOWNHandler}/>  
         <img src={"/image/emoticon.png"}  onClick={EmojiHandler}/>
            {ispost && (<div className="Mainpage_Content_commnet_post">
             <p onClick={CommentUpload}>게시</p>
@@ -1089,7 +1105,8 @@ const cookies = new Cookies();
                />
         </div>)}
         {!isloading && (<>
-          <input type="text" placeholder="댓글 달기" onChange={commentHandler} value={emoticon} onKeyDown={KeyDOWNHandler}/>  
+          <input type="text" placeholder="댓글 달기" onChange={commentHandler} value={emoticon}
+           onKeyDown={KeyDOWNHandler} />  
         <img src={"/image/emoticon.png"}  onClick={EmojiHandler}/>
            {ispost && (<div className="Mainpage_Content_commnet_post">
             <p onClick={CommentUpload}>게시</p>

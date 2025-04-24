@@ -32,6 +32,7 @@ type comment_list={
     userid:string,
     like_status:string,
     cm_date:string
+    mentions:mention_user[]
 }
 
 type Owner={
@@ -45,7 +46,12 @@ type cm_userinfo={
     userid:string,
     nickname:string,
     commentdid:string
-  }
+}
+type mention_user={
+    id:string,
+    nickname:string,
+    commentid:string
+}
 //#endregion
 const Comments_List =({comments, Owner_infos ,Comment_Send}:props) =>{
     const[isOwner, setIsOwner]=useState<boolean>(false);

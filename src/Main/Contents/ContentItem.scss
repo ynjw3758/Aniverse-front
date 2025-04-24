@@ -327,7 +327,7 @@
         margin-top: -0.6vh;
     }
     .MainPage_Comment_input_extend input,
-    .MainPage_Comment_input_extend input:hover{
+    .MainPage_Comment_input_extend input:focus{
         border-top: none;
         border-bottom: none;
         border-left: none;
@@ -337,6 +337,8 @@
         margin-left: 0vw;
         margin-top: 0vh;
         cursor: pointer;
+        overflow: hidden;
+        white-space: nowrap;
 
     }
     .MainPage_Comment_input{
@@ -348,7 +350,7 @@
         margin-top: -2vh;
     }
     .MainPage_Comment_input input,
-    .MainPage_Comment_input input:hover{
+    .MainPage_Comment_input input:focus{
         border-top: none;
         border-bottom: none;
         border-left: none;
@@ -419,6 +421,8 @@
         color:darkgray;
         cursor: pointer;
         font-size: small;
+        overflow: hidden;
+        white-space: nowrap;
     }
     .MainContent_Comment_cnt_extend{
         display: flex;
@@ -633,7 +637,7 @@
         margin-top: -1vh;
     }
     .MainPage_Comment_input input,
-    .MainPage_Comment_input input:hover{
+    .MainPage_Comment_input input:focus{
         border-top: none;
         border-bottom: none;
         border-left: none;
@@ -655,7 +659,7 @@
         position: relative;
     }
     .MainPage_Comment_input_extend input,
-    .MainPage_Comment_input_extend input:hover{
+    .MainPage_Comment_input_extend input:focus{
         border-top: none;
         border-bottom: none;
         border-left: none;

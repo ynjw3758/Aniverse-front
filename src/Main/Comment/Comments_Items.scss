@@ -89,6 +89,13 @@
     font-size: medium;
     margin-top: 1vh;
 }
+.Comments_Item_Mention{
+    display: flex;
+    flex-direction: row;
+    width: max-content;
+    height: max-content;
+    
+}
 }
 
 @media screen and (max-width:1540px) {

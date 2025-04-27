@@ -83,7 +83,11 @@ type user_info ={
   img:string
 }
 
-
+type Content_cm={
+ contentid:string,
+ img:string,
+ nickname:string
+}
 
 const ContentItem =(props:content_info) =>{
 
@@ -186,6 +190,12 @@ const ContentItem =(props:content_info) =>{
     img:""
   }]);
 
+  const[content_cm ,setContent_cm]=useState<Content_cm>({
+    contentid:"",
+    nickname:"",
+    img:""
+  });
+
   const[mentioninfo, setMentioninfo]=useState<object[]>([])
 
 //#endregion
@@ -201,6 +211,8 @@ const input_tag_position = iscomcnt ? "MainPage_Comment_input_extend":"MainPage_
 const comment_cnt_position = fullText ? "MainContent_Comment_cnt_extend" : "MainContent_Comment_cnt";
 const Timeout = 200;
 const cookies = new Cookies();
+let IsSearchCheck=useRef<boolean | null | undefined>(false);
+const textareaRef = useRef<HTMLTextAreaElement>(null);
 //#endregion
 
 //                             +--------------------
@@ -507,22 +519,14 @@ const cookies = new Cookies();
     const closeModal =() =>{
      setIsBlock(false);
     }
-    let before=useRef<string>("");
-    let current=useRef<string>("");
-    let IsSearchCheck=useRef<boolean | null | undefined>(false);
-     const commentHandler =(event:React.ChangeEvent<HTMLInputElement>) =>{
-      before.current = emoticon;
-      current.current = event.target.value;
-      console.log("이전 :" , before.current)
-      console.log("현재재 :" , current.current)
+    
+     const commentHandler =(event:React.ChangeEvent<HTMLTextAreaElement>) =>{
       
       const findgoal = event.target.value.lastIndexOf("@");
       if(event.target.value.length-1 ==findgoal && iskeyboard === true){
         if(searchLoading === true) setSearchLoading(false);
-        console.log("그냥 넘어간다");
         IsSearchCheck.current=true;
       }else{
-        console.log("아니 뭐여 :" ,emoticon);
         if(event.target.value.length >0 && event.target.value.includes("@") && 
             iskeyboard === true &&IsSearchCheck.current===true  ) {
           const idx:number =event.target.value.lastIndexOf("@"); 
@@ -532,7 +536,6 @@ const cookies = new Cookies();
         
       }
       if(event.target.value == ""){
-        console.log("모두 지워졌다");
         setSearchLoading(false);
         setEmoticon("");
         setMentionsize([]);
@@ -543,11 +546,8 @@ const cookies = new Cookies();
     const ta = useRef<string>("");
      const Searchbound =useMemo(() => debounce((values:string) =>{
       setTextmention(values);
-      
-      console.log("검색 :" , values)
       let access_token:string="";
       access_token =localStorage.getItem("a_id")!;
-      console.log("access : " , access_token);
       axios.defaults.headers.common['Authorization'] = access_token;
       axios.get("http://localhost:8080/Pets-social/acccheck")
       .then(response =>{
@@ -685,6 +685,10 @@ const cookies = new Cookies();
           Local:props.Local, heart_ct:heart, check_heart:hearticon, content_ct:ct_date}
   
           const ownerinfos:object={Id:props.UserId , Profile:props.profile, Nickname:props.nickname}
+          const content_cm:Content_cm={ contentid:props.conntetid,
+            img:props.MyImg,
+            nickname:props.MyNick}
+            setContent_cm(content_cm);
             setOwners(ownerinfos); 
             setShowCommentData(data);
             setAllComment(true);
@@ -727,8 +731,7 @@ const cookies = new Cookies();
         IsSearchCheck.current=false;
       }
           //키보드 눌럿을 때 이벤트
-    const KeyDOWNHandler =(event:React.KeyboardEvent<HTMLInputElement>) =>{
-      console.log("아니 ㅅㅂ 뭔데")
+    const KeyDOWNHandler =(event:React.KeyboardEvent<HTMLTextAreaElement>) =>{
      setIskeyboard(true);
   }
 
@@ -956,11 +959,29 @@ const cookies = new Cookies();
       })
     }
 //#endregion
-
+    const te_inpuHandler =(event: React.FormEvent<HTMLTextAreaElement>) =>{
+      const textarea = textareaRef.current;
+      const max_height = 200;
+    
+      if (textarea) {
+        // 1️⃣ 초기화 → 줄어드는 경우를 위해 height 리셋
+        textarea.style.height = "auto";
+    
+        // 2️⃣ 실제 필요한 scrollHeight 계산
+        const newHeight = Math.min(textarea.scrollHeight, max_height);
+    
+        // 3️⃣ 설정
+        textarea.style.height = `${newHeight}px`;
+    
+        // (선택) 디버깅 로그
+        console.log("scrollHeight:", textarea.scrollHeight);
+        console.log("applied height:", textarea.style.height);
+      }
+    }
 
 
     return(<>
-      {allCommtent && (<ShowComment OnClose={CloseAllComment} ShowData={showCommentData} Owner={owners}/>)}
+      {allCommtent && (<ShowComment OnClose={CloseAllComment} ShowData={showCommentData} Owner={owners} Content_cm={content_cm}/>)}
       {isshow && (<div id={props.conntetid} ref={DIVref}>     
       <div className="Mainpage_Content_userinfo" onMouseOver={SmallProfile}  
       onMouseLeave={Mouseout} onMouseMove={MouseMoveHandler}>
@@ -1027,8 +1048,8 @@ const cookies = new Cookies();
                />
         </>)}
         {!isloading && (<>
-          <input type="text" placeholder="댓글 달기" onChange={commentHandler} value={emoticon} 
-          onKeyDown={KeyDOWNHandler}/>  
+          <textarea  placeholder="댓글 달기" onChange={commentHandler} value={emoticon} ref={textareaRef}
+          onKeyDown={KeyDOWNHandler} onInput={te_inpuHandler}/>  
         <img src={"/image/emoticon.png"}  onClick={EmojiHandler}/>
            {ispost && (<div className="Mainpage_Content_commnet_post">
             <p onClick={CommentUpload}>게시</p>
@@ -1038,6 +1059,9 @@ const cookies = new Cookies();
           <AddMentionMain Userinfo={userinfo} AddMentionData={InsertMention}/>
         </div>)}
         </div>
+        </div>
+        <div className="Mainpage_Content_vertical">
+          <hr />
         </div>
        </div>   
       </>)}
@@ -1105,8 +1129,8 @@ const cookies = new Cookies();
                />
         </div>)}
         {!isloading && (<>
-          <input type="text" placeholder="댓글 달기" onChange={commentHandler} value={emoticon}
-           onKeyDown={KeyDOWNHandler} />  
+          <textarea  placeholder="댓글 달기" onChange={commentHandler} value={emoticon} ref={textareaRef}
+           onKeyDown={KeyDOWNHandler} onInput={te_inpuHandler}/>  
         <img src={"/image/emoticon.png"}  onClick={EmojiHandler}/>
            {ispost && (<div className="Mainpage_Content_commnet_post">
             <p onClick={CommentUpload}>게시</p>
@@ -1121,11 +1145,11 @@ const cookies = new Cookies();
           <EmojiPicker onEmojiClick={onClickHandler} />
           </div>)}
         </div>
+        <div className="Mainpage_Content_vertical">
+          <hr />
+        </div>
        </div>    
         </> )}
-       <div className="Mainpage_Content_vertical">
-        <hr />
-       </div>
 
        {mousecheck && (<div className="Mainpage_Content_smallprofile"
        onMouseOver={Mouseover} > 

@@ -21,13 +21,11 @@ const right_active = rightactive ? "right_active" : "right_unactive";
 const page_number= useRef<number>(1)
 
 useEffect(() =>{
-  console.log("최초 진입 오른쪽만 보인다");
   setRightactive(true);
 },[])
 
 
    useEffect(() =>{
-    console.log("최초에만 발생");
     setIsfirst(true);
    },[])
 
@@ -35,7 +33,6 @@ useEffect(() =>{
     page_number.current+=1;
     pageChange(page_number.current, "next");
     if(page_number.current == total){
-        console.log("page ")
         setRightactive(false);
         setLeftactive(true);
     }
@@ -46,7 +43,6 @@ useEffect(() =>{
   }
 
   const SlidebeforeHandler =() =>{
-    console.log("leftpage :" ,pagenumber);
     page_number.current-=1;
     pageChange(page_number.current, "before");
     if(page_number.current == 1){

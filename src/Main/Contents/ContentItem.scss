@@ -87,6 +87,7 @@
           width: 1vw;
           height: 2vh;
           margin-top: 1vh;
+          margin-left: 2vw;
       }
       .Mainpage_Content_commnet_post{
         display: flex;
@@ -130,7 +131,7 @@
     .Mainpage_Content_vertical hr{
         margin-top: 0px;
         width:34vw;        
-        margin-left: 2vw;
+        margin-left: 0vw;
     }
     .Mainpage_Content_emojiopen{
         position: absolute;
@@ -323,34 +324,37 @@
         display: flex;
         flex-direction: row;
         width: 100%;
-        height: 4vh;
+        //height: 4vh;
         margin-top: -0.6vh;
     }
-    .MainPage_Comment_input_extend input,
-    .MainPage_Comment_input_extend input:focus{
+    
+    .MainPage_Comment_input_extend textarea,
+    .MainPage_Comment_input_extend textarea:focus{
+        resize: none;
+        outline: none;
         border-top: none;
         border-bottom: none;
         border-left: none;
         border-right: none;
         width: 100%;
-        height: 4vh;
+        height: 2vh;
         margin-left: 0vw;
-        margin-top: 0vh;
+        margin-top: 0.5vh;
         cursor: pointer;
-        overflow: hidden;
-        white-space: nowrap;
 
     }
+        
     .MainPage_Comment_input{
         position:relative;
         display: flex;
         flex-direction: row;
         width: 100%;
-        height: 4vh;
         margin-top: -2vh;
     }
-    .MainPage_Comment_input input,
-    .MainPage_Comment_input input:focus{
+    .MainPage_Comment_input textarea,
+    .MainPage_Comment_input textarea:focus{
+        resize: none;
+        outline: none;
         border-top: none;
         border-bottom: none;
         border-left: none;
@@ -358,8 +362,9 @@
         width: 100%;
         height: 4vh;
         margin-left: 0vw;
-        margin-top: 0vh;
+        margin-top: 0.5vh;
         cursor: pointer;
+        
 
     }
     .Content_MyComment{
@@ -518,7 +523,7 @@
         flex-direction: row;
         position: absolute;
         top:-3vh;
-        left: 29vw;
+        left: 30.5vw;
         width: 3vw;
         align-items: center;
         justify-content: center;
@@ -538,7 +543,7 @@
     .Mainpage_Content_imoticon{
         display: flex;
         flex-direction: column;
-        gap:1;
+        gap:1px;
       }
       .Mainpage_Content_imoticon p{
           margin-top: 3vh;
@@ -548,6 +553,7 @@
         width: 1vw;
         height: 2vh;
         margin-top: 1vh;
+        margin-left: 2vw;
       }
       .Mainpage_Content_subItem{
         margin-top: -5px;
@@ -576,9 +582,9 @@
     }
 
     .Mainpage_Content_vertical hr{
-        margin-top: 0px;
-        width:34vw;
-        margin-left: 2vw;
+        margin-top: 1vh; 
+        width: 34vw;
+        margin-left: 0.4vw;
         
     }
     .Mainpage_Content_emojiopen{
@@ -632,12 +638,13 @@
         display: flex;
         flex-direction: row;
         width: 100%;
-        height: 4vh;
-        position: relative;
         margin-top: -1vh;
     }
-    .MainPage_Comment_input input,
-    .MainPage_Comment_input input:focus{
+    .MainPage_Comment_input textarea,
+    .MainPage_Comment_input textarea:focus{
+
+        resize: none;
+        outline: none;
         border-top: none;
         border-bottom: none;
         border-left: none;
@@ -647,6 +654,7 @@
         margin-left: 0vw;
         margin-top: -1vh;
         cursor: pointer;
+        margin-bottom: -1vh;
 
     }
         .MainPage_Comment_input_extend{
@@ -654,21 +662,23 @@
         display: flex;
         flex-direction: row;
         width: 100%;
-        height: 4vh;
         margin-top: -0.6vh;
-        position: relative;
+        
     }
-    .MainPage_Comment_input_extend input,
-    .MainPage_Comment_input_extend input:focus{
+    .MainPage_Comment_input_extend textarea,
+    .MainPage_Comment_input_extend textarea:focus{
+        resize: none;
+        outline: none;
         border-top: none;
         border-bottom: none;
         border-left: none;
         border-right: none;
-        width: 100%;
-        height: 4vh;
+        width: 31vw;
+        height: 2vh;
         margin-left: 0vw;
         margin-top: 0vh;
         cursor: pointer;
+        
 
     }
     .Comments_loading{

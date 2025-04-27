@@ -2,10 +2,10 @@
 //-----------------------------+   외부부 라이브러리리
 //                             +--------------------
 //#region
-import { useEffect, useState ,useRef} from "react";
+import { useEffect, useState ,useRef, useMemo} from "react";
 import {Oval} from "react-loader-spinner";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useResolvedPath } from "react-router-dom";
 import {Cookies} from 'react-cookie';
 import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
 import debounce from 'lodash/debounce';
@@ -21,6 +21,9 @@ import "./ShowComment.scss";
 import Comment_Slide from "./Comment_Slide";
 import LoginExp from "../../LginExpiration/LoginExp";
 import Comments_List from "./Comments_List";
+import AddMentionMain from "../Mention/AddMentionMain";
+import useMentionHandler from "../../UseHook/SearchHandler";
+
 //#endregion
 
 //                             +--------------------
@@ -87,6 +90,23 @@ type Owner={
     nickname:string,
     commentid:string
   }
+  type user_info ={
+    id:string,
+    nickname:string,
+    img:string
+  }
+  type Content_cm={
+    contentid:string,
+    img:string,
+    nickname:string
+   }
+
+   type reply={
+    commentid:string,
+    userid:string,
+    nickname:string
+   }
+
 //#endregion
 
 //                             +--------------------
@@ -96,11 +116,17 @@ type Owner={
 interface showcomments_info{
  OnClose :() => void,
 ShowData:showdata,
-Owner:Owner
+Owner:Owner,
+Content_cm:Content_cm
+}
+interface tokenRenewal { //토큰 생긴 인터페이스
+  message: string;
+  code: number;
+  data:string
 }
 //#endregion
 
-const ShowComment =({ShowData, Owner, OnClose}:showcomments_info) =>{
+const ShowComment =({ShowData, Owner, Content_cm,OnClose}:showcomments_info) =>{
 
 //                             +--------------------
 //-----------------------------+   상태 관리
@@ -115,9 +141,15 @@ const ShowComment =({ShowData, Owner, OnClose}:showcomments_info) =>{
     const[isperist, setIsperist]=useState<boolean>(false);
     const[isemoji, setIsemoji]=useState<boolean>(false);
     const[ispost, setIspost]=useState<boolean>(false);
+    const[searchLoading, setSearchLoading]=useState<boolean>(false);
+    const[iskeyboard,setIskeyboard]=useState<boolean>(false);
+    const[isReply, setIsReply]=useState<boolean>(false);
+    const[showComment, setShowComment]=useState<boolean>(false);
+    const[isloading, setIsloading]=useState<boolean>(false);
+    const[ischangeline, setIschangeline]=useState<boolean>(false);
     
     
-
+    
     const[totalcnt, setTotalcnt]=useState<number>(0);
     const[page, setPage]=useState<number>(1);
     const[video_last, setVideo_last]=useState<number>(0);
@@ -130,6 +162,10 @@ const ShowComment =({ShowData, Owner, OnClose}:showcomments_info) =>{
     const[favorite, setFavorite]=useState<number>(ShowData.heart_ct);
     const[emoticon, setEmoticon]=useState<string>("");
     const[commentid, setCommentid]=useState<string>("");
+    const[textmention, setTextmention]=useState<string>("");
+    const[mentionsize, setMentionsize]=useState<string[]>([]);
+    const[mentioninfo, setMentioninfo]=useState<object[]>([])
+    
 
 
     const[comments_list, setComments_list]=useState<Commentslist[]>([{
@@ -150,6 +186,20 @@ const ShowComment =({ShowData, Owner, OnClose}:showcomments_info) =>{
       Profile:"",
       Nickname:"",
     })
+
+    const[userinfo ,setUserinfo]=useState<user_info[]>([{
+      id:"",
+      nickname:"",
+      img:""
+    }]);
+    const[replyinfo, setReplyinfo]=useState<reply>({
+      userid:"",
+      nickname:"",
+      commentid:""
+    })
+
+    
+
 //#endregion
     
     
@@ -162,7 +212,16 @@ const ShowComment =({ShowData, Owner, OnClose}:showcomments_info) =>{
     const list:any=useRef<null | HTMLVideoElement[]>([]);
     const video_idx = useRef<number>(0);
     const navigate = useNavigate();
+    const Timeout = 200;
     const cookies = new Cookies();
+    let IsSearchCheck=useRef<boolean | null | undefined>(false);
+    const textareaRef = useRef<HTMLTextAreaElement>(null);
+    const DivRef = useRef<HTMLDivElement>(null);
+    const input_div = useRef<HTMLDivElement>(null);
+    const infos_div =useRef<HTMLDivElement>(null);
+    const imglist_div =useRef<HTMLDivElement>(null);
+    const text_width = useRef<string>("");
+    const text_string = useRef<string>("");
 //#endregion
 
 //                             +--------------------
@@ -187,7 +246,7 @@ const ShowComment =({ShowData, Owner, OnClose}:showcomments_info) =>{
      else if(window.innerWidth > 1550){
       setScreen_width(36)
      }
-     console.log("브라우저 넓이 :" , window.innerWidth);
+     console.log("Content_cm :" , Content_cm);
 
      
     },[])
@@ -442,14 +501,318 @@ const ShowComment =({ShowData, Owner, OnClose}:showcomments_info) =>{
   setEmoticon((prev)=>prev+emojiData.emoji);
 
     }
-  const commentHandler =(event:React.ChangeEvent<HTMLInputElement>) =>{
-  setEmoticon(event.target.value);
+
+    const KeyDOWNHandler =(event:React.KeyboardEvent<HTMLTextAreaElement>) =>{
+     setIskeyboard(true);
   }
+  const margin = useRef<number>(0);
+  const img_margin = useRef<number>(-1);
+  const compare_height = useRef<number>(139);
+  const change_height =(data:any) =>{
+    if(window.innerWidth <1550 && window.innerWidth> 1540 ){
+      const textarea = textareaRef.current;
+      const input = input_div.current;
+      const infos = infos_div.current;
+      const imgage = imglist_div.current;
+      const text_height = 60;
+      const div_current=  DivRef.current;
+      const margin_limit = -3;
+  
+      if (textarea && div_current && input && infos && imgage) {
+  
+        // 2️⃣ 실제 필요한 scrollHeight 계산
+        const newHeight = Math.min(textarea.scrollHeight, text_height);
+        const input_Height = Math.min(div_current.scrollHeight, 150);
+        console.log("text_width.current :" ,input_Height)
+       if(ischangeline === true) {
+       if(margin.current > margin_limit) {
+        text_width.current="";
+        margin.current+=-1
+        img_margin.current+=-1;
+        imgage.style.marginTop = `${img_margin.current}vh`;
+        compare_height.current += 5;
+        if(compare_height.current>= 150) compare_height.current = 150;
+        div_current.style.height = `${compare_height.current}px`;
+        div_current.style.marginTop = `${margin.current}vh`;
+        textarea.style.height = `${newHeight}px`;
+      }
+      else{
+        div_current.style.height = `${input_Height}px`;
+        textarea.style.height = `${newHeight}px`;
+      }
+      text_width.current="";
+       }
+       else if(text_string.current.length == 0){
+        console.log("제발")
+        margin.current=0;
+        compare_height.current =139;
+        imgage.style.marginTop = "1vh";
+        //infos.style.marginTop = "1.5vh";
+        input.style.marginTop="2vh";
+        textarea.style.height = "auto";
+        textarea.style.marginTop ="auto";
+        div_current.style.height = "auto";
+        div_current.style.marginTop="auto";
+        
+       }
+    }
+    }
+    else if(window.innerWidth >1550 && window.innerWidth<= 1920){
+      console.log("브라우저 크기 1550이상");
+      const textarea = textareaRef.current;
+      const input = input_div.current;
+      const infos = infos_div.current;
+      const imgage = imglist_div.current;
+      const text_height = 60;
+      const div_current=  DivRef.current;
+      const margin_limit = -3;
+      console.log("길이 :" , )
+      if (textarea && div_current && input && infos && imgage) {
+  
+        // 2️⃣ 실제 필요한 scrollHeight 계산
+        const newHeight = Math.min(textarea.scrollHeight, text_height);
+        const input_Height = Math.min(div_current.scrollHeight, 180);
+        console.log("text_width.current :" ,input_Height)
+       if(ischangeline === true) {
+       if(margin.current > margin_limit) {
+        text_width.current="";
+        margin.current+=-1
+        img_margin.current+=-1;
+        imgage.style.marginTop = `${img_margin.current}vh`;
+        compare_height.current += 10;
+        if(compare_height.current>= 180) compare_height.current = 180;
+        div_current.style.height = `${compare_height.current}px`;
+        div_current.style.marginTop = `${margin.current}vh`;
+        textarea.style.height = `${newHeight}px`;
+      }
+      else{
+        div_current.style.height = `${input_Height}px`;
+        textarea.style.height = `${newHeight}px`;
+      }
+      text_width.current="";
+       }
+       else if(text_string.current.length == 0){
+        console.log("제발")
+        margin.current=0;
+        compare_height.current =139;
+        imgage.style.marginTop = "1vh";
+        //infos.style.marginTop = "1.5vh";
+        input.style.marginTop="2vh";
+        textarea.style.height = "4vh";
+        textarea.style.marginTop ="1vh";
+        div_current.style.height = "auto";
+        div_current.style.marginTop="auto";
+        
+       }
+    }
+    }
+   
+}
+const ischeck = useRef<string>("");
+  const commentHandler =(event:React.ChangeEvent<HTMLTextAreaElement>) =>{
+    if(window.innerWidth <1550 && window.innerWidth> 1540 ){
+        if(event.target.value.length===34 ){
+          setIschangeline(true);
+          ischeck.current = event.target.value;
+        }
+        else if(event.target.value.length -ischeck.current.length ===34 ){
+          setIschangeline(true);
+          ischeck.current = event.target.value;
+        }
+        else if(event.target.value.length -ischeck.current.length !==34 ){
+          setIschangeline(false);
+        }
+  }
+   else if(window.innerWidth >1550 && window.innerWidth<= 1920){
+    console.log("길이 :" , event.target.value.length)
+    if(event.target.value.length===52 ){
+      setIschangeline(true);
+      ischeck.current = event.target.value;
+    }
+    else if(event.target.value.length -ischeck.current.length ===52 ){
+      setIschangeline(true);
+      ischeck.current = event.target.value;
+    }
+    else if(event.target.value.length -ischeck.current.length !==52 ){
+      setIschangeline(false);
+    }
+   }
+    text_width.current =event.target.value;
+    text_string.current = event.target.value;
+    const findgoal = event.target.value.lastIndexOf("@");
+    if(event.target.value.length-1 ==findgoal && iskeyboard === true){
+      if(searchLoading === true) setSearchLoading(false);
+      IsSearchCheck.current=true;
+    }else{
+      if(event.target.value.length >0 && event.target.value.includes("@") && 
+          iskeyboard === true &&IsSearchCheck.current===true  ) {
+        const idx:number =event.target.value.lastIndexOf("@"); 
+        const values =event.target.value.slice(idx+1 ,event.target.value.length);
+        Searchbound(values)
+      }
+      
+    }
+    if(event.target.value == ""){
+      console.log("모두 지워졌다");
+      setSearchLoading(false);
+      setEmoticon("");
+      setMentionsize([]);
+      IsSearchCheck.current=false;
+    }
+    setEmoticon(event.target.value);
+    change_height(text_width.current);
+    
+  }
+  const InsertMention =(data:user_info) =>{
+    let infos:object[]=[...mentioninfo];
+    infos.push(data);
+    setMentioninfo(infos);
+
+    if(mentionsize.length ==0) {
+      let add_name:string=`@${data.nickname}`;
+      setEmoticon(add_name);
+      setSearchLoading(false);
+      setTextmention("");
+    }
+    else{
+      let before_text ="";
+      mentionsize.forEach((values) =>{
+        before_text+=`@${values}`;
+      })
+      
+      let add_name:string=before_text+`@${data.nickname}`;
+      setEmoticon(add_name);
+      setSearchLoading(false);
+      setTextmention("");
+    }
+    
+    let size = [...mentionsize]
+    size.push(data.nickname)
+    setMentionsize(size);
+    setIskeyboard(false);
+    IsSearchCheck.current=false;
+  }
+  const Searchbound =useMemo(() => debounce((values:string) =>{
+    setTextmention(values);
+    
+    console.log("검색 :" , values)
+    let access_token:string="";
+    access_token =localStorage.getItem("a_id")!;
+    console.log("access : " , access_token);
+    axios.defaults.headers.common['Authorization'] = access_token;
+    axios.get("http://localhost:8080/Pets-social/acccheck")
+    .then(response =>{
+      if(response.status == 200){
+        console.log("토큰 인증 성공");
+        axios.get("http://localhost:8088/Pets-social/Search/Person" , {params:{Word:values}})
+        .then((response) =>{
+              console.log("검색 결과 :", response.data)
+            if(response.status == 200 && response.data.length !==0){
+              setUserinfo(response.data);
+            }
+            else if(response.status == 200 && response.data.length ==0){
+              setUserinfo([]);
+            }
+            setIskeyboard(false);
+            setSearchLoading(true);
+        }).catch((error) =>{
+            if(axios.isAxiosError<ResponseDataType>(error)){
+                console.log("error code: " , error.response?.status);
+                
+                if(error.code=="ERR_BAD_REQUEST"){
+                  navigate("/error");
+                }
+  
+                else if(error.response?.status==500){
+                  console.log("서버 에러발생");
+                  navigate("/error/se-error")
+                }
+                
+                console.log("error response: " , error.response?.data);
+              }
+        })
+      }
+    }).catch((error) =>{
+      if(axios.isAxiosError<ResponseDataType>(error)){
+          console.log("error code: " , error.response?.status);
+          
+          if(error.code=="ERR_BAD_REQUEST"){
+            navigate("/error");
+          }
+          else if(error.response?.status==401){
+            console.log("승인되지 않은 로그인");
+            Object.entries(error.response?.data).map(key =>{
+              if(key.at(0) == "errorcode"){
+                if(key.at(1) == "00"){
+                  navigate("/error/auth/");
+                  return;
+                }
+                
+                else if(key.at(1) == "01"){
+                  let refresh_token:string="";
+                  console.log("토큰 시간 만료 refresh token을 보낸다");
+                  refresh_token= cookies.get('refresh_token');
+                  const id= localStorage.getItem("id");
+                  axios.post("http://localhost:8080/Pets-social/token/refresh", {
+                    refresh_token : refresh_token,
+                    id : id})
+                    .then(
+                    response =>{
+                      console.log("응답 결과 :" , response)
+                      if(response.status == 200){
+                        localStorage.setItem("p_exp" ,response.data.data.exp);
+                        localStorage.setItem("a_id" ,response.data.data.access_token);
+                        navigate("/main");
+                      }
+                    }
+                  ).catch(error =>{
+                    if(axios.isAxiosError<tokenRenewal>(error)){
+                                console.log("error code: " , error.response?.status);
+        
+                                if(error.response?.status==400){
+                                  navigate("/error");
+                                  return;
+                                }
+                                else if(error.code == "ERR_NETWORK"){
+                                  console.log("네트워크 에러 ");
+                                  return;
+                                  
+                                }
+                                else if(error.response?.status == 401){
+                                    console.log("다시 로그인해야 된다.");
+                                    localStorage.clear();
+                                    //setAgainlogin(true);
+
+     
+                                }
+                                else if(error.response?.status==301){
+                                    console.log("기존 아이디 존재");
+                                    //setIsfirst(true);
+                                    //setUserid(error.response?.data.data);
+                                }
+                              }
+                })
+                  
+                }
+              }
+            })
+        }
+
+          else if(error.response?.status==500){
+            navigate("/error/se-error")
+          }
+        }
+    })
+   },Timeout),[textmention])
+
   const SendCommentHandler =(data:cm_userinfo) =>{
     const values = `@${data.nickname}`;
     setEmoticon(values);
     setCommentid(data.commentdid);
+    const value = {userid:data.userid , commentid:data.commentdid, nickname:data.nickname}
+    setReplyinfo(value);
     setIspost(true);
+    setIsReply(true);
   } 
 
   const sendcomment =() =>{
@@ -461,17 +824,70 @@ const ShowComment =({ShowData, Owner, OnClose}:showcomments_info) =>{
     axios.get("http://localhost:8080/Pets-social/acccheck").then(
       response =>{
         if(response.status === 200){
-            if(commentid == ""){
-              console.log("root 댓글을 단다");
+          if(isReply){
+            console.log("content_cm : " , Content_cm);
+            
+            axios.post("http://localhost:8090/Pets-social/comment/reply", {Comments:emoticon,contentid:Content_cm.contentid,
+              CommentId:replyinfo.commentid ,MentionUser:replyinfo.userid, 
+              MentionNickname:replyinfo.nickname ,MyId :id , MyNick:Content_cm.nickname , MyProrile:Content_cm.img}).then(response =>{
+                console.log("응답 처리 :" , response);
 
-            }
-            else{
-              console.log("대댓글을 단다.");
-        
-            }
+                const data={cm_cnt:0, cm_favorite:0 ,comment_text:emoticon, }
+
+              }).catch((error) =>{
+                if(axios.isAxiosError<ResponseDataType>(error)){
+                  console.log("error code: " , error.response?.status);
+                  
+                  if(error.code=="ERR_BAD_REQUEST"){
+                    navigate("/error");
+                  }
+                  else if(error.response?.status==500){
+                    console.log("서버 에러발생");
+                    navigate("/error/se-error")
+                  }
+                  else if(error.response?.status == 404){
+                    console.log("not found");
+                  }
+                  
+                  console.log("error response: " , error.response?.data);
+                }
+              })
+                
+          }
+          else{
+            let access_token:string="";
+            let UserId:string= "";
+            access_token = localStorage.getItem("a_id")!;
+            UserId = localStorage.getItem("id")!;
+            axios.defaults.headers.common['Authorization'] = access_token;
+
+               
+             axios.post("http://localhost:8090/Pets-social/comment/Create", {UserId :UserId ,Comments:emoticon ,
+               contentid:Content_cm.contentid, profile:Content_cm.img, nickname:Content_cm.nickname, MentionInfos:mentioninfo
+             }).then((response) =>{
+                 console.log("응답 :" , response);
+                 setIspost(false);
+                 setShowComment(true);
+                 setIsloading(false);
+                 setEmoticon("");
+             }).catch((error) =>{
+               if(axios.isAxiosError<ResponseDataType>(error)){
+                 console.log("error code: " , error.response?.status);
+                 
+                 if(error.code=="ERR_BAD_REQUEST"){
+                   navigate("/error");
+                 }
+                 else if(error.response?.status==500){
+                   console.log("서버 에러발생");
+                   navigate("/error/se-error")
+                 }
+                 
+                 console.log("error response: " , error.response?.data);
+               }
+          })
         }
 
-      }
+      }}
     ).catch((error) =>{
       if(axios.isAxiosError<ResponseDataType>(error)){
           console.log("error code: " , error.response?.status);
@@ -550,6 +966,8 @@ const ShowComment =({ShowData, Owner, OnClose}:showcomments_info) =>{
        })
 
   }
+
+  
 //#endregion
 
     return(<div className="ShowAllComments_BackDrop" onClick={CloseHandler}>
@@ -599,20 +1017,25 @@ const ShowComment =({ShowData, Owner, OnClose}:showcomments_info) =>{
                 <Comments_List comments ={comments_list} Owner_infos={owner_info} Comment_Send={SendCommentHandler}/>
               </>)}
               </div>
-              <div className="ShowComments_content_compare">
-                 <div className="ShowComments_content_Imglist">
+              <div className="ShowComments_content_compare" ref={DivRef}>
+                <div className="ShowComments_Input" ref={input_div}>
+                  <div className="ShowComments_Imoticon">
+                    <img src={"/image/emoticon.png"}  onClick={EmojiHandler} />
+                  </div>
+                    {ispost && (<div className="ShowComments_commnet_post">
+                      <p onClick={sendcomment}>게시</p>
+                    </div>)}
+                    <textarea  placeholder="댓글 달기..." onChange={commentHandler} value={emoticon} 
+                    onKeyDown={KeyDOWNHandler}  ref={textareaRef}/>
+                  </div>
+                  <div className="ShowComments_content_Infos" ref={infos_div}>
+                    <h3>{`좋아요 ${favorite}개`}</h3>
+                    <p>{ShowData.content_ct}</p>
+                  </div>
+                 <div className="ShowComments_content_Imglist" ref={imglist_div}>
                     <img src={hearticon}/>
                     <img src="/image/share.png"/>
                     <img src="/image/favorite_content.png"/>
-                 </div>
-                 <h3>{`좋아요 ${favorite}개`}</h3>
-                 <p>{ShowData.content_ct}</p>
-                 <div className="ShowComments_Input">
-                   <input type="text" placeholder="댓글 달기..." onChange={commentHandler} value={emoticon}/>
-                   <img src={"/image/emoticon.png"}  onClick={EmojiHandler}/>
-                   {ispost && (<div className="ShowComments_commnet_post">
-                    <p onClick={sendcomment}>게시</p>
-                   </div>)}
                  </div>
                  {isemoji && (<div className="ShowComments_Input_Emoji">
                     <EmojiPicker onEmojiClick={onClickHandler}  
@@ -620,7 +1043,9 @@ const ShowComment =({ShowData, Owner, OnClose}:showcomments_info) =>{
                     width={400}/>
                    </div>)}
               </div>
-
+              {searchLoading && (<div>
+                      <AddMentionMain Userinfo={userinfo} AddMentionData={InsertMention}/>
+              </div>)}
             </div>
           </div>
     </div>)

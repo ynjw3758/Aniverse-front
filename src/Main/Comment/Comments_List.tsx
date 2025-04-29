@@ -31,7 +31,8 @@ type comment_list={
     profile:string,
     userid:string,
     like_status:string,
-    cm_date:string
+    cm_date:string,
+    contentid:string,
     mentions:mention_user[]
 }
 
@@ -52,6 +53,8 @@ type mention_user={
     nickname:string,
     commentid:string
 }
+
+
 //#endregion
 const Comments_List =({comments, Owner_infos ,Comment_Send}:props) =>{
     const[isOwner, setIsOwner]=useState<boolean>(false);
@@ -72,6 +75,7 @@ const Comments_List =({comments, Owner_infos ,Comment_Send}:props) =>{
         }
         else setIsnormal(true);
     }
+     console.log("comments : ",comments);
 
     },[])
 

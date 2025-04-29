@@ -70,8 +70,9 @@ type Commentslist={
   profile:string,
   userid:string,
   like_status:string,
-  cm_date:string
-  mentions:mention_user[]
+  cm_date:string,
+  contentid:string,
+  mentions:any[]
 }
 type Owner={
   Text:string,
@@ -105,6 +106,13 @@ type Owner={
     commentid:string,
     userid:string,
     nickname:string
+   }
+   type comment_infos={
+    commentid:string, 
+    id:string, 
+    comments:string, 
+    nickname:string,
+    profile:string
    }
 
 //#endregion
@@ -146,7 +154,9 @@ const ShowComment =({ShowData, Owner, Content_cm,OnClose}:showcomments_info) =>{
     const[isReply, setIsReply]=useState<boolean>(false);
     const[showComment, setShowComment]=useState<boolean>(false);
     const[isloading, setIsloading]=useState<boolean>(false);
+    const[reploading, setRepload]=useState<boolean>(false);
     const[ischangeline, setIschangeline]=useState<boolean>(false);
+    const[isnewreply, setIsnewreply]=useState<boolean>(false);
     
     
     
@@ -178,6 +188,7 @@ const ShowComment =({ShowData, Owner, Content_cm,OnClose}:showcomments_info) =>{
       userid:"",
       like_status:"",
       cm_date:"",
+      contentid:"",
       mentions:[]
     }]);
     const[owner_info, setOwner_info]=useState<Owner>({
@@ -196,6 +207,14 @@ const ShowComment =({ShowData, Owner, Content_cm,OnClose}:showcomments_info) =>{
       userid:"",
       nickname:"",
       commentid:""
+    })
+
+    const[commentsinfos, setCommentsinfos]=useState<comment_infos>({
+      commentid:"", 
+      id:"", 
+      comments:"", 
+      nickname:"",
+      profile:""
     })
 
     
@@ -280,7 +299,7 @@ const ShowComment =({ShowData, Owner, Content_cm,OnClose}:showcomments_info) =>{
           axios.get("http://localhost:8090/Pets-social/Comment/list", {params:{ContentId:ShowData.ContentId,
             UserId:ShowData.UserId, MyId:id}})
           .then((response) =>{
-               console.log("응답 데이터: ", response.data.data);
+               console.log("응답 데이터: ", response.data);
                let text="";
                if(response.data.data.owner_text !== "null") text =response.data.data.owner_text;
                setComments_list(response.data.data.Comment_List);
@@ -818,6 +837,7 @@ const ischeck = useRef<string>("");
   const sendcomment =() =>{
     let access_token:string="";          
     let id:string="";
+    
     id=localStorage.getItem("id")!;
     access_token = localStorage.getItem("a_id")!;
     axios.defaults.headers.common['Authorization'] = access_token;
@@ -825,6 +845,7 @@ const ischeck = useRef<string>("");
       response =>{
         if(response.status === 200){
           if(isReply){
+            setIsLoading(true);
             console.log("content_cm : " , Content_cm);
             
             axios.post("http://localhost:8090/Pets-social/comment/reply", {Comments:emoticon,contentid:Content_cm.contentid,
@@ -832,7 +853,9 @@ const ischeck = useRef<string>("");
               MentionNickname:replyinfo.nickname ,MyId :id , MyNick:Content_cm.nickname , MyProrile:Content_cm.img}).then(response =>{
                 console.log("응답 처리 :" , response);
 
-                const data={cm_cnt:0, cm_favorite:0 ,comment_text:emoticon, }
+                const data={cm_cnt:0, cm_favorite:0 ,comment_text:emoticon, CommentId:response.data.data};
+                setEmoticon("");
+                setIsLoading(false);
 
               }).catch((error) =>{
                 if(axios.isAxiosError<ResponseDataType>(error)){
@@ -855,6 +878,7 @@ const ischeck = useRef<string>("");
                 
           }
           else{
+            setIsLoading(true);
             let access_token:string="";
             let UserId:string= "";
             access_token = localStorage.getItem("a_id")!;
@@ -865,11 +889,44 @@ const ischeck = useRef<string>("");
              axios.post("http://localhost:8090/Pets-social/comment/Create", {UserId :UserId ,Comments:emoticon ,
                contentid:Content_cm.contentid, profile:Content_cm.img, nickname:Content_cm.nickname, MentionInfos:mentioninfo
              }).then((response) =>{
-                 console.log("응답 :" , response);
-                 setIspost(false);
-                 setShowComment(true);
-                 setIsloading(false);
+                  const today = new Date();
+                  const todayString = today.toISOString(); 
+                  const comments_info={commentid:response.data.data, id:UserId, comments:emoticon, 
+                  nickname:Content_cm.nickname, profile:Content_cm.img};
+                  let new_list:Commentslist[]=[...comments_list];
+                  if(emoticon.length ===0){
+                    const newdata ={ cm_cnt:0,
+                      cm_favorite:0,comment_text:emoticon,commentid: response.data.data,
+                      nickname:Content_cm.nickname,
+                      profile:Content_cm.img,
+                      userid:UserId,
+                      like_status:"N",
+                      cm_date:todayString,
+                      contentid:ShowData.ContentId,
+                      mentions:[]}; 
+                      new_list.unshift(newdata);
+                  }
+                  else{
+                    const aaa:mention_user={id:"", nickname:"", commentid:""};
+                    const newdata ={ cm_cnt:0,
+                      cm_favorite:0,comment_text:emoticon,commentid: response.data.data,
+                      nickname:Content_cm.nickname,
+                      profile:Content_cm.img,
+                      userid:UserId,
+                      like_status:"N",
+                      cm_date:todayString,
+                      contentid:ShowData.ContentId,
+                      mentions:mentioninfo}; 
+                      new_list.unshift(newdata);
+                  }
+                  setComments_list(new_list);
+
+                  
+                 
+                 //setCommentsinfos(comments_info);
                  setEmoticon("");
+                 setIsLoading(false);
+                 
              }).catch((error) =>{
                if(axios.isAxiosError<ResponseDataType>(error)){
                  console.log("error code: " , error.response?.status);
@@ -1014,11 +1071,11 @@ const ischeck = useRef<string>("");
                              />
               </div>)}
               {!isLoading && (<>
-                <Comments_List comments ={comments_list} Owner_infos={owner_info} Comment_Send={SendCommentHandler}/>
+                <Comments_List comments ={comments_list} Owner_infos={owner_info} Comment_Send={SendCommentHandler} />
               </>)}
               </div>
               <div className="ShowComments_content_compare" ref={DivRef}>
-                <div className="ShowComments_Input" ref={input_div}>
+                {!reploading && (<div className="ShowComments_Input" ref={input_div}>
                   <div className="ShowComments_Imoticon">
                     <img src={"/image/emoticon.png"}  onClick={EmojiHandler} />
                   </div>
@@ -1027,7 +1084,15 @@ const ischeck = useRef<string>("");
                     </div>)}
                     <textarea  placeholder="댓글 달기..." onChange={commentHandler} value={emoticon} 
                     onKeyDown={KeyDOWNHandler}  ref={textareaRef}/>
-                  </div>
+                  </div>)}
+                {reploading && (<div className="ShowComments_Loading">
+                  <Oval 
+                                color="#ff0000" 
+                                height={40} 
+                                width={40}
+                             />
+                </div>)}
+
                   <div className="ShowComments_content_Infos" ref={infos_div}>
                     <h3>{`좋아요 ${favorite}개`}</h3>
                     <p>{ShowData.content_ct}</p>

@@ -74,7 +74,39 @@
 .Comments_List_CM_List::-webkit-scrollbar {
     display: none;
 }
+.CommentsList_newcm{
+    display: flex;
+    flex-direction: row;
+}
+.CommentsList_newcm img{
+    width: 2vw;
+    height: 4vh;
+    border-radius: 50px;
+    margin-left: 1vw;
 
+}
+.CommentsList_newcominfo{
+    display: flex;
+    flex-direction: column;
+}
+
+.CommentsList_dayinfo{
+    display: flex;
+    flex-direction: row;
+    width: max-content;
+}
+.CommentsList_dayinfo h4,
+.CommentsList_dayinfo h4:hover{
+    cursor: pointer;
+    margin-left: 0.3vw;
+    margin-top: -0.2vh;
+    font-size: 10px;
+}
+.CommentsList_dayinfo h3{
+    margin-left: 0.3vw;
+    margin-top: -0.2vh;
+    font-size: 10px;
+}
 
 }
 @media (min-width:1550px) and (max-width:1920px) {

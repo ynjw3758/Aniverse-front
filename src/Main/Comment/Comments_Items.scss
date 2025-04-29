@@ -4,8 +4,9 @@
     display: flex;
     flex-direction: row;
     width: 27vw;
-    height: 10vh;
+    height: auto;
     margin-left: 2vw;
+    margin-bottom: 1vh;
 }
 .Comments_Item_Uerinfo_Stand{
     display: flex;
@@ -30,12 +31,21 @@
     font-size:small;
     font-weight: bolder;
 }
+.Comments_Item_contents_extend{
+    display: flex;
+    flex-direction: column;
+    width: 24vw;
+}
+.Comments_Item_contents_extend h4{
+    font-size:small;
+    font-weight: bolder;
+}
 .Comments_Item_content_row{
     display: flex;
     flex-direction: row;
     margin-left: 0.4vw;
     width: max-content;
-    margin-top: -2.5vh;
+    margin-top: -2vh;
 }
 .Comments_Item_content_row img,
 .Comments_Item_content_row img:hover{
@@ -96,16 +106,58 @@
     height: max-content;
     
 }
+
+.Comments_Item_cm_cnt{
+    display: flex;
+    flex-direction: column;
+
+}
+.Comments_Item_cm_row{
+    display: flex;
+    flex-direction: row;
+    display: flex;
+    flex-direction: row;
+    width: 5vw;
+    height: 3vh;
+    align-items: center;
+    justify-content: center;
+    margin-top: -1.5vh;
+
+}
+.Comments_Item_cm_row:hover{
+    display: flex;
+    flex-direction: row;
+    display: flex;
+    flex-direction: row;
+    width: 5vw;
+    height: 3vh;
+    align-items: center;
+    justify-content: center;
+    margin-top: -1.5vh;
+    cursor: pointer;
+    background-color: darkgray;
+}
+.Comments_Item_cm_row img{
+    width: 1vw;
+    height: 2vh;
+    cursor: pointer;
+    background-color: darkgray;
+}
+.Comments_Item_cm_row h3{
+    font-size: 12px;
+   margin-left: 1vw;
+}
 }
 
 @media screen and (max-width:1540px) {
     .Comments_Item_Main{
 
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         width: 27vw;
-        height: 10vh;
+        height: auto;
         margin-left: 2vw;
+        margin-bottom: 1vh;
     }
     .Comments_Item_Uerinfo_Stand{
         display: flex;
@@ -129,12 +181,21 @@
         font-size:small;
         font-weight: bolder;
     }
+    .Comments_Item_contents_extend{
+        display: flex;
+        flex-direction: column;
+        width: 24vw;
+    }
+    .Comments_Item_contents_extend h4{
+        font-size:small;
+        font-weight: bolder;
+    }
     .Comments_Item_content_row{
         display: flex;
         flex-direction: row;
         margin-left: 0.4vw;
         width: max-content;
-        margin-top: -2.5vh;
+        margin-top: -2vh;
     }
     .Comments_Item_content_row img,
     .Comments_Item_content_row img:hover{
@@ -190,4 +251,45 @@
         font-size: small;
         margin-top: 1vh;
     }
+    .Comments_Item_cm_cnt{
+        display: flex;
+        flex-direction: column;
+
+    }
+    .Comments_Item_cm_row{
+        display: flex;
+        flex-direction: row;
+        display: flex;
+        flex-direction: row;
+        width: 5vw;
+        height: 3vh;
+        align-items: center;
+        justify-content: center;
+        margin-top: -1.5vh;
+
+    }
+    .Comments_Item_cm_row:hover{
+        display: flex;
+        flex-direction: row;
+        display: flex;
+        flex-direction: row;
+        width: 5vw;
+        height: 3vh;
+        align-items: center;
+        justify-content: center;
+        margin-top: -1.5vh;
+        cursor: pointer;
+        background-color: darkgray;
+        border-radius: 20px;
+    }
+    .Comments_Item_cm_row img{
+        width: 1vw;
+        height: 2vh;
+        cursor: pointer;
+    }
+    .Comments_Item_cm_row h3{
+        font-size: 12px;
+       margin-left: 1vw;
+    }
+    
 }

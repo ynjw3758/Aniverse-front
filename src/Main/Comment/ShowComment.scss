@@ -220,25 +220,9 @@ margin-left: 0.5vw;
     background: white;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
-/*
-.ShowComments_commnet_post{
-    display: flex;
-    flex-direction: row;
-    position: absolute;
-    top:72vh;
-    left: 57vw;
-    width: 3vw;
-    align-items: center;
-    justify-content: center;
+.ShowComments_Loading{
+    margin-left: 10vw;
 }
-.ShowComments_commnet_post p,
-.ShowComments_commnet_post p:hover{
-    font-size: medium;
-    color:#007AFF;
-    font-weight: 600;
-    cursor: pointer;
-}
-    */
 }
 
 @media (min-width: 1550px) and (max-width: 1920px)  {
@@ -371,15 +355,7 @@ margin-left: 0.5vw;
         margin-top: 2vh;
         margin-left: 0.5vw;
     }
-    /*
-    .ShowComments_Input img,
-    .ShowComments_Input img:hover{
-    width: 2vw;
-    height: 3vh;
-    margin-top: 1.5vh;
-    margin-left: 0.5vw;
-    }
-    */
+
     .ShowComments_content_compare{
         display: flex;
         flex-direction: column-reverse;
@@ -459,5 +435,8 @@ margin-left: 0.5vw;
         color:#007AFF;
         font-weight: 600;
         cursor: pointer;
+    }
+    .ShowComments_Loading{
+        margin-left: 10vw;
     }
 }

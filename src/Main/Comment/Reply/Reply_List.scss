@@ -1,0 +1,20 @@
+
+@media screen and (max-width:1540px) {
+.ReplyList_Stand{
+    display: flex;
+    flex-direction: column;
+    margin-left: 2.5vw;
+    width: 100%;
+
+}
+}
+
+@media (min-width: 1550px) and (max-width: 1920px)  {
+    .ReplyList_Stand{
+        display: flex;
+        flex-direction: column;
+        margin-left: 2.5vw;
+        width: 100%;
+    }
+
+}

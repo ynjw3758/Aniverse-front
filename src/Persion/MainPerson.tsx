@@ -4,7 +4,7 @@ import moment from "momnet";
 import {Cookies} from 'react-cookie';
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import user_info from "../Userdata/Userdata";
+import user_info from "../Context/Userdata";
 
 
 interface ResponseDataType {

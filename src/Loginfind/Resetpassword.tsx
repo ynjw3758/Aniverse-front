@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Resetpassword.scss";
 import UseInput from "../UseHook/UserInput";
-import Id from "../Userdata/Userdata";
+import Id from "../Context/Userdata";
 import { useContext } from "react";
 import axios from "axios";
 import Change_pw_success from "../Message/Change_pw_success";

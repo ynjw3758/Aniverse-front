@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState ,useContext} from "react";
 import SecondsModal from "./SecondsModal";
 import React from "react";
 import SecondModal from "../Modal/SecondModal";
-import Name from "../Userdata/Userdata";
+import Name from "../Context/Userdata";
 import Modals from "../Modal/Modals";
 
 type user_info ={

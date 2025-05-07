@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import "./MainProfile.scss";
 import Filelist from "./Filelist";
-import user_info from "../Userdata/Userdata";
+import user_info from "../Context/Userdata";
 import Private from "./Private";
 
 

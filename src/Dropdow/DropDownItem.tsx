@@ -1,7 +1,7 @@
 import Clesses from"./DropDown.module.scss";
 import { useNavigate } from "react-router-dom";
 import { Fragment, useContext, useEffect, useState } from "react";
-import user_info from "../Userdata/Userdata";
+import user_info from "../Context/Userdata";
 type user_info ={
     img:string,
     nickname:string,

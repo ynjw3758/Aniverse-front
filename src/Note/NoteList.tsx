@@ -13,7 +13,7 @@ import { useNavigate , useParams } from "react-router-dom";
 //#region type 
 import "./NoteList.scss";
 import Item from "./Item";
-import user_info from "../Userdata/Userdata";
+import user_info from "../Context/Userdata";
 import NoteItemList from "./NoteItemList";
 import BlockList from "./BlockList";
 import SendNote from "../Main/SendNote/SendNote";

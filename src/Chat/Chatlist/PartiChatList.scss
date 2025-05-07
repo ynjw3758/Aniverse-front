@@ -1,7 +1,10 @@
+
+@media (min-width: 1550px) and (max-width: 1920px) {
 .PartiChatList_Main{
     display: flex;
     flex-direction: row;
     border-bottom: 1px solid black;
+    margin-top: 1vh;
 }
 .PartiChatList_Main:hover{
     display: flex;
@@ -38,4 +41,52 @@
 }
 .PartiChatList_story p{
     font-weight: lighter;
+}
+}
+
+
+@media(max-width: 1550px) {
+    .PartiChatList_Main{
+        display: flex;
+        flex-direction: row;
+        border-bottom: 1px solid black;
+        margin-top: 1vh;
+    }
+    .PartiChatList_Main:hover{
+        display: flex;
+        flex-direction: row;
+        background-color: darkgrey;
+        cursor: pointer;
+    }
+    
+    .PartiChatList_contents{
+        display: flex;
+        flex-direction: column;
+        margin-left: -1.3vw;
+    
+    
+    }
+    .PartiChatList_contents p{
+        margin-top: 3.5vh;
+        font-weight: bolder;
+    }
+    .PartiChatList_contents h4{
+        margin-top: 4.3vh;
+        margin-left: 0.4vw;
+    }
+    .PartiChatList_info{
+        display: flex;
+        flex-direction: row;
+        margin-top: -0.5vh;
+    }
+    .PartiChatList_info h4{
+        margin-top: 3.5vh;
+    }
+    .PartiChatList_story{
+        margin-top: -6vh;
+    }
+    .PartiChatList_story p{
+        font-weight: lighter;
+    }
+
 }

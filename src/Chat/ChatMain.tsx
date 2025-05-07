@@ -11,11 +11,11 @@ import axios from "axios";
 //----------------------------+ 내부 라이브로리
 //                            +--------------------
 //#region type 
-import user_info from "../Userdata/Userdata";
+import user_info from "../Context/Userdata";
 import "./ChatMain.scss";
 import AddChat from "./AddChat/AddChat";
 import ShowChat from "./ChatContents/ShowChat";
-import AddList from "./AddChat/AddList";
+import WebSocker_Provider from "../Context/WebSocker_Provider";
 import ChatList from "./Chatlist/ChatList";
 import Dupleroom from "./AddChat/Dupleroom";
 import ChatMainSide from "./ChatMainSide";
@@ -42,6 +42,7 @@ const ChatMain =() =>{
    const[ischat,setIschat]=useState<any>({Addchat:false , showcaht:false, islist:false , isDuple:false});
    const[dupldata, setDupldata]=useState<object>({});
    const[isSearch, setIsSearch]=useState<boolean>(false);
+   const[issocket, setIssocket]=useState<boolean>(false);
 //#endregion
 
 //              +-----------------
@@ -53,6 +54,7 @@ const param=useParams();
 const chattitle=useRef("");
 const chatid=useRef("");
 const chatDate=useRef("");
+const isFirst=useRef<boolean>(false);
 const chatdata=useRef<object[]>([]);
 const imgdata=useRef<string[]>([]);
 const myinfo=useContext(user_info);
@@ -135,6 +137,7 @@ const myinfo=useContext(user_info);
       chatdata.current = data;
       imgdata.current=img;
       chatDate.current = date;
+      isFirst.current= true;
       setIschat({AddChat:false , showchat:true, islist:true});
 
     }
@@ -185,7 +188,8 @@ const myinfo=useContext(user_info);
       console.log("생성 날짜 :" ,chatDate);
       console.log("유저 :" ,chatdata);
       console.log("제목 :" ,chattitle);
-      setIschat({...ischat ,showchat:true});
+      setIschat({...ischat ,showchat:true });
+      setIssocket(true);
     }
 
     const Active_Search =(data:boolean) =>{
@@ -197,7 +201,11 @@ const myinfo=useContext(user_info);
       }
 
     }
-    return(<>
+
+    const OneToOneDuple =() =>{
+
+    }
+    return(<WebSocker_Provider>
         <div className="Side">
             <div className="Myinfo">
               <div className="Profile">
@@ -231,18 +239,19 @@ const myinfo=useContext(user_info);
           <button onClick={AddchatHandler}>초대하기</button>
         </div>
         </>)}
-        {ischat.Addchat && (<AddChat onClose={AddClose} ChatShow={chatList} onDuple={DupleHandler} 
+        {ischat.Addchat && (<AddChat onClose={AddClose} ChatShow={chatList} onDuple={DupleHandler} OnOneDuple={OneToOneDuple} 
         Profile={myinfo.Profile} Nickname={myinfo.UserNickName}/>)}
         {ischat.showchat && (<div className="chatcontents">
            <ShowChat Userinfo={chatdata.current} RoomName={chattitle.current} 
-           CreateDate={chatDate.current} Chat_id={chatid.current}/>
+           CreateDate={chatDate.current} Chat_id={chatid.current} onConnect={issocket} 
+           MyProfile={myinfo.Profile} isFirst={isFirst.current}/>
         </div>)}
         {ischat.isDuple &&(<>
         <Dupleroom Items={dupldata} onMovechat={TypeChatHandler}/>
         </>)}
         <ChatMainSide OnclickSearch={Active_Search}/>
         {isSearch && (<Side_Search />)}        
-        </>)
+        </WebSocker_Provider>)
 }
 
 export default ChatMain;

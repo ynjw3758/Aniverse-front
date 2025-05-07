@@ -13,7 +13,7 @@ import { useNavigate , useParams } from "react-router-dom";
 //#region type  
 import "./Item.scss";
 import BaseLoading from "../LoadPage/BaseLoading";
-import user_info from "../Userdata/Userdata";
+import user_info from "../Context/Userdata";
 //#endregion
 
 //                            +--------------------

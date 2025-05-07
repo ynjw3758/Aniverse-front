@@ -13,7 +13,7 @@ module.exports = merge(common, {
     client: {
       overlay: true,
       // 웹소켓용 url 지정
-      webSocketURL: "ws://127.0.0.1:8083/user",
+      //webSocketURL: "ws://127.0.0.1:8083/login",
     },
   },
 });

@@ -1,15 +1,31 @@
-.ShowChat_CharHeader{
-    display: flex;
-    flex-direction: row;
-    overflow: auto;
-}
-.ShowChat_vertical hr{
-    margin-top: -0.5vh;    
-    width:62.5vw;
-    max-width: 62.5vw;
-    border-color: burlywood;
+@media (min-width: 1550px) and (max-width: 1920px) {
+    .ShowChat_CharHeader{
+        display: flex;
+        flex-direction: row;
+        overflow: auto;
+    }
+    .ShowChat_vertical hr{
+        margin-top: -0.5vh;    
+        width:70vw;
+        max-width: 70vw;
+        border-color: burlywood;
+        margin-left: -7vw;
+    }
 }
 
-.ShowChat_Showcontents{
-    
+
+@media (max-width: 1550px) {
+    .ShowChat_CharHeader{
+        display: flex;
+        flex-direction: row;
+        overflow: auto;
+    }
+    .ShowChat_vertical hr{
+        margin-top: -0.5vh;    
+        width:70vw;
+        max-width: 70vw;
+        border-color: burlywood;
+        margin-left: -7vw;
+    }
+
 }

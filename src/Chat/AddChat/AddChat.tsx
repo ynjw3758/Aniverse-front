@@ -37,6 +37,7 @@ type data ={
     onClose:() => void,
     ChatShow:(data:Object[] ,img:string[], name:string, roomid:string, createdate:string) => void,
     onDuple:(data:object) =>void,
+    OnOneDuple:() => void,
     Profile:string,
     Nickname:string
  }
@@ -315,11 +316,12 @@ else return;
           axios.post("http://localhost:8089/Pets-social/Chat/Create" , {params:{list:addLiist , 
             Name:RoomName , Img:props.Profile , Id:Id, Nickname:props.Nickname}})
           .then((response) =>{
-              console.log("채팅 보낸 결과 :" , response.status);
+              console.log("채팅 생성 결과 :" , response);
               if(response.status == 200){
                 console.log("중복 채팅방 존재")
                 if(response.data.data.isDuplicate== false){
                    console.log("그냥 해당 채팅으로 이동");
+                   props.OnOneDuple();
                    
                 }
                 else{
@@ -340,20 +342,10 @@ else return;
              if(error.response?.status==400){
                navigate("/error");
              }
-             else if(error.code == "ERR_NETWORK"){
-               console.log("네트워크 에러 ");
-               
-             }
              else if(error.response?.status==500){
                console.log("서버 에러발생");
                navigate("/error/se-error")
              }
-             /*
-             else if(error.response?.status == 409){
-                   console.log("중복 채팅방");
-                   props.onDuple(error.response.data.resultdata);
-             }
-             */
              console.log("error response: " , error.response?.data);
            }
       })
@@ -421,36 +413,7 @@ useEffect(() =>{
     const KeyupHandler =(event:React.KeyboardEvent<HTMLInputElement>) =>{
       setKeycheck(false);
     }
-    //키보드 눌럿을 때 이벤트
-    /*
-    const KeyDOWNHandler =(event:React.KeyboardEvent<HTMLInputElement>) =>{
-        setKeycheck(true);
-        console.log("키 이벤트  :" , event);
-        if(userinfo.length ==0){
-          if(event.key == "ArrowDown" || event.key == "ArrowUp"){
-            console.log("적용 불가");
-            return;
-          }
-        }
-        else{
-          if(event.key == "ArrowDown"){
-            profile.addcount(vercount+1);
-            setVercount(vercount+1);
-            
-          }
-          else if(event.key == "ArrowUp"){
-            profile.addcount(vercount-1);
-            setVercount(vercount-1);
-          }
-          else if(event.key != "ArrowUp" && event.key != "ArrowDown"){
-             console.log("문자 추가");
-             //setSearch(event.target.value);
-          }
-          
-        }
 
-    }
-        */
    const chatbox_size = listbox ? "AddChat_bigbox" : "addchat_normalbox";
     return(<div className="AddChat_total">
       <div className="AddChat_header">

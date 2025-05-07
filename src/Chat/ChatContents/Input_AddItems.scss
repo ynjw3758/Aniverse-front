@@ -1,3 +1,4 @@
+@media (min-width: 1550px) and (max-width: 1920px) {
 .AddChatItems_total{
     display: flex;
     flex-direction: column;
@@ -10,7 +11,10 @@ left: 3vw;
 .AddChatItems_date{
     font-weight:bolder;
     text-align: center;
-    margin-top: -1vh;
+    margin-top: -2vh;
+    margin-left: 20vw;
+    width: max-content;
+    height: max-content;
 }
 .AddChatItems_inputchat input{
     padding-left: 1vw;
@@ -44,4 +48,90 @@ left: 3vw;
     max-width: 53vw;
     overflow: auto;
 }
+.ChatInput_AddItems{
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    top:87vh;
+    left: 56vw;
+    width: 3vw;
+    align-items: center;
+    justify-content: center;
+}
+.ChatInput_AddItems p,
+.ChatInput_AddItems p:hover{
+    font-size: medium;
+    color:#007AFF;
+    font-weight: 600;
+    cursor: pointer;
+}
+}
+@media  (max-width: 1550px) {
+    .AddChatItems_total{
+        display: flex;
+        flex-direction: column;
+    }
+    .AddChatItems_inputchat{
+    position: absolute;
+    top:87vh;
+    left: 3vw;
+    }
+    .AddChatItems_date{
+        font-weight:bolder;
+        text-align: center;
+        margin-top: -3vh;
+        margin-left: 20vw;
+        width: max-content;
+        height: max-content;
+    }
+    .AddChatItems_inputchat input{
+        padding-left: 1vw;
+        border-radius: 20px;
+        width: 55vw;
+        height: 7vh;
+        font-size: large;
+        font-weight: bolder;
+    }
+    .AddChatItems_AddContents{
+        display: flex;
+        flex-direction: row;
+        position:absolute;
+        top:89vh;
+        left: 50vw;
+    }
+    .AddChatItems_AddContents img{
+        width: 2vw;
+        height: 4vh;
+        margin-left: 1vw;
+    }
+    .AddChatItems_filelist{
+        position: absolute;
+        top:70vh;
+        left:3vw;
+        background-color:white;
+        border-radius: 14px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+        padding: 20px;
+        width: 53vw;    
+        max-width: 53vw;
+        overflow: auto;
+    }
 
+    .ChatInput_AddItems_Post{
+        display: flex;
+        flex-direction: row;
+        position: absolute;
+        top:87vh;
+        left: 56vw;
+        width: 3vw;
+        align-items: center;
+        justify-content: center;
+    }
+    .ChatInput_AddItems_Post p,
+    .ChatInput_AddItems_Post p:hover{
+        font-size: medium;
+        color:#007AFF;
+        font-weight: 600;
+        cursor: pointer;
+    }
+}

@@ -15,6 +15,7 @@
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-react": "^7.25.9",
     "@babel/preset-typescript": "^7.26.0",
+    "@types/sockjs-client": "^1.5.4",
     "babel-loader": "^9.2.1",
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^7.1.2",
@@ -29,6 +30,7 @@
     "webpack-merge": "^6.0.1"
   },
   "dependencies": {
+    "@stomp/stompjs": "^7.1.1",
     "@types/jest": "^29.5.14",
     "@types/lodash": "^4.17.16",
     "@types/node": "^22.9.0",
@@ -51,6 +53,7 @@
     "react-router-dom": "^6.28.0",
     "react-spinners": "^0.14.1",
     "sass": "^1.81.0",
+    "sockjs-client": "^1.6.1",
     "style-loader": "^4.0.0",
     "styled-jsx": "^5.1.6",
     "swiper": "^6.8.4",

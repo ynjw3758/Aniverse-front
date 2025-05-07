@@ -61,7 +61,7 @@ useEffect(() =>{
 
 },[props.Image]);
 useEffect(() =>{
-  console.log("이미지 갯수 :"  , img)
+  console.log("이미지 갯수 :"  , props.Image)
     if(img.length ==1){
         setIsSingle(true);
         setIsTwo(false);

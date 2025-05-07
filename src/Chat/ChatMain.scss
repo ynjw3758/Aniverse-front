@@ -1,4 +1,5 @@
 
+@media (min-width: 1550px) and (max-width: 1920px) {
 .Side{
     display: flex;
     flex-direction: column;
@@ -53,7 +54,7 @@
     height: 45px; 
     border-radius: 70%;
     overflow: hidden;
-    margin-left: 13.4vw;
+    margin-left: 15.5vw;
     margin-top: 3vh;
     //margin-left: 0.7vw;
     //margin-top: 3vh;
@@ -85,7 +86,7 @@
   margin-left: 3vw;
 }
 .Initbody button{
-    margin-left: 5vw;
+    margin-left: 2vw;
     margin-top: 2vh;
     cursor: pointer;
     height: 5vh;
@@ -106,7 +107,7 @@
     
     padding-left: 1.5vw;
     margin-left: 1vw;
-    width: 33vw;
+    width: 22vw;
     height: 6vh;
     border-top: none;
     border-bottom: none;
@@ -124,4 +125,134 @@
     display: flex;
     flex-direction: column;
     margin-top: 0.5vh;
+}
+}
+@media (max-width: 1550px) {
+    .Side{
+        display: flex;
+        flex-direction: column;
+        width: 24vw;
+        height: 100vh;
+        max-width: 24vw;
+        max-height: 100vh;
+        overflow: auto;
+        background-color: #E0FFFF;
+        margin-left: 4.5vw;
+        margin-top: -1vh;
+        overflow-x: hidden;
+    }
+    .Side h3{
+        margin-top: 4.2vh;
+        margin-left: 1vw;
+    
+    }
+    .Myinfo{
+        display: flex;
+        flex-direction: row;
+    }
+    
+    .Profile{
+        width: 60px;
+        height: 60px; 
+        border-radius: 70%;
+        overflow: hidden;
+        margin-left: 0.7vw;
+        margin-top: 2vh;
+    }
+    
+    .Profile img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .Myinfo h3{
+        margin-left: 1vw;
+        margin-top: 4.2vh;
+    }
+    
+    .addchat{
+        display: flex;
+        flex-direction: row;
+        height: 10vh;
+    }
+    
+    
+    .plusIcon{
+        width: 45px;
+        height: 45px; 
+        border-radius: 70%;
+        overflow: hidden;
+        margin-left: 13.4vw;
+        margin-top: 3vh;
+        //margin-left: 0.7vw;
+        //margin-top: 3vh;
+        //margin-left: 24vw;
+    }
+    
+    .plusIcon img,
+    .plusIcon img:hover{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        cursor: pointer;
+    }
+    .verticla hr{
+        margin-top: 0vh;
+        width:24vw;
+        max-width:24vw;
+    
+        border-color: burlywood;
+    }
+    .Initbody{
+        position: absolute;
+        top:40vh;
+        left: 60vw;
+    }
+    .Initbody img{
+      width: 100px;
+      height: 100px;
+      margin-left: 3vw;
+    }
+    .Initbody button{
+        margin-left: 5vw;
+        margin-top: 2vh;
+        cursor: pointer;
+        height: 5vh;
+        width: 6vw;
+        margin-bottom: 5vh;
+        border-bottom: none;
+        border-right: none;
+        border-left: none;
+        border-top: none;
+        border-radius: 37px;
+        background-color: rgb(0, 217, 255);
+    }
+    
+    .search{
+        margin-top: -1vh;
+    }
+    .search input{
+        
+        padding-left: 1.5vw;
+        margin-left: 1vw;
+        width: 22vw;
+        height: 6vh;
+        border-top: none;
+        border-bottom: none;
+        border-left: none;
+        border-right: none;
+        margin-top: 1vh;
+        outline: none;
+    }
+    .chatcontents{
+        position:absolute;
+        top:2vh;
+        left: 36vw;
+    }
+    .chatlist{
+        display: flex;
+        flex-direction: column;
+        margin-top: 0.5vh;
+    }
+
 }

@@ -23,7 +23,7 @@ import debounce from 'lodash/debounce';
 //                             +--------------------
 import "./ContentItem.scss";
 import OtherProfile from "../Profile/OtherProfile";
-import user_info from "../../Userdata/Userdata";
+import user_info from "../../Context/Userdata";
 import CancelFollower from "../Modal/CancleFollower";
 import ShowComment from "../Comment/ShowComment";
 import Slide from "../Slide/Slide";

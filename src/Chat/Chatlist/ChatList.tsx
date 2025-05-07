@@ -49,7 +49,7 @@ useEffect(() =>{
 const showcontents =(data:object) =>{
   props.showcontents(data);
 }
-console.log("데이터 존재 가능 :" , props.DataList)
+console.log("데이터 존재 가능 :" , props.ImgList)
    return(<>
    {isdata && (<>
     <AddChatItems DataList={props.DataList} RoomId={props.RoomId} Roomname={props.Roomname} 

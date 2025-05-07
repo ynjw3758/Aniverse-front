@@ -6,7 +6,7 @@
     import axios from "axios";
     import { useNavigate } from "react-router-dom";
     import {Oval} from "react-loader-spinner";
-    import user_info from "../../Userdata/Userdata";
+    import user_info from "../../Context/Userdata";
     import {Cookies} from 'react-cookie';
     //#endregion
 

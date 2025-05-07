@@ -2,7 +2,7 @@
 //----------------------------+ 외부 라이브로리
 //                            +--------------------
 //#region type 
-import {useEffect, useState} from "react";
+import {useEffect, useState, useRef, useContext} from "react";
 //#endregion
 
 //                            +--------------------
@@ -12,6 +12,8 @@ import {useEffect, useState} from "react";
 import ChatHeader from "./ChatHeader";
 import "./ShowChat.scss";
 import AddItems from "./Input_AddItems";
+import WebSocket_Chat_Provider from "../../Context/WebSocker_Chat_Provider";
+
 //#endregion
 
 //                            +------------------
@@ -23,6 +25,9 @@ type info ={
     RoomName:string,
     CreateDate:any,
     Chat_id:string,
+    onConnect:boolean,
+    MyProfile:string,
+    isFirst:boolean
  }
  //#endregion
 
@@ -44,6 +49,8 @@ const ShowChat =(props:info) =>{
     const[ctid, setCtid]=useState<string[]>([]);
     const[size, setSize]=useState<number>(0);
     const[create, setCreate]=useState<string>("");
+    const[isSocket, setIsSocket]=useState<boolean>(false);
+
 
     useEffect(() =>{
         let list:Object[]=props.Userinfo;
@@ -52,7 +59,7 @@ const ShowChat =(props:info) =>{
         let Id:string[]=[...id];
         let Ctid:string[]=[...ctid];
         console.log("props :" , props.Userinfo);
-        list.map((data) => Object.entries(data).map((key) =>{
+        list.map((data) => Object.entries(data).map((key, idx) =>{
 
             if(key.at(0) == "Ctid"){
                 Ctid.push(key[1]);
@@ -88,9 +95,19 @@ const ShowChat =(props:info) =>{
             String(date.getSeconds()).padStart(2, '0');
          setCreate(formatted);
          setSize(list.length);
+         const myid=localStorage.getItem("id")!;
+         Id.push(myid);
+         setId(Id);
     },[props.Userinfo])
 
-     return(<div id={props.Chat_id}>
+    useEffect(() =>{
+
+       if(id.length !==0) setIsSocket(true);
+       console.log("isocket : " , isSocket);
+    },[id])
+       
+     return(<WebSocket_Chat_Provider>
+     <div id={props.Chat_id}>
      <div>
         <ChatHeader name={props.RoomName} Count={size}/>
      </div>
@@ -98,9 +115,12 @@ const ShowChat =(props:info) =>{
          <hr />
       </div>
       <div className="ShowChat_Showcontents">
-       <AddItems CreateDate={create}/>
+        {isSocket && (<>
+          <AddItems CreateDate={create} ChatId={props.Chat_id} totalId={id} Profile={props.MyProfile} isFirst={props.isFirst}/>
+        </>)}
       </div>
-     </div>)
+     </div>
+     </WebSocket_Chat_Provider>)
 }
 
 export default ShowChat;

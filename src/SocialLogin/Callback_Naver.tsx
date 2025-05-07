@@ -6,7 +6,7 @@ import {Cookies} from 'react-cookie';
 
 
 import "./Callback_Naver.scss";
-import user_info from "../Userdata/Userdata";
+import user_info from "../Context/Userdata";
 import LoginExp from "../LginExpiration/LoginExp";
 
 

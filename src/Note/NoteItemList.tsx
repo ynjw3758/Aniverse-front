@@ -12,7 +12,7 @@ import { useEffect, useContext, useState } from "react";
 import "./NoteItemList.scss";
 import NoteItem from "./NoteItem";
 import BaseLoading from "../LoadPage/BaseLoading";
-import user_info from "../Userdata/Userdata";
+import user_info from "../Context/Userdata";
 
 //#endregion
 

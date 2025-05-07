@@ -1,7 +1,7 @@
 import "./PersionPage.scss";
 import { Outlet, useNavigate ,Link} from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
-import user_info from "../Userdata/Userdata";
+import user_info from "../Context/Userdata";
 import HiBellIcon from "../Layout/HibellIcon";
 import MyPage from "../Layout/MyPage";
 import moment from "momnet";

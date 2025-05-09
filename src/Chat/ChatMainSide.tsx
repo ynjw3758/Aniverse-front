@@ -73,9 +73,6 @@ const ChatMainSide =(props:SideBar_Active) =>{
                  <img src="/image/time.png" />    
                  </button>
              </ul>
-             <div className="NoteSide_vertical"> 
-              <hr />
-             </div>
      </>)
 
 }

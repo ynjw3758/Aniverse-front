@@ -54,9 +54,10 @@ const WebSocket_Chat_Provider =({children}:Props) =>{
     }, []);
 
 
-    const sendMessage = (chatId: string, message: string, userId: string, Profile:string, isFirst:boolean) => {
+    const sendMessage = (chatId: string, message: string, userId: string, nickname:string, 
+      Profile:string, isFirst:boolean ,UserId:string[]) => {
        console.log("채팅보내기");
-       console.log("stompClientRef.current : " , stompClientRef.current?.connected);
+       console.log("nickname : " , nickname);
        if (!stompClientRef.current || !stompClientRef.current.connected) {
         console.warn("STOMP 연결이 되어 있지 않습니다.");
         return;
@@ -68,7 +69,9 @@ const WebSocket_Chat_Provider =({children}:Props) =>{
         message,
         timestamp: new Date().toISOString(), // 선택적
         profile:Profile,
-        isFirst:isFirst
+        first:isFirst,
+        inviteIds:UserId,
+        nickname:nickname
       };
     
       stompClientRef.current.publish({
@@ -80,9 +83,10 @@ const WebSocket_Chat_Provider =({children}:Props) =>{
     const Partici_Chatid =(chatid:string, UserId:string[]) =>{
       ChatId.current="d209ba25-bb41-4894-a3a5-def24a073ba9";
       UserIds.current =UserId;
+      const userid= localStorage.getItem("id")!;
         // 여기서 STOMP 연결 수행
         const ws = new WebSocket("ws://127.0.0.1:8083/chat");
-        const socket = new SockJS("http://127.0.0.1:8083/ws");
+        const socket = new SockJS(`http://127.0.0.1:8083/ws?userid=${userid}`);
         ws.onopen = () => {
           console.log("✅ WebSocket Chat연결됨 : " );
           const client = new Client({
@@ -90,13 +94,18 @@ const WebSocket_Chat_Provider =({children}:Props) =>{
             reconnectDelay: 5000,
             onConnect: () => {
               client.subscribe(`/topic/chat/${ChatId.current}`, (message: IMessage) => {
-                console.log("📩 수신 메시지:", JSON.parse(message.body));
+                console.log("📩 수신 메시지:", message.body);
               },  {
-                userId:JSON.stringify(UserIds.current), // ✅ 헤더로 userId 넘김
+                userId:JSON.stringify(UserIds.current), 
+                type:"Chat"// ✅ 헤더로 userId 넘김
               });
             },
             onStompError: (frame) => {
               console.error("❌ STOMP 에러:", frame);
+            },
+            onWebSocketError: (error) => {
+              console.error("❌ SockJS 연결 에러", error);
+              alert("서버와 연결할 수 없습니다.");
             },
           });
     

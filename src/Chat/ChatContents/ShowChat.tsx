@@ -27,7 +27,8 @@ type info ={
     Chat_id:string,
     onConnect:boolean,
     MyProfile:string,
-    isFirst:boolean
+    isFirst:boolean,
+    MyNickname:string
  }
  //#endregion
 
@@ -47,6 +48,7 @@ const ShowChat =(props:info) =>{
     const[nick, setNick]=useState<string[]>([]);
     const[id, setId]=useState<string[]>([]);
     const[ctid, setCtid]=useState<string[]>([]);
+    const[chsendId, setChsendId]=useState<string[]>([]);
     const[size, setSize]=useState<number>(0);
     const[create, setCreate]=useState<string>("");
     const[isSocket, setIsSocket]=useState<boolean>(false);
@@ -58,6 +60,7 @@ const ShowChat =(props:info) =>{
         let Nick:string[]=[...nick];
         let Id:string[]=[...id];
         let Ctid:string[]=[...ctid];
+        let SendIds:string[]=[...chsendId];
         console.log("props :" , props.Userinfo);
         list.map((data) => Object.entries(data).map((key, idx) =>{
 
@@ -71,7 +74,9 @@ const ShowChat =(props:info) =>{
               }
               else if(key.at(0) == "Userid"){
                 Id.push(key[1]);
+                SendIds.push(key[1]);
                setId(Id);
+               setChsendId(SendIds);
               }
 
               else if(key.at(0) == "Img"){
@@ -116,7 +121,8 @@ const ShowChat =(props:info) =>{
       </div>
       <div className="ShowChat_Showcontents">
         {isSocket && (<>
-          <AddItems CreateDate={create} ChatId={props.Chat_id} totalId={id} Profile={props.MyProfile} isFirst={props.isFirst}/>
+          <AddItems CreateDate={create} ChatId={props.Chat_id} totalId={id} Profile={props.MyProfile} 
+          isFirst={props.isFirst} ChSendId={chsendId} MyNickname={props.MyNickname}/>
         </>)}
       </div>
      </div>

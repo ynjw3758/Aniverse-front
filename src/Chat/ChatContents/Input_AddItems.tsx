@@ -2,7 +2,7 @@
 //----------------------------+ 외부 라이브러리
 //                            +------------------
 //#region
-import {useContext, useEffect, useState } from "react";
+import {useContext, useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import {Cookies} from 'react-cookie';
 import axios from "axios";
@@ -28,9 +28,11 @@ import WebSocketChatContext from "../../Context/WebSocketChatContext";
 type info ={
     CreateDate:string,
     ChatId:string,
+    MyNickname:string,
     totalId:string[],
     Profile:string,
-    isFirst:boolean
+    isFirst:boolean,
+    ChSendId:string[]
 
  }
  //#endregion
@@ -61,7 +63,6 @@ const Input_AddItems =(props:info) =>{
 const[isSize, setIsSize]=useState<boolean>(false);
 const[isEmoticon, setIsEmoticon]=useState<boolean>(false);
 const[isfiles, setIsfiles]=useState<boolean>(false);
-const[ispost,setIspost]=useState<boolean>(false);
 
 const[emoticon, setEmoticon]=useState<string>("");
 const[img, setImg]=useState<string[]>([]);
@@ -83,6 +84,8 @@ const max_size:number=  1024 * 1024 * 20;
 const cookies = new Cookies();
 const navigate = useNavigate();
 const Chat_Context= useContext(WebSocketChatContext);
+const TextRef =useRef<HTMLTextAreaElement>(null); 
+const containerRef = useRef<HTMLDivElement>(null);
 
 //#endregion
 
@@ -152,7 +155,7 @@ const Chat_Context= useContext(WebSocketChatContext);
         setEmoticon((prev)=>prev+data);
     }
 
-    const inputHandler =(e:React.ChangeEvent<HTMLInputElement>) =>{
+    const inputHandler =(e:React.ChangeEvent<HTMLTextAreaElement>) =>{
         setEmoticon(e.target.value);
     }
     
@@ -165,17 +168,8 @@ const Chat_Context= useContext(WebSocketChatContext);
         Chat_Context.Partici_Chatid(props.ChatId, props.totalId);
     },[]);
 
-    useEffect(() =>{
-        if(emoticon.length == 0){
-          setIspost(false);
-        }
-        else{
-          setIspost(true);
-        }
-      },[emoticon])
-
-
       const sendChatHandler =() =>{
+        if(emoticon.length !== 0){
         let access_token:string="";
         let UserId:string= "";
         access_token = localStorage.getItem("a_id")!;
@@ -187,11 +181,10 @@ const Chat_Context= useContext(WebSocketChatContext);
          if(response.status == 200){
            console.log("채팅 아이디 :" , props.ChatId);
            const UserId = localStorage.getItem("id")!;
-           Chat_Context.sendMessage(props.ChatId, emoticon, UserId, props.Profile, props.isFirst);
-           //Chat_Context.sendMessage("", "", "");
-           //sendMessage(props.ChatId, emoticon, UserId);
-           //sendMessage("", "", "");
-
+           console.log("보낼 닉네임이다 :" , props.MyNickname)
+           Chat_Context.sendMessage(props.ChatId, emoticon, UserId, props.MyNickname ,props.Profile,  props.isFirst, props.ChSendId);
+           Chat_Context.sendMessage("", "", "", "" ,"", false, []);
+           setEmoticon("");
         }
    
         }).catch((error) =>{
@@ -267,29 +260,69 @@ const Chat_Context= useContext(WebSocketChatContext);
              console.log("error response: " , error.response?.data);
            }
          })
+        }
+        else{
+           console.log("임력값이 없음");
+           return;
+        }
       }
+      const margin = useRef<number>(0);
+      const compare_height = useRef<number>(85);
+      const textarea_hegiht= useRef<number>(65);
+      const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        if (e.key === 'Enter' && e.shiftKey) {;
+            resizeTextarea(); 
+        }
+        else{
+          if(e.key === "Backspace" && e.currentTarget.selectionStart === 0 && e.currentTarget.selectionEnd === e.currentTarget.value.length){
+                   console.log(" 초기화");
+                   Initial_textarea()
+          } 
+          
+        }
+      };
 
-      /*
-               axios.post("http://localhost:8089/Pets-social/Chat/Send", {ChatId:props.ChatId, UserId:UserId,  Content:emoticon
-         }).then((response) =>{
+      const Initial_textarea =() =>{
+        const textarea = TextRef.current;
+        const container = containerRef.current;
+        if (textarea && container) {
+          container.style.height = `auto`; // 여유
+          container.style.marginTop = `auto`;
+          textarea.style.height = `auto`;
+          margin.current=0
+          compare_height.current=85
+          textarea_hegiht.current=65
+        }
+      }
+      const resizeTextarea = () => {
+        const margin_limit = -200;
+        const textarea = TextRef.current;
+        const container = containerRef.current;
+        if (textarea && container) {
+          //if(margin.current > margin_limit) {
+            const newHeight = Math.min(textarea.scrollHeight, 600);
+            const containers = Math.min(container.scrollHeight, 400);
+             console.log("containers : " ,containers)
+             console.log("newHeight : " ,newHeight)
+           if(margin.current > margin_limit) {
+            margin.current+=-20;
+            compare_height.current+=20;
+            textarea_hegiht.current+=15;
+            if(compare_height.current >=500) compare_height.current=500;
+            if(textarea_hegiht.current >= 600) textarea_hegiht.current =600;
+            container.style.height = `${compare_height.current}px`; // 여유
+            container.style.marginTop = `${margin.current}px`;
+            textarea.style.height = `${textarea_hegiht.current }px`;
+            }
+            else{
+             console.log(" 여기여?")
+              textarea.style.height = `${newHeight}px`;
+            }
 
-            console.log("채팅 보내고 결과 :" , response);
-         }).catch((error) =>{
-           if(axios.isAxiosError<ResponseDataType>(error)){
-             console.log("error code: " , error.response?.status);
-             
-             if(error.code=="ERR_BAD_REQUEST"){
-               navigate("/error");
-             }
-             else if(error.response?.status==500){
-               console.log("서버 에러발생");
-               navigate("/error/se-error")
-             }
-             
-             console.log("error response: " , error.response?.data);
-           }
-         })
-           */
+        }
+
+        
+      };
 
 
     return(
@@ -300,26 +333,26 @@ const Chat_Context= useContext(WebSocketChatContext);
         {isfiles &&(<div className="AddChatItems_filelist" >
             <Addfiles Img={img} Video={video} ImgId={imgid} VideoId={videoid}/>
         </div>)}
-        <div className="AddChatItems_inputchat">
-         <input type="text" placeholder="메시지 입력..." value={emoticon} onChange={inputHandler}/>
-        </div>
-        {ispost && (<div className="ChatInput_AddItems_Post">
-            <p onClick={sendChatHandler}>게시</p>
-        </div>)} 
+        <div className="AddChatItems_inputchat" ref={containerRef}>
         <div className="AddChatItems_AddContents">
-         <img src={"/image/emoticon.png"} onClick={EmoticonHandler}/>
-         <label  
-            draggable="true"
+            <img src="/image/ChatSend.png" onClick={sendChatHandler}/>
+            <img src="/image/emoticon.png" onClick={EmoticonHandler}/>
+            <label  
+                draggable="true"
             >
-         <img src="/image/picture.png"/>
-           <input type="file" 
-           style={{display:"none"}}
-           onChange={AddfileHandler}
-           multiple={true}
-           accept=".jpg, .jpeg, .png , .mp4"
-            />
-            </label>
+            <img src="/image/picture.png"/>
+            <input type="file" 
+                style={{display:"none"}}
+                onChange={AddfileHandler}
+                multiple={true}
+                accept=".jpg, .jpeg, .png , .mp4"
+              />
+              </label>
         </div>
+        <textarea  placeholder="메시지 입력..." value={emoticon} onChange={inputHandler} 
+           onKeyDown={handleKeyDown} ref={TextRef}/>
+        </div>
+
         {isEmoticon && (<>
           <Emoji onimage={AddEmoticon}/>
         </>)}

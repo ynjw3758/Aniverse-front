@@ -1,6 +1,8 @@
 
 @media (min-width: 1550px) and (max-width: 1920px) {
 .Side{
+    position: absolute;
+    top:0vh;
     display: flex;
     flex-direction: column;
     width: 24vw;
@@ -9,8 +11,7 @@
     max-height: 100vh;
     overflow: auto;
     background-color: #E0FFFF;
-    margin-left: 4.5vw;
-    margin-top: -1vh;
+    margin-left: 3.5vw;
     overflow-x: hidden;
 }
 .Side h3{

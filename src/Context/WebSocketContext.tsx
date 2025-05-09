@@ -1,3 +1,14 @@
 import React from "react";
-const WebSocketContext  =React.createContext<WebSocket | null>(null);
+
+export interface WebSocketInfo {
+    socket: WebSocket | null;
+    isDisconnected: boolean;
+  }
+  
+  const defaultContext: WebSocketInfo = {
+    socket: null,
+    isDisconnected: false,
+  };
+
+const WebSocketContext  =React.createContext<WebSocketInfo>(defaultContext);
 export default WebSocketContext ;

@@ -244,7 +244,7 @@ const myinfo=useContext(user_info);
         {ischat.showchat && (<div className="chatcontents">
            <ShowChat Userinfo={chatdata.current} RoomName={chattitle.current} 
            CreateDate={chatDate.current} Chat_id={chatid.current} onConnect={issocket} 
-           MyProfile={myinfo.Profile} isFirst={isFirst.current}/>
+           MyProfile={myinfo.Profile} isFirst={isFirst.current} MyNickname={myinfo.UserNickName}/>
         </div>)}
         {ischat.isDuple &&(<>
         <Dupleroom Items={dupldata} onMovechat={TypeChatHandler}/>

@@ -23,6 +23,7 @@ import axios from "axios";
  import LoginExp from "../LginExpiration/LoginExp";
  import WebSocker_Info from"../Context/WebSocketContext";
  import WebSocker_Provider from "../Context/WebSocker_Provider";
+ import WebSocketAlarm_Provider from "../Context/WebSocketAlarm_Provider";
  //#endregion
 
 //                            +--------------------
@@ -59,11 +60,11 @@ interface ResponseDataType {
       const[againlogin, setAgainlogin]=useState<boolean>(false);
       const[isperist, setIsperist]=useState<boolean>(false);
       const[userid, setUserid]=useState<string>("");
-      
+
+
 
       const navigate = useNavigate();
       const login_info = useContext(user_info);
-      const WebSocket_info = useContext(WebSocker_Info);
       const cookies = new Cookies();
       let uuid:any="";
       let p_exp:any="";
@@ -71,7 +72,7 @@ interface ResponseDataType {
       let s_id:any="";
       let message:string="";
       const param=useParams();
-        
+
       useEffect(()=>{        
         setIsloading(true);
             p_exp=localStorage.getItem("p_exp");
@@ -420,7 +421,9 @@ interface ResponseDataType {
         setDataLoaded(true); // 데이터 로딩 완료
         setIsloading(false); // 로딩 화면 해제
       };
-    return(<WebSocker_Provider>
+
+    return(<WebSocketAlarm_Provider>
+    <WebSocker_Provider>
     <div >
         {againlogin && (<LoginExp />)}
         <div className="MainPage_log" onClick={MainClick}>
@@ -438,7 +441,8 @@ interface ResponseDataType {
 
          
     </div>
-    </WebSocker_Provider>)
+    </WebSocker_Provider>
+    </WebSocketAlarm_Provider>)
 }
 
 export default MapinPage;

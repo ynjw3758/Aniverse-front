@@ -4,9 +4,17 @@
     flex-direction: column;
 }
 .AddChatItems_inputchat{
-position: absolute;
-top:87vh;
-left: 3vw;
+    position: relative; 
+    bottom: 0; 
+    display: flex;
+    width: 71vw;
+    background-color: #f2f2f2;
+    padding: 8px;
+    top:77.6vh;
+    margin-left: -8.1vw;      
+    align-items: flex-end;
+    overflow: hidden;
+
 }
 .AddChatItems_date{
     font-weight:bolder;
@@ -16,25 +24,56 @@ left: 3vw;
     width: max-content;
     height: max-content;
 }
-.AddChatItems_inputchat input{
-    padding-left: 1vw;
-    border-radius: 20px;
-    width: 55vw;
-    height: 7vh;
-    font-size: large;
+.AddChatItems_inputchat textarea,
+.AddChatItems_inputchat textarea:focus{
+
+    box-sizing: border-box; 
+    resize: none;
+    outline: none;
+    border-top: none;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    width: 61vw;
+    margin-top: 1.5vh;
+    margin-left: 1vw;
+    cursor: pointer;
+    font-size: 15px;
     font-weight: bolder;
+    line-height: 1.5;
+    padding-left: 25px;
+    padding-top: 20px;
+    padding-bottom: 0px;
+    padding-right: 25px;
+    border: 1px solid;
+    border-radius: 50px;
+    overflow-y: auto;         
+    max-height: 27vh;       
+    scrollbar-width: none
+}
+.AddChatItems_inputchat textarea::-webkit-scrollbar {
+    width: 0;
+  }
+.AddChatItems_inputchat textarea::placeholder{
+    color: #888; 
+    font-size: 15px;
+    line-height: 1.5;
+    vertical-align: middle;
 }
 .AddChatItems_AddContents{
     display: flex;
     flex-direction: row;
     position:absolute;
-    top:89vh;
-    left: 50vw;
+    top:4vh;
+    left: 64vw;
+    gap: 2px;
 }
-.AddChatItems_AddContents img{
-    width: 2vw;
-    height: 4vh;
-    margin-left: 1vw;
+.AddChatItems_AddContents img,
+.AddChatItems_AddContents img:hover{
+    width: 1.5vw;
+    height: 3vh;
+    margin-left: 0.5vw;
+    cursor: pointer;
 }
 .AddChatItems_filelist{
     position: absolute;
@@ -65,6 +104,24 @@ left: 3vw;
     font-weight: 600;
     cursor: pointer;
 }
+.ChatInput_AddItems_Post{
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    top:91vh;
+    left: 52vw;
+    width: 3vw;
+    align-items: center;
+    justify-content: center;
+}
+.ChatInput_AddItems_Post p,
+.ChatInput_AddItems_Post p:hover{
+    font-size: medium;
+    color:#007AFF;
+    font-weight: 600;
+    font-size: 20px;
+    cursor: pointer;
+}
 }
 @media  (max-width: 1550px) {
     .AddChatItems_total{
@@ -84,7 +141,7 @@ left: 3vw;
         width: max-content;
         height: max-content;
     }
-    .AddChatItems_inputchat input{
+    .AddChatItems_inputchat text{
         padding-left: 1vw;
         border-radius: 20px;
         width: 55vw;
@@ -92,6 +149,22 @@ left: 3vw;
         font-size: large;
         font-weight: bolder;
     }
+.AddChatItems_inputchat textarea,
+.AddChatItems_inputchat textarea:focus{
+    resize: none;
+    outline: none;
+    border-top: none;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    width: 32vw;
+    height: 4vh;
+    margin-left: 0vw;
+    margin-top: -1vh;
+    cursor: pointer;
+    margin-bottom: -1vh;
+    background-color: darkgray;
+}
     .AddChatItems_AddContents{
         display: flex;
         flex-direction: row;

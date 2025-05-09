@@ -2,7 +2,8 @@ import React from "react";
 
 export interface Socket_Info {
     socketRef: React.MutableRefObject<WebSocket | null>;
-    sendMessage: (chatId: string, message: string, userId: string ,Profile:string, isFirst:boolean) => void;
+    sendMessage: (chatId: string, message: string, userId: string , nickname:string,
+        Profile:string, isFirst:boolean ,UserId:string[]) => void;
     Partici_Chatid : (chatId: string, UserId:string[]) => void
 }
 

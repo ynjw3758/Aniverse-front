@@ -15,7 +15,11 @@ const navigate = useNavigate();
   const HomeHandler =() =>{
     navigate("/main");
   }
-
+/*
+            <div className="NoteSide_vertical"> 
+              <hr />
+             </div>
+             */
 
     return(<>
        <ul className="Note_side">
@@ -44,9 +48,7 @@ const navigate = useNavigate();
                 <img src="/image/time.png" />    
                 </button>
             </ul>
-            <div className="NoteSide_vertical"> 
-             <hr />
-            </div>
+
     </>)
 }
 

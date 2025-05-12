@@ -22,6 +22,8 @@ import Network from "../Error_Page/Network";
 import ChatMain from "../Chat/ChatMain";
 import Server_Error from "../Error_Page/Server_Error";
 import Callback_Naver from "../SocialLogin/Callback_Naver";
+import ShowChat from "../Chat/ChatContents/ShowChat";
+import ShowChatWrapper from "../Chat/ChatContents/ShowChatWrapper";
 
 const router = createBrowserRouter([
   {
@@ -63,10 +65,12 @@ const router = createBrowserRouter([
 },
 
 
- { path:"/main/Chat/:userid",
+ { path:"/main/Chat/",
    element:<ChatMain />,
    errorElement:<Not_found />,
-
+   children: [
+    { path: ":chatRoomId", element:<ShowChatWrapper />} 
+  ]
  },
  
  {

@@ -50,12 +50,14 @@ const MainContentsx=(props:user_info) =>{
         setAlchatReceive(ChatReceive_Alarm.chatReceive);
         setIsAlarm(true);
             // 2초 후 알람 숨기기
+            /*
         const timer = setTimeout(() => {
             setIsAlarm(false);
         }, 7000);
     
         // 클린업
         return () => clearTimeout(timer);
+        */
         }
     },[ChatReceive_Alarm])
 

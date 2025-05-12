@@ -182,7 +182,8 @@ const containerRef = useRef<HTMLDivElement>(null);
            console.log("채팅 아이디 :" , props.ChatId);
            const UserId = localStorage.getItem("id")!;
            console.log("보낼 닉네임이다 :" , props.MyNickname)
-           Chat_Context.sendMessage(props.ChatId, emoticon, UserId, props.MyNickname ,props.Profile,  props.isFirst, props.ChSendId);
+           Chat_Context.sendMessage(props.ChatId, emoticon, UserId, props.MyNickname ,props.Profile,  
+            props.isFirst, props.ChSendId);
            Chat_Context.sendMessage("", "", "", "" ,"", false, []);
            setEmoticon("");
         }
@@ -295,20 +296,23 @@ const containerRef = useRef<HTMLDivElement>(null);
         }
       }
       const resizeTextarea = () => {
-        const margin_limit = -200;
+        //const margin_limit = -200;
+        const margin_limit = -70;
         const textarea = TextRef.current;
         const container = containerRef.current;
         if (textarea && container) {
           //if(margin.current > margin_limit) {
             const newHeight = Math.min(textarea.scrollHeight, 600);
-            const containers = Math.min(container.scrollHeight, 400);
+            const containers = Math.min(container.scrollHeight, 150); //이전값은 500
              console.log("containers : " ,containers)
              console.log("newHeight : " ,newHeight)
            if(margin.current > margin_limit) {
-            margin.current+=-20;
-            compare_height.current+=20;
+            margin.current+=-10;
+            compare_height.current+=10;
+            //margin.current+=-20;
+            //compare_height.current+=20;
             textarea_hegiht.current+=15;
-            if(compare_height.current >=500) compare_height.current=500;
+            if(compare_height.current >=150) compare_height.current=150;
             if(textarea_hegiht.current >= 600) textarea_hegiht.current =600;
             container.style.height = `${compare_height.current}px`; // 여유
             container.style.marginTop = `${margin.current}px`;

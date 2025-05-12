@@ -3,7 +3,7 @@
 //                            +--------------------
 //#region type 
 import { useContext, useEffect, useState ,useRef} from "react";
-import { useNavigate , useParams } from "react-router-dom";
+import { Outlet, useNavigate , useParams } from "react-router-dom";
 import axios from "axios";
 //#endregion
 
@@ -20,6 +20,7 @@ import ChatList from "./Chatlist/ChatList";
 import Dupleroom from "./AddChat/Dupleroom";
 import ChatMainSide from "./ChatMainSide";
 import Side_Search from "../CommonSide/Side_Search";
+import ShowChatContext from "../Context/ShowChatContext";
 //#endregion
 
 
@@ -58,6 +59,7 @@ const isFirst=useRef<boolean>(false);
 const chatdata=useRef<object[]>([]);
 const imgdata=useRef<string[]>([]);
 const myinfo=useContext(user_info);
+const Chatinfo =useContext(ShowChatContext);
 //#endregion
 
 
@@ -138,7 +140,12 @@ const myinfo=useContext(user_info);
       imgdata.current=img;
       chatDate.current = date;
       isFirst.current= true;
+
+      Chatinfo.insert_values(chatid.current,chattitle.current, chatdata.current,imgdata.current,
+       chatDate.current,isFirst.current , myinfo.UserNickName , myinfo.Profile);
       setIschat({AddChat:false , showchat:true, islist:true});
+
+      navigate(`/main/chat/${chatid.current}`);
 
     }
 
@@ -205,6 +212,11 @@ const myinfo=useContext(user_info);
     const OneToOneDuple =() =>{
 
     }
+    /*
+               <ShowChat Userinfo={chatdata.current} RoomName={chattitle.current} 
+           CreateDate={chatDate.current} Chat_id={chatid.current} onConnect={issocket} 
+           MyProfile={myinfo.Profile} isFirst={isFirst.current} MyNickname={myinfo.UserNickName}/>
+           */
     return(<WebSocker_Provider>
         <div className="Side">
             <div className="Myinfo">
@@ -242,9 +254,7 @@ const myinfo=useContext(user_info);
         {ischat.Addchat && (<AddChat onClose={AddClose} ChatShow={chatList} onDuple={DupleHandler} OnOneDuple={OneToOneDuple} 
         Profile={myinfo.Profile} Nickname={myinfo.UserNickName}/>)}
         {ischat.showchat && (<div className="chatcontents">
-           <ShowChat Userinfo={chatdata.current} RoomName={chattitle.current} 
-           CreateDate={chatDate.current} Chat_id={chatid.current} onConnect={issocket} 
-           MyProfile={myinfo.Profile} isFirst={isFirst.current} MyNickname={myinfo.UserNickName}/>
+          <Outlet />
         </div>)}
         {ischat.isDuple &&(<>
         <Dupleroom Items={dupldata} onMovechat={TypeChatHandler}/>

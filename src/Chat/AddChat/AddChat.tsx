@@ -153,7 +153,8 @@ else return;
            console.log("응답 결과 확인 " , response.data);
           if(response.status == 200){
             console.log("토큰 인증 성공");
-            const id:string =param.userid!;
+            //const id:string =param.userid!;
+            const id:string =localStorage.getItem("id")!;
             axios.get("http://localhost:8080/Pets-social/MatList" , {params:{Id:id}})
             .then((response) =>{
                 console.log("조회 결과 :" , response.data.data);
@@ -310,11 +311,13 @@ else return;
             length++;
             
           });
-          console.log("룸 이름 :" , RoomName);
-          const Id:string =param.userid! ;
+          
+          //const Id:string =param.userid! ;
+          const Id:string =localStorage.getItem("id")!;
           console.log("img :" , img);
+          console.log("props.Profile :" , props.Profile);
           axios.post("http://localhost:8089/Pets-social/Chat/Create" , {params:{list:addLiist , 
-            Name:RoomName , Img:props.Profile , Id:Id, Nickname:props.Nickname}})
+            Name:RoomName , MyProfile:props.Profile , Id:Id, Nickname:props.Nickname}})
           .then((response) =>{
               console.log("채팅 생성 결과 :" , response);
               if(response.status == 200){

@@ -130,6 +130,8 @@
 }
 @media (max-width: 1550px) {
     .Side{
+        position: absolute;
+        top:0vh;
         display: flex;
         flex-direction: column;
         width: 24vw;
@@ -139,7 +141,7 @@
         overflow: auto;
         background-color: #E0FFFF;
         margin-left: 4.5vw;
-        margin-top: -1vh;
+        //margin-top: -1vh;
         overflow-x: hidden;
     }
     .Side h3{

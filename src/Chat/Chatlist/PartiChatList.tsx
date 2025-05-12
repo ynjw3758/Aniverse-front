@@ -2,7 +2,7 @@
 //----------------------------+ 내부 라이브로리
 //                            +--------------------
 //#region type 
-import { useEffect ,useState } from "react";
+import { useContext, useEffect ,useState } from "react";
 //#endregion
 
 //                            +--------------------
@@ -11,6 +11,7 @@ import { useEffect ,useState } from "react";
 //#region type 
 import "./PartiChatList.scss";
 import Multipicture from "./Multipicture";
+import ShowChatContext from "../../Context/ShowChatContext";
 //#endregion
 
 //                            +------------------
@@ -43,6 +44,7 @@ const[name, setName]=useState<string>("");
 //--------------+ 전역 변수
 //              +-----------------
 //#region type
+const Chat_infos=useContext(ShowChatContext);
 //#endregion
 
 useEffect(() =>{

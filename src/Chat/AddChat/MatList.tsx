@@ -22,8 +22,13 @@ import "./MatList.scss";
 //#region
 type list ={
     List:object[],
-    onlist:(data:Object)=> void
+    onlist:(data:Userfos)=> void
  }
+ type Userfos={
+    Img:string,
+    Nickname:string,
+    UserId:string
+   }
  //#endregion
 
 const MatList =(props:list) =>{
@@ -72,10 +77,9 @@ useEffect(() =>{
     }))
 
 },[props.List]);
-const addList =(data:Object) =>{
+const addList =(data:Userfos) =>{
     props.onlist(data);
 }
-   console.log("img :" ,img);
 
     return(<div className="MatList_list">
         {conntectid.map((data, i)=>(<div className="MatList_Listbox">

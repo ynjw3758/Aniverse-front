@@ -23,7 +23,9 @@ type Chat ={
   RoomId:string,
   UserCount:number,
   Image:string[],
-  create_date:string
+  create_date:string,
+  isFocusid:string,
+  IsDuple:boolean,
   showcontents(data:object):void
  }
 //#endregion
@@ -65,11 +67,11 @@ useEffect(() =>{
 const showContentsHandler =(data:object) =>{
   props.showcontents(data);
 }
-
+console.log("타겟 : " , props.isFocusid);
      return(<>
         <ChatImtems Id={props.RoomId} title={props.Roomname} 
         Image={props.Image} Usercount={props.UserCount} Onshowcontents={showContentsHandler} 
-        create_date={props.create_date} user_infos ={props.DataList}/>
+        create_date={props.create_date} user_infos ={props.DataList} isFocusId={props.isFocusid} IsDuple={props.IsDuple}/>
      </>)   
 }
 export default AddChatItems;

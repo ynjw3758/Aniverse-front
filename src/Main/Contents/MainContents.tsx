@@ -7,7 +7,7 @@ import UserUpload from "../../Upload/UserUpload";
 import Contents from "./Contents";
 import UploadComplate from "../../Layout/UploadComplete";
 import WebSocketAlarmContext from "../../Context/WebSocketAlarmContext";
-import NotificationMain from "../../Notification/NotificationMain";
+import NotificationMain from "../../Notification/ChatNotificationMain";
 
 type user_info ={
     img:string,
@@ -23,6 +23,7 @@ type Receive_chat={
     SendNickname:string,
     SendMsg:string;
     SendTime:string;
+    ChatId:string
 }
 
 const MainContentsx=(props:user_info) =>{
@@ -37,7 +38,8 @@ const MainContentsx=(props:user_info) =>{
         SendProfile: "",
         SendNickname: "",
         SendMsg: "" ,
-        SendTime:""
+        SendTime:"",
+        ChatId:""
     })
     const disable:boolean=true;
 

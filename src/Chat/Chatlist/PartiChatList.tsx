@@ -2,7 +2,7 @@
 //----------------------------+ 내부 라이브로리
 //                            +--------------------
 //#region type 
-import { useContext, useEffect ,useState } from "react";
+import {useEffect ,useRef,useState } from "react";
 //#endregion
 
 //                            +--------------------
@@ -11,7 +11,6 @@ import { useContext, useEffect ,useState } from "react";
 //#region type 
 import "./PartiChatList.scss";
 import Multipicture from "./Multipicture";
-import ShowChatContext from "../../Context/ShowChatContext";
 //#endregion
 
 //                            +------------------
@@ -25,7 +24,12 @@ type image ={
     Images:Object,
     create_date:string,
     user_infos:object,
-    showdata : (data:Object) => void
+    FocusId:string,
+    IsDuple:boolean,
+    total:number,
+    idx:number,
+    showdata : (data:Object) => void,
+    onshowlist : () => void
    }
 //#endregion
 
@@ -44,32 +48,52 @@ const[name, setName]=useState<string>("");
 //--------------+ 전역 변수
 //              +-----------------
 //#region type
-const Chat_infos=useContext(ShowChatContext);
+let focus_div = useRef<boolean>(false);
+let Focus_div = focus_div.current? "PartiChatList_Main_Focus" :"PartiChatList_Main";
 //#endregion
 
 useEffect(() =>{
+    //setIsFocus(false);
     let test :string[]=[...img];
     const images:object=props.Images;
+    if(props.Id ===props.FocusId) {
+
+        focus_div.current= true;
+    }
+    else{
+        focus_div.current= false;
+    }
     Object.entries(images).map((key) =>{
         test.push(key[1]);
         setImg(test);
     })
-     console.log("길이 :" , props.Name.length);
     if(props.Name.length >= 15){
         const name = props.Name.slice(0,15)+"...";
         setName(name);
     }
     else setName(props.Name);
-},[props.Images]);
+    if(props.idx ===props.total -1) props.onshowlist();
+},[props.Id, props.FocusId]);
+
+useEffect(() =>{
+      if(props.IsDuple === true){
+        focus_div.current= true;
+      }
+      else{
+        focus_div.current= false;
+      }
+},[props.IsDuple])
+
 
 const showchat= () =>{
     const show_data:object ={user_count:props.Count+1, room_name:name, room_id:props.Id, 
         create_date:props.create_date, userinfos: props.user_infos}
     props.showdata(show_data);
-  console.log("해당 데이터 보여주기");
+    
+
 }
  
-    return(<div className="PartiChatList_Main" id={props.Id} onClick={showchat}>
+    return(<div className={Focus_div} id={props.Id} onClick={showchat}>
                 <div className="PartiChatList_imgs">
                     <Multipicture Image={props.Images}/>
              </div>

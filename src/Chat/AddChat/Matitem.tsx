@@ -23,9 +23,14 @@ type Items ={
     Ctid:string,
     Userid:string,
     Image:string,
-    onChcked:(info:Object)=> void
+    onChcked:(info:Userfos)=> void
 
  }
+ type Userfos={
+    Img:string,
+    Nickname:string,
+    UserId:string
+   }
  //#endregion
 
 const Matitem =(props:Items) =>{
@@ -41,13 +46,13 @@ const checkedHandler =(e:React.ChangeEvent<HTMLInputElement>) =>{
        console.log("체크 :" , ischecked);
     if(ischecked == false){
         setIschecked(true);
-        const userinfo:object={Img:props.Image ,/* Ctid:props.Ctid ,*/ Nickname:props.Nickname , Userid:props.Userid};
+        const userinfo:Userfos={Img:props.Image , Nickname:props.Nickname , UserId:props.Userid};
         props.onChcked(userinfo);
     }
     else{
         console.log("체크 해제");
         setIschecked(false);
-        const userinfo:object={Img:props.Image , /*Ctid:props.Ctid ,*/ Nickname:props.Nickname , Userid:props.Userid};
+        const userinfo:Userfos={Img:props.Image , Nickname:props.Nickname , UserId:props.Userid};
         props.onChcked(userinfo);
     }
 }

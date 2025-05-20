@@ -10,11 +10,10 @@
     width: 71vw;
     background-color: #f2f2f2;
     padding: 8px;
-    top:77.6vh;
+    top:79.7vh;
     margin-left: -8.1vw;      
     align-items: flex-end;
     overflow: hidden;
-
 }
 .AddChatItems_date{
     font-weight:bolder;
@@ -26,7 +25,7 @@
 }
 .AddChatItems_inputchat textarea,
 .AddChatItems_inputchat textarea:focus{
-
+    
     box-sizing: border-box; 
     resize: none;
     outline: none;
@@ -40,16 +39,16 @@
     cursor: pointer;
     font-size: 15px;
     font-weight: bolder;
-    line-height: 1.5;
+    line-height: 1;
     padding-left: 25px;
-    padding-top: 20px;
+    padding-top: 15px;
     padding-bottom: 0px;
     padding-right: 25px;
     border: 1px solid;
     border-radius: 50px;
     overflow-y: auto;         
-    max-height: 27vh;       
-    scrollbar-width: none
+    max-height: 27vh; 
+       
 }
 .AddChatItems_inputchat textarea::-webkit-scrollbar {
     width: 0;
@@ -122,6 +121,17 @@
     font-size: 20px;
     cursor: pointer;
 }
+.AllChat_Stand{
+    position: absolute;
+    top:9vh;
+    left: -7vw;
+    width: 70vw;
+    height: 80vh;
+    max-height: 80vh;
+    background-color: #007AFF;
+    display: flex;
+    flex-direction: column;
+}
 }
 @media  (max-width: 1550px) {
     .AddChatItems_total{
@@ -132,11 +142,11 @@
         position: relative; 
         bottom: 0; 
         display: flex;
-        width: 71vw;
+        width: 70vw;
         background-color: #f2f2f2;
         padding: 8px;
-        top:73.3vh;
-        margin-left: -7.1vw;      
+        top:76vh;
+        margin-left: -6.1vw;      
         align-items: flex-end;
         overflow: hidden;
     }
@@ -171,9 +181,9 @@
     cursor: pointer;
     font-size: 15px;
     font-weight: bolder;
-    line-height: 1.5;
+    line-height: 1;
     padding-left: 25px;
-    padding-top: 20px;
+    padding-top: 15px;
     padding-bottom: 0px;
     padding-right: 25px;
     border: 1px solid;
@@ -195,6 +205,13 @@
         height: 4vh;
         margin-left: 1vw;
     }
+    .AddChatItems_AddContents img,
+    .AddChatItems_AddContents img:hover{
+    width: 1.5vw;
+    height: 3vh;
+    margin-left: 0.5vw;
+    cursor: pointer;
+}
     .AddChatItems_filelist{
         position: absolute;
         top:70vh;
@@ -224,5 +241,16 @@
         color:#007AFF;
         font-weight: 600;
         cursor: pointer;
+    }
+    .AllChat_Stand{
+        position: absolute;
+        top:9vh;
+        left: -7vw;
+        width: 70vw;
+        height: 80vh;
+        max-height: 80vh;
+        //background-color: #007AFF;
+        display: flex;
+        flex-direction: column;
     }
 }

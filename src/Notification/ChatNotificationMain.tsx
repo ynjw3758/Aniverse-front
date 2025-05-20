@@ -1,6 +1,7 @@
 
-import { useEffect, useRef, useState } from "react";
-import "./NotificationMain.scss";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./ChatNotificationMain.scss";
 
 
 interface Props{
@@ -12,12 +13,14 @@ type Receive_chat={
     SendProfile:string,
     SendNickname:string,
     SendMsg:string,
-    SendTime:string
+    SendTime:string,
+    ChatId:string,
 }
 
-const NotificationMain =({ChatReceive}:Props) =>{
+const ChatNotificationMain =({ChatReceive}:Props) =>{
    
     const[time, setTime]=useState<string>("");
+    const navigate = useNavigate();
     useEffect(() =>{
      console.log("알람 ui 활성화");
 
@@ -34,7 +37,16 @@ const NotificationMain =({ChatReceive}:Props) =>{
         setTime(result)
     },[])
 
-    return(<div className="Notification_Stand">
+    const moveChat =() =>{
+      console.log("채팅 아이디 :" ,ChatReceive.ChatId )
+        navigate(`/main/Chat/${ChatReceive.ChatId}`, {
+            state: { focusId: ChatReceive.ChatId,
+                isFromAlarm: true,
+             },
+          });
+    }
+
+    return(<div className="Notification_Stand" onClick={moveChat}>
             <img src={ChatReceive.SendProfile}/>
           <div className="Notification_Userinfo">
             <h4>{ChatReceive.SendNickname}</h4>
@@ -46,4 +58,4 @@ const NotificationMain =({ChatReceive}:Props) =>{
     </div>)
 }
 
-export default NotificationMain;
+export default ChatNotificationMain;

@@ -20,6 +20,8 @@ type Chatitem ={
   user_infos:object[],
   Usercount:number,
   create_date:string,
+  isFocusId:string,
+  IsDuple:boolean,
   Onshowcontents(data:object) :void,
  }
 //#endregion
@@ -32,6 +34,7 @@ const AddPerson_MultiImg =(props:Chatitem) =>{
 //#region type
     const[data, setData]=useState<Object[]>([]);
     const[ischeck, setIscheck]=useState<boolean>(false);
+    const[isfocus, setIsfocus]=useState<boolean>(false);
     const[id, setId]=useState<string[]>([]);
     const[img, setImg]=useState<object[]>([]);
     const[name, setName]=useState<string[]>([]);
@@ -54,34 +57,38 @@ const AddPerson_MultiImg =(props:Chatitem) =>{
       let imgs:object[]=[...img];
       let create_dates:string[]=[...create];
       let user_infos:object[]=[...userinfos];
-      user_infos.push(props.user_infos);
+      user_infos.unshift(props.user_infos);
       setUserinfos(user_infos);
-      create_dates.push(props.create_date);
+      create_dates.unshift(props.create_date);
       setCreate(create_dates);
-      imgs.push(props.Image);
+      imgs.unshift(props.Image);
       setImg(imgs);
-      divId.push(props.Id);
-      usercount.push(props.Usercount);
-      roomname.push(props.title);
+      divId.unshift(props.Id);
+      usercount.unshift(props.Usercount);
+      roomname.unshift(props.title);
       setId(divId);
       setCount(usercount);
       setName(roomname);
       setIscheck(true);
+
     },[props.Image]);
     const click_data =(data:object)=>{
       console.log("data :", data);
       props.Onshowcontents(data);
 
     }
-    
-    return(<div className="AddPerson_MultiImg_total" id={props.Id}>
-            {ischeck && (<>
-                {id.map((data , i) =>(<>
+    console.log("chatid :" ,ischeck);
+    /*
+                    {id.map((data , i) =>(<>
                     <MultiData Id={data} Name={name[i]} Count={count[i]} 
-                    Images={img[i]} showdata={click_data} create_date={create[i]}
-                    user_infos={userinfos[i]}/>
+                    Images={img[i]} showdata={click_data} create_date={create[i]} FocusId={props.isFocusId}
+                    user_infos={userinfos[i]} IsDuple={props.IsDuple}/>
                 </>))}
                 
+                */
+    return(<div className="AddPerson_MultiImg_total" id={props.Id}>
+            {ischeck && (<>
+
             </>)}
     </div>)
 

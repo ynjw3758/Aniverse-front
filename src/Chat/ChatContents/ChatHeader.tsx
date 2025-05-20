@@ -38,7 +38,7 @@ const ChatHeader =(props:info) =>{
     return(<div className="ChatHeader_List">
       <div className="ChatHeader_menu">
          <h2>{name}</h2>
-         <h3>{props.Count+1}</h3>
+         <h3>{props.Count}</h3>
       </div>
       <div className="ChatHeader_showadd">
            <img src={"/image/showadd.png"} />

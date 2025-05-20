@@ -16,9 +16,7 @@ const navigate = useNavigate();
     navigate("/main");
   }
 /*
-            <div className="NoteSide_vertical"> 
-              <hr />
-             </div>
+
              */
 
     return(<>
@@ -48,7 +46,9 @@ const navigate = useNavigate();
                 <img src="/image/time.png" />    
                 </button>
             </ul>
-
+            <div className="NoteSide_vertical"> 
+              <hr />
+             </div>
     </>)
 }
 

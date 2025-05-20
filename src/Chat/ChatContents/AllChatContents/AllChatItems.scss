@@ -1,0 +1,19 @@
+@media (min-width: 1550px) and (max-width: 1920px) {
+    .AllChatDiv_MyStand{
+        display: flex;
+        flex-direction: row;
+        width: max-content;
+        height: max-content;
+        margin-left: 65vw;
+    }
+}
+
+@media (max-width: 1540px) {
+    .AllChatDiv_MyStand{
+        display: flex;
+        flex-direction: row;
+        width: max-content;
+        height: max-content;
+        margin-left: 65vw;
+    }
+}

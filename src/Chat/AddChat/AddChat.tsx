@@ -2,7 +2,7 @@
 //----------------------------+ 외부 라이브로리
 //                            +--------------------
 //#region type 
-import { useContext, useEffect, useState ,useRef} from "react";
+import {useEffect, useState} from "react";
 import { useNavigate , useParams } from "react-router-dom";
 import axios from "axios";
 import {Oval} from "react-loader-spinner";
@@ -35,11 +35,29 @@ interface ResponseDataType {
 //#region
 type data ={
     onClose:() => void,
-    ChatShow:(data:Object[] ,img:string[], name:string, roomid:string, createdate:string) => void,
+    ChatShow:(data:Userfos[] ,img:string[], name:string, roomid:string, createdate:string) => void,
     onDuple:(data:object) =>void,
-    OnOneDuple:() => void,
+    OnOneDuple:(MemList:object[], Chat_info:duple_infos , Myinfos:My_IFOS, ImageList:string[]) => void,
     Profile:string,
     Nickname:string
+ }
+
+ type My_IFOS={
+  Mnick:string;
+  Mprofile:string;
+ }
+
+ type duple_infos ={
+ ChatId:string;
+ ChatTitle:string;
+ ChatCtDate:string;
+ }
+
+
+ type Userfos={
+  Img:string,
+  Nickname:string,
+  UserId:string
  }
  //#endregion
 
@@ -55,7 +73,6 @@ const[nickname, setNickname]=useState<Object[]>([]);
 const [userinfo , setUserinfo]=useState<string[]>([]);
 const[search ,setSearch]=useState<string>("");
 const[matlist, setMatlist]=useState<Object[]>([]);
-const[addLiist, setAddList]=useState<Object[]>([]);
 const[loading, setLoading]=useState<boolean>(false);
 const[invite, setInvite]=useState<boolean>(false);
 const[isType, setIsType]=useState<boolean>(false);
@@ -65,6 +82,17 @@ const[sendcheck, setSendcheck]=useState<boolean>(false);
 const[isnotmat, setIsnotmat]=useState<boolean>(false);
 const[searchempty, setSearchempty] = useState<boolean>(false);
 const[listbox, setListbox]=useState<boolean>(false);
+const[imglist, setImglist]=useState<string[]>([]);
+const[dulpleinfo, setDulpleinfo] =useState<duple_infos>({
+  ChatId:"",
+  ChatTitle:"",
+  ChatCtDate:""
+})
+const[myinfo , setMyinfo]=useState<My_IFOS>({
+  Mnick:"",
+  Mprofile:""
+})
+const[addLiist, setAddList]=useState<Userfos[]>([]);
 //#endregion
 
 //              +-----------------
@@ -88,7 +116,6 @@ useEffect(() =>{
     const id:string =param.userid!;
   axios.get("http://localhost:8088/Pets-social/Search/MatList" , {params:{Nickname:search, Id:id}})
   .then((response) =>{
-    console.log("아니 ㅅㅂ :" , response );
 
      if(response.status == 200 ){
       setMatlist([]);
@@ -241,11 +268,11 @@ else return;
     props.onClose();
     }
 
-    const addlist =(data:Object) =>{
+    const addlist =(data:Userfos) =>{
 
       setInvite(false);
       setIscreate(true);
-        const add:Object[]=[...addLiist];
+        const add:Userfos[]=[...addLiist];
         console.log("add :" , addLiist);
         if(addLiist.length == 0){
           add.push(data);
@@ -254,7 +281,7 @@ else return;
         }
 
         if(addLiist.length > 0){
-          const list:Object[] = addLiist.filter((remove) =>{
+          const list:Userfos[] = addLiist.filter((remove) =>{
             return JSON.stringify(remove) !== JSON.stringify(data);
           })
           if(list.length == addLiist.length){
@@ -321,10 +348,14 @@ else return;
           .then((response) =>{
               console.log("채팅 생성 결과 :" , response);
               if(response.status == 200){
-                console.log("중복 채팅방 존재")
                 if(response.data.data.isDuplicate== false){
                    console.log("그냥 해당 채팅으로 이동");
-                   props.OnOneDuple();
+                   console.log("이미지 리스트 보내자 :" ,img);
+                   const duple_infos:duple_infos = {ChatId:response.data.data.roomId, ChatTitle:response.data.data.roomname , ChatCtDate:response.data.data.Createdate}
+                   const My_info:My_IFOS={  Mnick:props.Nickname ,Mprofile:props.Nickname}; 
+                   setMyinfo(My_info);
+                   setDulpleinfo(duple_infos)
+                   props.OnOneDuple(response.data.data.userlist,duple_infos, myinfo, img);
                    
                 }
                 else{
@@ -333,7 +364,6 @@ else return;
                 
               }
               else if(response.status == 201){
-                console.log("새로 생성")
                 props.ChatShow(addLiist ,img,RoomName , response.data.Id , response.data.Date);
               }
   

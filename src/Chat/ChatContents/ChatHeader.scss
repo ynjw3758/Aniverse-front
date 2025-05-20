@@ -9,7 +9,7 @@
   flex-direction: row;
   width: 20vw;
   max-width: 20vw;
-  margin-left: -7vw;
+  margin-left: -6vw;
 }
 .ChatHeader_menu h2{
   font-size:larger;
@@ -27,9 +27,11 @@
 }
 .ChatHeader_showadd img,
 .ChatHeader_showadd img:hover{
-  width: 3vw;
-  height: 5vh;
+  width: 2vw;
+  height: 3vh;
   cursor: pointer;
+  margin-left: 1.7vw;
+  margin-top: 1vh;
 }
 }
 @media (max-width: 1550px) {
@@ -44,7 +46,7 @@
   flex-direction: row;
   width: 20vw;
   max-width: 20vw;
-  margin-left: -7vw;
+  margin-left: -6vw;
 }
 .ChatHeader_menu h2{
   font-size:larger;

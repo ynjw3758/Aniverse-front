@@ -17,6 +17,8 @@ import Emoji from"./Emoji";
 import Addfiles from "./Addfiles";
 import Sizemessage from "./Sizemessage";
 import WebSocketChatContext from "../../Context/WebSocketChatContext";
+import AllChat from "./AllChatContents/AllChat";
+import { TranseDate } from "../../Utils/TranseDate";
 
 //#endregion
 
@@ -32,9 +34,15 @@ type info ={
     totalId:string[],
     Profile:string,
     isFirst:boolean,
-    ChSendId:string[]
-
+    ChSendId:string[],
+    count:number
  }
+
+ type MyChat ={
+  Mchat:string,
+  ReCount:number,
+  Time:string
+}
  //#endregion
 
  //                             +--------------------
@@ -63,6 +71,7 @@ const Input_AddItems =(props:info) =>{
 const[isSize, setIsSize]=useState<boolean>(false);
 const[isEmoticon, setIsEmoticon]=useState<boolean>(false);
 const[isfiles, setIsfiles]=useState<boolean>(false);
+const[isMyChat, setIsMyChat]=useState<boolean>(false);
 
 const[emoticon, setEmoticon]=useState<string>("");
 const[img, setImg]=useState<string[]>([]);
@@ -71,6 +80,7 @@ const[imgid,  setImgid]=useState<string[]>([]);
 const[videoid,  setVideoid]=useState<string[]>([]);
 
 const[maxsize, setMaxsize]=useState<number>(0);
+const[mychat , setMychat]=useState<MyChat[][]>([]);
 //const { sendMessage } = useContext(WebSocketContext);
 
 
@@ -179,12 +189,18 @@ const containerRef = useRef<HTMLDivElement>(null);
         axios.get("http://localhost:8080/Pets-social/acccheck").then((response) =>{
    
          if(response.status == 200){
-           console.log("채팅 아이디 :" , props.ChatId);
+           console.log("채팅 아이디 :" , props.isFirst);
            const UserId = localStorage.getItem("id")!;
-           console.log("보낼 닉네임이다 :" , props.MyNickname)
+           console.log("보낼 닉네임이다 :" , props.ChSendId)
            Chat_Context.sendMessage(props.ChatId, emoticon, UserId, props.MyNickname ,props.Profile,  
-            props.isFirst, props.ChSendId);
-           Chat_Context.sendMessage("", "", "", "" ,"", false, []);
+            true, props.ChSendId,props.count )
+           //Chat_Context.sendMessage("", "", "", "" ,"", false, [], 0);
+           let MyChatinfo:MyChat[][]=[...mychat];
+           const now = new Date();
+           const SendTime = TranseDate(now);
+           MyChatinfo.push([{ Mchat:emoticon,ReCount:props.count ,Time:SendTime}]);
+           setMychat(MyChatinfo);
+           setIsMyChat(true);
            setEmoticon("");
         }
    
@@ -192,7 +208,7 @@ const containerRef = useRef<HTMLDivElement>(null);
            if(axios.isAxiosError<ResponseDataType>(error)){
              console.log("error code: " , error.response?.status);
              
-             if(error.code=="ERR_BAD_REQUEST"){
+             if(error.response?.status==400){
                navigate("/error");
              }
              else if(error.response?.status==401){
@@ -214,7 +230,7 @@ const containerRef = useRef<HTMLDivElement>(null);
                           id : id})
                           .then(
                           response =>{
-                            console.log("응답 결과 :" , response)
+                            console.log("refresh 토큰 응답 결과 :" , response)
                             if(response.status == 200){
                               localStorage.setItem("p_exp" ,response.data.data.exp);
                               localStorage.setItem("a_id" ,response.data.data.access_token);
@@ -297,29 +313,26 @@ const containerRef = useRef<HTMLDivElement>(null);
       }
       const resizeTextarea = () => {
         //const margin_limit = -200;
-        const margin_limit = -70;
+        const margin_limit = -40;
         const textarea = TextRef.current;
         const container = containerRef.current;
         if (textarea && container) {
           //if(margin.current > margin_limit) {
-            const newHeight = Math.min(textarea.scrollHeight, 600);
-            const containers = Math.min(container.scrollHeight, 150); //이전값은 500
-             console.log("containers : " ,containers)
-             console.log("newHeight : " ,newHeight)
+            const newHeight = Math.min(textarea.scrollHeight, 100);
+            const containers = Math.min(container.scrollHeight, 100); //이전값은 500
            if(margin.current > margin_limit) {
             margin.current+=-10;
             compare_height.current+=10;
             //margin.current+=-20;
             //compare_height.current+=20;
-            textarea_hegiht.current+=15;
-            if(compare_height.current >=150) compare_height.current=150;
-            if(textarea_hegiht.current >= 600) textarea_hegiht.current =600;
-            container.style.height = `${compare_height.current}px`; // 여유
+            textarea_hegiht.current+=10;
+            //if(compare_height.current >=100) compare_height.current=100;
+            if(textarea_hegiht.current >= 100) textarea_hegiht.current =100;
+            container.style.height = `${containers}px`; // 여유
             container.style.marginTop = `${margin.current}px`;
             textarea.style.height = `${textarea_hegiht.current }px`;
             }
             else{
-             console.log(" 여기여?")
               textarea.style.height = `${newHeight}px`;
             }
 
@@ -328,7 +341,6 @@ const containerRef = useRef<HTMLDivElement>(null);
         
       };
 
-
     return(
     <div className="AddChatItems_total">
         <div className="AddChatItems_date">
@@ -336,6 +348,9 @@ const containerRef = useRef<HTMLDivElement>(null);
         </div>
         {isfiles &&(<div className="AddChatItems_filelist" >
             <Addfiles Img={img} Video={video} ImgId={imgid} VideoId={videoid}/>
+        </div>)}
+        {isMyChat && (<div className="AllChat_Stand">
+          <AllChat mychat={mychat} otherchat={[]}/>
         </div>)}
         <div className="AddChatItems_inputchat" ref={containerRef}>
         <div className="AddChatItems_AddContents">

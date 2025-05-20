@@ -55,12 +55,14 @@ const ShowChat =(props:info) =>{
 
 
     useEffect(() =>{
+      console.log("list 서아주 :" , props.Userinfo)
         let list:Object[]=props.Userinfo;
         let image:string[]=[...img];
         let Nick:string[]=[...nick];
         let Id:string[]=[...id];
         let Ctid:string[]=[...ctid];
         let SendIds:string[]=[...chsendId];
+        const My_Id:string= localStorage.getItem("id")!;
         console.log("props :" , props.Userinfo);
         list.map((data) => Object.entries(data).map((key, idx) =>{
 
@@ -72,11 +74,15 @@ const ShowChat =(props:info) =>{
                 Nick.push(key[1]);
                 setNick(Nick);
               }
-              else if(key.at(0) == "Userid"){
-                Id.push(key[1]);
-                SendIds.push(key[1]);
+              else if(key.at(0) == "UserId"){
+                console.log("key :" ,key[1])
+               Id.push(key[1]);
                setId(Id);
-               setChsendId(SendIds);
+               if(key[1] !==My_Id ){
+                SendIds.push(key[1]);
+                setChsendId(SendIds);
+               }
+
               }
 
               else if(key.at(0) == "Img"){
@@ -100,17 +106,13 @@ const ShowChat =(props:info) =>{
             String(date.getSeconds()).padStart(2, '0');
          setCreate(formatted);
          setSize(list.length);
-         const myid=localStorage.getItem("id")!;
-         Id.push(myid);
-         setId(Id);
+
     },[props.Userinfo])
 
     useEffect(() =>{
-
        if(id.length !==0) setIsSocket(true);
-       console.log("isocket : " , isSocket);
     },[id])
-       
+
      return(<WebSocket_Chat_Provider>
      <div id={props.Chat_id}>
      <div>
@@ -122,7 +124,7 @@ const ShowChat =(props:info) =>{
       <div className="ShowChat_Showcontents">
         {isSocket && (<>
           <AddItems CreateDate={create} ChatId={props.Chat_id} totalId={id} Profile={props.MyProfile} 
-          isFirst={props.isFirst} ChSendId={chsendId} MyNickname={props.MyNickname}/>
+          isFirst={props.isFirst} ChSendId={id} MyNickname={props.MyNickname} count={size}/>
         </>)}
       </div>
      </div>

@@ -103,6 +103,7 @@
 
 .search{
     margin-top: -1vh;
+    margin-bottom: 1vh;
 }
 .search input{
     
@@ -120,7 +121,7 @@
 .chatcontents{
     position:absolute;
     top:2vh;
-    left: 36vw;
+    left: 35vw;
 }
 .chatlist{
     display: flex;
@@ -250,7 +251,7 @@
     .chatcontents{
         position:absolute;
         top:2vh;
-        left: 36vw;
+        left: 35vw;
     }
     .chatlist{
         display: flex;

@@ -1,6 +1,5 @@
 import {Oval} from "react-loader-spinner";
 
-
 import "./BaseLoading.scss";
 
 

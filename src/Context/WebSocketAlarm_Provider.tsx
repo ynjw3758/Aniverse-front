@@ -9,11 +9,12 @@ type Props = {
   };
 
 type Receive_chat={
-    SendId:string,
-    SendProfile:string,
-    SendNickname:string,
-    SendMsg:string,
-    SendTime:string
+    SendId:string;
+    SendProfile:string;
+    SendNickname:string;
+    SendMsg:string;
+    SendTime:string;
+    ChatId:string;
 }
 
 
@@ -23,7 +24,8 @@ type Receive_chat={
         SendProfile: "",
         SendNickname: "",
         SendMsg: "",
-        SendTime:""
+        SendTime:"",
+        ChatId:""
     })
     const[isAlarm, setIsAlarm]=useState<boolean>(false);
     const socketRef = useRef<WebSocket | null>(null);

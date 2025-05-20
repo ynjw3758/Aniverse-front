@@ -4,9 +4,16 @@
     display: flex;
     flex-direction: row;
     border-bottom: 1px solid black;
-    margin-top: 1vh;
 }
 .PartiChatList_Main:hover{
+    display: flex;
+    flex-direction: row;
+    background-color: darkgrey;
+    border-bottom: 1px solid black;
+    cursor: pointer;
+}
+.PartiChatList_Main_Focus,
+.PartiChatList_Main_Focus:hover{
     display: flex;
     flex-direction: row;
     background-color: darkgrey;
@@ -50,13 +57,20 @@
         display: flex;
         flex-direction: row;
         border-bottom: 1px solid black;
-        margin-top: 1vh;
+        //margin-top: 1vh;
     }
     .PartiChatList_Main:hover{
         display: flex;
         flex-direction: row;
         background-color: darkgrey;
         cursor: pointer;
+    }
+    .PartiChatList_Main_Focus,
+    .PartiChatList_Main_Focus:hover{
+    display: flex;
+    flex-direction: row;
+    background-color: darkgrey;
+    cursor: pointer;
     }
     
     .PartiChatList_contents{

@@ -230,7 +230,7 @@ const Login:React.FC= (props : {})=>{
                         onBlur={PassBlurHandler} />
                 </div>
                 {islogin && (<div className="fali_login">
-                <p>회원정보와 일치하지 않습니다다</p>
+                <p>회원정보와 일치하지 않습니다</p>
                 </div>)}
                 <div className="Loginbtn">
                     <button type="submit" onClick={submitfn} disabled={!fomrIsValid} >로그인</button>

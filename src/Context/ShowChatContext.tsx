@@ -9,7 +9,7 @@ export interface ShoChat_infos{
     isfirst:boolean;
     MyNickname:string;
     MyProfile:string;
-    insert_values:(chatId:string,chatTitle:string, chatData:object[], chatProfiles:string[], 
+    insert_values:(chatId:string,chatTitle:string, chatData:object[],chatProfiles:string[], 
         chatCtDate:string, isfirst:boolean, MyNickname:string, MyProfile:string)=> void
 }
 

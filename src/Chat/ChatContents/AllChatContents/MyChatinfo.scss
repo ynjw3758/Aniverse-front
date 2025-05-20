@@ -41,12 +41,9 @@
         flex-direction: row;
         margin-bottom: 1vh;
         justify-content: center;
+        align-items: flex-end; 
     }
-    .MyChat_Stand h4{
-        font-size: 15px;
-        margin-top: 1vh;
-        font-weight:normal;
-    }
+
     .MyChat_Loading{
         margin-top: 2vh;
         margin-right: 1vw; 
@@ -72,14 +69,24 @@
     .MyChat_ChangData p{
         font-size: 10px;
         margin: 0;
+        width: max-content;
     }
     .MyChat_Context{
         background-color: #f2f2f2;
         border-radius: 15px;
-        height:5vh;
-        max-width:max-content;
-        padding-left: 10px;
-        padding-right: 10px;
+        height:fit-content;
+        max-width:240px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        padding: 6px 10px; 
+    }
+    .MyChat_Context h4{
+        margin: 0;
+        padding: 0;
+        font-size: 14px;
+        line-height: 1.4;
+        word-break: break-word;
+        white-space: pre-wrap;
     }
     #MyChat_ReCount{
         margin-left: 3vw;

@@ -40,12 +40,15 @@ const MyChatinfo =({Chatinfo}:props) =>{
 
     const resizeToLeft = (data:string) => {
         const container = div_ref.current;
+        const size = 20;
         if (container) {
+            //if(size > Chatinfo.Mchat.length){
           const currentWidth = container.offsetWidth;
           const newWidth = currentWidth + 10; // 확장 정도
-      
           container.style.width = `${newWidth}px`;
           container.style.marginLeft = `${100 - newWidth}px`; // 왼쪽으로 확장처럼 보이게
+            //}
+
         }
       };
 

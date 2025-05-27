@@ -186,8 +186,8 @@ const Login:React.FC= (props : {})=>{
     const naverlogin =() =>{
 
 
-        const url = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${client_id}&redirect_uri=${naver_redirect_url}&state=${state}`;
-        window.location.href = url;
+            const url = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${client_id}&redirect_uri=${naver_redirect_url}&state=${state}`;
+            window.location.href = url;
 
     }
 

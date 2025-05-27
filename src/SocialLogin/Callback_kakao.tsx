@@ -58,7 +58,7 @@ const Callbackkakao =() =>{
                         console.log("error code: " , error.response?.data.resultdata);
 
                         if(error.response?.status==400){
-                          navigate("/error");
+                          navigate("/error/BadRequest");
                           return;
                         }
                         else if(error.code == "ERR_NETWORK"){
@@ -181,20 +181,11 @@ const Callbackkakao =() =>{
                           navigate("/link");
                           return;
                         }
-                        if(error.code=="ERR_BAD_REQUEST"){
-                          navigate("/error");
+                        if(error.response?.status ==400){
+                          navigate("/error/BadRequest");
                         }
-                        if(error.code == "ERR_NETWORK"){
-                          console.log("네트워크 에러 ");
-                          
-                        }
-                        if(error.response?.status==401){
-                            console.log("승인되지 않은 로그인 :" , error.response.data);
-                            
 
-                        }
-                        
-                        //console.log("error response: " , error.response?.data);
+
                       }
         })
         

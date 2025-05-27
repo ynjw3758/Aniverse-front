@@ -358,7 +358,7 @@ const SendNote =(props:Note) =>{
          const senduser:string =profile.UserNickName;
          const receiveuser:string[] =sendList;
          const Profile:string = profile.Profile;
-         axios.post("http://localhost:8082/Pets-social/SendNote" , {params :{SendUser:senduser , 
+         axios.post("http://localhost:8082/Pets-social/Note/SendNote" , {params :{SendUser:senduser , 
           ReceiveUser:receiveuser ,ReceiveImg:addprofile , Profile:Profile, Contents:textArea}})
          .then((response) =>{
 
@@ -380,17 +380,23 @@ const SendNote =(props:Note) =>{
               return;
             }
             
-            if(error.code=="ERR_BAD_REQUEST"){
-              navigate("/error");
+            if(error.response?.status ==400){
+              navigate("/error/BadRequest");
               return;
             }
-            if(error.code == "ERR_NETWORK"){
-              console.log("네트워크 에러 ");
-              return;
-            }
-            if(error.response?.status==500){
+
+            else if(error.response?.status==500){
               console.log("서버 에러발생");
               navigate("/error/se-error");
+              return;
+            }
+            else if(error.response?.status==403){
+              console.log("인가 문제?");
+              navigate("/error/NoAccess");
+            }
+            else if(error.response?.status==502){
+              console.log("gateway 에러 발생");
+              navigate("/error/Gateway");
               return;
             }
 
@@ -405,16 +411,22 @@ const SendNote =(props:Note) =>{
             if(error.code=="ERR_BAD_REQUEST"){
               navigate("/error");
             }
-            if(error.code == "ERR_NETWORK"){
-              console.log("네트워크 에러 ");
-              
-            }
-            if(error.response?.status==401){
+
+           else if(error.response?.status==401){
                 console.log("승인되지 않은 로그인");
             }
-            if(error.response?.status==500){
+            else if(error.response?.status==500){
               console.log("서버 에러발생");
               navigate("/error/se-error")
+            }
+            else if(error.response?.status==403){
+              console.log("cors 문제제");
+              navigate("/error/NoAccess");
+            }
+            else if(error.response?.status==502){
+              console.log("gateway 에러 발생");
+              navigate("/error/Gateway");
+              return;
             }
             
             console.log("error response: " , error.response?.data);

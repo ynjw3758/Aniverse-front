@@ -13,6 +13,7 @@ import {Oval} from "react-loader-spinner";
 //----------------------------+ 내부 라이브로리
 //                            +--------------------
 //#region type 
+import "./ChatList.scss";
 import AddChatItems from "../AddChat/AddChatItems";
 import PartiChatList from "./PartiChatList";
 //#endregion
@@ -39,6 +40,8 @@ type Chat ={
    RoomName:string,
    chat_Id:string,
    userCount:number,
+   lasttime:string,
+   Message:string,
    Members:Member_info[]
   }
   type Member_info={
@@ -57,8 +60,11 @@ const ChatList =(props:Chat) =>{
 const[roomname, setRoomname]=useState<string[]>([]);
 const[ctdate, setCtdate]=useState<string[]>([]);
 const[chatId, setChatId]=useState<string[]>([]);
+const[lastmsg, setLastmsg]=useState<string[]>([]);
+const[lasttime, setLasttime]=useState<string[]>([]);
 const[isdata, setIsdata]=useState<boolean>(false);
 const[isloading, setIsloading]=useState<boolean>(true);
+const[noChat, setNoChat]=useState<boolean>(false);
 const[isfocus, setIsfocus]=useState<string>("");
 const[usercnt, setUsercnt]=useState<number[]>([]);
 const[member, setMember]=useState<Member_info[][]>([]);
@@ -72,7 +78,7 @@ const[imglist, setImglist]=useState<string[][]>([]);
 //#endregion
 
 useEffect(() =>{
-   
+   if(props.ChatListinfo.length != 0){
    const ChatInfos:ChatList_infos[] = props.ChatListinfo;
    dayjs.extend(relativeTime);
    let RoomName:string[]=[...roomname];
@@ -81,6 +87,8 @@ useEffect(() =>{
    let ChatId:string[] = [...chatId];
    let Member_info:Member_info[][] =[...member];
    let allImages: string[][] = [...imglist]; // ⬅️ 바깥에 선언해두기
+   let lastMsg:string[]=[...lastmsg];
+   let lastTime:string[]=[...lasttime];
    ChatInfos.forEach((data) =>{
       Object.entries(data).map((key) =>{
          if(key[0] === "RoomName"){
@@ -113,23 +121,37 @@ useEffect(() =>{
               setImglist(allImages);
             }
          }
+         else if(key.at(0) =="Message"){
+           lastMsg.unshift(key[1].toString());
+           setLastmsg(lastMsg);
+         }
+         else if(key.at(0) =="lasttime"){
+            lasttime.unshift(key[1].toString());
+            setLasttime(lastMsg);
+         }
 
       })
    })
    setIsdata(true);
+}
+else{
+    console.log("데이터 없다");
+    setIsloading(false);
+    setNoChat(true);
+}
 },[props.ChatListinfo]);
 
 const showcontents =(data:object) =>{
   props.showcontents(data);
 }
 const ShowList =() =>{
-   console.log("뭐야야")
    setIsloading(false);
    setIsdata(true)
 }
 
+
    return(<>
-   {isloading && (<div className="ChatList_Loading">
+{isloading && (<div className="ChatList_Loading">
       <Oval 
          color="#ff0000" 
          height={150} 
@@ -138,21 +160,24 @@ const ShowList =() =>{
        {isdata && (<>
          {chatId.map((data , i) =>(<>
          <PartiChatList Id={data} Name={roomname[i]} Count={usercnt[i]} 
-         Images={imglist[i]} showdata={showcontents} create_date={ctdate[i]} FocusId={""}
-         user_infos={member[i]} IsDuple={props.IsDuple} total={chatId.length} idx={i} onshowlist={ShowList}/>
+         Images={imglist[i]} showdata={showcontents} create_date={ctdate[i]} FocusId={props.isFocusid}
+         user_infos={member[i]} IsDuple={props.IsDuple} total={chatId.length} idx={i} lastmsg={lastmsg[i]} lasttime={lasttime[i]}
+         onshowlist={ShowList}/>
       </>))}
        </>)}
-
-       
-
    </div>)}
    {!isloading && (<>
       {chatId.map((data , i) =>(<>
          <PartiChatList Id={data} Name={roomname[i]} Count={usercnt[i]} 
          Images={imglist[i]} showdata={showcontents} create_date={ctdate[i]} FocusId={props.isFocusid}
-         user_infos={member[i]} IsDuple={props.IsDuple} total={chatId.length} idx={i} onshowlist={ShowList}/>
+         user_infos={member[i]} IsDuple={props.IsDuple} total={chatId.length} idx={i} lastmsg={lastmsg[i]} lasttime={lasttime[i]}
+         onshowlist={ShowList}/>
       </>))}
    </>)}
+   {(isloading == false && noChat == true) && (<div className="ChatList_Nochat">
+   <p>참여 중인 채팅이 없습니다.</p>
+   </div>)}
+   
    </>)
 
 

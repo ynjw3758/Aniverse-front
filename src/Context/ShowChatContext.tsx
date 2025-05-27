@@ -9,8 +9,9 @@ export interface ShoChat_infos{
     isfirst:boolean;
     MyNickname:string;
     MyProfile:string;
+    isClick:boolean,
     insert_values:(chatId:string,chatTitle:string, chatData:object[],chatProfiles:string[], 
-        chatCtDate:string, isfirst:boolean, MyNickname:string, MyProfile:string)=> void
+        chatCtDate:string, isfirst:boolean, MyNickname:string, MyProfile:string, FocuseId:string, isClick:boolean)=> void
 }
 
 const Initial : ShoChat_infos={
@@ -22,6 +23,7 @@ const Initial : ShoChat_infos={
     isfirst:false,
     MyNickname:"",
     MyProfile:"",
+    isClick:false,
     insert_values:() => {}
 }
 

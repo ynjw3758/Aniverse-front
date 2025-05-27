@@ -6,6 +6,7 @@ import {useContext, useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import {Cookies} from 'react-cookie';
 import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
 //#endregion
 
 //                            +------------------
@@ -18,7 +19,6 @@ import Addfiles from "./Addfiles";
 import Sizemessage from "./Sizemessage";
 import WebSocketChatContext from "../../Context/WebSocketChatContext";
 import AllChat from "./AllChatContents/AllChat";
-import { TranseDate } from "../../Utils/TranseDate";
 
 //#endregion
 
@@ -35,7 +35,9 @@ type info ={
     Profile:string,
     isFirst:boolean,
     ChSendId:string[],
-    count:number
+    count:number,
+    date:string[],
+    messages:MessageInfo[][]
  }
 
  type MyChat ={
@@ -43,6 +45,19 @@ type info ={
   ReCount:number,
   Time:string
 }
+
+type MessageInfo={
+  chatId:string;
+  message:string;
+  messageId:string;
+  nickname:string;
+  profile:string;
+  recount:number;
+  sendId:string;
+  timestamp:string;
+  type:string;
+  isSend:boolean;
+ }
  //#endregion
 
  //                             +--------------------
@@ -74,6 +89,7 @@ const[isfiles, setIsfiles]=useState<boolean>(false);
 const[isMyChat, setIsMyChat]=useState<boolean>(false);
 
 const[emoticon, setEmoticon]=useState<string>("");
+//const[newDate, setNewDate]=useState<string>("");
 const[img, setImg]=useState<string[]>([]);
 const[video, setVideo]=useState<string[]>([]);
 const[imgid,  setImgid]=useState<string[]>([]);
@@ -81,6 +97,7 @@ const[videoid,  setVideoid]=useState<string[]>([]);
 
 const[maxsize, setMaxsize]=useState<number>(0);
 const[mychat , setMychat]=useState<MyChat[][]>([]);
+const[allChat, setAllChat]=useState<MessageInfo[][]>(props.messages);
 //const { sendMessage } = useContext(WebSocketContext);
 
 
@@ -96,7 +113,8 @@ const navigate = useNavigate();
 const Chat_Context= useContext(WebSocketChatContext);
 const TextRef =useRef<HTMLTextAreaElement>(null); 
 const containerRef = useRef<HTMLDivElement>(null);
-
+const StandDate= useRef<string[]>(props.date);
+const newDate = useRef<string>("");
 //#endregion
 
     const AddfileHandler =(event: React.ChangeEvent<HTMLInputElement>) =>{
@@ -161,7 +179,6 @@ const containerRef = useRef<HTMLDivElement>(null);
     }
 
     const AddEmoticon =(data:string) =>{
-        console.log("값 :" , data);
         setEmoticon((prev)=>prev+data);
     }
 
@@ -174,9 +191,19 @@ const containerRef = useRef<HTMLDivElement>(null);
     }
 
     useEffect(() =>{
-       console.log("날짜 :" , props.totalId);
-        Chat_Context.Partici_Chatid(props.ChatId, props.totalId);
-    },[]);
+      console.log("props" , props.messages);
+      setAllChat([]);
+       Chat_Context.Partici_Chatid(props.ChatId, props.totalId);
+       if(props.messages.length !==0) setIsMyChat(true);
+      setAllChat(props.messages);
+   },[]);
+      const formatdate =(date:Date) =>{
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // 0~11이므로 +1
+        const day = String(date.getDate()).padStart(2, '0');
+      
+        return `${year}-${month}-${day}`;
+      }
 
       const sendChatHandler =() =>{
         if(emoticon.length !== 0){
@@ -189,17 +216,34 @@ const containerRef = useRef<HTMLDivElement>(null);
         axios.get("http://localhost:8080/Pets-social/acccheck").then((response) =>{
    
          if(response.status == 200){
-           console.log("채팅 아이디 :" , props.isFirst);
            const UserId = localStorage.getItem("id")!;
-           console.log("보낼 닉네임이다 :" , props.ChSendId)
+           const messageId = uuidv4();
+           const nowTime =  new Date().toISOString();
+           const now  =new Date();
+           const FormatDate = formatdate(now);
+           console.log("마지막 :" , props.date[props.date.length-1])
+           if(FormatDate === props.date[props.date.length-1]){
+              console.log("일치 ")
+           }
+           else{
+              newDate.current = FormatDate;
+              let add_date:string[]=[...props.date];
+              add_date.push(FormatDate);
+              StandDate.current =add_date; 
+           }
            Chat_Context.sendMessage(props.ChatId, emoticon, UserId, props.MyNickname ,props.Profile,  
-            true, props.ChSendId,props.count )
-           //Chat_Context.sendMessage("", "", "", "" ,"", false, [], 0);
-           let MyChatinfo:MyChat[][]=[...mychat];
-           const now = new Date();
-           const SendTime = TranseDate(now);
-           MyChatinfo.push([{ Mchat:emoticon,ReCount:props.count ,Time:SendTime}]);
-           setMychat(MyChatinfo);
+            true, props.ChSendId,props.count ,messageId)
+            let newChat:MessageInfo[][]=[...allChat];
+            
+            newChat.push([{chatId:props.ChatId,message:emoticon, messageId:messageId,nickname:props.MyNickname,
+              profile:props.Profile,
+              recount:props.count-1,
+              sendId:UserId,
+              timestamp:nowTime,
+              type:"mine",
+              isSend:false}])
+              
+            setAllChat(newChat);
            setIsMyChat(true);
            setEmoticon("");
         }
@@ -209,7 +253,8 @@ const containerRef = useRef<HTMLDivElement>(null);
              console.log("error code: " , error.response?.status);
              
              if(error.response?.status==400){
-               navigate("/error");
+              navigate("/error/BadRequest");
+              return;
              }
              else if(error.response?.status==401){
                  console.log("승인되지 않은 로그인");
@@ -234,7 +279,7 @@ const containerRef = useRef<HTMLDivElement>(null);
                             if(response.status == 200){
                               localStorage.setItem("p_exp" ,response.data.data.exp);
                               localStorage.setItem("a_id" ,response.data.data.access_token);
-                              navigate("/main");
+                              //navigate("/main");
                             }
                           }
                         ).catch(error =>{
@@ -242,7 +287,7 @@ const containerRef = useRef<HTMLDivElement>(null);
                                       console.log("error code: " , error.response?.status);
               
                                       if(error.response?.status==400){
-                                        navigate("/error");
+                                        navigate("/error/BadRequest");
                                         return;
                                       }
                                       else if(error.code == "ERR_NETWORK"){
@@ -273,8 +318,12 @@ const containerRef = useRef<HTMLDivElement>(null);
                console.log("서버 에러발생");
                navigate("/error/se-error")
              }
-             
-             console.log("error response: " , error.response?.data);
+             else if(error.response?.status==502){
+              console.log("gateway 에러 발생");
+              navigate("/error/Gateway");
+              return;
+             }
+
            }
          })
         }
@@ -340,17 +389,34 @@ const containerRef = useRef<HTMLDivElement>(null);
 
         
       };
+      const chatEndRef = useRef<HTMLDivElement | null>(null);
+      useEffect(() => {
+        console.log("아래로 이동하나?")
+        /*
+        if (chatEndRef.current) {
+          chatEndRef.current.scrollIntoView({ behavior: "smooth", block: "end" }); // 또는 "auto"
+        }
+          */
+        setTimeout(() => {
+          chatEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+        }, 0);
+      }, [allChat]); // ✅ 메시지가 바뀔 때마다 스크롤 실행
+
+      function AutoDownScroll (){
+        if (chatEndRef.current) {
+          console.log("가나?")
+          chatEndRef.current.scrollIntoView({ behavior: "smooth", block: "end" }); // 또는 "auto"
+        }
+      }
 
     return(
     <div className="AddChatItems_total">
-        <div className="AddChatItems_date">
-         <p>{props.CreateDate}</p>    
-        </div>
         {isfiles &&(<div className="AddChatItems_filelist" >
             <Addfiles Img={img} Video={video} ImgId={imgid} VideoId={videoid}/>
         </div>)}
         {isMyChat && (<div className="AllChat_Stand">
-          <AllChat mychat={mychat} otherchat={[]}/>
+          <AllChat allChat={allChat} StandDate={StandDate.current} CreateDate={props.CreateDate} newDate={newDate.current}/>
+          <div ref={chatEndRef} />
         </div>)}
         <div className="AddChatItems_inputchat" ref={containerRef}>
         <div className="AddChatItems_AddContents">

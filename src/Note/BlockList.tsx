@@ -133,7 +133,7 @@ useEffect(() =>{
             console.log("토큰 인증 성공");
             setName([]);
             setId([]);
-            axios.post("http://localhost:8082/Pets-social/CancelBlock" , cancelList)
+            axios.post("http://localhost:8082/Pets-social/Note/CancelBlock" , cancelList)
             .then((response) =>{
              console.log("결과 :" , response.data.resultdata);
              const list:string[] = response.data.resultdata;

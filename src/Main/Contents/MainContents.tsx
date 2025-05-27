@@ -44,9 +44,8 @@ const MainContentsx=(props:user_info) =>{
     const disable:boolean=true;
 
     const ChatReceive_Alarm= useContext(WebSocketAlarmContext);
-
     useEffect(() =>{
-      console.log("채팅 알람람 : " , ChatReceive_Alarm);
+      console.log("채팅 알람람 : " , ChatReceive_Alarm.chatReceive);
       if(ChatReceive_Alarm.chatReceive.SendMsg !="") 
        {
         setAlchatReceive(ChatReceive_Alarm.chatReceive);

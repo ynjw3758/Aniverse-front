@@ -1,36 +1,47 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./AllChatItems.scss";
-import MyChatinfo from "./MyChatinfo";
+import DividChatinfo from "./MyChatinfo";
 
 interface props{
-    mychat : MyChat[],
-    //otherchat:OtherChat
+    ChatInfoList : MessageInfo[],
+    StandDate:string,
+    CreateDate:string,
+    newDate:string
 }
+type MessageInfo={
+    chatId:string;
+    message:string;
+    messageId:string;
+    nickname:string;
+    profile:string;
+    recount:number;
+    sendId:string;
+    timestamp:string;
+    type:string;
+    isSend:boolean;
+   }
 
-type MyChat ={
-  Mchat:string,
-  ReCount:number,
-  Time:string
-}
-type OtherChat={
-    Profile:string,
-    UserId:string,
-    Nickname:string,
-    ReCount:number,
-    Chat:string
-}
-
-const AllChatItems =({mychat}:props) =>{
-
+const AllChatItems =({ChatInfoList ,StandDate ,newDate}:props) =>{
+    const[isSameTime, setIsSameTime]=useState<boolean>(true);
     useEffect(() =>{
-     console.log("채팅 리스트 :" , mychat);
-    },[mychat])
+        if(newDate !==StandDate && StandDate !== undefined) setIsSameTime(false);
+        else if(newDate !==StandDate && StandDate === undefined) setIsSameTime(true);
+    },[ChatInfoList])
+   
 
-    return(<>
-     {mychat.map((data, i) =>(<div className="AllChatDiv_MyStand">
-      <MyChatinfo Chatinfo={data}/>
-     </div>))}
-    </>)
+    return(<div className="StandDate_AllChat">
+        {!isSameTime && (<>
+            <button>{StandDate}</button>
+        </>)}
+        {ChatInfoList.map((data, index) => {
+         const className = data.type === "mine" ? "AllChatDiv_MyStand" : "AllChatDiv_OtherStand";
+            return (
+            <div key={index} className={className}>
+                <DividChatinfo Chatinfo={data} />
+            </div>
+            );
+       })}
+    </div>)
 }
 
 export default AllChatItems

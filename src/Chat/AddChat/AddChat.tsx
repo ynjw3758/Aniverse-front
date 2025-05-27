@@ -114,36 +114,38 @@ useEffect(() =>{
   if(sendcheck == true ){
     setLoading(false);
     const id:string =param.userid!;
-  axios.get("http://localhost:8088/Pets-social/Search/MatList" , {params:{Nickname:search, Id:id}})
-  .then((response) =>{
+      axios.get("http://localhost:8088/Pets-social/Search/MatList" , {params:{Nickname:search, Id:id}})
+      .then((response) =>{
 
-     if(response.status == 200 ){
-      setMatlist([]);
-      setMatlist(response.data);
-       
-     }
-     else if(response.status == 204){
-      setSearchempty(true);
-     }
-     setLoading(true);
+        if(response.status == 200 ){
+          setMatlist([]);
+          setMatlist(response.data);
+          
+        }
+        else if(response.status == 204){
+          setSearchempty(true);
+        }
+        setLoading(true);
 
-  }).catch((error) =>{
+      }).catch((error) =>{
      if(axios.isAxiosError<ResponseDataType>(error)){
          console.log("error code: " , error.response?.status);
          
-         if(error.code=="ERR_BAD_REQUEST"){
-           navigate("/error");
+         if(error.response?.status ==400){
+          navigate("/error/BadRequest");
+          return;
          }
-         if(error.code == "ERR_NETWORK"){
-           console.log("네트워크 에러 ");
-           
-         }
-         if(error.response?.status==401){
+
+         else if(error.response?.status==401){
              console.log("승인되지 않은 로그인");
          }
-         if(error.response?.status==500){
+         else if(error.response?.status==500){
            console.log("서버 에러발생");
            navigate("/error/se-error")
+         }
+         else if(error.response?.status == 502){
+          navigate("/error/Gateway");
+          return;
          }
          
          console.log("error response: " , error.response?.data);
@@ -201,16 +203,17 @@ else return;
            if(axios.isAxiosError<ResponseDataType>(error)){
                console.log("error code: " , error.response?.status);
                
-               if(error.code=="ERR_BAD_REQUEST"){
-                 navigate("/error");
+               if(error.response?.status ==400){
+                navigate("/error/BadRequest");
+                return;
                }
-               if(error.code == "ERR_NETWORK"){
-                 console.log("네트워크 에러 ");
-                 
-               }
-               if(error.response?.status==500){
+               else if(error.response?.status==500){
                  console.log("서버 에러발생");
                  navigate("/error/se-error")
+               }
+               else if(error.response?.status == 502){
+                navigate("/error/Gateway");
+                return;
                }
                
                console.log("error response: " , error.response?.data);
@@ -222,20 +225,22 @@ else return;
            if(axios.isAxiosError<ResponseDataType>(error)){
                console.log("error code: " , error.response?.status);
                
-               if(error.code=="ERR_BAD_REQUEST"){
-                 navigate("/error");
+               if(error.response?.status ==400){
+                navigate("/error/BadRequest");
+                return;
                }
-               if(error.code == "ERR_NETWORK"){
-                 console.log("네트워크 에러 ");
-                 
-               }
-               if(error.response?.status==401){
+
+               else if(error.response?.status==401){
                    console.log("승인되지 않은 로그인");
                    navigate("/login");
                }
-               if(error.response?.status==500){
+               else if(error.response?.status==500){
                  console.log("서버 에러발생");
                  navigate("/error/se-error")
+               }
+               else if(error.response?.status == 502){
+                navigate("/error/Gateway");
+                return;
                }
                
                console.log("error response: " , error.response?.data);
@@ -373,11 +378,16 @@ else return;
              console.log("error code: " , error.response?.status);
              
              if(error.response?.status==400){
-               navigate("/error");
+              navigate("/error/BadRequest");
+              return;
              }
              else if(error.response?.status==500){
                console.log("서버 에러발생");
                navigate("/error/se-error")
+             }
+             else if(error.response?.status == 502){
+              navigate("/error/Gateway");
+              return;
              }
              console.log("error response: " , error.response?.data);
            }
@@ -388,23 +398,21 @@ else return;
          if(axios.isAxiosError<ResponseDataType>(error)){
              console.log("error code: " , error.response?.status);
              
-             if(error.code=="ERR_BAD_REQUEST"){
-               navigate("/error");
+             if(error.response?.status == 400){
+              navigate("/error/BadRequest");
+              return;
              }
-             if(error.code == "ERR_NETWORK"){
-               console.log("네트워크 에러 ");
-               
-             }
-             if(error.response?.status==401){
-                 console.log("승인되지 않은 로그인");
+             else if(error.response?.status==401){
                  navigate("/login");
              }
-             if(error.response?.status==500){
-               console.log("서버 에러발생");
-               navigate("/error/se-error")
+             else if(error.response?.status==500){
+               navigate("/error/se-error");
+               return;
              }
-             
-             console.log("error response: " , error.response?.data);
+             else if(error.response?.status == 502){
+              navigate("/error/Gateway");
+              return;
+             }
            }
       })
     }

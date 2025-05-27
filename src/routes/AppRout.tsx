@@ -24,6 +24,8 @@ import Server_Error from "../Error_Page/Server_Error";
 import Callback_Naver from "../SocialLogin/Callback_Naver";
 import ShowChat from "../Chat/ChatContents/ShowChat";
 import ShowChatWrapper from "../Chat/ChatContents/ShowChatWrapper";
+import GatewayError from "../Error_Page/GatewayError";
+import BadRequest from "../Error_Page/BadRequest";
 
 const router = createBrowserRouter([
   {
@@ -90,7 +92,10 @@ const router = createBrowserRouter([
     children:[
       {path:"/error/auth/" , element:<Authorization_Page />},
       {path:"/error/se-error/" , element:<Server_Error />},
-      {path:"/error/ne_error" , element:<Network />}
+      {path:"/error/ne_error" , element:<Network />},
+      {path:"/error/NoAccess" , element:<Authorization_Page />},
+      {path:"/error/Gateway" , element:<GatewayError />},
+      {path:"/error/BadRequest" , element:<BadRequest />}
     ]
     
  },

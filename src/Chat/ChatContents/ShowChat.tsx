@@ -3,6 +3,9 @@
 //                            +--------------------
 //#region type 
 import {useEffect, useState, useRef, useContext} from "react";
+import { useNavigate } from "react-router-dom";
+import axios, { AxiosHeaders } from "axios";
+import {Cookies} from 'react-cookie';
 //#endregion
 
 //                            +--------------------
@@ -21,14 +24,33 @@ import WebSocket_Chat_Provider from "../../Context/WebSocker_Chat_Provider";
 //                            +------------------
 //#region
 type info ={
-    Userinfo:Object[],
-    RoomName:string,
-    CreateDate:any,
-    Chat_id:string,
-    onConnect:boolean,
-    MyProfile:string,
-    isFirst:boolean,
-    MyNickname:string
+    Userinfo:Object[];
+    RoomName:string;
+    CreateDate:any;
+    Chat_id:string;
+    onConnect:boolean;
+    MyProfile:string;
+    isFirst:boolean;
+    MyNickname:string;
+    isClick:boolean;
+ }
+
+ type ChatInfos={
+  date:string;
+  messages:MessageInfo[];
+ }
+
+ type MessageInfo={
+  chatId:string;
+  message:string;
+  messageId:string;
+  nickname:string;
+  profile:string;
+  recount:number;
+  sendId:string;
+  timestamp:string;
+  type:string;
+  isSend:boolean
  }
  //#endregion
 
@@ -46,73 +68,209 @@ const ShowChat =(props:info) =>{
 
     const[img, setImg]=useState<string[]>([]);
     const[nick, setNick]=useState<string[]>([]);
-    const[id, setId]=useState<string[]>([]);
+    const[ids, setIds]=useState<string[]>([]);
     const[ctid, setCtid]=useState<string[]>([]);
     const[chsendId, setChsendId]=useState<string[]>([]);
     const[size, setSize]=useState<number>(0);
     const[create, setCreate]=useState<string>("");
+    const[standDate, setStandDate]=useState<string[]>([]);
+    const[msgInfo, setMsgInfo]=useState<MessageInfo[][]>([]);
     const[isSocket, setIsSocket]=useState<boolean>(false);
-
+    const[againlogin,setAgainlogin]=useState<boolean>(false);
+    const[isperist, setIsperist]=useState<boolean>(false);
+//              +-----------------
+//--------------+ 전역 변수
+//              +-----------------
+//#region type
+    const navigate = useNavigate();
+    const cookies = new Cookies();
+    const test = useRef<boolean>(false);
+//#endregion
 
     useEffect(() =>{
-      console.log("list 서아주 :" , props.Userinfo)
-        let list:Object[]=props.Userinfo;
-        let image:string[]=[...img];
-        let Nick:string[]=[...nick];
-        let Id:string[]=[...id];
-        let Ctid:string[]=[...ctid];
-        let SendIds:string[]=[...chsendId];
-        const My_Id:string= localStorage.getItem("id")!;
-        console.log("props :" , props.Userinfo);
-        list.map((data) => Object.entries(data).map((key, idx) =>{
-
-            if(key.at(0) == "Ctid"){
-                Ctid.push(key[1]);
-               setCtid(Ctid);
-              }
-              else if(key.at(0) == "Nickname"){
-                Nick.push(key[1]);
-                setNick(Nick);
-              }
-              else if(key.at(0) == "UserId"){
-                console.log("key :" ,key[1])
-               Id.push(key[1]);
-               setId(Id);
-               if(key[1] !==My_Id ){
-                SendIds.push(key[1]);
-                setChsendId(SendIds);
-               }
-
-              }
-
-              else if(key.at(0) == "Img"){
-                  if(key.at(1) == "N"){
-                      image.push("/image/baseimg.png");
+      setIsSocket(false);
+    if(props.isClick === true){
+      console.log("클릭")
+      setMsgInfo([]);
+      console.log("soket :" , test.current);
+      let access_token:string="";
+      const UserId:string= localStorage.getItem("id")!;
+      access_token =localStorage.getItem("a_id")!;
+      axios.defaults.headers.common['Authorization'] = access_token;
+      axios.post("http://localhost:8080/Pets-social/gateway/api-proxy", {
+       service: "chat",
+       endpoint: "/chatinfo",
+       method: "GET",
+       body: {Id:UserId, ChatId:props.Chat_id}
+     })
+      .then(response =>{
+             console.log("채팅 정보 가져오기 결과:" , response);
+             const ChatData:ChatInfos[] = response.data.data;
+             let date:string[] =[...standDate];
+             let message:MessageInfo[][]=[];
+             ChatData.map(Item => {
+               date.push(Item.date);
+               message.push(Item.messages);
+               setStandDate(date);
+               setMsgInfo(message);
+               UserInfoPasing();
+             })
+             setIsSocket(true);
+       }).catch((error) =>{
+       if(axios.isAxiosError<ResponseDataType>(error)){
+           console.log("error code: " , error.config);
+           const originalRequest = error.config;
+           if(error.response?.status==400){
+            navigate("/error/BadRequest");
+            return;
+           }
+           else if(error.response?.status==401){
+               console.log("승인되지 않은 로그인 : " , error);
+               Object.entries(error.response?.data).map(key =>{
+                if(key.at(0) == "errorcode"){
+                  if(key.at(1) == "00"){
+                    navigate("/error/auth/");
+                    return;
                   }
-                  else{
-                      image.push(key[1]);
-                  }   
-                  setImg(image);
-              }
-        }))
-        const isoDate =props.CreateDate;
-        const date = new Date(isoDate);
-        const formatted =
-            date.getFullYear() + '-' +
-            String(date.getMonth() + 1).padStart(2, '0') + '-' +
-            String(date.getDate()).padStart(2, '0') + ' ' +
-            String(date.getHours()).padStart(2, '0') + ':' +
-            String(date.getMinutes()).padStart(2, '0') + ':' +
-            String(date.getSeconds()).padStart(2, '0');
-         setCreate(formatted);
-         setSize(list.length);
+                  else if(key.at(1) == "01"){
+                    let refresh_token:string="";
+                      console.log("토큰 시간 만료 refresh token을 보낸다");
+                      refresh_token= cookies.get('refresh_token');
+                      const id= localStorage.getItem("id");
+                      axios.post("http://localhost:8080/Pets-social/token/refresh", {
+                        refresh_token : refresh_token,
+                        id : id})
+                        .then(
+                        response =>{
+                          console.log("응답 결과 :" , response)
+                          if(response.status == 200){
+                            localStorage.setItem("p_exp" ,response.data.data.exp);
+                            localStorage.setItem("a_id" ,response.data.data.access_token);
+                            if (originalRequest) {
+                              const newAccesstoken = localStorage.getItem("a_id")!;
+                              originalRequest.headers = new AxiosHeaders({
+                                ...originalRequest.headers,
+                                Authorization: newAccesstoken
+                              });
+                              if (typeof originalRequest.data === "string") {
+                                originalRequest.data = JSON.parse(originalRequest.data);
+                              }
+                              const retryResponse = axios.request(originalRequest);
+                              console.log("재요청 후 응답 처리 :" , retryResponse)
+                            }
+                          }
+                        }
+                      ).catch(error =>{
+                        if(axios.isAxiosError<ResponseDataType>(error)){
+                                    console.log("error code: " , error.response?.status);
+            
+                                    if(error.response?.status==400){
+                                      navigate("/error");
+                                      return;
+                                    }
+                                    else if(error.code == "ERR_NETWORK"){
+                                      console.log("네트워크 에러 ");
+                                      return;
+                                      
+                                    }
+                                    else if(error.response?.status == 401){
+                                        console.log("다시 로그인해야 된다.");
+                                        localStorage.clear();
+                                        setAgainlogin(true);
+ 
+        
+                                    }
+                                    else if(error.response?.status==301){
+                                        console.log("기존 아이디 존재");
+                                        setIsperist(true);
+                                        //setUserid(error.response?.data.resultdata);
+                                    }
+            
+                                    
+                                    console.log("error response: " , error.response?.data.response);
+                                  }
+                    })
+                      
+ 
+                  }
+                }
+              })
+           }
+           else if(error.response?.status==500){
+             console.log("서버 에러발생");
+             navigate("/error/se-error")
+           }
+           else if(error.response?.status==403){
+                console.log("인가 문제?");
+                navigate("/error/NoAccess");
+           }
+           else if(error.response?.status==502){
+            console.log("gateway 에러 발생");
+            navigate("/error/Gateway");
+            return;
+           }
+           
+           console.log("error response: " , error.response?.data);
+         }
+    })
+    }else{
+      setIsSocket(false);
+    }
 
-    },[props.Userinfo])
+    },[props.Chat_id])
 
-    useEffect(() =>{
-       if(id.length !==0) setIsSocket(true);
-    },[id])
 
+    async function UserInfoPasing(){
+      let list:Object[]=props.Userinfo;
+      let image:string[]=[];
+      let Nick:string[]=[];
+      let Ids:string[]=[];
+      let Ctid:string[]=[];
+      let SendIds:string[]=[];
+      const My_Id:string= localStorage.getItem("id")!;
+     
+      list.map((data) => Object.entries(data).map((key, idx) =>{
+
+          if(key.at(0) == "Ctid"){
+              Ctid.push(key[1]);
+             setCtid(Ctid);
+            }
+            else if(key.at(0) == "Nickname"){
+              Nick.push(key[1]);
+              setNick(Nick);
+            }
+            else if(key.at(0) == "UserId"){
+             Ids.push(key[1]);
+             setIds(Ids);
+             if(key[1] !==My_Id ){
+              SendIds.push(key[1]);
+              setChsendId(SendIds);
+             }
+
+            }
+
+            else if(key.at(0) == "Img"){
+                if(key.at(1) == "N"){
+                    image.push("/image/baseimg.png");
+                }
+                else{
+                    image.push(key[1]);
+                }   
+                setImg(image);
+            }
+      }))
+      const isoDate =props.CreateDate;
+      const date = new Date(isoDate);
+      const formatted =
+          date.getFullYear() + '-' +
+          String(date.getMonth() + 1).padStart(2, '0') + '-' +
+          String(date.getDate()).padStart(2, '0') + ' ' +
+          String(date.getHours()).padStart(2, '0') + ':' +
+          String(date.getMinutes()).padStart(2, '0') + ':' +
+          String(date.getSeconds()).padStart(2, '0');
+       setCreate(formatted);
+       setSize(list.length);
+    }
      return(<WebSocket_Chat_Provider>
      <div id={props.Chat_id}>
      <div>
@@ -123,8 +281,9 @@ const ShowChat =(props:info) =>{
       </div>
       <div className="ShowChat_Showcontents">
         {isSocket && (<>
-          <AddItems CreateDate={create} ChatId={props.Chat_id} totalId={id} Profile={props.MyProfile} 
-          isFirst={props.isFirst} ChSendId={id} MyNickname={props.MyNickname} count={size}/>
+          <AddItems CreateDate={create} ChatId={props.Chat_id} totalId={ids} Profile={props.MyProfile} 
+          isFirst={props.isFirst} ChSendId={chsendId} MyNickname={props.MyNickname} 
+          count={size} date ={standDate} messages={msgInfo}/>
         </>)}
       </div>
      </div>

@@ -18,7 +18,7 @@ const ShowChatWrapper =() =>{
     return(<>
       <ShowChat Userinfo={Chatinfo.chatData} RoomName={Chatinfo.chatTitle} CreateDate={Chatinfo.chatCtDate}
       Chat_id={Chatinfo.chatId} onConnect={true} MyProfile={Chatinfo.MyProfile} isFirst={Chatinfo.isfirst}
-      MyNickname={Chatinfo.MyNickname}/>
+      MyNickname={Chatinfo.MyNickname} isClick={Chatinfo.isClick}/>
     </>)
 
 }

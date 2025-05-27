@@ -68,11 +68,6 @@ const Callback_Naver =() =>{
                              navigate("/error");
                              return;
                            }
-                           else if(error.code == "ERR_NETWORK"){
-                             console.log("네트워크 에러 ");
-                             return;
-                             
-                           }
                            else if(error.response?.status == 401){
                                console.log("승인되지 않은 로그인");
                                Object.entries(error.response?.data).map(key =>{
@@ -94,7 +89,11 @@ const Callback_Naver =() =>{
                                           if(response.status == 200){
                                             localStorage.setItem("p_exp" ,response.data.data.exp);
                                             localStorage.setItem("a_id" ,response.data.data.access_token);
-                                            navigate("/main");
+                                            //todo: 엑세스 토큰과 만료 시간을 재설정하고 사용자의 아아디, 닉네임, 이미지를 가져오면 된다.
+                                            const accesstoken = localStorage.getItem("a_id")!;
+                                            axios.defaults.headers.common['Authorization'] = accesstoken;
+                                            //todo:나의 데이터를 가져올 api 호출출
+                                            
                                           }
                                         }
                                       ).catch(error =>{
@@ -135,7 +134,7 @@ const Callback_Naver =() =>{
 
                            }
                            else if(error.response?.status==301){
-                               console.log("카카오와 계정 연동");
+                               console.log("네이버와 계정 연동");
                                setIsperist(true);
                                setUserid(error.response?.data.resultdata);
                            }
@@ -188,19 +187,10 @@ const Callback_Naver =() =>{
                              navigate("/link");
                              return;
                            }
-                           else if(error.code=="ERR_BAD_REQUEST"){
-                             navigate("/error");
+                           else if(error.response?.status == 400){
+                             navigate("/error/BadRequest");
                              return ;
                            }
-                           else if(error.code == "ERR_NETWORK"){
-                             return;
-                             
-                           }
-                           else if(error.response?.status==401){
-                                  return;
-                           }
-                           
-                           //console.log("error response: " , error.response?.data);
                          }
            })
            
@@ -237,10 +227,10 @@ const Callback_Naver =() =>{
              if(axios.isAxiosError<ResponseDataType>(error)){
                  console.log("error code: " , error.code);
                  
-                 if(error.code=="ERR_BAD_REQUEST"){
+                 if(error.response?.status ==400){
                     setIsunvalid(true);
                     setIsvalid(false);
-     
+                    navigate("/error/BadRequest");
                    
                  }
                  if(error.code == "ERR_NETWORK"){
@@ -258,8 +248,8 @@ const Callback_Naver =() =>{
         if(axios.isAxiosError<ResponseDataType>(error)){
             console.log("error code: " , error.response?.status);
             
-            if(error.code=="ERR_BAD_REQUEST"){
-              navigate("/error");
+            if(error.response?.status ==400){
+              navigate("/error/BadRequest");
             }
             if(error.code == "ERR_NETWORK"){
               console.log("네트워크 에러 ");

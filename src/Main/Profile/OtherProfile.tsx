@@ -80,27 +80,7 @@ const OtherProfile =(props:Samll_profile) =>{
          setCheck({following:true});
         }
         console.log("check :" , check.follower);
-        /*
-        let image = [...img];
-        let video=[...vid];
 
-        for(let i=0; i<3; i++){
-            let url:string = content[i];
-            let last:number =url.lastIndexOf(".");
-            let expand:string =url.substring(last+1 , url.length);
-            if((expand=="jpg" || expand=="png")){
-                image.push(content[i]);
-                setImg(image);
-              }
-              
-              else if(expand=="mp4"){
-                video.push(content[i]);
-                setVid(video);
-    
-              }
-        }
-        setAa(true);
-*/
     },[props.checkfl , props.content , props.followers , props.following , props.id , props.nickname , props.profile]);
 
     //팔로워 신청 함수

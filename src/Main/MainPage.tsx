@@ -353,21 +353,131 @@ interface ResponseDataType {
                           if(axios.isAxiosError<ResponseDataType>(error)){
                                       console.log("error code: " , error.response?.status);
                                       
-                                      if(error.code=="ERR_BAD_REQUEST"){
-                                        navigate("/error");
+                                      if(error.response?.status == 400){
+                                        navigate("/error/BadRequest");
+                                        return;
                                       }
-                                      if(error.code == "ERR_NETWORK"){
-                                        console.log("네트워크 에러 ");
-                                        
-                                      }
-                                      if(error.response?.status==401){
+
+                                      else if(error.response?.status==401){
                                           console.log("승인되지 않은 로그인");
+                                          Object.entries(error.response?.data).map(key =>{
+                                            if(key.at(0) == "errorcode"){
+                                              if(key.at(1) == "00"){
+                                                navigate("/error/auth/");
+                                                return;
+                                              }
+                                              else if(key.at(1) == "01"){
+                                                  console.log("토큰 시간 만료 refresh token을 보낸다");
+                                                  const refresh_token= cookies.get('refresh_token');
+                                                  const id= localStorage.getItem("id");
+                                                  axios.post("http://localhost:8080/Pets-social/token/refresh", {
+                                                    refresh_token : refresh_token,
+                                                    id : id})
+                                                    .then(
+                                                    response =>{
+                                                      console.log("응답 결과 :" , response)
+                                                      if(response.status == 200){
+                                                        localStorage.setItem("p_exp" ,response.data.data.exp);
+                                                        localStorage.setItem("a_id" ,response.data.data.access_token);
+                                                        //todo: 엑세스 토큰과 만료 시간을 재설정하고 사용자의 아아디, 닉네임, 이미지를 가져오면 된다.
+                                                        const accesstoken = localStorage.getItem("a_id")!;
+                                                        axios.defaults.headers.common['Authorization'] = accesstoken;
+                                                        //todo:re
+                                                        axios.get("http://localhost:8080/Pets-social/refresh-main" , {params:{Id:id}})
+                                                        .then(response =>{
+                                                           console.log("응답 결과 확인 " , response.data);
+                                                           if(response.status == 200){
+                                                            setContent(response.data.resultdata.content_info);
+                                                            setNickName(response.data.resultdata.nickname);
+                                                            const progile:string=response.data.resultdata.profile_img;
+                                                            console.log("progile :", progile);
+                                                            if(progile =="null"){
+                                                              console.log("등록된 사진이 없습니다");
+                                                              setProfile("/image/baseimg.png");
+                                      
+                                                            }
+                                                            else{
+                                                              setProfile(response.data.resultdata.profile_img);
+                                                            }
+                                                            login_info.addprofile(response.data.resultdata.profile_img);
+                                                            login_info.addeNickName(response.data.resultdata.nickname);
+                                                            setId(response.data.resultdata.id);
+                                                            setContentitem(true);
+                                                           }
+                                                           else if(response.status == 201){
+                                                            setContent([]);
+                                                            setNickName(response.data.resultdata.nickname);
+                                                            const progile:string=response.data.resultdata.profile_img;
+                                                            console.log("progile :", progile);
+                                                            if(progile =="null"){
+                                                              console.log("등록된 사진이 없습니다");
+                                                              setProfile("/image/baseimg.png");
+                                      
+                                                            }
+                                                            else{
+                                                              setProfile(response.data.resultdata.profile_img);
+                                                            }
+                                                            login_info.addprofile(response.data.resultdata.profile_img);
+                                                            login_info.addeNickName(response.data.resultdata.nickname);
+                                                            setId(response.data.resultdata.id);
+                                                            setContentitem(true);
+                                                           }
+                                                           setIsready(true);
+                                                           navigate("/main");
+                                                  })
+                                                        
+                                                      }
+                                                    }
+                                                  ).catch(error =>{
+                                                    if(axios.isAxiosError<ResponseDataType>(error)){
+                                                                console.log("error code: " , error.response?.status);
+                                        
+                                                                if(error.response?.status==400){
+                                                                  navigate("/error/BadRequest");
+                                                                  return;
+                                                                }
+                                                                else if(error.response?.status == 401){
+                                                                    console.log("다시 로그인해야 된다.");
+                                                                    localStorage.clear();
+                                                                    setAgainlogin(true);
+            
+                                     
+                                                                }
+                                                                else if(error.response?.status==301){
+                                                                    console.log("기존 아이디 존재");
+                                                                    setIsperist(true);
+                                                                    setUserid(error.response?.data.resultdata);
+                                                                }
+                                                                else if(error.response?.status==403){
+                                                                  console.log("인가 문제?");
+                                                                  navigate("/error/NoAccess");
+                                                                }
+                                                                else if(error.response?.status==502){
+                                                                  console.log("gateway 에러 발생");
+                                                                  navigate("/error/Gateway");
+                                                                  return;
+                                                                }
+
+                                                              }
+                                                })
+                                                  
+            
+                                              }
+                                            }
+                                           })
                                       }
-                                      if(error.response?.status==500){
-                                        console.log("서버 에러발생");
+                                      else if(error.response?.status==500){
                                         navigate("/error/se-error")
                                       }
-                                      
+                                      else if(error.response?.status==403){
+                                           console.log("인가 문제?");
+                                           navigate("/error/NoAccess");
+                                      }
+                                      else if(error.response?.status==502){
+                                       console.log("gateway 에러 발생");
+                                       navigate("/error/Gateway");
+                                       return;
+                                      }
                                       console.log("error response: " , error.response?.data);
                                     }
                       })
@@ -377,17 +487,24 @@ interface ResponseDataType {
            if(axios.isAxiosError<ResponseDataType>(error)){
                console.log("error code: " , error.response?.status);
                
-               if(error.code=="ERR_BAD_REQUEST"){
-                 navigate("/error");
+               if(error.response?.status ==400){
+                navigate("/error/BadRequest");
+                return;
                }
-               if(error.code == "ERR_NETWORK"){
-                 console.log("네트워크 에러 ");
-                 
-               }
-               if(error.response?.status==500){
+
+               else if(error.response?.status==500){
                  console.log("서버 에러발생");
                  navigate("/error/se-error")
                }
+               else if(error.response?.status==403){
+                console.log("인가 문제?");
+                navigate("/error/NoAccess");
+              }
+              else if(error.response?.status==502){
+                console.log("gateway 에러 발생");
+                navigate("/error/Gateway");
+                return;
+              }
                
                console.log("error response: " , error.response?.data);
              }

@@ -3,32 +3,37 @@ import "./AllChat.scss";
 import AllChatItems from "./AllChatItems";
 
 interface props{
-    mychat : MyChat[][],
-    otherchat:OtherChat[][]
+    allChat : MessageInfo[][],
+    StandDate:string[],
+    CreateDate:string,
+    newDate:string,
 }
+type MessageInfo={
+    chatId:string;
+    message:string;
+    messageId:string;
+    nickname:string;
+    profile:string;
+    recount:number;
+    sendId:string;
+    timestamp:string;
+    type:string;
+    isSend:boolean;
+   }
 
-type MyChat ={
-  Mchat:string,
-  ReCount:number,
-  Time:string
-}
-type OtherChat={
-    Profile:string,
-    UserId:string,
-    Nickname:string,
-    ReCount:number,
-    Chat:string
-}
 
-const AllChat =({mychat}:props) =>{
+const AllChat =({allChat ,StandDate ,CreateDate ,newDate}:props) =>{
+
 
     useEffect(() =>{
-      console.log("2중배열의 채팅 정보 : " , mychat);
-    },[mychat])
+      console.log("2중배열의 채팅 정보 : " , newDate);
+    },[allChat])    
 
     return(<>
-    {mychat.map((values, idx) =>(<>
-    <AllChatItems mychat={values}/>
+    <p id="AllCaht_Stand_date">{CreateDate}</p>
+    <p id="CreateChat_Message">채팅방이 생성 되었습니다.</p>
+    {allChat.map((values, idx) =>(<>
+    <AllChatItems ChatInfoList={values} StandDate={StandDate[idx]} CreateDate={CreateDate} newDate={newDate}/>
     </>))}
     </>)
 

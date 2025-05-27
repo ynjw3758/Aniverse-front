@@ -5,7 +5,7 @@ export interface Socket_Info {
     isError:boolean,
     isSuccess:boolean,
     sendMessage: (chatId: string, message: string, userId: string , nickname:string,
-        Profile:string, isFirst:boolean ,UserId:string[], ReCount:number) => void;
+        Profile:string, isFirst:boolean ,UserId:string[], ReCount:number, messageId:string) => void;
     Partici_Chatid : (chatId: string, UserId:string[]) => void
 }
 

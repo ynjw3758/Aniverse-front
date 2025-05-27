@@ -53,15 +53,19 @@ useEffect(() =>{
     Object.entries(images).map((key) =>{
       if(img_cnt <4){
         img_cnt++
-        title_img.push(key[1]);
-        setImg(title_img);
+        if(key[1] !== "N"){
+          title_img.push(key[1]);
+          setImg(title_img);
+        }
+        else{
+          title_img.push("/image/baseimg.png");
+          setImg(title_img);
+        }
       }
-        console.log("카운트 :" , img_cnt);
     })
 
 },[props.Image]);
 useEffect(() =>{
-  console.log("이미지 갯수 :"  , props.Image)
     if(img.length ==1){
         setIsSingle(true);
         setIsTwo(false);

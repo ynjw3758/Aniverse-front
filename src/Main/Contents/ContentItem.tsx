@@ -568,13 +568,23 @@ const textareaRef = useRef<HTMLTextAreaElement>(null);
               if(axios.isAxiosError<ResponseDataType>(error)){
                   console.log("error code: " , error.response?.status);
                   
-                  if(error.code=="ERR_BAD_REQUEST"){
-                    navigate("/error");
+                  if(error.response?.status ==400){
+                    navigate("/error/BadRequest");
+                    return;
                   }
     
                   else if(error.response?.status==500){
                     console.log("서버 에러발생");
                     navigate("/error/se-error")
+                  }
+                  else if(error.response?.status==403){
+                    console.log("인가 문제?");
+                    navigate("/error/NoAccess");
+                  }
+                  else if(error.response?.status==502){
+                    console.log("gateway 에러 발생");
+                    navigate("/error/Gateway");
+                    return;
                   }
                   
                   console.log("error response: " , error.response?.data);
@@ -585,8 +595,9 @@ const textareaRef = useRef<HTMLTextAreaElement>(null);
         if(axios.isAxiosError<ResponseDataType>(error)){
             console.log("error code: " , error.response?.status);
             
-            if(error.code=="ERR_BAD_REQUEST"){
-              navigate("/error");
+            if(error.response?.status ==400){
+              navigate("/error/BadRequest");
+              return;
             }
             else if(error.response?.status==401){
               console.log("승인되지 않은 로그인");
@@ -619,7 +630,7 @@ const textareaRef = useRef<HTMLTextAreaElement>(null);
                                   console.log("error code: " , error.response?.status);
           
                                   if(error.response?.status==400){
-                                    navigate("/error");
+                                    navigate("/error/BadRequest");
                                     return;
                                   }
                                   else if(error.code == "ERR_NETWORK"){

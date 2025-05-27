@@ -1,0 +1,29 @@
+.BadRequest_Stand{
+    display: flex;
+    flex-direction: column;
+    margin-top: -14vh;
+    justify-content: center;
+    align-items: center;
+}
+.BadRequest_Stand h2{
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: -10vh;
+}
+
+.BadRequest_Stand_btn{
+    display: flex;
+    flex-direction: row;
+    gap:20px;
+    margin-left: 1vw;
+
+}
+.BadRequest_Stand_btn button,
+.BadRequest_Stand_btn button:hover{
+    background-color:lightskyblue;
+    color:white;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    cursor: pointer; 
+}

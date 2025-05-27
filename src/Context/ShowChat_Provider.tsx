@@ -14,6 +14,8 @@ type infos={
     isfirst:boolean;
     MyNickname:string;
     MyProfile:string;
+    FocuseId:string;
+    isClick:boolean
 }
 
 const ShowChat_Provider =({children} : Props) =>{
@@ -27,22 +29,18 @@ const[chatinfo, setChatinfo]=useState<infos>({
     isfirst:false,
     MyNickname:"",
     MyProfile:"",
+    FocuseId:"",
+    isClick:false
 })
 
 const insert_data =(chatId:string,chatTitle:string, chatData:object[], chatProfiles:string[], chatCtDate:string, isfirst:boolean, 
-                    MyNickname:string, MyProfile:string
+                    MyNickname:string, MyProfile:string,FocuseId:string, isClick:boolean
 ) =>{
 
     setChatinfo({chatId:chatId, chatTitle:chatTitle, chatData:chatData, 
         chatProfiles :chatProfiles, chatCtDate:chatCtDate ,isfirst:isfirst, 
-        MyNickname:MyNickname ,MyProfile:MyProfile})
+        MyNickname:MyNickname ,MyProfile:MyProfile, FocuseId:FocuseId , isClick:isClick})
 }
-
-
-
-
-
-
 const Chat_infos ={
     chatId:chatinfo.chatId,
     chatTitle:chatinfo.chatTitle,
@@ -52,6 +50,7 @@ const Chat_infos ={
     isfirst:chatinfo.isfirst,
     MyNickname:chatinfo.MyNickname,
     MyProfile:chatinfo.MyProfile,
+    isClick:chatinfo.isClick,
     insert_values:insert_data
 }
     return(<ShowChatContext.Provider value={Chat_infos}>

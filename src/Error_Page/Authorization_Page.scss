@@ -1,0 +1,32 @@
+.Authorization{
+    display: flex;
+    flex-direction: column;
+}
+
+.Authorization h4{
+    font-size: 30px;
+    font-weight: bolder;
+    margin-bottom: 1vh;
+    margin-top: -10vh;
+}
+.Authorization h2{
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 3vw;
+}
+.Authorization_btn{
+    display: flex;
+    flex-direction: row;
+    gap:20px;
+    margin-left: 1vw;
+
+}
+.Authorization_btn button,
+.Authorization_btn button:hover{
+    background-color:lightskyblue;
+    color:white;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    cursor: pointer; 
+}

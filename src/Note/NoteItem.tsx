@@ -164,7 +164,7 @@ useEffect(() =>{
                         const id:string =param.userid! ;
                         const NoteId:string = Divref.current?.id!;
                         console.log("note :" , NoteId);
-                        axios.post("http://localhost:8082/Pets-social/readNote" , {Id:id , Noteid:NoteId , Type:props.message})
+                        axios.post("http://localhost:8082/Pets-social/Note/readNote" , {Id:id , Noteid:NoteId , Type:props.message})
                         .then((response) =>{
                          console.log("결과 :" , response);
     

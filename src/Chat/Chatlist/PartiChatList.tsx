@@ -28,6 +28,8 @@ type image ={
     IsDuple:boolean,
     total:number,
     idx:number,
+    lastmsg:string,
+    lasttime:string
     showdata : (data:Object) => void,
     onshowlist : () => void
    }
@@ -42,27 +44,26 @@ const PartiChatList =(props:image) =>{
 //#region type
 const[img, setImg]=useState<string[]>([]);
 const[name, setName]=useState<string>("");
+const[isfocus, setIsfocus]=useState<boolean>(false);
 //#endregion
 
 //              +-----------------
 //--------------+ 전역 변수
 //              +-----------------
 //#region type
-let focus_div = useRef<boolean>(false);
-let Focus_div = focus_div.current? "PartiChatList_Main_Focus" :"PartiChatList_Main";
+const Focus_div = isfocus? "PartiChatList_Main_Focus" :"PartiChatList_Main";
 //#endregion
 
 useEffect(() =>{
-    //setIsFocus(false);
+
     let test :string[]=[...img];
     const images:object=props.Images;
     if(props.Id ===props.FocusId) {
+        setIsfocus(true);
+    }else{
+        setIsfocus(false);
+      }
 
-        focus_div.current= true;
-    }
-    else{
-        focus_div.current= false;
-    }
     Object.entries(images).map((key) =>{
         test.push(key[1]);
         setImg(test);
@@ -77,10 +78,10 @@ useEffect(() =>{
 
 useEffect(() =>{
       if(props.IsDuple === true){
-        focus_div.current= true;
+        setIsfocus(true);
       }
       else{
-        focus_div.current= false;
+        setIsfocus(false);
       }
 },[props.IsDuple])
 
@@ -103,7 +104,7 @@ const showchat= () =>{
              <h4>{props.Count+1}</h4>
           </div>
           <div className="PartiChatList_story" id={props.create_date}>
-            <p>안녕하세요</p>
+            <p>{props.lastmsg}</p>
           </div>
         </div>
     </div>)

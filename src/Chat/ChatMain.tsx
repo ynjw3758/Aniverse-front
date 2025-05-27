@@ -56,7 +56,33 @@ type My_IFOS={
   RoomName:string,
   chat_Id:string,
   userCount:number,
+  lasttime:string,
+  Message:string,
   Members:Userfos[]
+ }
+
+ type RoomInfo ={
+  CreateDate:string,
+  Members:Userfos[],
+  Name:string,
+  RoomId:string,
+ 
+ }
+
+ type ChatInfos ={
+  date:string,
+  message:MessageInfo[]
+ }
+
+ type MessageInfo={
+  chatId:string,
+  message:string,
+  messageId:string,
+  nickname:string,
+  profile:string,
+  sendId:string,
+  timestamp:string,
+  type:string
  }
 
 
@@ -65,6 +91,7 @@ type My_IFOS={
   Nickname:string,
   UserId:string
  }
+
  //#endregion
 const ChatMain =() =>{
 
@@ -85,6 +112,8 @@ const ChatMain =() =>{
     Nickname:"",
     UserId:""
    })
+  const[roomInfos, setRoomInfos]=useState<RoomInfo>();
+  const[chatinfos, setChatinfos]=useState<ChatInfos[]>([]);
 
 //#endregion
 
@@ -93,7 +122,8 @@ const ChatMain =() =>{
 //              +-----------------
 //#region type
 const navigate = useNavigate();
-const param=useParams();
+const endPoint=useRef<string>("");
+const Body=useRef<object>({});
 const chattitle=useRef("");
 const chatid=useRef("");
 const focusid=useRef("");
@@ -120,79 +150,60 @@ const cookies = new Cookies();
 
 
     useEffect(() =>{
+      setIschat({...ischat ,islist:false ,showchat:false})
+      const UserId:string= localStorage.getItem("id")!;
+      if(isFromAlarm === undefined){
+        endPoint.current="/reload";
+        Body.current={Id:UserId};
+      }
+      else{
+        endPoint.current="/getFocusList";
+        Body.current={Id:UserId ,ChatId:focusId};
+      }
         let access_token:string="";
         access_token =localStorage.getItem("a_id")!;
         console.log("access : " , access_token);
         axios.defaults.headers.common['Authorization'] = access_token;
-        axios.get("http://localhost:8080/Pets-social/acccheck")
+        axios.post("http://localhost:8080/Pets-social/gateway/api-proxy",{
+          service: "chat",
+          endpoint: endPoint.current,
+          method: "GET",
+          body:  Body.current})
         .then(response =>{
           if(response.status == 200){
-            console.log("토큰 인증 성공");
-            if(isFromAlarm === undefined){
-              const id:string =localStorage.getItem("id")! ;
-              axios.get("http://localhost:8089/Pets-social/Chat/reload" , {params:{Id:id}})
-              .then((response) =>{
-                console.log("새로고침 데이터 가져오기기 : " , response.data.data);
+            console.log("토큰 인증 성공 : " ,response);
+            if(response.status ==200){
+              const sucode:string = response.data.succode;
+              if(sucode ==="00"){
+                console.log("데이터가 없다")
                 setMyinfos(response.data.data.Myinfo);
-                setCtList_Info(response.data.data.ChatList);
-                setIschat({...ischat ,islist:true ,showchat:false})
+                setCtList_Info([]);
                 myinfo.addeNickName(response.data.data.Myinfo.Nickname);
                 myinfo.addprofile(response.data.data.Myinfo.Img)
-     
-              }).catch((error) =>{
-             if(axios.isAxiosError<ResponseDataType>(error)){
-                 console.log("error code: " , error.response?.status);
-                 
-                 if(error.code=="ERR_BAD_REQUEST"){
-                   navigate("/error");
-                 }
-                 if(error.code == "ERR_NETWORK"){
-                   console.log("네트워크 에러 ");
-                   
-                 }
-                 if(error.response?.status==500){
-                   console.log("서버 에러발생");
-                   navigate("/error/se-error")
-                 }
-                 
-                 console.log("error response: " , error.response?.data);
-               }
-          })
-            }else{
-              const id:string =localStorage.getItem("id")!;
-              axios.get("http://localhost:8089/Pets-social/Chat/getFocusList" , {params:{Id:id, ChatId:focusId}})
-              .then((response) =>{
-               console.log("채팅 리스트 조회 결과 : " ,response);
-               setCtList_Info(response.data.data.ChatList);
-               setIschat({...ischat ,islist:true ,showchat:true})
-               setMyinfos(response.data.data.Myinfo);
-               myinfo.addeNickName(response.data.data.Myinfo.Nickname);
-               myinfo.addprofile(response.data.data.Myinfo.Img);
-
-               Chatinfo.insert_values(focusId,response.data.data.RoomInfo.Name, response.data.data.RoomInfo.Member.Members,[],
-                response.data.data.RoomInfo.Member.CreateDate,isFirst.current , myinfo.UserNickName , myinfo.Profile);
-              setIschat({AddChat:false , showchat:true, islist:true});
-              }).catch((error) =>{
-             if(axios.isAxiosError<ResponseDataType>(error)){
-                 console.log("error code: " , error.response?.status);
-                 
-                 if(error.code=="ERR_BAD_REQUEST"){
-                   navigate("/error");
-                 }
-                 if(error.code == "ERR_NETWORK"){
-                   console.log("네트워크 에러 ");
-                   
-                 }
-                 if(error.response?.status==500){
-                   console.log("서버 에러발생");
-                   navigate("/error/se-error")
-                 }
-                 
-                 console.log("error response: " , error.response?.data);
-               }
-          })
+              }
+              else{
+                if(response.data.data.ChatInfos =="null" && response.data.data.RoomInfo == "null"){
+                  setMyinfos(response.data.data.Myinfo);
+                  setCtList_Info(response.data.data.ChatList);
+                  myinfo.addeNickName(response.data.data.Myinfo.Nickname);
+                  myinfo.addprofile(response.data.data.Myinfo.Img);
+                  setIschat({...ischat ,islist:true})
+                }
+                else{
+                  console.log("이 부분이 문제 :" ,response.data )
+                  focusid.current=response.data.data.RoomInfo.RoomId;
+                  setMyinfos(response.data.data.Myinfo);
+                  setCtList_Info(response.data.data.ChatList);
+                  myinfo.addeNickName(response.data.data.Myinfo.Nickname);
+                  myinfo.addprofile(response.data.data.Myinfo.Img);
+                  Chatinfo.insert_values(response.data.data.RoomInfo.RoomId,response.data.data.RoomInfo.Name, 
+                    response.data.data.RoomInfo.Member.Members,[],
+                    response.data.data.RoomInfo.CreateDate,false , 
+                    myinfo.UserNickName , myinfo.Profile,response.data.data.RoomInfo.RoomId, false );
+                    setIschat({...ischat ,islist:true, showchat:true});
+                }
+              }
             }
-
    
           }
         }).catch((error) =>{
@@ -200,7 +211,8 @@ const cookies = new Cookies();
                console.log("error code: " , error.response?.status);
                
                if(error.response?.status==400){
-                 navigate("/error");
+                navigate("/error/BadRequest");
+                return;
                }
                else if(error.response?.status==401){
                    console.log("승인되지 않은 로그인");
@@ -232,14 +244,10 @@ const cookies = new Cookies();
                                         console.log("error code: " , error.response?.status);
                 
                                         if(error.response?.status==400){
-                                          navigate("/error");
+                                          navigate("/error/BadRequest");
                                           return;
                                         }
-                                        else if(error.code == "ERR_NETWORK"){
-                                          console.log("네트워크 에러 ");
-                                          return;
-                                          
-                                        }
+
                                         else if(error.response?.status == 401){
                                             console.log("다시 로그인해야 된다.");
                                             localStorage.clear();
@@ -269,6 +277,12 @@ const cookies = new Cookies();
                }
                else if(error.response?.status==403){
                     console.log("인가 문제?");
+                    navigate("/error/NoAccess");
+               }
+               else if(error.response?.status==502){
+                console.log("gateway 에러 발생");
+                navigate("/error/Gateway");
+                return;
                }
                
                console.log("error response: " , error.response?.data);
@@ -283,10 +297,10 @@ const cookies = new Cookies();
 
     const chatList =(data:Userfos[] , img:string[] ,name:string , roomid:string, date:string) =>{
     console.log("보여줄 데이터 :" , data);
-      const myinfo_add:Userfos[]=[...data];
+      const MemberInfo_add:Userfos[]=[...data];
       const Id = localStorage.getItem("id")!;
 
-      myinfo_add.push({Img:myinfo.Profile,Nickname:myinfo.UserNickName, UserId:Id });
+      MemberInfo_add.push({Img:myinfo.Profile,Nickname:myinfo.UserNickName, UserId:Id });
       setIschat({AddChat:false , showchat:false, islist:false});
       let ChatList_add:ChatList_infos[]=[...ctList_Info];
       ChatList_add.push({
@@ -294,13 +308,15 @@ const cookies = new Cookies();
         RoomName: name,
         chat_Id: roomid,
         userCount: data.length,
-        Members: myinfo_add
+        Members: MemberInfo_add,
+        lasttime: "",
+        Message: ""
       });
       setCtList_Info(ChatList_add);
       isFirst.current= true;
       focusid.current = roomid;
-      Chatinfo.insert_values(roomid,name, myinfo_add,img,
-        date,isFirst.current , myinfo.UserNickName , myinfo.Profile);
+      Chatinfo.insert_values(roomid,name, MemberInfo_add,img,
+        date,isFirst.current , myinfo.UserNickName , myinfo.Profile ,roomid, false);
       setIschat({AddChat:false , showchat:true, islist:true});
       navigate(`/main/chat/${roomid}`);
 
@@ -342,12 +358,9 @@ const cookies = new Cookies();
       }
      })
        console.log("chatid :" ,focusid.current)
-      setIschat({...ischat ,showchat:true });
-      setIssocket(true);
       Chatinfo.insert_values(chatid.current,chattitle.current, chatdata.current,imgdata.current,
-        chatDate.current,isFirst.current , myinfo.UserNickName , myinfo.Profile);
+        chatDate.current,false , myinfo.UserNickName , myinfo.Profile ,focusid.current, true);
        setIschat({AddChat:false , showchat:true, islist:true});
- 
        navigate(`/main/chat/${chatid.current}`);
     }
 
@@ -369,7 +382,7 @@ const cookies = new Cookies();
       DpchatDate.current=Chat_info.ChatCtDate
       setIsDuple(true);
       Chatinfo.insert_values(Dpchatid.current,Dpchattitle.current, Dpchat.current,Dpimgdata.current,
-        DpchatDate.current,isFirst.current , Myinfos.Mnick, Myinfos.Mprofile);
+        DpchatDate.current,isFirst.current , Myinfos.Mnick, Myinfos.Mprofile,Dpchatid.current, false);
       setIschat({AddChat:false , showchat:true, islist:true});
       navigate(`/main/chat/${chatid.current}`);
      

@@ -91,34 +91,9 @@ const noteref=useRef<HTMLDivElement>(null);
         if(response.status == 200){
           console.log("토큰 인증 성공");
           const id:string =param.userid! ;
-          axios.get("http://localhost:8082/Pets-social/getNote" , {params:{Id:id , Type:"receive"}})
+          axios.get("http://localhost:8082/Pets-social/Note/getNote" , {params:{Id:id , Type:"receive"}})
           .then((response) =>{
            console.log("결과 :" , response);
-           /*
-           if(response.status ==200 && response.data.Read !=="null" &&  response.data.NotRead !=="null"){
-            console.log("둘다 존재");
-           setGetnoteinfo({Nrsize:response.data.NotRead.length ,Rsize:response.data.Read.length , 
-             Nrlist:response.data.NotRead , Rlist:response.data.Read});
-             setIsreceive(true);
-             //return;
-          }
-          else if(response.status ==200 && response.data.Read =="null" &&  response.data.NotRead !=="null"){
-
-           setGetnoteinfo({...getnoteinfo, Nrsize:response.data.NotRead.length , Nrlist:response.data.NotRead});
-           setIsreceive(true);
-           return;
-          }
-          else if(response.status ==200 && response.data.Read !=="null" &&  response.data.NotRead =="null"){
-
-           setGetnoteinfo({...getnoteinfo ,Rsize:response.data.Read.length ,  Rlist:response.data.Read});
-           setIsreceive(true);
-           return;
-          }
-          else if(response.status ==200 && response.data.Read =="null" &&  response.data.NotRead =="null"){
-             console.log("데이터가 존재하지 않는다");
-             return;
-          }
-             */
 
            if(response.status == 200 && response.data.resultdata !== "null"){
              console.log("성공");
@@ -467,7 +442,7 @@ const noteref=useRef<HTMLDivElement>(null);
         if(response.status == 200){
           console.log("토큰 인증 성공");
           const id:string =param.userid! ;
-          axios.get("http://localhost:8082/Pets-social/getSaveNote" , {params:{Id:id , Type:"receive"}})
+          axios.get("http://localhost:8082/Pets-social/Note/getSaveNote" , {params:{Id:id , Type:"receive"}})
           .then((response) =>{
            console.log("결과 :" , response);
 
@@ -543,7 +518,7 @@ const noteref=useRef<HTMLDivElement>(null);
         if(response.status == 200){
           console.log("토큰 인증 성공");
           const id:string =param.userid! ;
-          axios.get("http://localhost:8082/Pets-social/getSaveNote" , {params:{Id:id , Type:"send"}})
+          axios.get("http://localhost:8082/Pets-social/Note/getSaveNote" , {params:{Id:id , Type:"send"}})
           .then((response) =>{
            console.log("결과 :" , response);
 
@@ -620,7 +595,7 @@ const noteref=useRef<HTMLDivElement>(null);
     if(response.status == 200){
       console.log("토큰 인증 성공");
       const id:string =param.userid! ;
-      axios.post("http://localhost:8082/Pets-social/saveNote" , {Id:id , Noteid:noteId , Type:message})
+      axios.post("http://localhost:8082/Pets-social/Note/saveNote" , {Id:id , Noteid:noteId , Type:message})
       .then((response) =>{
        if(response.status == 200 && response.data.resultdata !=="null"){
 
@@ -771,7 +746,7 @@ const NoteBlock =() =>{
     if(response.status == 200){
       console.log("토큰 인증 성공");
       const id:string =param.userid! ;
-      axios.get("http://localhost:8082/Pets-social/BlockList" , {params:{Id:id}})
+      axios.get("http://localhost:8082/Pets-social/Note/BlockList" , {params:{Id:id}})
       .then((response) =>{
 
        console.log("차단 리스트 :" , response);

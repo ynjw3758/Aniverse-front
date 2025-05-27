@@ -1,5 +1,14 @@
 .ChatList_Loading{
     position:absolute;
-    top:3vh;
-    left: 3vw;
+    top:30vh;
+    left: 10vw;
+}
+.ChatList_Nochat{
+    position: absolute;
+    top:30vh;
+    left: 5vw;
+}
+.ChatList_Nochat p{
+    font-size: medium;
+    font-weight: bolder;
 }

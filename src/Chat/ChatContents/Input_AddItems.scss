@@ -7,22 +7,15 @@
     position: relative; 
     bottom: 0; 
     display: flex;
-    width: 71vw;
+    width: 71.2vw;
     background-color: #f2f2f2;
     padding: 8px;
-    top:79.7vh;
-    margin-left: -8.1vw;      
+    top:80.3vh;
+    margin-left: -7.1vw;      
     align-items: flex-end;
     overflow: hidden;
 }
-.AddChatItems_date{
-    font-weight:bolder;
-    text-align: center;
-    margin-top: -2vh;
-    margin-left: 20vw;
-    width: max-content;
-    height: max-content;
-}
+
 .AddChatItems_inputchat textarea,
 .AddChatItems_inputchat textarea:focus{
     
@@ -63,7 +56,7 @@
     display: flex;
     flex-direction: row;
     position:absolute;
-    top:4vh;
+    top:3vh;
     left: 64vw;
     gap: 2px;
 }
@@ -123,14 +116,15 @@
 }
 .AllChat_Stand{
     position: absolute;
-    top:9vh;
+    top:8vh;
     left: -7vw;
-    width: 70vw;
+    width: 72vw;
     height: 80vh;
     max-height: 80vh;
-    background-color: #007AFF;
     display: flex;
     flex-direction: column;
+    max-height:80vh;
+    overflow-y:scroll;
 }
 }
 @media  (max-width: 1550px) {
@@ -145,19 +139,12 @@
         width: 70vw;
         background-color: #f2f2f2;
         padding: 8px;
-        top:76vh;
+        top:80.5vh;
         margin-left: -6.1vw;      
         align-items: flex-end;
         overflow: hidden;
     }
-    .AddChatItems_date{
-        font-weight:bolder;
-        text-align: center;
-        margin-top: -3vh;
-        margin-left: 20vw;
-        width: max-content;
-        height: max-content;
-    }
+
     .AddChatItems_inputchat text{
         padding-left: 1vw;
         border-radius: 20px;
@@ -243,14 +230,18 @@
         cursor: pointer;
     }
     .AllChat_Stand{
+        
         position: absolute;
-        top:9vh;
+        top:8vh;
         left: -7vw;
-        width: 70vw;
+        width: 72vw;
         height: 80vh;
         max-height: 80vh;
-        //background-color: #007AFF;
         display: flex;
         flex-direction: column;
+        max-height:80vh;
+        overflow-y:auto;
+        overflow-x: hidden;
+        
     }
 }

@@ -5,6 +5,7 @@ import Id from "../Context/Userdata";
 import { useContext } from "react";
 import axios from "axios";
 import Change_pw_success from "../Message/Change_pw_success";
+import { useNavigate } from "react-router-dom";
 
 interface ResponseDataType {
     message: string;
@@ -20,6 +21,7 @@ const Resetpassword =() =>{
     console.log("aaaaa: " ,User_id.UserId );
     const passwordRegExp =
     /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
+    const navigate = useNavigate();
 
     const {
         value: EnterNewpw,
@@ -28,8 +30,7 @@ const Resetpassword =() =>{
         valueChangeHandler: NewChangeHandler,
         inputBlurHandler: NewBlurHandler,
     } = UseInput((value:string) => value.trim().length >=11 && value.match(passwordRegExp) != null);
-     console.log("error 체크  : " , EnterNewpwHassError , enterNewpwIsValid);
-     console.log("input value : " , EnterNewpw);
+
     const {
         value: EnterAgainpw,
         hassError: EnterAgaintpwHassError,
@@ -66,15 +67,23 @@ const Resetpassword =() =>{
       }).catch(error =>{
         if(axios.isAxiosError<ResponseDataType>(error)){
             console.log("error code: " , error.code);
-            
-            if(error.code=="ERR_BAD_REQUEST"){
-              console.log("요청 파라미터 에러")
-            }
-            if(error.code == "ERR_NETWORK"){
-              console.log("네트워크 에러 ");
-              
-            }
-            console.log("error response: " , error.response?.data);
+            if(error.response?.status == 400){
+                navigate("/error/BadRequest");
+                return;
+              }
+              else if(error.response?.status==500){
+                console.log("서버 에러발생");
+                navigate("/error/se-error")
+              }
+              else if(error.response?.status==403){
+                   console.log("인가 문제?");
+                   navigate("/error/NoAccess");
+              }
+              else if(error.response?.status==502){
+               console.log("gateway 에러 발생");
+               navigate("/error/Gateway");
+               return;
+              }
         }
     }
     )

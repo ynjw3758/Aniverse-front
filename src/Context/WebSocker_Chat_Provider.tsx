@@ -17,13 +17,18 @@ const WebSocket_Chat_Provider =({children}:Props) =>{
   const socketRef = useRef<WebSocket | null>(null);
   const ChatId = useRef<string>("");
   const UserIds = useRef<string[]>([]);
+
+
+  useEffect(() =>{
+   console.log("채팅 페이지 입장");
+
+  },[]);
     const sendMessage = (chatId: string, message: string, sendId: string, nickname:string, 
-      Profile:string, isFirst:boolean ,UserId:string[], ReCount:number) => {
+      Profile:string, isFirst:boolean ,UserId:string[], ReCount:number ,messageId:string) => {
        if (!stompClientRef.current || !stompClientRef.current.connected) {
         console.warn("STOMP 연결이 되어 있지 않습니다.");
         return;
       }
-     console.log("야 이름 :" , UserId)
       const payload = {
         chatId,
         sendId,
@@ -33,7 +38,9 @@ const WebSocket_Chat_Provider =({children}:Props) =>{
         first:isFirst,
         inviteIds:UserId,
         nickname:nickname,
-        recount:ReCount
+        recount:ReCount,
+        messageId,
+
       };
     
       stompClientRef.current.publish({
@@ -61,8 +68,8 @@ const WebSocket_Chat_Provider =({children}:Props) =>{
                 userId:JSON.stringify(UserIds.current), 
                 type:"Chat"// ✅ 헤더로 userId 넘김
               });
-              
-              client.subscribe(`/user/${userid}/queue/errors`, (message) => {
+              console.log("userid :" , userid);
+              client.subscribe(`/user/queue/errors`, (message) => {
                 const error = JSON.parse(message.body);  // 항상 parse 필요
                  console.log("에러 발생 :" , error);
                  setIsError(true);
@@ -71,7 +78,8 @@ const WebSocket_Chat_Provider =({children}:Props) =>{
                 }, 100); // 3초 뒤 자동 초기화
               });
 
-              client.subscribe(`/user/${userid}/queue/success`, (message) => {
+              client.subscribe(`/user/queue/success`, (message) => {
+                console.log("message :" , message);
                 const success = JSON.parse(message.body);  // 역시 parse 필요
                 console.log("✅ 메시지 전송 성공:", success);
                 setIsSuccess(true);

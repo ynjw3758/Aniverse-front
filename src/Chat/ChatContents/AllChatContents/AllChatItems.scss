@@ -6,6 +6,34 @@
         height: max-content;
         margin-left: 65vw;
     }
+    .AllChatDiv_OtherStand{
+        display: flex;
+        flex-direction: row;
+        width: max-content;
+        height: max-content;
+        margin-left: 2vw;
+    }
+    .StandDate_AllChat{
+        margin-top: -5vh;
+    }
+
+    .StandDate_AllChat button{
+        display: inline-block;
+        background: linear-gradient(135deg, #e0e0e0, #f8f8f8);
+        color: #333;
+        font-weight: 600;
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 13px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin: 20px auto;
+        text-align: center;
+        width: fit-content;
+        border: none;         
+        outline: none;    
+        margin-left: 32vw;
+        margin-top: 7vh;    
+    }
 }
 
 @media (max-width: 1540px) {
@@ -15,5 +43,33 @@
         width: max-content;
         height: max-content;
         margin-left: 65vw;
+    }
+    .AllChatDiv_OtherStand{
+        display: flex;
+        flex-direction: row;
+        width: max-content;
+        height: max-content;
+        margin-left: 2vw;
+    }
+    .StandDate_AllChat{
+        margin-top: -5vh;
+    }
+
+    .StandDate_AllChat button{
+        display: inline-block;
+        background: linear-gradient(135deg, #e0e0e0, #f8f8f8);
+        color: #333;
+        font-weight: 600;
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 13px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin: 20px auto;
+        text-align: center;
+        width: fit-content;
+        border: none;         
+        outline: none;    
+        margin-left: 32vw;
+        margin-top: 7vh;   
     }
 }

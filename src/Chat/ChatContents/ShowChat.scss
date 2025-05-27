@@ -19,6 +19,10 @@
 
 
 @media (max-width: 1550px) {
+    .ShowChat_Showcontents{
+        display: flex;
+        flex-direction: column-reverse;
+    }
     .ShowChat_CharHeader{
         display: flex;
         flex-direction: row;

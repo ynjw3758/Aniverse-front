@@ -38,21 +38,23 @@ const link =() =>{
         }).catch(error =>{
             if(axios.isAxiosError<ResponseDataTypetest>(error)){
                 console.log("error code: " , error.response?.data.resultcode);
-
-                if(error.code=="ERR_BAD_REQUEST"){
-                  navigate("/error");
+                if(error.response?.status == 400){
+                  navigate("/error/BadRequest");
+                  return;
                 }
-                if(error.code == "ERR_NETWORK"){
-                  console.log("네트워크 에러 ");
-                  
+                else if(error.response?.status==500){
+                  console.log("서버 에러발생");
+                  navigate("/error/se-error")
                 }
-                if(error.response?.status==401){
-                    console.log("승인되지 않은 로그인");
-                    navigate("/error/auth/");
+                else if(error.response?.status==403){
+                     console.log("인가 문제?");
+                     navigate("/error/NoAccess");
                 }
-
-                
-                console.log("error response: " , error.response);
+                else if(error.response?.status==502){
+                 console.log("gateway 에러 발생");
+                 navigate("/error/Gateway");
+                 return;
+                }
               }
         })
 

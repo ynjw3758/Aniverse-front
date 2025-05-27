@@ -152,7 +152,7 @@ useEffect(() =>{
                      console.log("토큰 인증 성공");
                      const id:string =param.userid! ;
 
-                     axios.post("http://localhost:8082/Pets-social/DeleteNote" , {params :{Id:id , type:"all" , 
+                     axios.post("http://localhost:8082/Pets-social/Note/DeleteNote" , {params :{Id:id , type:"all" , 
                       Message:props.name, savetype:selectname}})
                      .then((response) =>{
                       console.log("결과 :" , response);
@@ -227,7 +227,7 @@ useEffect(() =>{
                     console.log("토큰 인증 성공");
                     const id:string =param.userid! ;
                     
-                    axios.post("http://localhost:8082/Pets-social/DeleteNote" , {params:{List:props.DeleteList , 
+                    axios.post("http://localhost:8082/Pets-social/Note/DeleteNote" , {params:{List:props.DeleteList , 
                       Id:id, Message:props.name, Savetype:selectname , type:"select"}} )
                     .then((response) =>{
                      console.log("결과 :" , response);

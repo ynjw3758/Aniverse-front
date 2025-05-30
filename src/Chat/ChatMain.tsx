@@ -22,6 +22,9 @@ import Dupleroom from "./AddChat/Dupleroom";
 import ChatMainSide from "./ChatMainSide";
 import Side_Search from "../CommonSide/Side_Search";
 import ShowChatContext from "../Context/ShowChatContext";
+import WebSocketAlarm_Provider from "../Context/WebSocketAlarm_Provider";
+import ChatNotificationMain from "../Notification/ChatNotificationMain";
+import WebSocketAlarmContext from "../Context/WebSocketAlarmContext";
 //#endregion
 
 
@@ -61,35 +64,40 @@ type My_IFOS={
   Members:Userfos[]
  }
 
- type RoomInfo ={
-  CreateDate:string,
-  Members:Userfos[],
-  Name:string,
-  RoomId:string,
- 
- }
 
- type ChatInfos ={
-  date:string,
-  message:MessageInfo[]
- }
-
- type MessageInfo={
-  chatId:string,
-  message:string,
-  messageId:string,
-  nickname:string,
-  profile:string,
-  sendId:string,
-  timestamp:string,
-  type:string
- }
 
 
  type Userfos={
   Img:string,
   Nickname:string,
   UserId:string
+ }
+
+ type Receive_chat={
+  SendId:string,
+  SendProfile:string,
+  SendNickname:string,
+  SendMsg:string;
+  SendTime:string;
+  ChatId:string;
+  MessageId:string
+}
+type MessageInfo={
+  chatId:string;
+  message:string;
+  messageId:string;
+  nickname:string;
+  profile:string;
+  recount:number;
+  sendId:string;
+  timestamp:string;
+  type:string;
+  isSend:boolean
+ }
+
+ type ChatInfos={
+  date:string;
+  messages:MessageInfo[];
  }
 
  //#endregion
@@ -102,7 +110,7 @@ const ChatMain =() =>{
    const[ischat,setIschat]=useState<any>({Addchat:false , showcaht:false, islist:false , isDuple:false});
    const[dupldata, setDupldata]=useState<object>({});
    const[isSearch, setIsSearch]=useState<boolean>(false);
-   const[issocket, setIssocket]=useState<boolean>(false);
+   const[isAlarm, setIsAlarm]=useState<boolean>(false);
    const[isDuple, setIsDuple]=useState<boolean>(false);
    const[againlogin, setAgainlogin]=useState<boolean>(false);
    const[isperist, setIsperist]=useState<boolean>(false);
@@ -112,8 +120,19 @@ const ChatMain =() =>{
     Nickname:"",
     UserId:""
    })
-  const[roomInfos, setRoomInfos]=useState<RoomInfo>();
-  const[chatinfos, setChatinfos]=useState<ChatInfos[]>([]);
+  const[alchatReceive, setAlchatReceive]=useState<Receive_chat>({
+    SendId: "",
+    SendProfile: "",
+    SendNickname: "",
+    SendMsg: "" ,
+    SendTime:"",
+    ChatId:"",
+    MessageId:""
+})
+const[roomId, setRoomId]=useState<string>("");
+const[memeber, setMember]=useState<Userfos[]>([]);
+const[roomName, setRoomName]=useState<string>("");
+const[ctdate, setCtdate]=useState<string>("")
 
 //#endregion
 
@@ -122,6 +141,8 @@ const ChatMain =() =>{
 //              +-----------------
 //#region type
 const navigate = useNavigate();
+const msgInfo = useRef<MessageInfo[][]>([]);
+const standDate =useRef<string[]>([]);
 const endPoint=useRef<string>("");
 const Body=useRef<object>({});
 const chattitle=useRef("");
@@ -129,10 +150,11 @@ const chatid=useRef("");
 const focusid=useRef("");
 const chatDate=useRef("");
 const isFirst=useRef<boolean>(false);
-const chatdata=useRef<object[]>([]);
+const isSave=useRef<boolean>(false);
+const chatdata=useRef<Userfos[]>([]);
 const imgdata=useRef<string[]>([]);
 const myinfo=useContext(user_info);
-const Dpchat=useRef<object[]>([]); 
+const Dpchat=useRef<Userfos[]>([]); 
 const Dpimgdata=useRef<string[]>([]);
 const Dpchattitle=useRef("");
 const Dpchatid=useRef("");
@@ -141,14 +163,30 @@ const Chatinfo =useContext(ShowChatContext);
 const location = useLocation();
 const { focusId, isFromAlarm } = location.state || {};
 const cookies = new Cookies();
+const ChatReceive_Alarm= useContext(WebSocketAlarmContext);
 //#endregion
 
 
     const AddchatHandler =() =>{
     setIschat({...ischat ,Addchat:true });
     }
-
-
+    useEffect(() =>{
+      console.log("채팅 알람람 : " , ChatReceive_Alarm.chatReceive);
+      if(ChatReceive_Alarm.chatReceive.SendMsg !="") 
+       {
+        setAlchatReceive(ChatReceive_Alarm.chatReceive);
+        setIsAlarm(true);
+            // 2초 후 알람 숨기기
+            /*
+        const timer = setTimeout(() => {
+            setIsAlarm(false);
+        }, 7000);
+    
+        // 클린업
+        return () => clearTimeout(timer);
+        */
+        }
+    },[ChatReceive_Alarm.chatReceive.MessageId])
     useEffect(() =>{
       setIschat({...ischat ,islist:false ,showchat:false})
       const UserId:string= localStorage.getItem("id")!;
@@ -182,24 +220,49 @@ const cookies = new Cookies();
                 myinfo.addprofile(response.data.data.Myinfo.Img)
               }
               else{
-                if(response.data.data.ChatInfos =="null" && response.data.data.RoomInfo == "null"){
+                console.log("여기로 와야지")
+                if(response.data.data.ChatInfos =="null" && response.data.data.RoomInfo == "null" &&
+                  response.data.data.ChatList !== "null"
+                ){
+                  console.log("채팅방에 아무 채팅이 없는경우 : realod경우");
                   setMyinfos(response.data.data.Myinfo);
-                  setCtList_Info(response.data.data.ChatList);
+                  setCtList_Info( response.data.data.ChatList);
                   myinfo.addeNickName(response.data.data.Myinfo.Nickname);
                   myinfo.addprofile(response.data.data.Myinfo.Img);
                   setIschat({...ischat ,islist:true})
                 }
+                else if(response.data.data.ChatInfos !=="null" && response.data.data.RoomInfo == "null" &&
+                  response.data.data.ChatList !== "null"
+                ){
+                     console.log("채팅 리스트만 존재");
+                     setMyinfos(response.data.data.Myinfo);
+                     setCtList_Info(response.data.data.ChatList);
+                     myinfo.addeNickName(response.data.data.Myinfo.Nickname);
+                     myinfo.addprofile(response.data.data.Myinfo.Img);
+                     setIschat({...ischat ,islist:true})
+                }
                 else{
-                  console.log("이 부분이 문제 :" ,response.data )
+                  
+                  const ChatData:ChatInfos[] = response.data.data.ChatInfos;
+                  let date:string[] =[];
+                  let message:MessageInfo[][]=[];
+                  ChatData.map(Item => {
+                    console.log("11 : " , Item);  
+                    date.push(Item.date);
+                    message.push(Item.messages);
+                    standDate.current = date;
+                    msgInfo.current = message
+                  })
                   focusid.current=response.data.data.RoomInfo.RoomId;
                   setMyinfos(response.data.data.Myinfo);
                   setCtList_Info(response.data.data.ChatList);
                   myinfo.addeNickName(response.data.data.Myinfo.Nickname);
                   myinfo.addprofile(response.data.data.Myinfo.Img);
+
                   Chatinfo.insert_values(response.data.data.RoomInfo.RoomId,response.data.data.RoomInfo.Name, 
-                    response.data.data.RoomInfo.Member.Members,[],
-                    response.data.data.RoomInfo.CreateDate,false , 
-                    myinfo.UserNickName , myinfo.Profile,response.data.data.RoomInfo.RoomId, false );
+                    response.data.data.RoomInfo.Member.Members,[],response.data.data.RoomInfo.CreateDate,
+                    false , myinfo.UserNickName , myinfo.Profile,focusid.current, 
+                    false ,standDate.current, msgInfo.current);
                     setIschat({...ischat ,islist:true, showchat:true});
                 }
               }
@@ -290,6 +353,18 @@ const cookies = new Cookies();
         })
     },[]);
 
+    useEffect(() =>{
+      if(standDate.current.length ===0 ) return;
+      console.log("d뭐여 " , isSave.current);
+      console.log("데이터 확인 :" ,standDate.current);
+      console.log("msgInfo :" ,msgInfo.current);
+      Chatinfo.insert_values(roomId,roomName, 
+        memeber,[],ctdate,false , 
+        myinfo.UserNickName , myinfo.Profile,roomId, 
+        false ,standDate.current, msgInfo.current);
+        setIschat({...ischat ,islist:true, showchat:true});
+    },[isSave.current])
+
 
     const AddClose =() =>{
     setIschat({...ischat ,Addchat:false });
@@ -316,7 +391,7 @@ const cookies = new Cookies();
       isFirst.current= true;
       focusid.current = roomid;
       Chatinfo.insert_values(roomid,name, MemberInfo_add,img,
-        date,isFirst.current , myinfo.UserNickName , myinfo.Profile ,roomid, false);
+        date,isFirst.current , myinfo.UserNickName , myinfo.Profile ,roomid, false,[], []);
       setIschat({AddChat:false , showchat:true, islist:true});
       navigate(`/main/chat/${roomid}`);
 
@@ -359,7 +434,7 @@ const cookies = new Cookies();
      })
        console.log("chatid :" ,focusid.current)
       Chatinfo.insert_values(chatid.current,chattitle.current, chatdata.current,imgdata.current,
-        chatDate.current,false , myinfo.UserNickName , myinfo.Profile ,focusid.current, true);
+        chatDate.current,false , myinfo.UserNickName , myinfo.Profile ,focusid.current, true, [], []);
        setIschat({AddChat:false , showchat:true, islist:true});
        navigate(`/main/chat/${chatid.current}`);
     }
@@ -374,7 +449,7 @@ const cookies = new Cookies();
 
     }
 
-    const OneToOneDuple =(MemList: object[], Chat_info: duple_infos, Myinfos: My_IFOS, ImageList:string[]) =>{
+    const OneToOneDuple =(MemList: Userfos[], Chat_info: duple_infos, Myinfos: My_IFOS, ImageList:string[]) =>{
       Dpchat.current=MemList;
       Dpchattitle.current=Chat_info.ChatTitle
       Dpchatid.current=Chat_info.ChatId
@@ -382,13 +457,18 @@ const cookies = new Cookies();
       DpchatDate.current=Chat_info.ChatCtDate
       setIsDuple(true);
       Chatinfo.insert_values(Dpchatid.current,Dpchattitle.current, Dpchat.current,Dpimgdata.current,
-        DpchatDate.current,isFirst.current , Myinfos.Mnick, Myinfos.Mprofile,Dpchatid.current, false);
+        DpchatDate.current,isFirst.current , Myinfos.Mnick, Myinfos.Mprofile,Dpchatid.current, false, [],[]);
       setIschat({AddChat:false , showchat:true, islist:true});
       navigate(`/main/chat/${chatid.current}`);
      
     }
+    
 
-    return(<WebSocker_Provider>
+    return(<WebSocketAlarm_Provider>
+    <WebSocker_Provider>
+      {isAlarm && (<>
+      <ChatNotificationMain ChatReceive={alchatReceive}/>
+      </>)}
         <div className="Side">
             <div className="Myinfo">
               <div className="Profile">
@@ -431,7 +511,8 @@ const cookies = new Cookies();
         </>)}
         <ChatMainSide OnclickSearch={Active_Search}/>
         {isSearch && (<Side_Search />)}        
-        </WebSocker_Provider>)
+        </WebSocker_Provider>
+        </WebSocketAlarm_Provider>)
 }
 
 export default ChatMain;

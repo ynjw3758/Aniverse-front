@@ -7,6 +7,8 @@ interface props{
     StandDate:string[],
     CreateDate:string,
     newDate:string,
+    ReadChatcnt:string[],
+    DeleteChat:(data:string) => void
 }
 type MessageInfo={
     chatId:string;
@@ -22,18 +24,23 @@ type MessageInfo={
    }
 
 
-const AllChat =({allChat ,StandDate ,CreateDate ,newDate}:props) =>{
+const AllChat =({allChat ,StandDate ,CreateDate ,newDate, ReadChatcnt  ,DeleteChat}:props) =>{
 
 
     useEffect(() =>{
-      console.log("2중배열의 채팅 정보 : " , newDate);
-    },[allChat])    
+      console.log("2중배열의 채팅 정보 : " , StandDate);
+    },[allChat])  
+    
+    const deletechat =(data:string) =>{
+        DeleteChat(data);
+    }
 
     return(<>
     <p id="AllCaht_Stand_date">{CreateDate}</p>
     <p id="CreateChat_Message">채팅방이 생성 되었습니다.</p>
     {allChat.map((values, idx) =>(<>
-    <AllChatItems ChatInfoList={values} StandDate={StandDate[idx]} CreateDate={CreateDate} newDate={newDate}/>
+    <AllChatItems ChatInfoList={values} StandDate={StandDate[idx]} CreateDate={CreateDate} 
+    newDate={newDate} DeleteChat={deletechat} ReadChatcnt={ReadChatcnt}/>
     </>))}
     </>)
 

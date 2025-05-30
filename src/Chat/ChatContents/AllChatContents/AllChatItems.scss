@@ -2,16 +2,18 @@
     .AllChatDiv_MyStand{
         display: flex;
         flex-direction: row;
-        width: max-content;
         height: max-content;
-        margin-left: 65vw;
+        //margin-left: 66vw;
+        justify-content: flex-end;
+        align-items: flex-end;
     }
     .AllChatDiv_OtherStand{
         display: flex;
         flex-direction: row;
         width: max-content;
         height: max-content;
-        margin-left: 2vw;
+        margin-left: 0.5vw;
+        margin-top: 3vh;
     }
     .StandDate_AllChat{
         margin-top: -5vh;
@@ -40,9 +42,10 @@
     .AllChatDiv_MyStand{
         display: flex;
         flex-direction: row;
-        width: max-content;
         height: max-content;
-        margin-left: 65vw;
+        //margin-left: 66vw;
+        justify-content: flex-end;
+        align-items: flex-end;
     }
     .AllChatDiv_OtherStand{
         display: flex;
@@ -50,6 +53,7 @@
         width: max-content;
         height: max-content;
         margin-left: 2vw;
+        margin-top: 3vh;
     }
     .StandDate_AllChat{
         margin-top: -5vh;

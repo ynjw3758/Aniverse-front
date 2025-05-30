@@ -11,6 +11,8 @@ import {useEffect ,useRef,useState } from "react";
 //#region type 
 import "./PartiChatList.scss";
 import Multipicture from "./Multipicture";
+import React from "react";
+import AllChat from "../ChatContents/AllChatContents/AllChat";
 //#endregion
 
 //                            +------------------
@@ -29,13 +31,29 @@ type image ={
     total:number,
     idx:number,
     lastmsg:string,
-    lasttime:string
+    lasttime:string,
+    ChatAlarm:Receive_chat,
+    AlarmCnt:number,
     showdata : (data:Object) => void,
     onshowlist : () => void
    }
+
+   type Receive_chat={
+    SendId:string,
+    SendProfile:string,
+    SendNickname:string,
+    SendMsg:string;
+    SendTime:string;
+    ChatId:string;
+    MessageId:string
+  }
+  type ChatAlarmMap = {
+    [chatId: string]: Receive_chat[];
+  };
 //#endregion
 
 const PartiChatList =(props:image) =>{
+
 
 
 //              +-----------------
@@ -44,7 +62,10 @@ const PartiChatList =(props:image) =>{
 //#region type
 const[img, setImg]=useState<string[]>([]);
 const[name, setName]=useState<string>("");
+const[message, setMessage]=useState<string>("");
 const[isfocus, setIsfocus]=useState<boolean>(false);
+const[isChat, setIsChat]=useState<boolean>(false);
+const[alarmcnt, setAlarmcnt]=useState<number>(0);
 //#endregion
 
 //              +-----------------
@@ -55,10 +76,14 @@ const Focus_div = isfocus? "PartiChatList_Main_Focus" :"PartiChatList_Main";
 //#endregion
 
 useEffect(() =>{
-
+    console.log("message :" , props.ChatAlarm)
     let test :string[]=[...img];
     const images:object=props.Images;
     if(props.Id ===props.FocusId) {
+        if(props.AlarmCnt !==0){
+            setAlarmcnt(0);
+            setIsChat(false);
+        }
         setIsfocus(true);
     }else{
         setIsfocus(false);
@@ -74,6 +99,8 @@ useEffect(() =>{
     }
     else setName(props.Name);
     if(props.idx ===props.total -1) props.onshowlist();
+    if(props.lastmsg !=="null") setMessage(props.lastmsg); 
+    
 },[props.Id, props.FocusId]);
 
 useEffect(() =>{
@@ -85,6 +112,16 @@ useEffect(() =>{
       }
 },[props.IsDuple])
 
+useEffect(() =>{
+    console.log("alarmid: ", props.lastmsg);
+    setMessage(props.lastmsg)
+    if(props.AlarmCnt !==0) {
+        setAlarmcnt(props.AlarmCnt);
+        setIsChat(true);}
+},[props.AlarmCnt])
+
+
+
 
 const showchat= () =>{
     const show_data:object ={user_count:props.Count+1, room_name:name, room_id:props.Id, 
@@ -93,21 +130,23 @@ const showchat= () =>{
     
 
 }
- 
     return(<div className={Focus_div} id={props.Id} onClick={showchat}>
-                <div className="PartiChatList_imgs">
-                    <Multipicture Image={props.Images}/>
-             </div>
+            <div className="PartiChatList_imgs">
+                <Multipicture Image={props.Images}/>
+            </div>
              <div className="PartiChatList_contents">
-            <div className="PartiChatList_info">
-             <p>{name}</p>
-             <h4>{props.Count+1}</h4>
-          </div>
-          <div className="PartiChatList_story" id={props.create_date}>
-            <p>{props.lastmsg}</p>
-          </div>
-        </div>
+                <div className="PartiChatList_info">
+                    <p>{name}</p>
+                    <h4>{props.Count+1}</h4>
+                </div>
+             <div className="PartiChatList_story" id={props.create_date}>
+                <p>{message}</p>
+             </div>
+            </div>
+        {isChat &&(<div className="ChatList_ChatAlarm">
+          <p>{alarmcnt}</p>
+        </div>)}
     </div>)
 }
 
-export default PartiChatList;
+export default React.memo(PartiChatList);

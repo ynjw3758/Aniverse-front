@@ -10,8 +10,11 @@ export interface ShoChat_infos{
     MyNickname:string;
     MyProfile:string;
     isClick:boolean,
-    insert_values:(chatId:string,chatTitle:string, chatData:object[],chatProfiles:string[], 
-        chatCtDate:string, isfirst:boolean, MyNickname:string, MyProfile:string, FocuseId:string, isClick:boolean)=> void
+    standDate:string[],
+    messageinfo:MessageInfo[][]
+    insert_values:(chatId:string,chatTitle:string, chatData:Userfos[],chatProfiles:string[], 
+        chatCtDate:string, isfirst:boolean, MyNickname:string, MyProfile:string, FocuseId:string, 
+        isClick:boolean ,standDate:string[], messageinfo:MessageInfo[][])=> void 
 }
 
 const Initial : ShoChat_infos={
@@ -24,8 +27,27 @@ const Initial : ShoChat_infos={
     MyNickname:"",
     MyProfile:"",
     isClick:false,
+    standDate:[],
+    messageinfo:[],
     insert_values:() => {}
 }
+type MessageInfo={
+    chatId:string;
+    message:string;
+    messageId:string;
+    nickname:string;
+    profile:string;
+    recount:number;
+    sendId:string;
+    timestamp:string;
+    type:string;
+    isSend:boolean
+   }
+   type Userfos={
+    Img:string,
+    Nickname:string,
+    UserId:string
+   }
 
 
 const ShowChatContext = React.createContext<ShoChat_infos>(Initial);

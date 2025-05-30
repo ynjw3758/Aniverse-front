@@ -16,6 +16,7 @@ import ChatHeader from "./ChatHeader";
 import "./ShowChat.scss";
 import AddItems from "./Input_AddItems";
 import WebSocket_Chat_Provider from "../../Context/WebSocker_Chat_Provider";
+import WebSocketChatContext from "../../Context/WebSocketChatContext";
 
 //#endregion
 
@@ -33,6 +34,8 @@ type info ={
     isFirst:boolean;
     MyNickname:string;
     isClick:boolean;
+    StandDate:string[];
+    MessageInfo:MessageInfo[][]
  }
 
  type ChatInfos={
@@ -85,12 +88,13 @@ const ShowChat =(props:info) =>{
     const navigate = useNavigate();
     const cookies = new Cookies();
     const test = useRef<boolean>(false);
+    const Web_Chatinfo=useContext(WebSocketChatContext);
 //#endregion
 
     useEffect(() =>{
       setIsSocket(false);
     if(props.isClick === true){
-      console.log("클릭")
+      console.log("클릭 : ", props.CreateDate)
       setMsgInfo([]);
       console.log("soket :" , test.current);
       let access_token:string="";
@@ -105,16 +109,23 @@ const ShowChat =(props:info) =>{
      })
       .then(response =>{
              console.log("채팅 정보 가져오기 결과:" , response);
-             const ChatData:ChatInfos[] = response.data.data;
-             let date:string[] =[...standDate];
-             let message:MessageInfo[][]=[];
-             ChatData.map(Item => {
-               date.push(Item.date);
-               message.push(Item.messages);
-               setStandDate(date);
-               setMsgInfo(message);
-               UserInfoPasing();
-             })
+             const ChatInfos:ChatInfos[] =response.data.data.MessageInfo;
+             console.log("ChatInfos :" , ChatInfos); 
+             if(ChatInfos.length !==0){
+                const ChatData:ChatInfos[] = response.data.data.MessageInfo;
+                let date:string[] =[...standDate];
+                let message:MessageInfo[][]=[];
+                ChatData.map(Item => {
+                  date.push(Item.date);
+                  message.push(Item.messages);
+                  setStandDate(date);
+                  setMsgInfo(message);
+                  UserInfoPasing();
+                })
+             }
+             else{
+              UserInfoPasing();
+             }
              setIsSocket(true);
        }).catch((error) =>{
        if(axios.isAxiosError<ResponseDataType>(error)){
@@ -214,10 +225,21 @@ const ShowChat =(props:info) =>{
          }
     })
     }else{
-      setIsSocket(false);
+      setIsSocket(true);
     }
 
     },[props.Chat_id])
+
+    useEffect(() =>{
+       setStandDate(props.StandDate);
+       setMsgInfo(props.MessageInfo);
+       UserInfoPasing();
+    },[props.MessageInfo, props.StandDate])
+
+    useEffect(() =>{
+     console.log("채팅 카운트 주시하자");
+     console.log("값 :" ,Web_Chatinfo.ReadChat );
+    },[Web_Chatinfo.ReadChat])
 
 
     async function UserInfoPasing(){
@@ -259,7 +281,7 @@ const ShowChat =(props:info) =>{
                 setImg(image);
             }
       }))
-      const isoDate =props.CreateDate;
+      const isoDate = props.CreateDate;
       const date = new Date(isoDate);
       const formatted =
           date.getFullYear() + '-' +
@@ -271,6 +293,8 @@ const ShowChat =(props:info) =>{
        setCreate(formatted);
        setSize(list.length);
     }
+
+    
      return(<WebSocket_Chat_Provider>
      <div id={props.Chat_id}>
      <div>

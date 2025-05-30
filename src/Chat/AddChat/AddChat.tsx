@@ -37,7 +37,7 @@ type data ={
     onClose:() => void,
     ChatShow:(data:Userfos[] ,img:string[], name:string, roomid:string, createdate:string) => void,
     onDuple:(data:object) =>void,
-    OnOneDuple:(MemList:object[], Chat_info:duple_infos , Myinfos:My_IFOS, ImageList:string[]) => void,
+    OnOneDuple:(MemList:Userfos[], Chat_info:duple_infos , Myinfos:My_IFOS, ImageList:string[]) => void,
     Profile:string,
     Nickname:string
  }

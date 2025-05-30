@@ -7,6 +7,10 @@ import SockJS from "sockjs-client";
 type Props = {
     children?: React.ReactNode
   };
+type readchatinfo={
+  chatId:string;
+  messageIds:string[]
+}
 
 
 const WebSocket_Chat_Provider =({children}:Props) =>{
@@ -17,6 +21,7 @@ const WebSocket_Chat_Provider =({children}:Props) =>{
   const socketRef = useRef<WebSocket | null>(null);
   const ChatId = useRef<string>("");
   const UserIds = useRef<string[]>([]);
+  const[readChat, setReadChat]=useState<string[]>([]);
 
 
   useEffect(() =>{
@@ -58,6 +63,8 @@ const WebSocket_Chat_Provider =({children}:Props) =>{
         const socket = new SockJS(`http://127.0.0.1:8083/ws?userid=${userid}`);
         ws.onopen = () => {
           console.log("✅ WebSocket Chat연결됨 : ", userid);
+          const MyId:string = localStorage.getItem("id")!;
+          ws.send(JSON.stringify({ UserId:MyId ,ChatId:ChatId.current, type: "ChatJoin" }));
           const client = new Client({
             webSocketFactory: () => socket,
             reconnectDelay: 5000,
@@ -68,7 +75,18 @@ const WebSocket_Chat_Provider =({children}:Props) =>{
                 userId:JSON.stringify(UserIds.current), 
                 type:"Chat"// ✅ 헤더로 userId 넘김
               });
-              console.log("userid :" , userid);
+               console.log("구독 하냐 ?" , ChatId.current);
+              client.subscribe(`/topic/read/${ChatId.current}`, (message) => {
+                console.log("오나 ?" , message);
+                const readInfo:readchatinfo = JSON.parse(message.body);
+                console.log("👁️ 읽음 정보 수신:", readInfo.messageIds);
+                setReadChat(readInfo.messageIds);
+              
+                // 여기에 읽음 카운트 UI 업데이트 로직 추가
+                // 예: 해당 messageId에 대한 UI의 recount 감소 처리 등
+              });
+
+
               client.subscribe(`/user/queue/errors`, (message) => {
                 const error = JSON.parse(message.body);  // 항상 parse 필요
                  console.log("에러 발생 :" , error);
@@ -132,6 +150,7 @@ const WebSocket_Chat_Provider =({children}:Props) =>{
       socketRef:socketRef,
       isError,
       isSuccess,
+      ReadChat:readChat,
       sendMessage:sendMessage,
       Partici_Chatid:Partici_Chatid,
 

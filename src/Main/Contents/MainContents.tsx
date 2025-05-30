@@ -23,7 +23,8 @@ type Receive_chat={
     SendNickname:string,
     SendMsg:string;
     SendTime:string;
-    ChatId:string
+    ChatId:string;
+    MessageId:string
 }
 
 const MainContentsx=(props:user_info) =>{
@@ -39,7 +40,8 @@ const MainContentsx=(props:user_info) =>{
         SendNickname: "",
         SendMsg: "" ,
         SendTime:"",
-        ChatId:""
+        ChatId:"",
+        MessageId:""
     })
     const disable:boolean=true;
 

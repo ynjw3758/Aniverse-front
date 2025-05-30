@@ -2,7 +2,7 @@
 //----------------------------+ 내부 라이브로리
 //                            +--------------------
 //#region type 
-import { useEffect ,useState} from "react";
+import { useContext, useEffect ,useState} from "react";
 import relativeTime from 'dayjs/plugin/relativeTime';
 import dayjs from 'dayjs';
 import {Oval} from "react-loader-spinner";
@@ -16,6 +16,7 @@ import {Oval} from "react-loader-spinner";
 import "./ChatList.scss";
 import AddChatItems from "../AddChat/AddChatItems";
 import PartiChatList from "./PartiChatList";
+import WebSocketAlarmContext from "../../Context/WebSocketAlarmContext";
 //#endregion
 
 //                            +------------------
@@ -49,6 +50,19 @@ type Chat ={
    Nickname:string,
    UserId:string
   }
+
+  type Receive_chat={
+   SendId:string,
+   SendProfile:string,
+   SendNickname:string,
+   SendMsg:string;
+   SendTime:string;
+   ChatId:string;
+   MessageId:string
+ }
+ type ChatAlarmMap = {
+   [chatId: string]: Receive_chat[];
+ };
 //#endregion
 
 const ChatList =(props:Chat) =>{
@@ -57,85 +71,143 @@ const ChatList =(props:Chat) =>{
 //--------------+ 상태 관리
 //              +-----------------
 //#region type
-const[roomname, setRoomname]=useState<string[]>([]);
-const[ctdate, setCtdate]=useState<string[]>([]);
-const[chatId, setChatId]=useState<string[]>([]);
+const[alarmid, setAlarmid]=useState<string[]>([]);
 const[lastmsg, setLastmsg]=useState<string[]>([]);
-const[lasttime, setLasttime]=useState<string[]>([]);
 const[isdata, setIsdata]=useState<boolean>(false);
 const[isloading, setIsloading]=useState<boolean>(true);
 const[noChat, setNoChat]=useState<boolean>(false);
-const[isfocus, setIsfocus]=useState<string>("");
-const[usercnt, setUsercnt]=useState<number[]>([]);
-const[member, setMember]=useState<Member_info[][]>([]);
-const[imglist, setImglist]=useState<string[][]>([]);
+  const[alchatReceive, setAlchatReceive]=useState<Receive_chat>({
+    SendId: "",
+    SendProfile: "",
+    SendNickname: "",
+    SendMsg: "" ,
+    SendTime:"",
+    ChatId:"",
+    MessageId:""
+})
+const[divideChat, setDivideChat]=useState<ChatAlarmMap>({});
+const [alarmCounts, setAlarmCounts] = useState<{ [chatId: string]: number }>({});
+const [alarmmsg, setAlarmmsg] = useState<{ [chatId: string]: string }>({});
+const [lasttime, setLasttime] = useState<{ [chatId: string]: string }>({});
+const [roomname, setRoomname] = useState<{ [chatId: string]: string }>({});
+const [ctdate, setCtdate] = useState<{ [chatId: string]: string }>({});
+const [usercnt, setUsercnt] = useState<{ [chatId: string]: number }>({});
+const [memebers, setMembers] = useState<{ [chatId: string]: Member_info[] }>({});
+const [imglist, setImglist] = useState<{ [chatId: string]: string[] }>({});
+const[chatId, setChatId]=useState<string[]>([]);
+
 //#endregion
 
 //              +-----------------
 //--------------+ 전역 변수
 //              +-----------------
 //#region type
+const ChatReceive_Alarm= useContext(WebSocketAlarmContext);
 //#endregion
+
+useEffect(() =>{
+   if(ChatReceive_Alarm.chatReceive.SendMsg !="") 
+    {
+      let ChatId:string=ChatReceive_Alarm.chatReceive.ChatId;
+      let alarmChatid:string[]=[...alarmid];
+      alarmChatid.push(ChatId);
+     setAlchatReceive(ChatReceive_Alarm.chatReceive);
+     let chatinfos:Receive_chat={SendId:ChatReceive_Alarm.chatReceive.SendId,
+      SendProfile:ChatReceive_Alarm.chatReceive.SendProfile,
+      SendNickname:ChatReceive_Alarm.chatReceive.SendNickname,
+      SendMsg:ChatReceive_Alarm.chatReceive.SendMsg,
+      SendTime:ChatReceive_Alarm.chatReceive.SendTime,
+      MessageId:ChatReceive_Alarm.chatReceive.MessageId,
+      ChatId:ChatReceive_Alarm.chatReceive.ChatId} 
+      setDivideChat(prev => {
+          const isExist = Object.prototype.hasOwnProperty.call(prev, ChatId);
+          return {
+            ...prev,
+            [ChatId]: isExist ? [...prev[ChatId], chatinfos] : [chatinfos]
+          };
+        });
+
+     }
+ },[ChatReceive_Alarm.chatReceive])
+
+ useEffect(() =>{
+   if(ChatReceive_Alarm.chatReceive.ChatId === "") return;
+   const chatId = ChatReceive_Alarm.chatReceive.ChatId;
+   const message =ChatReceive_Alarm.chatReceive.SendMsg;
+   setAlarmCounts(prev => ({
+      ...prev,
+      [chatId]: prev[chatId] ? prev[chatId] + 1 : 1
+    }));
+    setAlarmmsg(prev =>{
+      return{
+         ...prev,
+         [chatId]: prev[chatId] ? message : message
+      }
+   });
+ },[divideChat])
 
 useEffect(() =>{
    if(props.ChatListinfo.length != 0){
    const ChatInfos:ChatList_infos[] = props.ChatListinfo;
    dayjs.extend(relativeTime);
-   let RoomName:string[]=[...roomname];
-   let CtDate:string[]=[...ctdate];
-   let Count:number[]=[...usercnt];
-   let ChatId:string[] = [...chatId];
-   let Member_info:Member_info[][] =[...member];
-   let allImages: string[][] = [...imglist]; // ⬅️ 바깥에 선언해두기
-   let lastMsg:string[]=[...lastmsg];
-   let lastTime:string[]=[...lasttime];
+   let addchatid:string[]=[...chatId];
    ChatInfos.forEach((data) =>{
-      Object.entries(data).map((key) =>{
-         if(key[0] === "RoomName"){
-            RoomName.unshift(key[1].toString());
-            setRoomname(RoomName);
+      let ChatId:string = data.chat_Id;
+      addchatid.unshift(ChatId);
+      setChatId(addchatid);
+      setAlarmmsg(prev =>{
+         return{
+            ...prev,
+            [ChatId]: prev[ChatId] ? prev[ChatId] +data.Message : data.Message
          }
-         else if(key.at(0) =="chat_Id"){
-            ChatId.unshift(key[1].toString());
-            setChatId(ChatId);
-         }
-         else if(key.at(0) =="userCount"){
-             const cnt:any = key[1]!;
-             Count.unshift(cnt);
-             setUsercnt(Count);
+      });
 
+      setRoomname(prev =>{
+         return{
+            ...prev,
+            [ChatId]: prev[ChatId] ? prev[ChatId] +data.RoomName : data.RoomName
          }
-         else if(key.at(0) =="CreateDate"){
-            CtDate.unshift(key[1].toString());
-            setCtdate(CtDate);
-         }
-         else if(key.at(0) =="Members"){
-            let members = key[1];
+      });
 
-            if (Array.isArray(members)) {
-               
-              const imgArray = members.map((m) => m.Img); // ✅ 각 멤버의 Img만 추출
-              allImages.unshift(imgArray); 
-              Member_info.unshift(key[1] as Member_info[]);
-              setMember(Member_info);
-              setImglist(allImages);
-            }
+      setLasttime(prev =>{
+         return{
+            ...prev,
+            [ChatId]: prev[ChatId] ? prev[ChatId] +data.lasttime : data.lasttime
          }
-         else if(key.at(0) =="Message"){
-           lastMsg.unshift(key[1].toString());
-           setLastmsg(lastMsg);
-         }
-         else if(key.at(0) =="lasttime"){
-            lasttime.unshift(key[1].toString());
-            setLasttime(lastMsg);
-         }
+      });
 
+      setUsercnt(prev =>{
+         return{
+            ...prev,
+            [ChatId]: prev[ChatId] ? prev[ChatId] +data.userCount : data.userCount
+         }
+      });
+
+      setCtdate(prev =>{
+         return{
+            ...prev,
+            [ChatId]: prev[ChatId] ? prev[ChatId] +data.CreateDate : data.CreateDate
+         }
       })
+      if (Array.isArray(data.Members)) {
+         const members = data.Members;
+         const imgArray = members.map((m) => m.Img);
+         setMembers((prev) => ({
+            ...prev,
+            [ChatId]: prev[ChatId] ? [...prev[ChatId], ...members] : members
+          }))
+
+          setImglist(prev =>{
+            return{
+               ...prev,
+               [ChatId]: prev[ChatId] ? [...prev[ChatId], ...imgArray] : imgArray
+            }
+         })
+      }
    })
    setIsdata(true);
 }
 else{
-    console.log("데이터 없다");
     setIsloading(false);
     setNoChat(true);
 }
@@ -159,19 +231,21 @@ const ShowList =() =>{
        />
        {isdata && (<>
          {chatId.map((data , i) =>(<>
-         <PartiChatList Id={data} Name={roomname[i]} Count={usercnt[i]} 
-         Images={imglist[i]} showdata={showcontents} create_date={ctdate[i]} FocusId={props.isFocusid}
-         user_infos={member[i]} IsDuple={props.IsDuple} total={chatId.length} idx={i} lastmsg={lastmsg[i]} lasttime={lasttime[i]}
-         onshowlist={ShowList}/>
+         <PartiChatList Id={data} Name={roomname[data] || ""} Count={usercnt[data] || 0} 
+         Images={imglist[data] || []} showdata={showcontents} create_date={ctdate[data] || ""} 
+         FocusId={props.isFocusid} user_infos={memebers[data] || []} IsDuple={props.IsDuple} 
+         total={chatId.length} idx={i} lastmsg={alarmmsg[data] || ""} lasttime={lasttime[data] || ""}
+         onshowlist={ShowList} ChatAlarm={alchatReceive} AlarmCnt={alarmCounts[data] || 0}/>
       </>))}
        </>)}
    </div>)}
    {!isloading && (<>
       {chatId.map((data , i) =>(<>
-         <PartiChatList Id={data} Name={roomname[i]} Count={usercnt[i]} 
-         Images={imglist[i]} showdata={showcontents} create_date={ctdate[i]} FocusId={props.isFocusid}
-         user_infos={member[i]} IsDuple={props.IsDuple} total={chatId.length} idx={i} lastmsg={lastmsg[i]} lasttime={lasttime[i]}
-         onshowlist={ShowList}/>
+         <PartiChatList Id={data} Name={roomname[data] || ""} Count={usercnt[data] || 0} 
+         Images={imglist[data] || []} showdata={showcontents} create_date={ctdate[data] || ""} 
+         FocusId={props.isFocusid} user_infos={memebers[data] || []} IsDuple={props.IsDuple} 
+         total={chatId.length} idx={i} lastmsg={alarmmsg[data] || ""} lasttime={lasttime[data] || ""}
+         onshowlist={ShowList} ChatAlarm={alchatReceive} AlarmCnt={alarmCounts[data] || 0}/>
       </>))}
    </>)}
    {(isloading == false && noChat == true) && (<div className="ChatList_Nochat">

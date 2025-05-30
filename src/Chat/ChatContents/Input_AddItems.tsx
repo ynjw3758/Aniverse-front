@@ -96,7 +96,6 @@ const[imgid,  setImgid]=useState<string[]>([]);
 const[videoid,  setVideoid]=useState<string[]>([]);
 
 const[maxsize, setMaxsize]=useState<number>(0);
-const[mychat , setMychat]=useState<MyChat[][]>([]);
 const[allChat, setAllChat]=useState<MessageInfo[][]>(props.messages);
 //const { sendMessage } = useContext(WebSocketContext);
 
@@ -191,12 +190,14 @@ const newDate = useRef<string>("");
     }
 
     useEffect(() =>{
-      console.log("props" , props.messages);
+      console.log("props" , props.CreateDate);
       setAllChat([]);
        Chat_Context.Partici_Chatid(props.ChatId, props.totalId);
-       if(props.messages.length !==0) setIsMyChat(true);
-      setAllChat(props.messages);
+       if(props.messages.length !==0) setAllChat(props.messages);
+      setIsMyChat(true);
    },[]);
+
+
       const formatdate =(date:Date) =>{
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, '0'); // 0~11이므로 +1
@@ -216,36 +217,41 @@ const newDate = useRef<string>("");
         axios.get("http://localhost:8080/Pets-social/acccheck").then((response) =>{
    
          if(response.status == 200){
+          setEmoticon("");
            const UserId = localStorage.getItem("id")!;
            const messageId = uuidv4();
            const nowTime =  new Date().toISOString();
            const now  =new Date();
            const FormatDate = formatdate(now);
            console.log("마지막 :" , props.date[props.date.length-1])
-           if(FormatDate === props.date[props.date.length-1]){
-              console.log("일치 ")
-           }
-           else{
+           if(FormatDate !== props.date[props.date.length-1]){
+              console.log("불불일치 ")
               newDate.current = FormatDate;
               let add_date:string[]=[...props.date];
               add_date.push(FormatDate);
               StandDate.current =add_date; 
            }
-           Chat_Context.sendMessage(props.ChatId, emoticon, UserId, props.MyNickname ,props.Profile,  
-            true, props.ChSendId,props.count ,messageId)
             let newChat:MessageInfo[][]=[...allChat];
-            
-            newChat.push([{chatId:props.ChatId,message:emoticon, messageId:messageId,nickname:props.MyNickname,
+            let newMessage = {chatId:props.ChatId,message:emoticon, messageId:messageId,nickname:props.MyNickname,
               profile:props.Profile,
               recount:props.count-1,
               sendId:UserId,
               timestamp:nowTime,
               type:"mine",
-              isSend:false}])
-              
+              isSend:false}
+              if(newChat.length ===0){
+                 newChat.push([newMessage]);
+              }
+              else{
+                newChat[allChat.length-1] = [...newChat[allChat.length-1], newMessage]
+              }
+            console.log("newChat" , newChat);
             setAllChat(newChat);
-           setIsMyChat(true);
-           setEmoticon("");
+            setIsMyChat(true);
+            
+            Chat_Context.sendMessage(props.ChatId, emoticon, UserId, props.MyNickname ,props.Profile,  
+            true, props.ChSendId,props.count ,messageId)
+            
         }
    
         }).catch((error) =>{
@@ -391,23 +397,34 @@ const newDate = useRef<string>("");
       };
       const chatEndRef = useRef<HTMLDivElement | null>(null);
       useEffect(() => {
-        console.log("아래로 이동하나?")
-        /*
-        if (chatEndRef.current) {
-          chatEndRef.current.scrollIntoView({ behavior: "smooth", block: "end" }); // 또는 "auto"
-        }
-          */
-        setTimeout(() => {
-          chatEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
-        }, 0);
+        console.log("추가 후 아래로 자동으로 스크롤 이동")
+        AutoDownScroll();
       }, [allChat]); // ✅ 메시지가 바뀔 때마다 스크롤 실행
+
+      useEffect(() =>{
+          console.log("채팅방 입장 시 ");
+          if(isMyChat === true) AutoDownScroll();
+      },[isMyChat])
+
+      useEffect(() =>{
+        console.log("읽음 카운트 도착? :" , Chat_Context.ReadChat);
+      },[Chat_Context.ReadChat])
 
       function AutoDownScroll (){
         if (chatEndRef.current) {
-          console.log("가나?")
-          chatEndRef.current.scrollIntoView({ behavior: "smooth", block: "end" }); // 또는 "auto"
+          setTimeout(() => {
+            chatEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+          }, 0);
         }
       }
+
+    const deletechat =(data:string) =>{
+      setAllChat(prev => prev.filter(chat => {
+        if(chat[chat.length-1].messageId !== data){
+          return{...prev}
+        }
+      }));
+    }
 
     return(
     <div className="AddChatItems_total">
@@ -415,8 +432,9 @@ const newDate = useRef<string>("");
             <Addfiles Img={img} Video={video} ImgId={imgid} VideoId={videoid}/>
         </div>)}
         {isMyChat && (<div className="AllChat_Stand">
-          <AllChat allChat={allChat} StandDate={StandDate.current} CreateDate={props.CreateDate} newDate={newDate.current}/>
-          <div ref={chatEndRef} />
+          <AllChat allChat={allChat} StandDate={StandDate.current} CreateDate={props.CreateDate} 
+          newDate={newDate.current} DeleteChat={deletechat}  ReadChatcnt={Chat_Context.ReadChat}/>
+          <div ref={chatEndRef}/>
         </div>)}
         <div className="AddChatItems_inputchat" ref={containerRef}>
         <div className="AddChatItems_AddContents">

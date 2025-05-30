@@ -6,7 +6,9 @@ import WebSocketChatContext from "../../../Context/WebSocketChatContext";
 import { TranseDate } from "../../../Utils/TranseDate";
 
 interface props{
-    Chatinfo:MessageInfo
+    Chatinfo:MessageInfo,
+    ReadChatcnt:string[],
+    DeleteChat :(data:string) => void
 }
 type MessageInfo={
     chatId:string;
@@ -20,18 +22,22 @@ type MessageInfo={
     type:string;
     isSend:boolean;
    }
-const DividChatinfo =({Chatinfo}:props) =>{
+const DividChatinfo =({Chatinfo,ReadChatcnt, DeleteChat}:props) =>{
     const[isLoading, setIsLoading]=useState<boolean>(true);
     const[isError, setIsError]=useState<boolean>(false);
     const[isSuccess, setIsSuccess]=useState<boolean>(false);
     const[ismine, setIsmine]=useState<boolean>(false);
     const[isother, setIsother]=useState<boolean>(false);
     const[sendtime, setSendtime]=useState<string>("");
+    const[reCnt, setReCnt]=useState<number>(1);
+    const[iszero, setIszero]=useState<boolean>(false);
+    const[zeroresize, setZeroresize]=useState<boolean>(false);
 
    let div_ref = useRef<HTMLDivElement>(null);
    const Chat_Context= useContext(WebSocketChatContext);
-   const Divide_div = ismine ? "MyChat_Stand" : "OtherChat_Stand";
-   
+   const resize_context =zeroresize?  "MyChat_Stand_resize":"MyChat_Stand";
+
+
    
    
     useEffect(() => {
@@ -44,6 +50,7 @@ const DividChatinfo =({Chatinfo}:props) =>{
         const nowTime =  new Date(Chatinfo.timestamp);
         const SendTime = TranseDate(nowTime);
         setSendtime(SendTime);
+        
         if(Chatinfo.isSend === false){
             if (Chat_Context.isError) {
                 setIsLoading(false);
@@ -59,10 +66,20 @@ const DividChatinfo =({Chatinfo}:props) =>{
             setIsLoading(false);
             setIsSuccess(true);
         }
+            
       },[Chat_Context.isError, Chat_Context.isSuccess])
 
     useEffect(() =>{
       resizeToLeft(Chatinfo.message);
+      console.log("리카운트 :");
+      if(Chatinfo.recount !==0) {
+        setReCnt(Chatinfo.recount)
+      }
+      else{
+        setZeroresize(true)
+        setIszero(true);
+      }
+
     },[Chatinfo])
 
 
@@ -94,27 +111,37 @@ const DividChatinfo =({Chatinfo}:props) =>{
             const container = div_ref.current;
             if(Chatinfo.isSend === false){
                 if (container) {
-                    let margin = CalMarginLeft(data);
-                    // 왼쪽으로 확장처럼 보이게 마진 조정
-                    if(margin >240) margin=240;
-                    container.style.marginLeft = `-${margin}px`;
+                    if(isSuccess === true){
+                        let margin = CalMarginLeft(data);
+                        if(margin >240) margin=240;
+                        container.style.marginLeft = `-${margin}px`;
+                    }
+                    else{
+                            let margin = CalMarginLeft(data);
+                            if(margin >240) margin=240;
+                            container.style.marginLeft = `-${margin}px`;
+                    }
     
                   }
             }
             else{
-                console.log("전송된 채팅");
                 if (container) {
                     let margin = CalMarginLeft(data);
                     if(margin >240) margin=240;
-                    // 왼쪽으로 확장처럼 보이게 마진 조정
                     container.style.marginLeft = `-${margin}px`;
                   }
             }
         }
-
-
       };
-    return(<div className="MyChat_Stand" ref={div_ref}>
+
+      const deletechat =() =>{
+        DeleteChat(Chatinfo.messageId);
+      }
+
+      const retrychat =() =>{
+
+      }
+    return(<div className={resize_context} ref={div_ref}>
         {ismine && (<>
             {isLoading && (<div className="MyChat_Loading">
                   <Oval 
@@ -125,17 +152,19 @@ const DividChatinfo =({Chatinfo}:props) =>{
         </div>)}
         {isSuccess && (<>
             <div className="MyChat_ChangData">
-                <p id="MyChat_ReCount">{Chatinfo.recount}</p>
+                {!iszero && (<>
+                    <p id="MyChat_ReCount">{reCnt}</p>
+                </>)}
                 <p>{sendtime}</p>
             </div>
         </>)}
         {isError && (<>
             <div className="MyChat_Error">
-              <img src="/image/chatdelete.png"/>
-              <img src="/image/rotate.png"/>
+              <img src="/image/chatdelete.png" onClick={deletechat}/>
+              <img src="/image/rotate.png" onClick={retrychat}/>
             </div>
         </>)}
-        <div className="MyChat_Context">
+        <div className="MyChat_Context" key={Chatinfo.messageId}>
          <h4>{Chatinfo.message}</h4>
         </div>
         </>)}
@@ -145,12 +174,14 @@ const DividChatinfo =({Chatinfo}:props) =>{
             </div>
             <div className="OtherChat_column">
              <p>{Chatinfo.nickname}</p>
-              <div className="OtherChat_Context">
+              <div className="OtherChat_Context" key={Chatinfo.messageId}>
                <h4>{Chatinfo.message}</h4>
               </div>
             </div>
         <div className="OtherChat_ChangData">
-                <p id="OtherChat_ReCount">{Chatinfo.recount}</p>
+                {!iszero && (<>
+                    <p id="OtherChat_ReCount">{reCnt}</p>
+                </>)}
                 <p>{sendtime}</p>
             </div>
         </>)}

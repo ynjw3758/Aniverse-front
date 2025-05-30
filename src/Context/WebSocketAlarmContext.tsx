@@ -7,6 +7,7 @@ export interface Receive_chat {
     SendMsg: string;
     SendTime:string;
     ChatId:string;
+    MessageId:string,
   }
 
 export interface Alarm_info {
@@ -22,7 +23,8 @@ chatReceive:{
     SendNickname: "",
     SendMsg: "",
     SendTime:"",
-    ChatId:""
+    ChatId:"",
+    MessageId:""
     },
 }
 

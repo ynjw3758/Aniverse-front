@@ -1,13 +1,20 @@
 @media (min-width: 1550px) and (max-width: 1920px) {
     .MyChat_Stand{
-
         display: flex;
         flex-direction: row;
         margin-bottom: 1vh;
         justify-content: flex-end;
         align-items: flex-end; 
+        margin-right: 0.3vw;
     }
-
+    .MyChat_Stand_resize{
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 1vh;
+        justify-content: flex-end;
+        align-items: flex-end;
+        margin-bottom: 3vh;
+    }
     .MyChat_Loading{
         margin-top: 2vh;
         margin-right: 1vw; 
@@ -54,7 +61,7 @@
         line-height: 1.4;
     }
     #MyChat_ReCount{
-        margin-left: 3vw;
+        margin-left: 2.5vw;
         margin-top: 2vh;
         font-size: 12px;
         font-weight: bolder;
@@ -64,8 +71,8 @@
         flex-direction: column;
     }
     .OtherChat_Userinfo img{
-        width: 4vw;
-        height: 8vh;
+        width: 3vw;
+        height: 6vh;
         border-radius: 50px;
     }
     .OtherChat_column{
@@ -110,18 +117,25 @@
     }
 }
 
-@media (max-width: 1540px) {
+@media (max-width: 1550px) {
     .MyChat_Stand{
         display: flex;
         flex-direction: row;
         margin-bottom: 1vh;
-        justify-content: center;
+        justify-content: flex-end;
         align-items: flex-end; 
     }
-
+    .MyChat_Stand_resize{
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 1vh;
+        justify-content: flex-end;
+        align-items: flex-end;
+        margin-bottom: 3vh;
+    }
     .MyChat_Loading{
         margin-top: 2vh;
-        margin-right: 1vw; 
+        margin-right: 0.4vw; 
     }
     .MyChat_Error{
       display: flex;
@@ -154,6 +168,7 @@
         height:fit-content;
         max-width:240px;
         word-wrap: break-word;
+        white-space: pre-wrap;
         overflow-wrap: break-word;
         padding: 6px 10px; 
     }
@@ -164,7 +179,7 @@
         line-height: 1.4;
     }
     #MyChat_ReCount{
-        margin-left: 3vw;
+        margin-left: 3.3vw;
         margin-top: 2vh;
         font-size: 9px;
         font-weight: bolder;

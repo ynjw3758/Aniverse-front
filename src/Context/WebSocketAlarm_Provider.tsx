@@ -15,6 +15,7 @@ type Receive_chat={
     SendMsg:string;
     SendTime:string;
     ChatId:string;
+    MessageId:string
 }
 
 
@@ -25,7 +26,8 @@ type Receive_chat={
         SendNickname: "",
         SendMsg: "",
         SendTime:"",
-        ChatId:""
+        ChatId:"",
+        MessageId:""
     })
     const[isAlarm, setIsAlarm]=useState<boolean>(false);
     const socketRef = useRef<WebSocket | null>(null);

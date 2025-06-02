@@ -26,6 +26,7 @@ import ShowChat from "../Chat/ChatContents/ShowChat";
 import ShowChatWrapper from "../Chat/ChatContents/ShowChatWrapper";
 import GatewayError from "../Error_Page/GatewayError";
 import BadRequest from "../Error_Page/BadRequest";
+import WebSocket_Chat_Provider from "../Context/WebSocker_Chat_Provider";
 
 const router = createBrowserRouter([
   {
@@ -71,7 +72,11 @@ const router = createBrowserRouter([
    element:<ChatMain />,
    errorElement:<Not_found />,
    children: [
-    { path: ":chatRoomId", element:<ShowChatWrapper />} 
+    { path: ":chatRoomId", 
+      element:(<WebSocket_Chat_Provider>
+          <ShowChatWrapper />
+      </WebSocket_Chat_Provider>)
+    } 
   ]
  },
  

@@ -202,7 +202,10 @@ const Login:React.FC= (props : {})=>{
             */
     return ( <Fragment>
           <form onSubmit={SubmitHandler} onKeyDown={KeydownHandler}>
-
+                  {isloading && (<div className="login_loading">
+                <img src="/image/login_loading.png"/>
+                <p>로그인 중....</p>
+            </div>)}
             <div className="Loginmain">
                 <h2>로그인</h2>
                 <div className="Loginimage">

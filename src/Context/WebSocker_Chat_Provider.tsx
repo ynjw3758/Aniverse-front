@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from "react";
 import WebSocketChatContext from "./WebSocketChatContext";
 import { Client, IMessage } from "@stomp/stompjs";
@@ -16,6 +15,8 @@ type readchatinfo={
 const WebSocket_Chat_Provider =({children}:Props) =>{
   const[isError, setIsError]=useState<boolean>(false);
   const[isSuccess, setIsSuccess]=useState<boolean>(false);
+  const[stomp, setStomp]=useState<Client | null>(null);
+  const[web, setWeb]=useState<WebSocket | null>(null);
   
   const stompClientRef = useRef<Client | null>(null);
   const socketRef = useRef<WebSocket | null>(null);
@@ -23,11 +24,77 @@ const WebSocket_Chat_Provider =({children}:Props) =>{
   const UserIds = useRef<string[]>([]);
   const[readChat, setReadChat]=useState<string[]>([]);
 
+useEffect(() => {
+  return () => {
+    console.log("🧹 WebSocket_Chat_Provider unmount, 연결 종료 시도");
+    if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
+      socketRef.current.close();
+      console.log("🔌 WebSocket 정상 종료");
+    }
 
+    if (stompClientRef.current && stompClientRef.current.connected) {
+      stompClientRef.current.deactivate();
+      console.log("📴 STOMP 클라이언트 정상 종료");
+    }
+  };
+}, []);
+
+/*
   useEffect(() =>{
+   
    console.log("채팅 페이지 입장");
+  const userid = localStorage.getItem("id")!;
+
+  // 1. WebSocket 연결 먼저
+  const ws = new WebSocket("ws://127.0.0.1:8083/chat");
+         
+      
+  ws.onopen = () => {
+    console.log("✅ WebSocket 연결 완료 (기본 연결)");
+    const sock = new SockJS(`http://127.0.0.1:8083/ws?userid=${userid}`);
+    const client = new Client({
+      webSocketFactory: () => sock,
+      reconnectDelay: 5000,
+      onConnect: () => {
+        
+      },
+      onStompError: (frame) => {
+        const errorMessage = frame.headers["message"] ?? frame.body;
+        console.error("❌ STOMP ERROR 메시지:", errorMessage);
+      },
+      onWebSocketError: (error) => {
+        console.error("❌ SockJS 연결 에러", error);
+      },
+    });
+
+    client.activate();
+    setWeb(ws);
+    setStomp(client);
+      };
+
+      ws.onmessage = (e) => {
+        console.log("📩 서버에서 온 메시지:", e.data);
+      };
+
+      ws.onerror = (e) => {
+        console.error("❌ WebSocket 에러 발생", e);
+      };
+
+      ws.onclose = () => {
+        console.log("🔌 WebSocket 연결 종료됨");
+      };
+
+      return () => {
+        if (ws.readyState === WebSocket.OPEN) {
+          ws.close();
+        }
+        if (stompClientRef.current?.connected) {
+          stompClientRef.current.deactivate();
+        }
+      };
 
   },[]);
+  */
     const sendMessage = (chatId: string, message: string, sendId: string, nickname:string, 
       Profile:string, isFirst:boolean ,UserId:string[], ReCount:number ,messageId:string) => {
        if (!stompClientRef.current || !stompClientRef.current.connected) {
@@ -57,27 +124,42 @@ const WebSocket_Chat_Provider =({children}:Props) =>{
     const Partici_Chatid =(chatid:string, UserId:string[]) =>{
       ChatId.current=chatid;
       UserIds.current =UserId;
+
+                // 🔌 기존 연결 정리
+          if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
+            socketRef.current.close();
+            socketRef.current = null;
+          }
+
+          if (stompClientRef.current && stompClientRef.current.connected) {
+            stompClientRef.current.deactivate();
+            stompClientRef.current = null;
+          }
+
       const userid= localStorage.getItem("id")!;
-        // 여기서 STOMP 연결 수행
-        const ws = new WebSocket("ws://127.0.0.1:8083/chat");
+        const ws = new WebSocket(`ws://127.0.0.1:8083/chat?userId=${userid}&chatId=${ChatId.current}`);
         const socket = new SockJS(`http://127.0.0.1:8083/ws?userid=${userid}`);
         ws.onopen = () => {
+
+          //setWeb(ws);
+          socketRef.current = ws;
           console.log("✅ WebSocket Chat연결됨 : ", userid);
           const MyId:string = localStorage.getItem("id")!;
           ws.send(JSON.stringify({ UserId:MyId ,ChatId:ChatId.current, type: "ChatJoin" }));
           const client = new Client({
             webSocketFactory: () => socket,
             reconnectDelay: 5000,
+            
             onConnect: () => {
+              //setStomp(client);
+              stompClientRef.current = client;
               client.subscribe(`/topic/chat/${ChatId.current}`, (message) => {
                 console.log("📩 채팅 아이디로 수신 메시지:", message.body);
               },  {
                 userId:JSON.stringify(UserIds.current), 
                 type:"Chat"// ✅ 헤더로 userId 넘김
               });
-               console.log("구독 하냐 ?" , ChatId.current);
               client.subscribe(`/topic/read/${ChatId.current}`, (message) => {
-                console.log("오나 ?" , message);
                 const readInfo:readchatinfo = JSON.parse(message.body);
                 console.log("👁️ 읽음 정보 수신:", readInfo.messageIds);
                 setReadChat(readInfo.messageIds);
@@ -128,22 +210,18 @@ const WebSocket_Chat_Provider =({children}:Props) =>{
           });
     
           client.activate();
-          stompClientRef.current = client;
         };
     
         ws.onmessage = (e) => {
           console.log("📩 서버 메시지:",e.data);
         }
         ws.onerror = (e) => console.error("❌ WebSocket 에러", e);
-        ws.onclose = () => console.log("🔌 WebSocket 종료");
-    
-        socketRef.current = ws;
+        ws.onclose = () => {
+          console.log("🔌 WebSocket 종료");
+        }
+      
 
     }
-    const resetErrorAndSuccess = () => {
-      setIsError(false);
-      setIsSuccess(false);
-    };
     
 
     const WebSocket_Ingo ={

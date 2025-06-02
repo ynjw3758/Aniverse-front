@@ -49,7 +49,7 @@ const AllChatItems =({ChatInfoList ,StandDate ,newDate,ReadChatcnt ,DeleteChat}:
     }
 
     useEffect(() =>{
-
+        console.log("ReadChatcnt :" ,ReadChatcnt);
         setChatInfoLists(prev =>
             prev.map(chat => {
               if (ReadChatcnt.includes(chat.messageId)) {

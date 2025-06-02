@@ -76,7 +76,7 @@ const Focus_div = isfocus? "PartiChatList_Main_Focus" :"PartiChatList_Main";
 //#endregion
 
 useEffect(() =>{
-    console.log("message :" , props.ChatAlarm)
+
     let test :string[]=[...img];
     const images:object=props.Images;
     if(props.Id ===props.FocusId) {
@@ -113,8 +113,7 @@ useEffect(() =>{
 },[props.IsDuple])
 
 useEffect(() =>{
-    console.log("alarmid: ", props.lastmsg);
-    setMessage(props.lastmsg)
+    if(props.lastmsg !== "null") setMessage(props.lastmsg)
     if(props.AlarmCnt !==0) {
         setAlarmcnt(props.AlarmCnt);
         setIsChat(true);}

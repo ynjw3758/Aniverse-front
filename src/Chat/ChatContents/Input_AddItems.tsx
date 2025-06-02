@@ -117,7 +117,6 @@ const newDate = useRef<string>("");
 //#endregion
 
     const AddfileHandler =(event: React.ChangeEvent<HTMLInputElement>) =>{
-        console.log("파일 :" , event.target.files);
         const array :any=event.target.files;
         let imglist:string[]=[...img];
         let imidlist:string[]=[...imgid];
@@ -190,7 +189,6 @@ const newDate = useRef<string>("");
     }
 
     useEffect(() =>{
-      console.log("props" , props.CreateDate);
       setAllChat([]);
        Chat_Context.Partici_Chatid(props.ChatId, props.totalId);
        if(props.messages.length !==0) setAllChat(props.messages);
@@ -225,7 +223,6 @@ const newDate = useRef<string>("");
            const FormatDate = formatdate(now);
            console.log("마지막 :" , props.date[props.date.length-1])
            if(FormatDate !== props.date[props.date.length-1]){
-              console.log("불불일치 ")
               newDate.current = FormatDate;
               let add_date:string[]=[...props.date];
               add_date.push(FormatDate);
@@ -245,7 +242,6 @@ const newDate = useRef<string>("");
               else{
                 newChat[allChat.length-1] = [...newChat[allChat.length-1], newMessage]
               }
-            console.log("newChat" , newChat);
             setAllChat(newChat);
             setIsMyChat(true);
             
@@ -334,7 +330,6 @@ const newDate = useRef<string>("");
          })
         }
         else{
-           console.log("임력값이 없음");
            return;
         }
       }
@@ -347,7 +342,6 @@ const newDate = useRef<string>("");
         }
         else{
           if(e.key === "Backspace" && e.currentTarget.selectionStart === 0 && e.currentTarget.selectionEnd === e.currentTarget.value.length){
-                   console.log(" 초기화");
                    Initial_textarea()
           } 
           
@@ -397,17 +391,14 @@ const newDate = useRef<string>("");
       };
       const chatEndRef = useRef<HTMLDivElement | null>(null);
       useEffect(() => {
-        console.log("추가 후 아래로 자동으로 스크롤 이동")
         AutoDownScroll();
       }, [allChat]); // ✅ 메시지가 바뀔 때마다 스크롤 실행
 
       useEffect(() =>{
-          console.log("채팅방 입장 시 ");
           if(isMyChat === true) AutoDownScroll();
       },[isMyChat])
 
       useEffect(() =>{
-        console.log("읽음 카운트 도착? :" , Chat_Context.ReadChat);
       },[Chat_Context.ReadChat])
 
       function AutoDownScroll (){

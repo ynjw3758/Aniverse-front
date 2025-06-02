@@ -94,9 +94,7 @@ const ShowChat =(props:info) =>{
     useEffect(() =>{
       setIsSocket(false);
     if(props.isClick === true){
-      console.log("클릭 : ", props.CreateDate)
       setMsgInfo([]);
-      console.log("soket :" , test.current);
       let access_token:string="";
       const UserId:string= localStorage.getItem("id")!;
       access_token =localStorage.getItem("a_id")!;
@@ -108,9 +106,7 @@ const ShowChat =(props:info) =>{
        body: {Id:UserId, ChatId:props.Chat_id}
      })
       .then(response =>{
-             console.log("채팅 정보 가져오기 결과:" , response);
              const ChatInfos:ChatInfos[] =response.data.data.MessageInfo;
-             console.log("ChatInfos :" , ChatInfos); 
              if(ChatInfos.length !==0){
                 const ChatData:ChatInfos[] = response.data.data.MessageInfo;
                 let date:string[] =[...standDate];
@@ -129,14 +125,12 @@ const ShowChat =(props:info) =>{
              setIsSocket(true);
        }).catch((error) =>{
        if(axios.isAxiosError<ResponseDataType>(error)){
-           console.log("error code: " , error.config);
            const originalRequest = error.config;
            if(error.response?.status==400){
             navigate("/error/BadRequest");
             return;
            }
            else if(error.response?.status==401){
-               console.log("승인되지 않은 로그인 : " , error);
                Object.entries(error.response?.data).map(key =>{
                 if(key.at(0) == "errorcode"){
                   if(key.at(1) == "00"){
@@ -237,10 +231,7 @@ const ShowChat =(props:info) =>{
     },[props.MessageInfo, props.StandDate])
 
     useEffect(() =>{
-     console.log("채팅 카운트 주시하자");
-     console.log("값 :" ,Web_Chatinfo.ReadChat );
     },[Web_Chatinfo.ReadChat])
-
 
     async function UserInfoPasing(){
       let list:Object[]=props.Userinfo;
@@ -295,7 +286,7 @@ const ShowChat =(props:info) =>{
     }
 
     
-     return(<WebSocket_Chat_Provider>
+     return(<>
      <div id={props.Chat_id}>
      <div>
         <ChatHeader name={props.RoomName} Count={size}/>
@@ -311,7 +302,7 @@ const ShowChat =(props:info) =>{
         </>)}
       </div>
      </div>
-     </WebSocket_Chat_Provider>)
+     </>)
 }
 
 export default ShowChat;

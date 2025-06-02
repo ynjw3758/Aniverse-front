@@ -3,6 +3,7 @@ import "./ShowChatWrapper.scss";
 import ShowChat from "./ShowChat";
 import ShowChatContext from "../../Context/ShowChatContext";
 import { useContext } from "react";
+import WebSocket_Chat_Provider from "../../Context/WebSocker_Chat_Provider";
 
 const ShowChatWrapper =() =>{
 

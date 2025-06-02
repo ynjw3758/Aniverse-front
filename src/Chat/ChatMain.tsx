@@ -17,6 +17,7 @@ import "./ChatMain.scss";
 import AddChat from "./AddChat/AddChat";
 import ShowChat from "./ChatContents/ShowChat";
 import WebSocker_Provider from "../Context/WebSocker_Provider";
+import WebSocket_Chat_Provider from "../Context/WebSocker_Chat_Provider";
 import ChatList from "./Chatlist/ChatList";
 import Dupleroom from "./AddChat/Dupleroom";
 import ChatMainSide from "./ChatMainSide";
@@ -25,6 +26,7 @@ import ShowChatContext from "../Context/ShowChatContext";
 import WebSocketAlarm_Provider from "../Context/WebSocketAlarm_Provider";
 import ChatNotificationMain from "../Notification/ChatNotificationMain";
 import WebSocketAlarmContext from "../Context/WebSocketAlarmContext";
+import WebSocketChatContext from "../Context/WebSocketChatContext";
 //#endregion
 
 
@@ -166,7 +168,6 @@ const cookies = new Cookies();
 const ChatReceive_Alarm= useContext(WebSocketAlarmContext);
 //#endregion
 
-
     const AddchatHandler =() =>{
     setIschat({...ischat ,Addchat:true });
     }
@@ -187,6 +188,13 @@ const ChatReceive_Alarm= useContext(WebSocketAlarmContext);
         */
         }
     },[ChatReceive_Alarm.chatReceive.MessageId])
+
+    useEffect(() =>{
+      console.log("아아")
+      setIschat({Addchat:false , showcaht:false, islist:false , isDuple:false})
+      //WebChat.Initialswtting(false);
+    },[])
+
     useEffect(() =>{
       setIschat({...ischat ,islist:false ,showchat:false})
       const UserId:string= localStorage.getItem("id")!;
@@ -355,9 +363,6 @@ const ChatReceive_Alarm= useContext(WebSocketAlarmContext);
 
     useEffect(() =>{
       if(standDate.current.length ===0 ) return;
-      console.log("d뭐여 " , isSave.current);
-      console.log("데이터 확인 :" ,standDate.current);
-      console.log("msgInfo :" ,msgInfo.current);
       Chatinfo.insert_values(roomId,roomName, 
         memeber,[],ctdate,false , 
         myinfo.UserNickName , myinfo.Profile,roomId, 
@@ -432,7 +437,6 @@ const ChatReceive_Alarm= useContext(WebSocketAlarmContext);
          chatDate.current= key[1];
       }
      })
-       console.log("chatid :" ,focusid.current)
       Chatinfo.insert_values(chatid.current,chattitle.current, chatdata.current,imgdata.current,
         chatDate.current,false , myinfo.UserNickName , myinfo.Profile ,focusid.current, true, [], []);
        setIschat({AddChat:false , showchat:true, islist:true});
@@ -464,7 +468,8 @@ const ChatReceive_Alarm= useContext(WebSocketAlarmContext);
     }
     
 
-    return(<WebSocketAlarm_Provider>
+    return(
+    <WebSocketAlarm_Provider>
     <WebSocker_Provider>
       {isAlarm && (<>
       <ChatNotificationMain ChatReceive={alchatReceive}/>
@@ -503,16 +508,20 @@ const ChatReceive_Alarm= useContext(WebSocketAlarmContext);
         </>)}
         {ischat.Addchat && (<AddChat onClose={AddClose} ChatShow={chatList} onDuple={DupleHandler} OnOneDuple={OneToOneDuple} 
         Profile={myinfo.Profile} Nickname={myinfo.UserNickName}/>)}
-        {ischat.showchat && (<div className="chatcontents">
-          <Outlet />
-        </div>)}
+        {ischat.showchat && (
+            <div className="chatcontents">
+              <Outlet />
+            </div>
+        
+        )}
         {ischat.isDuple &&(<>
         <Dupleroom Items={dupldata} onMovechat={TypeChatHandler}/>
         </>)}
         <ChatMainSide OnclickSearch={Active_Search}/>
         {isSearch && (<Side_Search />)}        
         </WebSocker_Provider>
-        </WebSocketAlarm_Provider>)
+        </WebSocketAlarm_Provider>
+       )
 }
 
 export default ChatMain;

@@ -28,8 +28,7 @@ const AllChatItems =({ChatInfoList ,StandDate ,newDate,ReadChatcnt ,DeleteChat}:
     const [ChatInfoLists, setChatInfoLists] = useState<MessageInfo[]>([]);
     const bottomRef = useRef<HTMLDivElement | null>(null);
     useEffect(() =>{
-        console.log("newdate :" , newDate);
-        console.log("StandDate :" , StandDate);
+        
         setChatInfoLists(ChatInfoList);
         if(newDate !==StandDate && StandDate !== undefined) setIsSameTime(false); //날짜가 갱신된 경우 표시 o
         else if(newDate !==StandDate && StandDate === undefined) setIsSameTime(true); //같은 날짜인 경우 표시 x
@@ -49,11 +48,11 @@ const AllChatItems =({ChatInfoList ,StandDate ,newDate,ReadChatcnt ,DeleteChat}:
     }
 
     useEffect(() =>{
-        console.log("ReadChatcnt :" ,ReadChatcnt);
+        console.log("ReadChatcnt :" ,ChatInfoLists);
+        
         setChatInfoLists(prev =>
             prev.map(chat => {
               if (ReadChatcnt.includes(chat.messageId)) {
-                console.log("카운트 낮추자", chat.messageId);
                 return {
                   ...chat,
                   recount: Math.max(chat.recount - 1, 0), // 음수 방지
@@ -62,6 +61,7 @@ const AllChatItems =({ChatInfoList ,StandDate ,newDate,ReadChatcnt ,DeleteChat}:
               return chat;
             })
           );
+          
     },[ReadChatcnt])
     
 

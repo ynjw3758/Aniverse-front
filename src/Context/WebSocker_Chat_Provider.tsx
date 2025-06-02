@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import WebSocketChatContext from "./WebSocketChatContext";
 import { Client, IMessage } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
+import ShowChatContext from "./ShowChatContext";
 
 type Props = {
     children?: React.ReactNode
@@ -10,19 +11,42 @@ type readchatinfo={
   chatId:string;
   messageIds:string[]
 }
+type Receive_Message={
+    MessageId:string
+    ChatId:String;
+    SendId:string;
+    SendProfile:string;
+    SendNickname:String;
+    SendMsg:String;
+    SendTime:string;
+    ReCount:number;
+    type:string
+}
 
+type MessageInfo={
+    chatId:string;
+    message:string;
+    messageId:string;
+    nickname:string;
+    profile:string;
+    recount:number;
+    sendId:string;
+    timestamp:string;
+    type:string;
+    isSend:boolean
+   }
 
 const WebSocket_Chat_Provider =({children}:Props) =>{
   const[isError, setIsError]=useState<boolean>(false);
   const[isSuccess, setIsSuccess]=useState<boolean>(false);
-  const[stomp, setStomp]=useState<Client | null>(null);
-  const[web, setWeb]=useState<WebSocket | null>(null);
   
   const stompClientRef = useRef<Client | null>(null);
   const socketRef = useRef<WebSocket | null>(null);
   const ChatId = useRef<string>("");
   const UserIds = useRef<string[]>([]);
   const[readChat, setReadChat]=useState<string[]>([]);
+  const[receivemsg, setReceivemsg]=useState<MessageInfo>()
+  //const showchat =useContext(ShowChatContext);
 
 useEffect(() => {
   return () => {
@@ -39,68 +63,15 @@ useEffect(() => {
   };
 }, []);
 
-/*
-  useEffect(() =>{
-   
-   console.log("채팅 페이지 입장");
-  const userid = localStorage.getItem("id")!;
-
-  // 1. WebSocket 연결 먼저
-  const ws = new WebSocket("ws://127.0.0.1:8083/chat");
-         
-      
-  ws.onopen = () => {
-    console.log("✅ WebSocket 연결 완료 (기본 연결)");
-    const sock = new SockJS(`http://127.0.0.1:8083/ws?userid=${userid}`);
-    const client = new Client({
-      webSocketFactory: () => sock,
-      reconnectDelay: 5000,
-      onConnect: () => {
-        
-      },
-      onStompError: (frame) => {
-        const errorMessage = frame.headers["message"] ?? frame.body;
-        console.error("❌ STOMP ERROR 메시지:", errorMessage);
-      },
-      onWebSocketError: (error) => {
-        console.error("❌ SockJS 연결 에러", error);
-      },
-    });
-
-    client.activate();
-    setWeb(ws);
-    setStomp(client);
-      };
-
-      ws.onmessage = (e) => {
-        console.log("📩 서버에서 온 메시지:", e.data);
-      };
-
-      ws.onerror = (e) => {
-        console.error("❌ WebSocket 에러 발생", e);
-      };
-
-      ws.onclose = () => {
-        console.log("🔌 WebSocket 연결 종료됨");
-      };
-
-      return () => {
-        if (ws.readyState === WebSocket.OPEN) {
-          ws.close();
-        }
-        if (stompClientRef.current?.connected) {
-          stompClientRef.current.deactivate();
-        }
-      };
-
-  },[]);
-  */
     const sendMessage = (chatId: string, message: string, sendId: string, nickname:string, 
       Profile:string, isFirst:boolean ,UserId:string[], ReCount:number ,messageId:string) => {
        if (!stompClientRef.current || !stompClientRef.current.connected) {
         console.warn("STOMP 연결이 되어 있지 않습니다.");
         return;
       }
+
+      console.log("닉네임  :" ,nickname );
+      console.log("프로파일일  :" ,Profile );
       const payload = {
         chatId,
         sendId,
@@ -155,6 +126,9 @@ useEffect(() => {
               stompClientRef.current = client;
               client.subscribe(`/topic/chat/${ChatId.current}`, (message) => {
                 console.log("📩 채팅 아이디로 수신 메시지:", message.body);
+                const msg:MessageInfo = JSON.parse(message.body);
+                console.log("msg :" ,msg)
+                setReceivemsg(msg);
               },  {
                 userId:JSON.stringify(UserIds.current), 
                 type:"Chat"// ✅ 헤더로 userId 넘김
@@ -163,9 +137,6 @@ useEffect(() => {
                 const readInfo:readchatinfo = JSON.parse(message.body);
                 console.log("👁️ 읽음 정보 수신:", readInfo.messageIds);
                 setReadChat(readInfo.messageIds);
-              
-                // 여기에 읽음 카운트 UI 업데이트 로직 추가
-                // 예: 해당 messageId에 대한 UI의 recount 감소 처리 등
               });
 
 
@@ -229,6 +200,7 @@ useEffect(() => {
       isError,
       isSuccess,
       ReadChat:readChat,
+      receivemsg:receivemsg,
       sendMessage:sendMessage,
       Partici_Chatid:Partici_Chatid,
 

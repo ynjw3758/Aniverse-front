@@ -37,7 +37,9 @@ type info ={
     ChSendId:string[],
     count:number,
     date:string[],
-    messages:MessageInfo[][]
+    messages:MessageInfo[][],
+    RealtimeMsg:MessageInfo
+    AllChat:MessageInfo[][]
  }
 
  type MyChat ={
@@ -58,6 +60,8 @@ type MessageInfo={
   type:string;
   isSend:boolean;
  }
+
+
  //#endregion
 
  //                             +--------------------
@@ -114,7 +118,10 @@ const TextRef =useRef<HTMLTextAreaElement>(null);
 const containerRef = useRef<HTMLDivElement>(null);
 const StandDate= useRef<string[]>(props.date);
 const newDate = useRef<string>("");
+const allChatRef = useRef<MessageInfo[][]>(props.messages);
 //#endregion
+
+
 
     const AddfileHandler =(event: React.ChangeEvent<HTMLInputElement>) =>{
         const array :any=event.target.files;
@@ -189,12 +196,24 @@ const newDate = useRef<string>("");
     }
 
     useEffect(() =>{
+      console.log("최초 렌더링되고 채팅 리스트 저장 useeffect" )
       setAllChat([]);
        Chat_Context.Partici_Chatid(props.ChatId, props.totalId);
        if(props.messages.length !==0) setAllChat(props.messages);
-      setIsMyChat(true);
+        setIsMyChat(true);
+      
+      
    },[]);
-
+   useEffect(() =>{
+     if(props.RealtimeMsg!== null ) setIsMyChat(true);
+   },[props.RealtimeMsg])
+/*
+   useEffect(() =>{
+     console.log("실시간 채팅 처리 useeffect : " ,isMyChat);
+     if(props.RealTimeRead ===null) return;
+     else setIsMyChat(true);
+   },[props.RealTimeRead])
+*/
 
       const formatdate =(date:Date) =>{
         const year = date.getFullYear();
@@ -221,7 +240,6 @@ const newDate = useRef<string>("");
            const nowTime =  new Date().toISOString();
            const now  =new Date();
            const FormatDate = formatdate(now);
-           console.log("마지막 :" , props.date[props.date.length-1])
            if(FormatDate !== props.date[props.date.length-1]){
               newDate.current = FormatDate;
               let add_date:string[]=[...props.date];
@@ -229,6 +247,7 @@ const newDate = useRef<string>("");
               StandDate.current =add_date; 
            }
             let newChat:MessageInfo[][]=[...allChat];
+            console.log("newChat :" ,newChat);
             let newMessage = {chatId:props.ChatId,message:emoticon, messageId:messageId,nickname:props.MyNickname,
               profile:props.Profile,
               recount:props.count-1,
@@ -240,11 +259,11 @@ const newDate = useRef<string>("");
                  newChat.push([newMessage]);
               }
               else{
-                newChat[allChat.length-1] = [...newChat[allChat.length-1], newMessage]
+                const lastIdx = newChat.length - 1;
+                newChat[lastIdx] = [...newChat[lastIdx], newMessage]
               }
-            setAllChat(newChat);
+            setAllChat([...newChat]);
             setIsMyChat(true);
-            
             Chat_Context.sendMessage(props.ChatId, emoticon, UserId, props.MyNickname ,props.Profile,  
             true, props.ChSendId,props.count ,messageId)
             
@@ -337,6 +356,10 @@ const newDate = useRef<string>("");
       const compare_height = useRef<number>(85);
       const textarea_hegiht= useRef<number>(65);
       const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        if(e.key === 'Enter' && emoticon.length !==0){
+          console.log("엔터 치면 바로 채팅 보내기");
+          sendChatHandler()
+        }
         if (e.key === 'Enter' && e.shiftKey) {;
             resizeTextarea(); 
         }
@@ -346,6 +369,7 @@ const newDate = useRef<string>("");
           } 
           
         }
+        
       };
 
       const Initial_textarea =() =>{
@@ -424,7 +448,7 @@ const newDate = useRef<string>("");
         </div>)}
         {isMyChat && (<div className="AllChat_Stand">
           <AllChat allChat={allChat} StandDate={StandDate.current} CreateDate={props.CreateDate} 
-          newDate={newDate.current} DeleteChat={deletechat}  ReadChatcnt={Chat_Context.ReadChat}/>
+          newDate={newDate.current} DeleteChat={deletechat}  ReadChatcnt={Chat_Context.ReadChat} RealTimeMsg={props.RealtimeMsg} />
           <div ref={chatEndRef}/>
         </div>)}
         <div className="AddChatItems_inputchat" ref={containerRef}>

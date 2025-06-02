@@ -65,6 +65,7 @@ const[name, setName]=useState<string>("");
 const[message, setMessage]=useState<string>("");
 const[isfocus, setIsfocus]=useState<boolean>(false);
 const[isChat, setIsChat]=useState<boolean>(false);
+const[ismsg, setIsmsg]=useState<boolean>(false);
 const[alarmcnt, setAlarmcnt]=useState<number>(0);
 //#endregion
 
@@ -73,6 +74,7 @@ const[alarmcnt, setAlarmcnt]=useState<number>(0);
 //              +-----------------
 //#region type
 const Focus_div = isfocus? "PartiChatList_Main_Focus" :"PartiChatList_Main";
+const Ismsg = ismsg ? "PartiChatList_story_msg" :"PartiChatList_story";
 //#endregion
 
 useEffect(() =>{
@@ -99,8 +101,10 @@ useEffect(() =>{
     }
     else setName(props.Name);
     if(props.idx ===props.total -1) props.onshowlist();
-    if(props.lastmsg !=="null") setMessage(props.lastmsg); 
-    
+    if(props.lastmsg !=="null") {
+        setIsmsg(true);
+        setMessage(props.lastmsg);
+    } 
 },[props.Id, props.FocusId]);
 
 useEffect(() =>{
@@ -138,7 +142,7 @@ const showchat= () =>{
                     <p>{name}</p>
                     <h4>{props.Count+1}</h4>
                 </div>
-             <div className="PartiChatList_story" id={props.create_date}>
+             <div className={Ismsg} id={props.create_date}>
                 <p>{message}</p>
              </div>
             </div>

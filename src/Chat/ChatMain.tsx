@@ -163,9 +163,10 @@ const Dpchatid=useRef("");
 const DpchatDate=useRef("");
 const Chatinfo =useContext(ShowChatContext);
 const location = useLocation();
-const { focusId, isFromAlarm } = location.state || {};
+//const { focusId, isFromAlarm } = location.state || {};
 const cookies = new Cookies();
 const ChatReceive_Alarm= useContext(WebSocketAlarmContext);
+const { chatRoomId } = useParams();
 //#endregion
 
     const AddchatHandler =() =>{
@@ -189,22 +190,21 @@ const ChatReceive_Alarm= useContext(WebSocketAlarmContext);
         }
     },[ChatReceive_Alarm.chatReceive.MessageId])
 
-    useEffect(() =>{
-      console.log("아아")
-      setIschat({Addchat:false , showcaht:false, islist:false , isDuple:false})
-      //WebChat.Initialswtting(false);
-    },[])
 
     useEffect(() =>{
+       console.log("chatRoomId :" ,chatRoomId);
       setIschat({...ischat ,islist:false ,showchat:false})
       const UserId:string= localStorage.getItem("id")!;
-      if(isFromAlarm === undefined){
-        endPoint.current="/reload";
-        Body.current={Id:UserId};
+      console.log("UserId :" ,UserId);
+      if(chatRoomId !==UserId){
+        console.log("채팅 가져오기;")
+        endPoint.current="/getFocusList";
+        Body.current={Id:UserId ,ChatId:chatRoomId};
       }
       else{
-        endPoint.current="/getFocusList";
-        Body.current={Id:UserId ,ChatId:focusId};
+        console.log("리로드")
+        endPoint.current="/reload";
+        Body.current={Id:UserId};
       }
         let access_token:string="";
         access_token =localStorage.getItem("a_id")!;

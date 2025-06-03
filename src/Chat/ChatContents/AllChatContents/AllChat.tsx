@@ -4,11 +4,15 @@ import AllChatItems from "./AllChatItems";
 
 interface props{
     allChat : MessageInfo[][],
+    Otherchat:MessageInfo[][],
     StandDate:string[],
     CreateDate:string,
     newDate:string,
     ReadChatcnt:string[],
     RealTimeMsg:MessageInfo,
+    Receive_NewDate:string,
+    Receive_standDate:string[],
+    IsMine:boolean,
     DeleteChat:(data:string) => void
 }
 type MessageInfo={
@@ -25,7 +29,8 @@ type MessageInfo={
    }
 
 
-const AllChat =({allChat ,StandDate ,CreateDate ,newDate, ReadChatcnt  ,DeleteChat ,RealTimeMsg}:props) =>{
+const AllChat =({allChat ,StandDate ,CreateDate ,newDate, ReadChatcnt  ,DeleteChat ,
+    RealTimeMsg ,Receive_NewDate ,Receive_standDate ,IsMine ,Otherchat}:props) =>{
 
     const [localChat, setLocalChat] = useState<MessageInfo[][]>(allChat);
     const [localDate, setLocalDate] = useState<string[]>(StandDate);
@@ -65,11 +70,40 @@ const AllChat =({allChat ,StandDate ,CreateDate ,newDate, ReadChatcnt  ,DeleteCh
 */
 
         useEffect(() =>{
-          setLocalChat([...allChat]);
-          setLocalDate([...StandDate]);
-          setNewDateState(newDate);
-        },[allChat])
+            if(Otherchat.length ===0){
+                console.log("다른 댓글이 없다")
+                setLocalChat([...allChat]);
+                setLocalDate([...StandDate]);
+                setNewDateState(newDate);
+            }else{
+                 console.log("다른 댓글이 있다 :" , Otherchat);
+                 console.log("allChat :" , allChat);
+                 const mergedChat = [...Otherchat];
+                 const latestIndex = mergedChat.length - 1;
+                       mergedChat[latestIndex] = [
+                    ...mergedChat[latestIndex],
+                    ...allChat[allChat.length - 1],
+                ];
+                setLocalChat(mergedChat);
+            }
 
+        },[allChat])
+        useEffect(() =>{
+           console.log("다른 사람 채팅이 왔다 받아라:" ,Otherchat);
+           if(allChat.length ===0){
+              setLocalChat([...Otherchat]);
+           }else{
+                 const mergedChat = [...allChat];
+                 const latestIndex = mergedChat.length - 1;
+                       mergedChat[latestIndex] = [
+                    ...mergedChat[latestIndex],
+                    ...Otherchat[Otherchat.length - 1],
+                ];
+                setLocalChat(mergedChat);
+           }
+           
+        },[Otherchat])
+/*
   useEffect(() => {
     if (!RealTimeMsg) return;
 
@@ -98,17 +132,20 @@ const AllChat =({allChat ,StandDate ,CreateDate ,newDate, ReadChatcnt  ,DeleteCh
         }
       }
     });
+    console.log("newdate :" , Receive_NewDate)
+    console.log("stand :" , Receive_standDate)
   }, [RealTimeMsg]);
+  */
     const deletechat =(data:string) =>{
         DeleteChat(data);
     }
-
     return(<>
     <p id="AllCaht_Stand_date">{CreateDate}</p>
     <p id="CreateChat_Message">채팅방이 생성 되었습니다.</p>
     {localChat.map((values, idx) =>(<>
     <AllChatItems ChatInfoList={values} StandDate={StandDate[idx]} CreateDate={CreateDate} 
-    newDate={newDate} DeleteChat={deletechat} ReadChatcnt={ReadChatcnt} />
+    newDate={newDate} DeleteChat={deletechat} ReadChatcnt={ReadChatcnt} 
+    NewDate_receive={newDateState} StandDate_receive={Receive_standDate[idx]} IsMine={IsMine}/>
     </>))}
     </>)
 

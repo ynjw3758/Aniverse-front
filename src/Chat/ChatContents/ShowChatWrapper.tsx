@@ -37,9 +37,6 @@ const ShowChatWrapper =() =>{
     const Chatinfo =useContext(ShowChatContext);
     const ReceiveMessage = useContext(WebSocketChatContext);
     const test = useRef<MessageInfo | null>(null);
-    useEffect(() =>{
-
-    },[ReceiveMessage.receivemsg])
 
 
     return(<>

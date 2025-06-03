@@ -93,6 +93,7 @@ const ShowChat =(props:info) =>{
     const cookies = new Cookies();
     const Web_Chatinfo=useContext(WebSocketChatContext);
     const real_chat = useRef<MessageInfo | null>(null);
+    const RdCnt = useRef<number>(0);
 //#endregion
 
   const formatdate = (date: Date) => {
@@ -102,18 +103,17 @@ const ShowChat =(props:info) =>{
     return `${year}-${month}-${day}`;
   };
 
+
     useEffect(() =>{
-      
+
       if(props.RealtimeMsg ===undefined) return;
-       const Id:string=localStorage.getItem("id")!;
-       console.log("RealtimeMsg :" ,props.RealtimeMsg);
-       
+       const Id:string=localStorage.getItem("id")!;       
        if(props.RealtimeMsg.sendId !==Id ){
-        props.RealtimeMsg.recount = Math.max(props.RealtimeMsg.recount - 1, 0)
           const newMsg: MessageInfo = {
-            ...props.RealtimeMsg
+            ...props.RealtimeMsg,
+            recount : Math.max(props.RealtimeMsg.recount - 1, 0)
           };
-          console.log("newMsg :" , newMsg);
+          RdCnt.current =newMsg.recount;
         real_chat.current = props.RealtimeMsg;
 
               const now = new Date();
@@ -121,10 +121,16 @@ const ShowChat =(props:info) =>{
 
             // 최초 메시지일 경우
       if (allChat.length === 0) {
-        setAllChat([[newMsg]]);
-        setStandDate([FormatDate]);
-        setNewDate(FormatDate);
-        return;
+        if(standDate.length ===0){
+          setAllChat([[newMsg]]);
+          setStandDate([FormatDate]);
+          setNewDate(FormatDate);
+          return;
+        }else{
+          if(standDate[standDate.length-1] ===FormatDate ) return;
+          else setStandDate([...standDate, FormatDate]);
+        }
+
       }
             // 날짜 단위로 메시지 병합
       const lastDate = standDate[standDate.length - 1];
@@ -136,8 +142,8 @@ const ShowChat =(props:info) =>{
         const updated = [...allChat];
         updated[updated.length - 1] = [...updated[updated.length - 1], newMsg];
         setAllChat(updated);
+
       }
-        console.log("allchat shochat :" ,allChat)
        }
        else return;
     },[props.RealtimeMsg])
@@ -145,6 +151,8 @@ const ShowChat =(props:info) =>{
     useEffect(() =>{
       setIsSocket(false);
     if(props.isClick === true){
+      real_chat.current=null;
+      setAllChat([]);
       setMsgInfo([]);
       let access_token:string="";
       const UserId:string= localStorage.getItem("id")!;
@@ -349,7 +357,8 @@ const ShowChat =(props:info) =>{
         {isSocket && (<>
           <AddItems CreateDate={create} ChatId={props.Chat_id} totalId={ids} Profile={props.MyProfile} 
           isFirst={props.isFirst} ChSendId={chsendId} MyNickname={props.MyNickname} 
-          count={size} date ={standDate} messages={msgInfo} RealtimeMsg={real_chat.current!} AllChat={allChat}/>
+          count={size} date ={standDate} messages={msgInfo} RealtimeMsg={real_chat.current!} 
+          AllChat={allChat} NewDate={newDate} realcnt={RdCnt.current}/>
         </>)}
       </div>
      </div>

@@ -66,7 +66,7 @@ const[message, setMessage]=useState<string>("");
 const[isfocus, setIsfocus]=useState<boolean>(false);
 const[isChat, setIsChat]=useState<boolean>(false);
 const[ismsg, setIsmsg]=useState<boolean>(false);
-const[alarmcnt, setAlarmcnt]=useState<number>(0);
+const[alarmcnt, setAlarmcnt]=useState<string>("");
 //#endregion
 
 //              +-----------------
@@ -83,7 +83,7 @@ useEffect(() =>{
     const images:object=props.Images;
     if(props.Id ===props.FocusId) {
         if(props.AlarmCnt !==0){
-            setAlarmcnt(0);
+            setAlarmcnt("0");
             setIsChat(false);
         }
         setIsfocus(true);
@@ -119,8 +119,22 @@ useEffect(() =>{
 useEffect(() =>{
     if(props.lastmsg !== "null") setMessage(props.lastmsg)
     if(props.AlarmCnt !==0) {
-        setAlarmcnt(props.AlarmCnt);
-        setIsChat(true);}
+        if(props.AlarmCnt >99)
+            {
+            
+            const cnt:string=String(props.AlarmCnt); 
+            setAlarmcnt("99+")
+            }
+            else{
+                const cnt:string=String(props.AlarmCnt); 
+                setAlarmcnt(cnt);
+                setIsChat(true);
+            }
+
+    }
+
+
+    
 },[props.AlarmCnt])
 
 

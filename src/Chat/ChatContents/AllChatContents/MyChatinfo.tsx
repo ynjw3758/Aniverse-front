@@ -70,8 +70,8 @@ const DividChatinfo =({Chatinfo,ReadChatcnt, DeleteChat}:props) =>{
       },[Chat_Context.isError, Chat_Context.isSuccess])
 
     useEffect(() =>{
+      console.log("chatinfo :" , Chatinfo)
       resizeToLeft(Chatinfo.message);
-      console.log("리카운트 :" ,reCnt);
       if(Chatinfo.recount !==0) {
         setReCnt(Chatinfo.recount)
       }

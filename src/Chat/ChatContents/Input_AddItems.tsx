@@ -38,8 +38,10 @@ type info ={
     count:number,
     date:string[],
     messages:MessageInfo[][],
-    RealtimeMsg:MessageInfo
-    AllChat:MessageInfo[][]
+    RealtimeMsg:MessageInfo,
+    AllChat:MessageInfo[][],
+    NewDate:string,
+    realcnt:number
  }
 
  type MyChat ={
@@ -119,6 +121,8 @@ const containerRef = useRef<HTMLDivElement>(null);
 const StandDate= useRef<string[]>(props.date);
 const newDate = useRef<string>("");
 const allChatRef = useRef<MessageInfo[][]>(props.messages);
+const ismychat= useRef<boolean>(false);
+const input_values= useRef<string>("");
 //#endregion
 
 
@@ -184,11 +188,19 @@ const allChatRef = useRef<MessageInfo[][]>(props.messages);
     }
 
     const AddEmoticon =(data:string) =>{
-        setEmoticon((prev)=>prev+data);
+      input_values.current += data;
+        if (TextRef.current) {
+          TextRef.current.value = input_values.current;
+        }
+        //setEmoticon((prev)=>prev+data);
     }
 
     const inputHandler =(e:React.ChangeEvent<HTMLTextAreaElement>) =>{
-        setEmoticon(e.target.value);
+       input_values.current = e.target.value;
+         if (TextRef.current) {
+          TextRef.current.value = input_values.current;
+        }
+        //setEmoticon(e.target.value);
     }
     
     const CloseHandler =() =>{
@@ -196,8 +208,7 @@ const allChatRef = useRef<MessageInfo[][]>(props.messages);
     }
 
     useEffect(() =>{
-      console.log("최초 렌더링되고 채팅 리스트 저장 useeffect" )
-      setAllChat([]);
+      console.log("최초 렌더링되고 채팅 리스트 저장 useeffect : ");
        Chat_Context.Partici_Chatid(props.ChatId, props.totalId);
        if(props.messages.length !==0) setAllChat(props.messages);
         setIsMyChat(true);
@@ -224,7 +235,8 @@ const allChatRef = useRef<MessageInfo[][]>(props.messages);
       }
 
       const sendChatHandler =() =>{
-        if(emoticon.length !== 0){
+        if(input_values.current.length !== 0){
+          ismychat.current =true;
         let access_token:string="";
         let UserId:string= "";
         access_token = localStorage.getItem("a_id")!;
@@ -234,23 +246,31 @@ const allChatRef = useRef<MessageInfo[][]>(props.messages);
         axios.get("http://localhost:8080/Pets-social/acccheck").then((response) =>{
    
          if(response.status == 200){
-          setEmoticon("");
+          //setEmoticon("");
            const UserId = localStorage.getItem("id")!;
            const messageId = uuidv4();
            const nowTime =  new Date().toISOString();
            const now  =new Date();
            const FormatDate = formatdate(now);
-           if(FormatDate !== props.date[props.date.length-1]){
+           console.log("date :",  props.date)
+           console.log("FormatDate :",  FormatDate)
+           if(FormatDate !== props.date[props.date.length-1]){ //둘이 같지 않다는 건 새로우이 추가하는 거고 같으면 그냥 stand.current 여기다 그냥 넣으면 되잔아아
               newDate.current = FormatDate;
               let add_date:string[]=[...props.date];
               add_date.push(FormatDate);
               StandDate.current =add_date; 
+           }else{
+            console.log("오늘 날짜와 동일하다")
+            newDate.current = FormatDate;
+            // 같은 날짜일 경우에도 외부 날짜(props)로 최신화하여 날짜 헤더의 일관성 유지
+            if(StandDate.current.length ===0)  StandDate.current[0] =props.date[props.date.length-1]; 
+            else  StandDate.current[StandDate.current.length-1] =props.date[props.date.length-1]; 
+           
            }
             let newChat:MessageInfo[][]=[...allChat];
-            console.log("newChat :" ,newChat);
-            let newMessage = {chatId:props.ChatId,message:emoticon, messageId:messageId,nickname:props.MyNickname,
+            let newMessage = {chatId:props.ChatId,message:input_values.current, messageId:messageId,nickname:props.MyNickname,
               profile:props.Profile,
-              recount:props.count-1,
+              recount:props.realcnt,
               sendId:UserId,
               timestamp:nowTime,
               type:"mine",
@@ -262,10 +282,13 @@ const allChatRef = useRef<MessageInfo[][]>(props.messages);
                 const lastIdx = newChat.length - 1;
                 newChat[lastIdx] = [...newChat[lastIdx], newMessage]
               }
+              
             setAllChat([...newChat]);
             setIsMyChat(true);
-            Chat_Context.sendMessage(props.ChatId, emoticon, UserId, props.MyNickname ,props.Profile,  
+            Chat_Context.sendMessage(props.ChatId, input_values.current, UserId, props.MyNickname ,props.Profile,  
             true, props.ChSendId,props.count ,messageId)
+             input_values.current = "";
+              if (TextRef.current) TextRef.current.value = "";
             
         }
    
@@ -356,7 +379,8 @@ const allChatRef = useRef<MessageInfo[][]>(props.messages);
       const compare_height = useRef<number>(85);
       const textarea_hegiht= useRef<number>(65);
       const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-        if(e.key === 'Enter' && emoticon.length !==0){
+        console.log("input :" , input_values.current)
+        if(e.key === 'Enter' && input_values.current.length !==0){
           console.log("엔터 치면 바로 채팅 보내기");
           sendChatHandler()
         }
@@ -448,7 +472,9 @@ const allChatRef = useRef<MessageInfo[][]>(props.messages);
         </div>)}
         {isMyChat && (<div className="AllChat_Stand">
           <AllChat allChat={allChat} StandDate={StandDate.current} CreateDate={props.CreateDate} 
-          newDate={newDate.current} DeleteChat={deletechat}  ReadChatcnt={Chat_Context.ReadChat} RealTimeMsg={props.RealtimeMsg} />
+          newDate={newDate.current} DeleteChat={deletechat}  ReadChatcnt={Chat_Context.ReadChat} 
+          RealTimeMsg={props.RealtimeMsg} Receive_NewDate={props.NewDate} Receive_standDate={props.date}
+          IsMine={ismychat.current} Otherchat={props.AllChat}/>
           <div ref={chatEndRef}/>
         </div>)}
         <div className="AddChatItems_inputchat" ref={containerRef}>
@@ -467,7 +493,7 @@ const allChatRef = useRef<MessageInfo[][]>(props.messages);
               />
               </label>
         </div>
-        <textarea  placeholder="메시지 입력..." value={emoticon} onChange={inputHandler} 
+        <textarea  placeholder="메시지 입력..." /*value={emoticon}*/ onChange={inputHandler} 
            onKeyDown={handleKeyDown} ref={TextRef}/>
         </div>
 

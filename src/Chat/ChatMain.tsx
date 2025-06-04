@@ -131,10 +131,12 @@ const ChatMain =() =>{
     ChatId:"",
     MessageId:""
 })
+//애네들은 테스트 후 필요없는 것으로 확인되면 삭제할 것!!!!
 const[roomId, setRoomId]=useState<string>("");
 const[memeber, setMember]=useState<Userfos[]>([]);
 const[roomName, setRoomName]=useState<string>("");
 const[ctdate, setCtdate]=useState<string>("")
+const [alarmmsg, setAlarmmsg] = useState<{ [chatId: string]: string }>({});
 
 //#endregion
 
@@ -161,19 +163,17 @@ const Dpimgdata=useRef<string[]>([]);
 const Dpchattitle=useRef("");
 const Dpchatid=useRef("");
 const DpchatDate=useRef("");
-const Chatinfo =useContext(ShowChatContext);
-const location = useLocation();
-//const { focusId, isFromAlarm } = location.state || {};
 const cookies = new Cookies();
+const Chatinfo =useContext(ShowChatContext);
 const ChatReceive_Alarm= useContext(WebSocketAlarmContext);
 const { chatRoomId } = useParams();
+const ReceiveMessage = useContext(WebSocketChatContext);
 //#endregion
 
     const AddchatHandler =() =>{
     setIschat({...ischat ,Addchat:true });
     }
     useEffect(() =>{
-      console.log("채팅 알람람 : " , ChatReceive_Alarm.chatReceive);
       if(ChatReceive_Alarm.chatReceive.SendMsg !="") 
        {
         setAlchatReceive(ChatReceive_Alarm.chatReceive);
@@ -376,7 +376,6 @@ const { chatRoomId } = useParams();
     }
 
     const chatList =(data:Userfos[] , img:string[] ,name:string , roomid:string, date:string) =>{
-    console.log("보여줄 데이터 :" , data);
       const MemberInfo_add:Userfos[]=[...data];
       const Id = localStorage.getItem("id")!;
 
@@ -495,7 +494,8 @@ const { chatRoomId } = useParams();
             </div>
             <div className="chatlist">
               {ischat.islist && (<>
-                <ChatList ChatListinfo={ctList_Info} showcontents={onClickshow} isFocusid={focusid.current} IsDuple={isDuple}/>
+                <ChatList ChatListinfo={ctList_Info} showcontents={onClickshow} isFocusid={focusid.current} IsDuple={isDuple}
+                />
               </>)}
             </div>
         </div>

@@ -13,6 +13,8 @@ export interface Receive_chat {
 export interface Alarm_info {
 socketRef: React.MutableRefObject<WebSocket | null>;
 chatReceive : Receive_chat,
+lastmsgalarm: lasgmsg,
+realTimeLastChat:(values:lasgmsg) => void
 }
 
 const initial:Alarm_info ={
@@ -26,6 +28,12 @@ chatReceive:{
     ChatId:"",
     MessageId:""
     },
+  lastmsgalarm:{ChatId:"" ,Message:""},
+  realTimeLastChat:() =>{}
+}
+type lasgmsg={
+  ChatId:string;
+  Message:string;
 }
 
 

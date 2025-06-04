@@ -2,7 +2,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import WebSocketChatContext from "./WebSocketChatContext";
 import { Client, IMessage } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
-import ShowChatContext from "./ShowChatContext";
+import WebSocketAlarmContext from "./WebSocketAlarmContext";
 
 type Props = {
     children?: React.ReactNode
@@ -36,6 +36,11 @@ type MessageInfo={
     isSend:boolean
    }
 
+  type lasgmsg={
+  ChatId:string;
+  Message:string;
+}
+
 const WebSocket_Chat_Provider =({children}:Props) =>{
   const[isError, setIsError]=useState<boolean>(false);
   const[isSuccess, setIsSuccess]=useState<boolean>(false);
@@ -46,7 +51,8 @@ const WebSocket_Chat_Provider =({children}:Props) =>{
   const UserIds = useRef<string[]>([]);
   const[readChat, setReadChat]=useState<string[]>([]);
   const[receivemsg, setReceivemsg]=useState<MessageInfo>()
-  //const showchat =useContext(ShowChatContext);
+  
+  const lasgmsgAlarm=useContext(WebSocketAlarmContext);
 
 useEffect(() => {
   return () => {
@@ -129,6 +135,8 @@ useEffect(() => {
                 const msg:MessageInfo = JSON.parse(message.body);
                 console.log("msg :" ,msg)
                 setReceivemsg(msg);
+                const lastmsg:lasgmsg ={ChatId:msg.chatId , Message:msg.message} 
+                lasgmsgAlarm.realTimeLastChat(lastmsg);
               },  {
                 userId:JSON.stringify(UserIds.current), 
                 type:"Chat"// ✅ 헤더로 userId 넘김

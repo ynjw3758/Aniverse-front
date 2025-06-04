@@ -93,19 +93,13 @@ const[isSize, setIsSize]=useState<boolean>(false);
 const[isEmoticon, setIsEmoticon]=useState<boolean>(false);
 const[isfiles, setIsfiles]=useState<boolean>(false);
 const[isMyChat, setIsMyChat]=useState<boolean>(false);
-
-const[emoticon, setEmoticon]=useState<string>("");
-//const[newDate, setNewDate]=useState<string>("");
 const[img, setImg]=useState<string[]>([]);
 const[video, setVideo]=useState<string[]>([]);
 const[imgid,  setImgid]=useState<string[]>([]);
 const[videoid,  setVideoid]=useState<string[]>([]);
 
 const[maxsize, setMaxsize]=useState<number>(0);
-const[allChat, setAllChat]=useState<MessageInfo[][]>(props.messages);
-//const { sendMessage } = useContext(WebSocketContext);
-
-
+const[allChat, setAllChat]=useState<MessageInfo[][]>(/*props.messages*/[]);
 //#endregion
 
 //              +-----------------
@@ -192,7 +186,6 @@ const input_values= useRef<string>("");
         if (TextRef.current) {
           TextRef.current.value = input_values.current;
         }
-        //setEmoticon((prev)=>prev+data);
     }
 
     const inputHandler =(e:React.ChangeEvent<HTMLTextAreaElement>) =>{
@@ -200,7 +193,6 @@ const input_values= useRef<string>("");
          if (TextRef.current) {
           TextRef.current.value = input_values.current;
         }
-        //setEmoticon(e.target.value);
     }
     
     const CloseHandler =() =>{
@@ -210,21 +202,18 @@ const input_values= useRef<string>("");
     useEffect(() =>{
       console.log("최초 렌더링되고 채팅 리스트 저장 useeffect : ");
        Chat_Context.Partici_Chatid(props.ChatId, props.totalId);
-       if(props.messages.length !==0) setAllChat(props.messages);
+       /*if(props.messages.length !==0) setAllChat(props.messages);*/
         setIsMyChat(true);
       
       
    },[]);
+
    useEffect(() =>{
-     if(props.RealtimeMsg!== null ) setIsMyChat(true);
+     if(props.RealtimeMsg!== null ) {
+      setIsMyChat(true);
+      AutoDownScroll();
+    }
    },[props.RealtimeMsg])
-/*
-   useEffect(() =>{
-     console.log("실시간 채팅 처리 useeffect : " ,isMyChat);
-     if(props.RealTimeRead ===null) return;
-     else setIsMyChat(true);
-   },[props.RealTimeRead])
-*/
 
       const formatdate =(date:Date) =>{
         const year = date.getFullYear();
@@ -260,7 +249,6 @@ const input_values= useRef<string>("");
               add_date.push(FormatDate);
               StandDate.current =add_date; 
            }else{
-            console.log("오늘 날짜와 동일하다")
             newDate.current = FormatDate;
             // 같은 날짜일 경우에도 외부 날짜(props)로 최신화하여 날짜 헤더의 일관성 유지
             if(StandDate.current.length ===0)  StandDate.current[0] =props.date[props.date.length-1]; 
@@ -453,7 +441,7 @@ const input_values= useRef<string>("");
         if (chatEndRef.current) {
           setTimeout(() => {
             chatEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
-          }, 0);
+          }, 100);
         }
       }
 
@@ -474,8 +462,8 @@ const input_values= useRef<string>("");
           <AllChat allChat={allChat} StandDate={StandDate.current} CreateDate={props.CreateDate} 
           newDate={newDate.current} DeleteChat={deletechat}  ReadChatcnt={Chat_Context.ReadChat} 
           RealTimeMsg={props.RealtimeMsg} Receive_NewDate={props.NewDate} Receive_standDate={props.date}
-          IsMine={ismychat.current} Otherchat={props.AllChat}/>
-          <div ref={chatEndRef}/>
+          IsMine={ismychat.current} Otherchat={props.AllChat} SaveChat={props.messages}/>
+          <div ref={chatEndRef} />
         </div>)}
         <div className="AddChatItems_inputchat" ref={containerRef}>
         <div className="AddChatItems_AddContents">

@@ -17,6 +17,11 @@ type Receive_chat={
     ChatId:string;
     MessageId:string
 }
+type lasgmsg={
+  ChatId:string;
+  Message:string;
+}
+
 
 
   const WebSocketAlarm_Provider =({children}:Props) =>{
@@ -29,7 +34,10 @@ type Receive_chat={
         ChatId:"",
         MessageId:""
     })
-    const[isAlarm, setIsAlarm]=useState<boolean>(false);
+    const [alarmmsg, setAlarmmsg] = useState<lasgmsg>({
+      ChatId:"",
+      Message:""
+    });
     const socketRef = useRef<WebSocket | null>(null);
     const stompClientRef = useRef<Client | null>(null);
 
@@ -68,10 +76,15 @@ type Receive_chat={
         }
 
     },[])
+    const RealTimeLastMsgChat =(values:lasgmsg) =>{
+       setAlarmmsg(values);
+    }
 
     const Alarm_info={
         socketRef:socketRef,
         chatReceive:chatReceive,
+        lastmsgalarm:alarmmsg,
+        realTimeLastChat:RealTimeLastMsgChat
     }
 
     return (

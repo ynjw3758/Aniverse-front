@@ -5,6 +5,7 @@ import AllChatItems from "./AllChatItems";
 interface props{
     allChat : MessageInfo[][],
     Otherchat:MessageInfo[][],
+    SaveChat:MessageInfo[][],
     StandDate:string[],
     CreateDate:string,
     newDate:string,
@@ -30,7 +31,7 @@ type MessageInfo={
 
 
 const AllChat =({allChat ,StandDate ,CreateDate ,newDate, ReadChatcnt  ,DeleteChat ,
-    RealTimeMsg ,Receive_NewDate ,Receive_standDate ,IsMine ,Otherchat}:props) =>{
+    RealTimeMsg ,Receive_NewDate ,Receive_standDate ,IsMine ,Otherchat,SaveChat }:props) =>{
 
     const [localChat, setLocalChat] = useState<MessageInfo[][]>(allChat);
     const [localDate, setLocalDate] = useState<string[]>(StandDate);
@@ -42,6 +43,9 @@ const AllChat =({allChat ,StandDate ,CreateDate ,newDate, ReadChatcnt  ,DeleteCh
         const day = String(date.getDate()).padStart(2, '0');  
         return `${year}-${month}-${day}`;
     }
+            const isValidChat = (chat: any[]) => {
+            return Array.isArray(chat) && chat.length > 0 && Array.isArray(chat[0]);
+            };
    
 /*
      useEffect(() =>{
@@ -68,8 +72,20 @@ const AllChat =({allChat ,StandDate ,CreateDate ,newDate, ReadChatcnt  ,DeleteCh
     else return;
      },[RealTimeMsg])
 */
-
         useEffect(() =>{
+         console.log("저장된 채팅 데이터 온다");
+          console.log("저장된 채팅  :" ,SaveChat );
+           console.log("standDate :" ,StandDate );
+           if (!isValidChat(SaveChat)) return;
+                setLocalChat([...SaveChat]);
+                setLocalDate([...StandDate]);
+                
+        },[SaveChat])
+        useEffect(() =>{
+            console.log("allchat :" , allChat);
+
+             if (!isValidChat(allChat)) return;
+
             if(Otherchat.length ===0){
                 console.log("다른 댓글이 없다")
                 setLocalChat([...allChat]);
@@ -88,8 +104,12 @@ const AllChat =({allChat ,StandDate ,CreateDate ,newDate, ReadChatcnt  ,DeleteCh
             }
 
         },[allChat])
+
         useEffect(() =>{
            console.log("다른 사람 채팅이 왔다 받아라:" ,Otherchat);
+
+            if (!isValidChat(Otherchat)) return;
+
            if(allChat.length ===0){
               setLocalChat([...Otherchat]);
            }else{

@@ -77,8 +77,14 @@ const Focus_div = isfocus? "PartiChatList_Main_Focus" :"PartiChatList_Main";
 const Ismsg = ismsg ? "PartiChatList_story_msg" :"PartiChatList_story";
 //#endregion
 
-useEffect(() =>{
 
+useEffect(() =>{
+  console.log("msg :" ,props.lastmsg)
+  if(props.lastmsg !== "null") setMessage(props.lastmsg)
+},[props.lastmsg])
+
+useEffect(() =>{
+    console.log("msg :" ,props.lastmsg)
     let test :string[]=[...img];
     const images:object=props.Images;
     if(props.Id ===props.FocusId) {
@@ -117,6 +123,7 @@ useEffect(() =>{
 },[props.IsDuple])
 
 useEffect(() =>{
+    console.log("msg :" , props.lastmsg)
     if(props.lastmsg !== "null") setMessage(props.lastmsg)
     if(props.AlarmCnt !==0) {
         if(props.AlarmCnt >99)

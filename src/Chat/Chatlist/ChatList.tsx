@@ -14,9 +14,9 @@ import {Oval} from "react-loader-spinner";
 //                            +--------------------
 //#region type 
 import "./ChatList.scss";
-import AddChatItems from "../AddChat/AddChatItems";
 import PartiChatList from "./PartiChatList";
 import WebSocketAlarmContext from "../../Context/WebSocketAlarmContext";
+import WebSocketChatContext from "../../Context/WebSocketChatContext";
 //#endregion
 
 //                            +------------------
@@ -37,32 +37,36 @@ type Chat ={
   showcontents(data:object):void
  }
  type ChatList_infos={
-   CreateDate:string,
-   RoomName:string,
-   chat_Id:string,
-   userCount:number,
-   lasttime:string,
-   Message:string,
-   Members:Member_info[]
+   CreateDate:string;
+   RoomName:string;
+   chat_Id:string;
+   userCount:number;
+   lasttime:string;
+   Message:string;
+   Members:Member_info[];
   }
   type Member_info={
-   Img:string,
-   Nickname:string,
-   UserId:string
+   Img:string;
+   Nickname:string;
+   UserId:string;
   }
 
   type Receive_chat={
-   SendId:string,
-   SendProfile:string,
-   SendNickname:string,
+   SendId:string;
+   SendProfile:string;
+   SendNickname:string;
    SendMsg:string;
    SendTime:string;
    ChatId:string;
-   MessageId:string
+   MessageId:string;
  }
  type ChatAlarmMap = {
    [chatId: string]: Receive_chat[];
  };
+   type lasgmsg={
+  ChatId:string;
+  Message:string;
+}
 //#endregion
 
 const ChatList =(props:Chat) =>{
@@ -72,7 +76,6 @@ const ChatList =(props:Chat) =>{
 //              +-----------------
 //#region type
 const[alarmid, setAlarmid]=useState<string[]>([]);
-const[lastmsg, setLastmsg]=useState<string[]>([]);
 const[isdata, setIsdata]=useState<boolean>(false);
 const[isloading, setIsloading]=useState<boolean>(true);
 const[noChat, setNoChat]=useState<boolean>(false);
@@ -103,7 +106,35 @@ const[chatId, setChatId]=useState<string[]>([]);
 //              +-----------------
 //#region type
 const ChatReceive_Alarm= useContext(WebSocketAlarmContext);
+const ReceiveMessage = useContext(WebSocketChatContext);
 //#endregion
+
+
+    useEffect(() =>{
+      console.log("실시간채팅 리스트 업데이트 :" , ChatReceive_Alarm.lastmsgalarm);
+      
+        const lastmsg:lasgmsg = ChatReceive_Alarm.lastmsgalarm;
+                       setAlarmmsg((prev) => ({
+               ...prev,
+               [lastmsg.ChatId]: lastmsg.Message,
+               }));
+        /*
+         Object.entries(lastmsg).forEach(([chatId, message]) => {
+            // message가 "null" 문자열로 들어올 수도 있으니 필터링
+            if (chatId && message && message !== "null") {
+               setAlarmmsg((prev) => ({
+               ...prev,
+               [chatId]: message,
+               }));
+            }
+         });
+         */
+          console.log("알람 :"  , alarmmsg)
+    },[ChatReceive_Alarm.lastmsgalarm])
+
+    useEffect(() =>{
+    console.log("알람 :" , alarmmsg);
+    },[alarmmsg])
 
 useEffect(() =>{
    if(ChatReceive_Alarm.chatReceive.SendMsg !="") 

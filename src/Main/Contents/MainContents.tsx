@@ -24,7 +24,8 @@ type Receive_chat={
     SendMsg:string;
     SendTime:string;
     ChatId:string;
-    MessageId:string
+    MessageId:string;
+    RoomName:string;
 }
 
 const MainContentsx=(props:user_info) =>{
@@ -41,7 +42,8 @@ const MainContentsx=(props:user_info) =>{
         SendMsg: "" ,
         SendTime:"",
         ChatId:"",
-        MessageId:""
+        MessageId:"",
+        RoomName:""
     })
     const disable:boolean=true;
 

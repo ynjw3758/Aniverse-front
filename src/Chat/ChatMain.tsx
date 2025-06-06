@@ -82,7 +82,8 @@ type My_IFOS={
   SendMsg:string;
   SendTime:string;
   ChatId:string;
-  MessageId:string
+  MessageId:string;
+  RoomName:string;
 }
 type MessageInfo={
   chatId:string;
@@ -129,7 +130,8 @@ const ChatMain =() =>{
     SendMsg: "" ,
     SendTime:"",
     ChatId:"",
-    MessageId:""
+    MessageId:"",
+    RoomName:""
 })
 //애네들은 테스트 후 필요없는 것으로 확인되면 삭제할 것!!!!
 const[roomId, setRoomId]=useState<string>("");

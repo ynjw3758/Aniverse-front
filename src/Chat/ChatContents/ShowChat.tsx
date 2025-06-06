@@ -94,6 +94,7 @@ const ShowChat =(props:info) =>{
     const Web_Chatinfo=useContext(WebSocketChatContext);
     const real_chat = useRef<MessageInfo | null>(null);
     const RdCnt = useRef<number>(0);
+    const isPartiZero= useRef<boolean>(false);
 //#endregion
 
   const formatdate = (date: Date) => {
@@ -105,10 +106,11 @@ const ShowChat =(props:info) =>{
 
 
     useEffect(() =>{
-
+     console.log("아니 이게 안되나?")
       if(props.RealtimeMsg ===undefined) return;
        const Id:string=localStorage.getItem("id")!;       
        if(props.RealtimeMsg.sendId !==Id ){
+        isPartiZero.current = true;
           const newMsg: MessageInfo = {
             ...props.RealtimeMsg,
             recount : Math.max(props.RealtimeMsg.recount - 1, 0)
@@ -144,8 +146,7 @@ const ShowChat =(props:info) =>{
         setAllChat(updated);
 
       }
-       }
-       else return;
+       }else  return
     },[props.RealtimeMsg])
 
     useEffect(() =>{
@@ -290,6 +291,7 @@ const ShowChat =(props:info) =>{
     },[props.MessageInfo, props.StandDate])
 
     useEffect(() =>{
+      
     },[Web_Chatinfo.ReadChat])
 
     async function UserInfoPasing(){
@@ -358,7 +360,7 @@ const ShowChat =(props:info) =>{
           <AddItems CreateDate={create} ChatId={props.Chat_id} totalId={ids} Profile={props.MyProfile} 
           isFirst={props.isFirst} ChSendId={chsendId} MyNickname={props.MyNickname} 
           count={size} date ={standDate} messages={msgInfo} RealtimeMsg={real_chat.current!} 
-          AllChat={allChat} NewDate={newDate} realcnt={RdCnt.current}/>
+          AllChat={allChat} NewDate={newDate} realcnt={RdCnt.current} isPartiZero={isPartiZero.current} RoomName={props.RoomName}/>
         </>)}
       </div>
      </div>

@@ -4,10 +4,10 @@ export interface Socket_Info {
     socketRef: React.MutableRefObject<WebSocket | null>;
     isError:boolean,
     isSuccess:boolean,
-    ReadChat:string[],
+    ReadChat:readchatinfo,
     receivemsg?:MessageInfo,
     sendMessage: (chatId: string, message: string, userId: string , nickname:string,
-        Profile:string, isFirst:boolean ,UserId:string[], ReCount:number, messageId:string) => void;
+        Profile:string, isFirst:boolean ,UserId:string[], ReCount:number, messageId:string , roomName:string) => void;
     Partici_Chatid : (chatId: string, UserId:string[]) => void
 }
 
@@ -15,7 +15,11 @@ const Initial:Socket_Info ={
     socketRef: { current: null } as React.MutableRefObject<WebSocket | null>,
     isError:false,
     isSuccess:false,
-    ReadChat:[],
+    ReadChat:{
+    chatId:"",
+    msg:"",
+    messageIds:[]
+    },
     receivemsg:{    
     chatId:"",
     message:"",
@@ -44,6 +48,11 @@ const Initial:Socket_Info ={
     type:string;
     isSend:boolean
    }
+type readchatinfo={
+  chatId:string;
+  msg:string;
+  messageIds:string[];
+}
 
 
 

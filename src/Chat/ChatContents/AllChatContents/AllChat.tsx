@@ -9,7 +9,7 @@ interface props{
     StandDate:string[],
     CreateDate:string,
     newDate:string,
-    ReadChatcnt:string[],
+    ReadChatcnt:readchatinfo,
     RealTimeMsg:MessageInfo,
     Receive_NewDate:string,
     Receive_standDate:string[],
@@ -28,6 +28,11 @@ type MessageInfo={
     type:string;
     isSend:boolean;
    }
+type readchatinfo={
+  chatId:string;
+  msg:string;
+  messageIds:string[];
+}
 
 
 const AllChat =({allChat ,StandDate ,CreateDate ,newDate, ReadChatcnt  ,DeleteChat ,
@@ -36,6 +41,7 @@ const AllChat =({allChat ,StandDate ,CreateDate ,newDate, ReadChatcnt  ,DeleteCh
     const [localChat, setLocalChat] = useState<MessageInfo[][]>(allChat);
     const [localDate, setLocalDate] = useState<string[]>(StandDate);
     const [newDateState, setNewDateState] = useState<string>(newDate);
+    const[totalRead, setTotalRead]=useState<readchatinfo>();
 
     const formatdate =(date:Date) =>{
         const year = date.getFullYear();
@@ -46,32 +52,6 @@ const AllChat =({allChat ,StandDate ,CreateDate ,newDate, ReadChatcnt  ,DeleteCh
             const isValidChat = (chat: any[]) => {
             return Array.isArray(chat) && chat.length > 0 && Array.isArray(chat[0]);
             };
-   
-/*
-     useEffect(() =>{
-        console.log("RealTimeMsg :" ,RealTimeMsg);
-        if(RealTimeMsg !==null){
-        if (allChat.length === 0) {
-            console.log("최초의 데이터 넣기");
-           const now  =new Date();
-           const FormatDate = formatdate(now);
-             StandDate[0] = FormatDate;
-             newDate =FormatDate; 
-            allChat.push([RealTimeMsg]); // 최초 메시지 2중 배열로 추가
-        } else {
-            console.log("날짜 단위로 데이터 넣기");
-           const now  =new Date();
-           const FormatDate = formatdate(now);
-             if(StandDate[StandDate.length-1] !== FormatDate) {
-                StandDate[StandDate.length-1] =FormatDate;
-            }
-            // 마지막 날짜 그룹에 실시간 메시지를 병합
-            allChat[allChat.length - 1].push(RealTimeMsg);
-        }
-    }
-    else return;
-     },[RealTimeMsg])
-*/
         useEffect(() =>{
          console.log("저장된 채팅 데이터 온다");
           console.log("저장된 채팅  :" ,SaveChat );
@@ -123,39 +103,13 @@ const AllChat =({allChat ,StandDate ,CreateDate ,newDate, ReadChatcnt  ,DeleteCh
            }
            
         },[Otherchat])
-/*
-  useEffect(() => {
-    if (!RealTimeMsg) return;
 
-    const now = new Date();
-    const FormatDate = formatdate(now);
 
-    setLocalChat((prev) => {
-      let updatedChat = [...prev];
+        useEffect(() =>{
+          console.log("ReadChatcnt :" , ReadChatcnt)
+          if(ReadChatcnt.chatId !== null && ReadChatcnt.chatId !== undefined)  setTotalRead(ReadChatcnt)
+        },[ReadChatcnt])
 
-      if (updatedChat.length === 0) {
-        setLocalDate([FormatDate]);
-        setNewDateState(FormatDate);
-        return [[RealTimeMsg]];
-      } else {
-        if (localDate[localDate.length - 1] !== FormatDate) {
-          setLocalDate((prevDate) => [...prevDate, FormatDate]);
-          setNewDateState(FormatDate);
-          return [...updatedChat, [RealTimeMsg]];
-        } else {
-          // 마지막 그룹에 메시지 추가
-          updatedChat[updatedChat.length - 1] = [
-            ...updatedChat[updatedChat.length - 1],
-            RealTimeMsg,
-          ];
-          return updatedChat;
-        }
-      }
-    });
-    console.log("newdate :" , Receive_NewDate)
-    console.log("stand :" , Receive_standDate)
-  }, [RealTimeMsg]);
-  */
     const deletechat =(data:string) =>{
         DeleteChat(data);
     }

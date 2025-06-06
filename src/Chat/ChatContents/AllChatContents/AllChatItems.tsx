@@ -7,7 +7,7 @@ interface props{
     StandDate:string,
     CreateDate:string,
     newDate:string,
-    ReadChatcnt:string[],
+    ReadChatcnt:readchatinfo,
     NewDate_receive:string,
     StandDate_receive:string,
     IsMine:boolean,
@@ -26,6 +26,12 @@ type MessageInfo={
     isSend:boolean;
    }
 
+type readchatinfo={
+  chatId:string;
+  msg:string;
+  messageIds:string[];
+}
+
 const AllChatItems =({ChatInfoList ,StandDate ,newDate,ReadChatcnt ,DeleteChat ,
     NewDate_receive ,StandDate_receive ,IsMine}:props) =>{
     const[isSameTime, setIsSameTime]=useState<boolean>(true);
@@ -34,6 +40,7 @@ const AllChatItems =({ChatInfoList ,StandDate ,newDate,ReadChatcnt ,DeleteChat ,
     const[groupdata ,setGroupdata]= useState<Record<string, MessageInfo[]>>({});
 
     const bottomRef = useRef<HTMLDivElement | null>(null);
+
     useEffect(() =>{
         setChatInfoLists(ChatInfoList);
         if(IsMine ===true){
@@ -51,6 +58,7 @@ const AllChatItems =({ChatInfoList ,StandDate ,newDate,ReadChatcnt ,DeleteChat ,
         const Group =groupChat(ChatInfoList)
         setGroupdata(Group);
     },[ChatInfoList])
+
     useEffect(() => {
         setTimeout(() => {
             bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
@@ -62,6 +70,12 @@ const AllChatItems =({ChatInfoList ,StandDate ,newDate,ReadChatcnt ,DeleteChat ,
         DeleteChat(data);
 
     }
+      const formatdate = (date: Date) => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`;
+    };
 
     function groupChat (data:MessageInfo[]){
         const grouped: Record<string, MessageInfo[]> = {};
@@ -84,10 +98,29 @@ const AllChatItems =({ChatInfoList ,StandDate ,newDate,ReadChatcnt ,DeleteChat ,
     useEffect(() =>{
       console.log("groupdata :" ,groupdata);
     },[groupdata])
-/*
+
     useEffect(() =>{
         console.log("ReadChatcnt :" ,ReadChatcnt);
-        if(IsMine === true){
+        console.log("chat :" , ChatInfoLists)
+        console.log("group :" , groupdata)
+        console.log("IsMine :" , IsMine)
+            if (IsMine === true && ReadChatcnt.msg === "All") {
+                setGroupdata((prev) => {
+                    const updated: Record<string, MessageInfo[]> = {};
+
+                    Object.entries(prev).forEach(([date, messages]) => {
+                    updated[date] = messages.map((msg) => ({
+                        ...msg,
+                        recount: Math.max(0, msg.recount - 1),
+                    }));
+                    });
+
+                    return updated;
+                });
+            }
+
+
+            /*
             setChatInfoLists(prev =>
                 prev.map(chat => {
                 if (ReadChatcnt.includes(chat.messageId)) {
@@ -99,11 +132,12 @@ const AllChatItems =({ChatInfoList ,StandDate ,newDate,ReadChatcnt ,DeleteChat ,
                 return chat;
                 })
             );
-        }
+            */
+        
 
           
     },[ReadChatcnt])
-    */
+    
    /*
                {!isSameTime && (<>
                 <button>{standdate}</button>
@@ -127,7 +161,7 @@ const AllChatItems =({ChatInfoList ,StandDate ,newDate,ReadChatcnt ,DeleteChat ,
                 const className = data.type === "mine" ? "AllChatDiv_MyStand" : "AllChatDiv_OtherStand";
                 return (
                     <div key={data.messageId} className={className}>
-                    <DividChatinfo Chatinfo={data} DeleteChat={deletechat} ReadChatcnt={ReadChatcnt} />
+                    <DividChatinfo Chatinfo={data} DeleteChat={deletechat} /*ReadChatcnt={ReadChatcnt}*/ />
                     </div>
                 );
                 })}

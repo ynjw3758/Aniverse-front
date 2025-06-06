@@ -19,8 +19,13 @@
     width: 3vw;
     height: 6vh;
     border-radius: 50%;
-    margin-top: 3vh;
+    margin-top: 4vh;
     margin-left: 0.3vw;
+}
+.Notification_Stand > p{
+    font-size: 10px;
+    margin-left: 0.5vw;
+    margin-top: -2.5vh;
 }
 .Notification_Userinfo{
     display: flex;
@@ -30,17 +35,24 @@
 .Notification_Userinfo h4{
     font-size: 15px;
     margin-left: 0.5vw;
-    margin-top: 2.5vh;
+    margin-top: -4vh;
 }
 .Notification_Userinfo p{
     font-size: 15px;
     margin-left: 0.5vw;
     margin-top: -2.5vh;
 }
+.Notification_Userinfo h5{
+    font-size: 15px;
+    height: fit-content;
+    margin-left: 7vw;
+    margin-top: 1vh;
+
+}
 .Notification_Time{
     position:absolute;
     top:0vh;
-    left: 45vw;
+    left: 21.5vw;
 }
 .Notification_Time p{
     font-size: 12px;
@@ -68,7 +80,7 @@
         width: 3vw;
         height: 6vh;
         border-radius: 50%;
-        margin-top: 3vh;
+        margin-top: 4vh;
         margin-left: 0.3vw;
     }
     .Notification_Userinfo{
@@ -79,12 +91,18 @@
     .Notification_Userinfo h4{
         font-size: 15px;
         margin-left: 0.5vw;
-        margin-top: 3vh;
+        margin-top: -2.5vh;
     }
     .Notification_Userinfo p{
         font-size: 15px;
         margin-left: 0.5vw;
         margin-top: -1.5vh;
+    }
+    .Notification_Userinfo h5{
+        font-size: 15px;
+        height: fit-content;
+        margin-left: 5vw;
+        margin-top: 1vh;
     }
     .Notification_Time{
         position:absolute;

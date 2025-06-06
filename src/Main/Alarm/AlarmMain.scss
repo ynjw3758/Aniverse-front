@@ -1,0 +1,65 @@
+@media (min-width: 1550px) and (max-width: 1920px)  {
+.AlarmList_Miain{
+position: fixed;
+top:1vh;
+left: 28vw;
+ display: flex;
+ flex-direction: column;
+ width: 20vw;
+ height: 99vh;
+ max-height: 99vh;
+ overflow-y: auto;
+ background-color: #F4F4F4;
+ border: 1px solid black;
+ z-index: 999;
+transform: translateX(-24vw);
+transition: transform 0.3s ease-in-out;
+margin-top: -1vh;
+}
+
+.AlarmList_Chat,
+.AlarmList_Chat:hover{
+    display: flex;
+    flex-direction: row;
+    width: 20vw;
+    height: 10vh;
+    background-color: darkgray;
+    border-bottom: 1px solid;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+}
+}
+
+@media screen and (max-width:1540px) {
+.AlarmList_Miain{
+position: fixed;
+top:1vh;
+left: 28vw;
+ display: flex;
+ flex-direction: column;
+ width: 20vw;
+ height: 99vh;
+ max-height: 99vh;
+ overflow-y: auto;
+ background-color: #F4F4F4;
+ border: 1px solid black;
+ z-index: 999;
+transform: translateX(-24vw);
+transition: transform 0.3s ease-in-out;
+margin-top: -1vh;
+}
+
+.AlarmList_Chat,
+.AlarmList_Chat:hover{
+    display: flex;
+    flex-direction: row;
+    width: 20vw;
+    height: 10vh;
+    background-color: darkgray;
+    border-bottom: 1px solid;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+}
+}

@@ -4,12 +4,17 @@ import { Client, IMessage } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import WebSocketAlarmContext from "./WebSocketAlarmContext";
 
+//                            +------------------
+//----------------------------+ 타입입
+//                            +------------------
+//#region
 type Props = {
     children?: React.ReactNode
   };
 type readchatinfo={
   chatId:string;
-  messageIds:string[]
+  msg:string;
+  messageIds:string[];
 }
 type Receive_Message={
     MessageId:string
@@ -39,8 +44,7 @@ type MessageInfo={
   type lasgmsg={
   ChatId:string;
   Message:string;
-}
-
+ }
 const WebSocket_Chat_Provider =({children}:Props) =>{
   const[isError, setIsError]=useState<boolean>(false);
   const[isSuccess, setIsSuccess]=useState<boolean>(false);
@@ -49,7 +53,11 @@ const WebSocket_Chat_Provider =({children}:Props) =>{
   const socketRef = useRef<WebSocket | null>(null);
   const ChatId = useRef<string>("");
   const UserIds = useRef<string[]>([]);
-  const[readChat, setReadChat]=useState<string[]>([]);
+  const[readChat, setReadChat]=useState<readchatinfo>({
+       chatId:"",
+       msg:"",
+       messageIds:[]
+   });
   const[receivemsg, setReceivemsg]=useState<MessageInfo>()
   
   const lasgmsgAlarm=useContext(WebSocketAlarmContext);
@@ -70,14 +78,11 @@ useEffect(() => {
 }, []);
 
     const sendMessage = (chatId: string, message: string, sendId: string, nickname:string, 
-      Profile:string, isFirst:boolean ,UserId:string[], ReCount:number ,messageId:string) => {
+      Profile:string, isFirst:boolean ,UserId:string[], ReCount:number ,messageId:string , roomName:string) => {
        if (!stompClientRef.current || !stompClientRef.current.connected) {
         console.warn("STOMP 연결이 되어 있지 않습니다.");
         return;
       }
-
-      console.log("닉네임  :" ,nickname );
-      console.log("프로파일일  :" ,Profile );
       const payload = {
         chatId,
         sendId,
@@ -89,7 +94,7 @@ useEffect(() => {
         nickname:nickname,
         recount:ReCount,
         messageId,
-
+        roomName,
       };
     
       stompClientRef.current.publish({
@@ -143,8 +148,8 @@ useEffect(() => {
               });
               client.subscribe(`/topic/read/${ChatId.current}`, (message) => {
                 const readInfo:readchatinfo = JSON.parse(message.body);
-                console.log("👁️ 읽음 정보 수신:", readInfo.messageIds);
-                setReadChat(readInfo.messageIds);
+                console.log("👁️ 읽음 정보 수신:", readInfo);
+                setReadChat(readInfo);
               });
 
 

@@ -9,12 +9,13 @@ interface Props{
 }
 
 type Receive_chat={
-    SendId:string,
-    SendProfile:string,
-    SendNickname:string,
-    SendMsg:string,
-    SendTime:string,
-    ChatId:string,
+    SendId:string;
+    SendProfile:string;
+    SendNickname:string;
+    SendMsg:string;
+    SendTime:string;
+    ChatId:string;
+    RoomName:string;
 }
 
 const ChatNotificationMain =({ChatReceive}:Props) =>{
@@ -49,6 +50,7 @@ const ChatNotificationMain =({ChatReceive}:Props) =>{
     return(<div className="Notification_Stand" onClick={moveChat}>
             <img src={ChatReceive.SendProfile}/>
           <div className="Notification_Userinfo">
+            <h5>{ChatReceive.RoomName}</h5>
             <h4>{ChatReceive.SendNickname}</h4>
             <p>{ChatReceive.SendMsg}</p>
           </div>

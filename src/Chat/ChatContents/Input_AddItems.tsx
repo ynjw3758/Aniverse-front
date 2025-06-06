@@ -28,27 +28,25 @@ import AllChat from "./AllChatContents/AllChat";
 //                            +------------------
 //#region
 type info ={
-    CreateDate:string,
-    ChatId:string,
-    MyNickname:string,
-    totalId:string[],
-    Profile:string,
-    isFirst:boolean,
-    ChSendId:string[],
-    count:number,
-    date:string[],
-    messages:MessageInfo[][],
-    RealtimeMsg:MessageInfo,
-    AllChat:MessageInfo[][],
-    NewDate:string,
-    realcnt:number
+    CreateDate:string;
+    ChatId:string;
+    MyNickname:string;
+    totalId:string[];
+    Profile:string;
+    isFirst:boolean;
+    ChSendId:string[];
+    count:number;
+    date:string[];
+    messages:MessageInfo[][];
+    RealtimeMsg:MessageInfo;
+    AllChat:MessageInfo[][];
+    NewDate:string;
+    realcnt:number;
+    isPartiZero:boolean;
+    RoomName:string;
  }
 
- type MyChat ={
-  Mchat:string,
-  ReCount:number,
-  Time:string
-}
+
 
 type MessageInfo={
   chatId:string;
@@ -189,7 +187,8 @@ const input_values= useRef<string>("");
     }
 
     const inputHandler =(e:React.ChangeEvent<HTMLTextAreaElement>) =>{
-       input_values.current = e.target.value;
+      const filteredValue = e.target.value.replace(/\n/g, '');
+       input_values.current = filteredValue;
          if (TextRef.current) {
           TextRef.current.value = input_values.current;
         }
@@ -202,7 +201,6 @@ const input_values= useRef<string>("");
     useEffect(() =>{
       console.log("최초 렌더링되고 채팅 리스트 저장 useeffect : ");
        Chat_Context.Partici_Chatid(props.ChatId, props.totalId);
-       /*if(props.messages.length !==0) setAllChat(props.messages);*/
         setIsMyChat(true);
       
       
@@ -235,14 +233,12 @@ const input_values= useRef<string>("");
         axios.get("http://localhost:8080/Pets-social/acccheck").then((response) =>{
    
          if(response.status == 200){
-          //setEmoticon("");
+          
            const UserId = localStorage.getItem("id")!;
            const messageId = uuidv4();
            const nowTime =  new Date().toISOString();
            const now  =new Date();
            const FormatDate = formatdate(now);
-           console.log("date :",  props.date)
-           console.log("FormatDate :",  FormatDate)
            if(FormatDate !== props.date[props.date.length-1]){ //둘이 같지 않다는 건 새로우이 추가하는 거고 같으면 그냥 stand.current 여기다 그냥 넣으면 되잔아아
               newDate.current = FormatDate;
               let add_date:string[]=[...props.date];
@@ -255,10 +251,17 @@ const input_values= useRef<string>("");
             else  StandDate.current[StandDate.current.length-1] =props.date[props.date.length-1]; 
            
            }
+            
             let newChat:MessageInfo[][]=[...allChat];
+            let RdCount=0;
+            console.log("카운트 :" , props.count)
+            if(props.isPartiZero === true){
+                RdCount =props.realcnt;
+            }
+            else RdCount =props.count-1;
             let newMessage = {chatId:props.ChatId,message:input_values.current, messageId:messageId,nickname:props.MyNickname,
               profile:props.Profile,
-              recount:props.realcnt,
+              recount:RdCount,
               sendId:UserId,
               timestamp:nowTime,
               type:"mine",
@@ -274,7 +277,7 @@ const input_values= useRef<string>("");
             setAllChat([...newChat]);
             setIsMyChat(true);
             Chat_Context.sendMessage(props.ChatId, input_values.current, UserId, props.MyNickname ,props.Profile,  
-            true, props.ChSendId,props.count ,messageId)
+            true, props.ChSendId,props.count ,messageId ,props.RoomName)
              input_values.current = "";
               if (TextRef.current) TextRef.current.value = "";
             
@@ -367,7 +370,6 @@ const input_values= useRef<string>("");
       const compare_height = useRef<number>(85);
       const textarea_hegiht= useRef<number>(65);
       const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-        console.log("input :" , input_values.current)
         if(e.key === 'Enter' && input_values.current.length !==0){
           console.log("엔터 치면 바로 채팅 보내기");
           sendChatHandler()
@@ -435,6 +437,7 @@ const input_values= useRef<string>("");
       },[isMyChat])
 
       useEffect(() =>{
+        console.log("읽어야 되는 데이터 :" , Chat_Context.ReadChat);
       },[Chat_Context.ReadChat])
 
       function AutoDownScroll (){
@@ -462,7 +465,7 @@ const input_values= useRef<string>("");
           <AllChat allChat={allChat} StandDate={StandDate.current} CreateDate={props.CreateDate} 
           newDate={newDate.current} DeleteChat={deletechat}  ReadChatcnt={Chat_Context.ReadChat} 
           RealTimeMsg={props.RealtimeMsg} Receive_NewDate={props.NewDate} Receive_standDate={props.date}
-          IsMine={ismychat.current} Otherchat={props.AllChat} SaveChat={props.messages}/>
+          IsMine={ismychat.current} Otherchat={props.AllChat} SaveChat={props.messages} />
           <div ref={chatEndRef} />
         </div>)}
         <div className="AddChatItems_inputchat" ref={containerRef}>

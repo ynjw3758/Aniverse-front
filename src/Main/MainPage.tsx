@@ -24,6 +24,7 @@ import axios from "axios";
  import WebSocker_Info from"../Context/WebSocketContext";
  import WebSocker_Provider from "../Context/WebSocker_Provider";
  import WebSocketAlarm_Provider from "../Context/WebSocketAlarm_Provider";
+import AlarmMain from "./Alarm/AlarmMain";
  //#endregion
 
 //                            +--------------------
@@ -43,7 +44,31 @@ interface ResponseDataType {
   response:object;
   resultdata:any;
 }
- //#endregion
+//#endregion
+
+//                            +--------------------
+//----------------------------+ type
+//                            +--------------------
+//#region type
+type Noti_Kind={
+  Chat:ChatNoti[];
+}
+
+type ChatNoti={
+  ChatId:string;
+  IsRead:boolean;
+  MessageId:string;
+  RoomName:string;
+  UserId:string;
+  message:string;
+  nickname:string;
+  profile:string;
+  sendId:string;
+  timestamp:string;
+  type:string;
+  Count:number;
+}
+//#endregion
 
  const MapinPage= () =>{      
       const[NickName, setNickName]=useState<string>("");
@@ -53,13 +78,13 @@ interface ResponseDataType {
       const[dropblur, setDropblur]=useState<boolean>(false);
       const [content , setContent]=useState<string[]>([]);
       const[contentitem  ,setContentitem]=useState<boolean>(false);
-      const[soket, setSoket]=useState<boolean>(false);
-      const[socket, setSocket]=useState<number>(0);
       const[isloading ,setIsloading]=useState<boolean>(false);
       const[isready, setIsready]=useState<boolean>(true);
       const[againlogin, setAgainlogin]=useState<boolean>(false);
       const[isperist, setIsperist]=useState<boolean>(false);
+      const[isAlarm , SetIsAlarm]=useState<boolean>(false);
       const[userid, setUserid]=useState<string>("");
+      const[noti, setNoti]=useState<Noti_Kind>()
 
 
 
@@ -70,7 +95,6 @@ interface ResponseDataType {
       let p_exp:any="";
       let sessionid:any="";
       let s_id:any="";
-      let message:string="";
       const param=useParams();
 
       useEffect(()=>{        
@@ -101,7 +125,9 @@ interface ResponseDataType {
                         if(response.status == 200){
                           axios.get("http://localhost:8080/Pets-social/refresh-main" , {params:{Id:id}})
                           .then(response =>{
+                            console.log("메인 페이지 새로고침 :" , response.data.resultdata.Noti)
                              if(response.status == 200){
+                              setNoti(response.data.resultdata.Noti);
                               setContent(response.data.resultdata.content_info);
                               setNickName(response.data.resultdata.nickname);
                               const progile:string=response.data.resultdata.profile_img;
@@ -238,40 +264,6 @@ interface ResponseDataType {
 
       },[]);
       
-
-      useEffect(() =>{
-              //console.log("웹 소켓 정보 :" , WebSocker_Info.Provider);
-                         /*
-                        let id:any;
-                        id=localStorage.getItem("id");
-                        const ws = new WebSocket("ws://127.0.0.1:8083/login");
-                        console.log("ws : " ,ws)
-                        ws.onopen = () => {
-                          console.log("✅ WebSocket 연결됨");
-                          const type = "login";
-                          ws.send(JSON.stringify({ Id: id, type }));
-                        };
-                      
-                        ws.onmessage = (event) => {
-                          const data = JSON.parse(event.data);
-                          console.log("서버에서 받은 메시지:", data);
-                        };
-                      
-                        ws.onerror = (error) => {
-                          console.error("❌ WebSocket 에러 발생:", error);
-                        };
-                      
-                        ws.onclose = () => {
-                          console.log("🔌 WebSocket 연결 종료");
-                        };
-                      
-                        return () => {
-                          ws.close(); // 컴포넌트 언마운트 시 연결 종료
-                        };
-        */
-      },[])
-      
-
       const MainClick =() =>{
         console.log("메인 페이지 이동");
         setContentitem(true);
@@ -287,9 +279,6 @@ interface ResponseDataType {
             console.log("변환 날짜 :" + date);
             let dates = moment(date).format('YYYY-MM-DD HH:mm');
             console.log("date : " + dates);
-            //cookies.set("Sessionid" , sessionid);
-            //cookies.set("p_exp" , p_exp);
-            //cookies.set("id" , s_id);
             
             if(moment(dates).diff(moment()) > 0){
 
@@ -310,14 +299,13 @@ interface ResponseDataType {
                           console.log("엑세스 토큰 확인")
                           axios.get("http://localhost:8080/Pets-social/refresh-main" , {params:{Id:id}})
                           .then(response =>{
-                             console.log("응답 결과 확인 " , response.data);
+                            console.log("메인 페이지 새로고침 :" , response.data.resultdata.Noti)
                              if(response.status == 200){
+                              setNoti(response.data.resultdata.Noti);
                               setContent(response.data.resultdata.content_info);
                               setNickName(response.data.resultdata.nickname);
                               const progile:string=response.data.resultdata.profile_img;
-                              console.log("progile :", progile);
                               if(progile =="null"){
-                                console.log("등록된 사진이 없습니다");
                                 setProfile("/image/baseimg.png");
         
                               }
@@ -333,9 +321,7 @@ interface ResponseDataType {
                               setContent([]);
                               setNickName(response.data.resultdata.nickname);
                               const progile:string=response.data.resultdata.profile_img;
-                              console.log("progile :", progile);
                               if(progile =="null"){
-                                console.log("등록된 사진이 없습니다");
                                 setProfile("/image/baseimg.png");
         
                               }
@@ -348,7 +334,6 @@ interface ResponseDataType {
                               setContentitem(true);
                              }
                              setIsready(true);
-                             navigate("/main");
                     }).catch(error =>{
                           if(axios.isAxiosError<ResponseDataType>(error)){
                                       console.log("error code: " , error.response?.status);
@@ -539,6 +524,15 @@ interface ResponseDataType {
         setIsloading(false); // 로딩 화면 해제
       };
 
+      const AlarmClick =() =>{
+        if(isAlarm == false){
+          SetIsAlarm(true);
+        }else{
+          SetIsAlarm(false);
+        }
+        
+      }
+
     return(<WebSocketAlarm_Provider>
     <WebSocker_Provider>
     <div >
@@ -549,8 +543,11 @@ interface ResponseDataType {
             </div>
           <MainSide img={profile}  nickname={NickName} id={id} onside={SideHandler} onProfile={() =>{
             contentHandler();
-          }} isReady={isready}/>         
+          }} isReady={isready} Noti={noti} AlarmClick={AlarmClick}/>         
           <Outlet />
+          {isAlarm && (<>
+          <AlarmMain AlarmData={noti}/>
+          </>)}
           {contentitem && (<div>
             <MainContentsx img={profile}  nickname={NickName} content={content} onDisActive={ContentDisActive} onload={handleDataLoaded}/>
             </div>)}

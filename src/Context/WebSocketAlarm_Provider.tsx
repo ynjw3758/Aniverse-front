@@ -15,7 +15,8 @@ type Receive_chat={
     SendMsg:string;
     SendTime:string;
     ChatId:string;
-    MessageId:string
+    MessageId:string;
+    RoomName:string;
 }
 type lasgmsg={
   ChatId:string;
@@ -32,7 +33,8 @@ type lasgmsg={
         SendMsg: "",
         SendTime:"",
         ChatId:"",
-        MessageId:""
+        MessageId:"",
+        RoomName:""
     })
     const [alarmmsg, setAlarmmsg] = useState<lasgmsg>({
       ChatId:"",

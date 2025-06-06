@@ -7,7 +7,6 @@ import { TranseDate } from "../../../Utils/TranseDate";
 
 interface props{
     Chatinfo:MessageInfo,
-    ReadChatcnt:string[],
     DeleteChat :(data:string) => void
 }
 type MessageInfo={
@@ -22,7 +21,7 @@ type MessageInfo={
     type:string;
     isSend:boolean;
    }
-const DividChatinfo =({Chatinfo,ReadChatcnt, DeleteChat}:props) =>{
+const DividChatinfo =({Chatinfo, DeleteChat}:props) =>{
     const[isLoading, setIsLoading]=useState<boolean>(true);
     const[isError, setIsError]=useState<boolean>(false);
     const[isSuccess, setIsSuccess]=useState<boolean>(false);

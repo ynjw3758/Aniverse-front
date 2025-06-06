@@ -8,6 +8,7 @@ export interface Receive_chat {
     SendTime:string;
     ChatId:string;
     MessageId:string,
+    RoomName:string
   }
 
 export interface Alarm_info {
@@ -26,7 +27,8 @@ chatReceive:{
     SendMsg: "",
     SendTime:"",
     ChatId:"",
-    MessageId:""
+    MessageId:"",
+    RoomName:""
     },
   lastmsgalarm:{ChatId:"" ,Message:""},
   realTimeLastChat:() =>{}

@@ -27,7 +27,7 @@ const ShowChatWrapper =() =>{
               <ShowChat Userinfo={Chatinfo.chatData} RoomName={Chatinfo.chatTitle} CreateDate={Chatinfo.chatCtDate}
       Chat_id={Chatinfo.chatId} onConnect={true} MyProfile={Chatinfo.MyProfile} isFirst={Chatinfo.isfirst}
       MyNickname={Chatinfo.MyNickname} isClick={Chatinfo.isClick} StandDate={Chatinfo.standDate} 
-      MessageInfo={Chatinfo.messageinfo} RealtimeMsg={ReceiveMessage.receivemsg!} />
+      MessageInfo={Chatinfo.messageinfo} RealtimeMsg={ReceiveMessage.receivemsg!} IsOneRead={ReceiveMessage.isOneRead}/>
 
     </>)
 

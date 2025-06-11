@@ -47,8 +47,24 @@
 .AddChatFile_total{
     display: flex;
     flex-direction: row;
-    width: 53vw;    
-    max-width: 53vw;
+    justify-content:flex-start;
     overflow: auto;
+}
+#AddFileChat_button{
+     position: absolute;
+     top:22vh;
+     left: 2vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: #f28e7b;
+    color: white;
+    font-weight: bold;
+    padding: 2px 8px;
+    border-radius: 30px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
 }
 

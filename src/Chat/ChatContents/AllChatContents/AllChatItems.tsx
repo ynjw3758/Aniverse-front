@@ -11,6 +11,7 @@ interface props{
     NewDate_receive:string,
     StandDate_receive:string,
     IsMine:boolean,
+    IsOneRead:boolean,
     DeleteChat :(data:string) => void
 }
 type MessageInfo={
@@ -33,7 +34,7 @@ type readchatinfo={
 }
 
 const AllChatItems =({ChatInfoList ,StandDate ,newDate,ReadChatcnt ,DeleteChat ,
-    NewDate_receive ,StandDate_receive ,IsMine}:props) =>{
+    NewDate_receive ,StandDate_receive ,IsMine ,IsOneRead}:props) =>{
     const[isSameTime, setIsSameTime]=useState<boolean>(true);
     const [ChatInfoLists, setChatInfoLists] = useState<MessageInfo[]>([]);
     const[standdate, setStandatwe]=useState<string>("");
@@ -96,15 +97,21 @@ const AllChatItems =({ChatInfoList ,StandDate ,newDate,ReadChatcnt ,DeleteChat ,
     }
 
     useEffect(() =>{
-      console.log("groupdata :" ,groupdata);
-    },[groupdata])
-
-    useEffect(() =>{
-        console.log("ReadChatcnt :" ,ReadChatcnt);
-        console.log("chat :" , ChatInfoLists)
-        console.log("group :" , groupdata)
-        console.log("IsMine :" , IsMine)
             if (IsMine === true && ReadChatcnt.msg === "All") {
+                setGroupdata((prev) => {
+                    const updated: Record<string, MessageInfo[]> = {};
+
+                    Object.entries(prev).forEach(([date, messages]) => {
+                    updated[date] = messages.map((msg) => ({
+                        ...msg,
+                        recount: Math.max(0, msg.recount - 1),
+                    }));
+                    });
+
+                    return updated;
+                });
+            }else if(IsOneRead === true &&  ReadChatcnt.msg === "All"){
+                console.log("IsOneRead :" ,IsOneRead)
                 setGroupdata((prev) => {
                     const updated: Record<string, MessageInfo[]> = {};
 
@@ -119,38 +126,8 @@ const AllChatItems =({ChatInfoList ,StandDate ,newDate,ReadChatcnt ,DeleteChat ,
                 });
             }
 
-
-            /*
-            setChatInfoLists(prev =>
-                prev.map(chat => {
-                if (ReadChatcnt.includes(chat.messageId)) {
-                    return {
-                    ...chat,
-                    recount: Math.max(chat.recount - 1, 0), // 음수 방지
-                    };
-                }
-                return chat;
-                })
-            );
-            */
-        
-
-          
     },[ReadChatcnt])
-    
-   /*
-               {!isSameTime && (<>
-                <button>{standdate}</button>
-            </>)}
-            {ChatInfoLists.map((data, index) => {
-            const className = data.type === "mine" ? "AllChatDiv_MyStand" : "AllChatDiv_OtherStand";
-                return (
-                <div key={index} className={className}>
-                    <DividChatinfo Chatinfo={data} DeleteChat={deletechat} ReadChatcnt={ReadChatcnt}/>
-                </div>
-                );
-        })}
-                */
+
 
         return(<div className="StandDate_AllChat">
             {Object.entries(groupdata).map(([date, chats]) => (

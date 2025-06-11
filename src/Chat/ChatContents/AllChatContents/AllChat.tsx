@@ -14,6 +14,8 @@ interface props{
     Receive_NewDate:string,
     Receive_standDate:string[],
     IsMine:boolean,
+    IsSaveChatCnt:boolean;
+    IsOneRead:boolean;
     DeleteChat:(data:string) => void
 }
 type MessageInfo={
@@ -36,7 +38,7 @@ type readchatinfo={
 
 
 const AllChat =({allChat ,StandDate ,CreateDate ,newDate, ReadChatcnt  ,DeleteChat ,
-    RealTimeMsg ,Receive_NewDate ,Receive_standDate ,IsMine ,Otherchat,SaveChat }:props) =>{
+    Receive_standDate ,IsMine ,Otherchat,SaveChat ,IsSaveChatCnt ,IsOneRead}:props) =>{
 
     const [localChat, setLocalChat] = useState<MessageInfo[][]>(allChat);
     const [localDate, setLocalDate] = useState<string[]>(StandDate);
@@ -52,15 +54,23 @@ const AllChat =({allChat ,StandDate ,CreateDate ,newDate, ReadChatcnt  ,DeleteCh
             const isValidChat = (chat: any[]) => {
             return Array.isArray(chat) && chat.length > 0 && Array.isArray(chat[0]);
             };
+
         useEffect(() =>{
          console.log("저장된 채팅 데이터 온다");
           console.log("저장된 채팅  :" ,SaveChat );
            console.log("standDate :" ,StandDate );
            if (!isValidChat(SaveChat)) return;
+             if(IsSaveChatCnt === true){
+
+
+             }else{
                 setLocalChat([...SaveChat]);
                 setLocalDate([...StandDate]);
+             }
+
                 
         },[SaveChat])
+
         useEffect(() =>{
             console.log("allchat :" , allChat);
 
@@ -119,7 +129,7 @@ const AllChat =({allChat ,StandDate ,CreateDate ,newDate, ReadChatcnt  ,DeleteCh
     {localChat.map((values, idx) =>(<>
     <AllChatItems ChatInfoList={values} StandDate={StandDate[idx]} CreateDate={CreateDate} 
     newDate={newDate} DeleteChat={deletechat} ReadChatcnt={ReadChatcnt} 
-    NewDate_receive={newDateState} StandDate_receive={Receive_standDate[idx]} IsMine={IsMine}/>
+    NewDate_receive={newDateState} StandDate_receive={Receive_standDate[idx]} IsMine={IsMine} IsOneRead={IsOneRead}/>
     </>))}
     </>)
 

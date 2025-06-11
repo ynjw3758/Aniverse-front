@@ -6,6 +6,7 @@ export interface Socket_Info {
     isSuccess:boolean,
     ReadChat:readchatinfo,
     receivemsg?:MessageInfo,
+    isOneRead:boolean,
     sendMessage: (chatId: string, message: string, userId: string , nickname:string,
         Profile:string, isFirst:boolean ,UserId:string[], ReCount:number, messageId:string , roomName:string) => void;
     Partici_Chatid : (chatId: string, UserId:string[]) => void
@@ -32,6 +33,7 @@ const Initial:Socket_Info ={
     type:"",
     isSend:false
 },
+isOneRead:false,
     sendMessage:() => {},
     Partici_Chatid:() =>{}
   }

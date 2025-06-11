@@ -47,7 +47,10 @@ useEffect(() =>{
 },[chat])
 
 const moveChat=(ChatId:string) =>{
-   navigate(`/main/chat/${ChatId}`);
+   navigate(`/main/chat/${ChatId}`,{
+            state: { IsReadCnt: true,
+             },
+          });
 }
 
 

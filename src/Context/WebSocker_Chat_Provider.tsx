@@ -48,9 +48,11 @@ type MessageInfo={
 const WebSocket_Chat_Provider =({children}:Props) =>{
   const[isError, setIsError]=useState<boolean>(false);
   const[isSuccess, setIsSuccess]=useState<boolean>(false);
+  //const[isOneRead, setIsOneRead]=useState<boolean>(false);
   
   const stompClientRef = useRef<Client | null>(null);
   const socketRef = useRef<WebSocket | null>(null);
+  const isOneRead = useRef<boolean>(false);
   const ChatId = useRef<string>("");
   const UserIds = useRef<string[]>([]);
   const[readChat, setReadChat]=useState<readchatinfo>({
@@ -74,6 +76,7 @@ useEffect(() => {
       stompClientRef.current.deactivate();
       console.log("📴 STOMP 클라이언트 정상 종료");
     }
+    
   };
 }, []);
 
@@ -120,25 +123,23 @@ useEffect(() => {
 
       const userid= localStorage.getItem("id")!;
         const ws = new WebSocket(`ws://127.0.0.1:8083/chat?userId=${userid}&chatId=${ChatId.current}`);
-        const socket = new SockJS(`http://127.0.0.1:8083/ws?userid=${userid}`);
+        const socket = new SockJS(`http://127.0.0.1:8083/ws?userid=${userid}&chatId=${ChatId.current}`);
         ws.onopen = () => {
 
           //setWeb(ws);
           socketRef.current = ws;
           console.log("✅ WebSocket Chat연결됨 : ", userid);
           const MyId:string = localStorage.getItem("id")!;
-          ws.send(JSON.stringify({ UserId:MyId ,ChatId:ChatId.current, type: "ChatJoin" }));
           const client = new Client({
             webSocketFactory: () => socket,
             reconnectDelay: 5000,
             
             onConnect: () => {
-              //setStomp(client);
+              
               stompClientRef.current = client;
               client.subscribe(`/topic/chat/${ChatId.current}`, (message) => {
                 console.log("📩 채팅 아이디로 수신 메시지:", message.body);
                 const msg:MessageInfo = JSON.parse(message.body);
-                console.log("msg :" ,msg)
                 setReceivemsg(msg);
                 const lastmsg:lasgmsg ={ChatId:msg.chatId , Message:msg.message} 
                 lasgmsgAlarm.realTimeLastChat(lastmsg);
@@ -149,6 +150,13 @@ useEffect(() => {
               client.subscribe(`/topic/read/${ChatId.current}`, (message) => {
                 const readInfo:readchatinfo = JSON.parse(message.body);
                 console.log("👁️ 읽음 정보 수신:", readInfo);
+                setReadChat(readInfo);
+              });
+               console.log("일로 오냐");
+              client.subscribe(`/user/queue/read`, (message) => {
+                const readInfo: readchatinfo = JSON.parse(message.body);
+                console.log("👁️ 개인 읽음 정보 수신 (ToUser):", readInfo);
+                isOneRead.current =true;
                 setReadChat(readInfo);
               });
 
@@ -173,6 +181,8 @@ useEffect(() => {
                 }, 100); // 3초 뒤 자동 초기화
                 // 여기서 메시지 전송 UI 처리 (로딩 종료, 체크표시 등)
               });
+
+              ws.send(JSON.stringify({ UserId:MyId ,ChatId:ChatId.current, type: "ChatJoin" }));
               
             },
             onStompError: (frame) => {
@@ -212,6 +222,7 @@ useEffect(() => {
       socketRef:socketRef,
       isError,
       isSuccess,
+      isOneRead:isOneRead.current,
       ReadChat:readChat,
       receivemsg:receivemsg,
       sendMessage:sendMessage,

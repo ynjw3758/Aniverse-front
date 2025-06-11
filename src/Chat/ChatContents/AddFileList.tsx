@@ -11,7 +11,13 @@ type info ={
     Img:string,
     Video:string,
     imgid:string,
-    videoid:string
+    videoid:string,
+    FileInfos:files,
+ }
+
+ type files={
+    name:string;
+    size:string;
  }
  //#endregion
 
@@ -27,6 +33,8 @@ const AddFileList =(props:info) =>{
     const[isvideo, setIsvideo]=useState<boolean>(false);
     const[imgid, setImgid]=useState<string>("");
     const[videoid, setVideoid]=useState<string>("");
+    const[unit, setUnit]=useState<string>("MB");
+    const[size, setSize]=useState<string>("");
 //#endregion
 
 //              +-----------------
@@ -38,8 +46,7 @@ const videoref=useRef<HTMLDivElement>(null);
 //#endregion
 
     useEffect(() =>{
-        console.log("imgid :" , props.imgid);
-        console.log("videoid :" , props.videoid);
+
 
         if(props.Img != "" && props.Video ==""){
            setImg(props.Img);
@@ -74,8 +81,11 @@ const videoref=useRef<HTMLDivElement>(null);
 
         }
 
-   
+        
     },[props.Img, props.Video,props.imgid, props.videoid]);
+    useEffect(() =>{
+       setSize(props.FileInfos.size);
+    },[props.FileInfos])
 
 
 
@@ -93,6 +103,10 @@ const videoref=useRef<HTMLDivElement>(null);
                    <img src="/image/delete.png"/>
                 </div>
             <img src={img} />
+            <div className="AddChatFileList_infos">
+                <p>{props.FileInfos.name}</p>
+                <h5>{size}</h5>
+            </div>
         </div>)}
         {isvideo && ( <div className="AddChatFileList_videobox"  id={videoid} ref={videoref} 
         onClick={VideoClick}>
@@ -100,6 +114,10 @@ const videoref=useRef<HTMLDivElement>(null);
                    <img src="/image/delete.png"/>
                 </div>
              <video src={video}/>
+            <div className="AddChatFileList_infos">
+                <p>{props.FileInfos.name}</p>
+                <h5>{size}</h5>
+            </div>
           </div>)}
     </>)
 

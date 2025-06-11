@@ -44,6 +44,8 @@ type info ={
     realcnt:number;
     isPartiZero:boolean;
     RoomName:string;
+    IsSaveChatCnt:boolean;
+    IsOneRead:boolean;
  }
 
 
@@ -59,6 +61,11 @@ type MessageInfo={
   timestamp:string;
   type:string;
   isSend:boolean;
+ }
+
+ type files={
+  name:string;
+  size:string
  }
 
 
@@ -95,6 +102,8 @@ const[img, setImg]=useState<string[]>([]);
 const[video, setVideo]=useState<string[]>([]);
 const[imgid,  setImgid]=useState<string[]>([]);
 const[videoid,  setVideoid]=useState<string[]>([]);
+const[files, setFiles]=useState<files[]>([]);
+
 
 const[maxsize, setMaxsize]=useState<number>(0);
 const[allChat, setAllChat]=useState<MessageInfo[][]>(/*props.messages*/[]);
@@ -104,7 +113,7 @@ const[allChat, setAllChat]=useState<MessageInfo[][]>(/*props.messages*/[]);
 //--------------+ 전역 변수수
 //              +-----------------
 //#region type
-const max_size:number=  1024 * 1024 * 20;
+const max_size:number=  1024 * 1024 * 25;
 const cookies = new Cookies();
 const navigate = useNavigate();
 const Chat_Context= useContext(WebSocketChatContext);
@@ -125,12 +134,29 @@ const input_values= useRef<string>("");
         let imidlist:string[]=[...imgid];
         let videolist:string[]=[...video];
         let vilistid:string[]=[...videoid];
-
+        
         for(let count =0; count<array.length;count++){
-            console.log("이미지 미리보기 만들기");
             if (array[count] !== null) {
                 const file = array[count];
-                if(max_size < maxsize){
+                if(max_size > maxsize){
+                  const realsize = file.size / (1024 * 1024);
+                  console.log("realsize :" ,realsize );
+                  let total_size =""; 
+                  const MbUnite:string =(file.size / (1024 * 1024)).toFixed(2);
+                  if(realsize < 0.01) {
+                     const kb = file.size/1024;
+                     total_size =(kb).toFixed(1)+"KB"; 
+
+                  }else{
+                       total_size =MbUnite+"MB"; 
+                  }
+                  const fileInfo: files = {
+                    name: file.name,
+                    size: total_size,
+                  };
+
+                  setFiles(prev => [...prev, fileInfo]);
+                  console.log("파일 사이즈 :" , MbUnite);
                     setMaxsize((prev) => prev+file.size);
                     if (file && file.type.substring(0, 5) === "image") {
                         const currentimg = URL.createObjectURL(file);
@@ -159,6 +185,7 @@ const input_values= useRef<string>("");
                     console.log("용량 초과");
                     setIsSize(true);
                     setIsfiles(false);
+                    setMaxsize(0);
                     return;
                 }
 
@@ -437,7 +464,6 @@ const input_values= useRef<string>("");
       },[isMyChat])
 
       useEffect(() =>{
-        console.log("읽어야 되는 데이터 :" , Chat_Context.ReadChat);
       },[Chat_Context.ReadChat])
 
       function AutoDownScroll (){
@@ -456,16 +482,34 @@ const input_values= useRef<string>("");
       }));
     }
 
+    const FileDropClose =() =>{
+     setIsfiles(false);
+     setImg([]);
+     setVideo([]);
+     setVideoid([]);
+     setImgid([]);
+     setFiles([]);
+     setMaxsize(0);
+    }
+/*
+            <div className="InputChat_upload-header">
+                <img src="/image/test.jpg" alt="upload-header" />
+            </div>
+            */
     return(
     <div className="AddChatItems_total">
-        {isfiles &&(<div className="AddChatItems_filelist" >
-            <Addfiles Img={img} Video={video} ImgId={imgid} VideoId={videoid}/>
+        {isfiles &&(<div className="AddChatItems_BackDrop" onClick={FileDropClose}>
+          <div className="AddChatItems_filelist" >
+            <h2>파일 업로드</h2>
+            <Addfiles Img={img} Video={video} ImgId={imgid} VideoId={videoid} FileInfos={files}/>
+            <button>파일 전송</button>
+        </div>
         </div>)}
         {isMyChat && (<div className="AllChat_Stand">
           <AllChat allChat={allChat} StandDate={StandDate.current} CreateDate={props.CreateDate} 
           newDate={newDate.current} DeleteChat={deletechat}  ReadChatcnt={Chat_Context.ReadChat} 
           RealTimeMsg={props.RealtimeMsg} Receive_NewDate={props.NewDate} Receive_standDate={props.date}
-          IsMine={ismychat.current} Otherchat={props.AllChat} SaveChat={props.messages} />
+          IsMine={ismychat.current} Otherchat={props.AllChat} SaveChat={props.messages} IsSaveChatCnt={props.IsSaveChatCnt} IsOneRead={props.IsOneRead}/>
           <div ref={chatEndRef} />
         </div>)}
         <div className="AddChatItems_inputchat" ref={containerRef}>

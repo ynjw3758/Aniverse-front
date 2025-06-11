@@ -3,7 +3,7 @@
 //                            +--------------------
 //#region type 
 import {useEffect, useState, useRef, useContext} from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios, { AxiosHeaders } from "axios";
 import {Cookies} from 'react-cookie';
 //#endregion
@@ -35,8 +35,9 @@ type info ={
     MyNickname:string;
     isClick:boolean;
     StandDate:string[];
-    MessageInfo:MessageInfo[][],
-    RealtimeMsg:MessageInfo
+    MessageInfo:MessageInfo[][];
+    RealtimeMsg:MessageInfo;
+    IsOneRead:boolean;
  }
 
  type ChatInfos={
@@ -95,6 +96,8 @@ const ShowChat =(props:info) =>{
     const real_chat = useRef<MessageInfo | null>(null);
     const RdCnt = useRef<number>(0);
     const isPartiZero= useRef<boolean>(false);
+    const location = useLocation();
+    const isReadCnt = location.state?.IsReadCnt;
 //#endregion
 
   const formatdate = (date: Date) => {
@@ -291,7 +294,7 @@ const ShowChat =(props:info) =>{
     },[props.MessageInfo, props.StandDate])
 
     useEffect(() =>{
-      
+
     },[Web_Chatinfo.ReadChat])
 
     async function UserInfoPasing(){
@@ -360,7 +363,8 @@ const ShowChat =(props:info) =>{
           <AddItems CreateDate={create} ChatId={props.Chat_id} totalId={ids} Profile={props.MyProfile} 
           isFirst={props.isFirst} ChSendId={chsendId} MyNickname={props.MyNickname} 
           count={size} date ={standDate} messages={msgInfo} RealtimeMsg={real_chat.current!} 
-          AllChat={allChat} NewDate={newDate} realcnt={RdCnt.current} isPartiZero={isPartiZero.current} RoomName={props.RoomName}/>
+          AllChat={allChat} NewDate={newDate} realcnt={RdCnt.current} isPartiZero={isPartiZero.current} 
+          RoomName={props.RoomName} IsSaveChatCnt={isReadCnt} IsOneRead={props.IsOneRead}/>
         </>)}
       </div>
      </div>

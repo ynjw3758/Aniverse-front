@@ -109,11 +109,18 @@ useEffect(() => {
 ).then(response =>{
 
      if(response.status==200){
-        console.log("아이디 조회 성공 : " ,response.data.id);
-        setAvailid(response.data.id);
-        setFailid(false);
-        setIdfind(false);
-        setSuccessid(true);
+        console.log("아이디 조회 성공 : " ,response.data);
+        if(response.data.Success === true){
+          setAvailid(response.data.id);
+          setFailid(false);
+          setIdfind(false);
+          setSuccessid(true);
+        }else{
+          setSuccessid(false);
+          setIdfind(false);
+          setFailid(true);
+        }
+
      }
 }).catch(error =>{
     console.log("error : " , error.response);
@@ -139,9 +146,7 @@ useEffect(() => {
       }
       console.log("error response: " , error.response?.data);
     }
-    setSuccessid(false);
-    setIdfind(false);
-    setFailid(true);
+
     
 })
   }

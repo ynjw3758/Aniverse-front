@@ -248,12 +248,9 @@ const Sign:React.FC=()=> {
            console.log("error code: " , error.code);
            
            if(error.code=="ERR_BAD_REQUEST"){
+              navigate("/error");
+           }
 
-           }
-           if(error.code == "ERR_NETWORK"){
-             console.log("네트워크 에러 ");
-             
-           }
            console.log("error response: " , error.response?.data);
          }
 

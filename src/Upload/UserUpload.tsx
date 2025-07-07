@@ -13,7 +13,7 @@ import TagList from "./Taglist/TagList";
 import AddTagPeople from "./AddTag/SearchTagPeople";
 import {Cookies} from 'react-cookie';
 import LoginExp from "../LginExpiration/LoginExp";
-
+import { KeywordStore } from "../Context/Ai/KeywordStore";
 
 
 type user_info ={
@@ -81,6 +81,7 @@ const UserUpload=(props:user_info) =>{
   const[againlogin, setAgainlogin]=useState<boolean>(false);
   const[userid, setUserid]=useState<string>("");
   const[isfirst, setIsfirst]=useState<boolean>(false);
+  const[isGetKeyword, setIsGetKeyword]=useState<boolean>(false);
 
 
   const[tagItems, setTagItems]=useState<any[]>([]);
@@ -91,22 +92,20 @@ const UserUpload=(props:user_info) =>{
   const max_size=1024*1024*100;
   const navigate = useNavigate();
   const cookies = new Cookies();
+  const file_infos = useRef<FileList | null>(null);
   let refresh_token:string =""
-
+  
 
   const onChangeImg = (event: React.ChangeEvent<HTMLInputElement>) => {
-
     const array :any=event.target.files;
-
+    file_infos.current = array;
     let file_list:string[]=[...preview];
     let video_list:string[]=[...videolist];
-    //let multi_list:string[]=[...multilist];
     let upload_list:string[]=[...uploadFile];
     let upload_videolist:string[]=[...uploadvideo];
     let url_list:string[] = [...urlList];
     let total_size:number=0;
     let files:string[]=[...multilist];
-    //let oringin:string[]=[...originmulti];
     for(let count =0; count<array.length;count++){
       if (array[count] !== null) {
           const file = array[count];
@@ -125,10 +124,7 @@ const UserUpload=(props:user_info) =>{
             setIsimg(true);
             setImgFile(file);
             const currentimg = URL.createObjectURL(file);
-            console.log("url :" , currentimg);
             file_list.push(currentimg);
-              
-              //multi_list.push(currentimg);
              setMultilist(file);
         
             if(array.length === 1){
@@ -153,6 +149,7 @@ const UserUpload=(props:user_info) =>{
                   
                   return;
               }
+               AisendFiles();
               return;
         
              }
@@ -169,13 +166,7 @@ const UserUpload=(props:user_info) =>{
              upload_videolist.push(file);
              setUploadvideo(upload_videolist);
              const create_url = URL.createObjectURL(file);
-  
              video_list.push(create_url);
-                      
-              
-              //multi_list.push(create_url);
-              //setMultilist(multi_list);
-
              setVideolist(video_list);
              setVideo(true);
            
@@ -186,13 +177,42 @@ const UserUpload=(props:user_info) =>{
   }
    }
    if(file_list.length !== 0 && video_list.length !== 0){
-    
     setMutiload(true);
     setVideo(false);
     setCheck(false);
     setOneimg(false);
+     
    }
+   AisendFiles();
   }
+
+    async function AisendFiles(){
+      console.log("아니 돼냐?");
+      const formData = new FormData();
+      const files = file_infos.current;
+      if (files && files.length > 0) {
+          for (let i = 0; i < files.length; i++) {
+              formData.append("files", files[i]); // ✅ 같은 key로 여러 개 추가
+        }
+      }
+      const res =  await axios.post('http://localhost:8001/ai/sendkeyword', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      }})
+      console.log("응답 결과 :" , res);
+      setIsGetKeyword(true);
+      //const jobId = res.data.jobId
+      //startPolling();
+    }
+
+    useEffect(() =>{
+      if(isGetKeyword === false) return;
+      console.log("자 이제 폴링 방식으로 키워드 가져오자");
+      //const startPolling = KeywordStore((state) => state.startPolling)
+      const startPolling = KeywordStore.getState().startPolling;
+      startPolling("abc1234");
+
+    },[isGetKeyword])
 
 
   
@@ -901,3 +921,4 @@ const UserUpload=(props:user_info) =>{
 }
 
 export default UserUpload;
+

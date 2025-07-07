@@ -24,7 +24,7 @@ const Success_Sign:React.FC<SettingsMenuType> =({onClose , Name}) =>{
 //<div className="Success_SignDrop">
     return(<Modal onClose={onClose}>
             <div className="Success_Sign_Main">
-              <img src="/image/success_sign.png"/>
+              <img src="../assets/images/success_sign.png"/>
              <p>{`${Name}님의 회원 가입을 축하드립니다`}</p>
              <h3>애완동물과의 이야기를 공유해보세요</h3>
              <div className="success_sign_btn">

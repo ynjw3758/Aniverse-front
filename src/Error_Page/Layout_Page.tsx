@@ -8,7 +8,7 @@ const Layout_Page =() =>{
 
     return(
         <div className="head">
-            <img src="/image/log_test.jpg" alt="애완멀" ></img>
+            <img src="../assets/images/log_test.jpg" alt="애완멀" ></img>
             <Outlet />
         </div>
     )

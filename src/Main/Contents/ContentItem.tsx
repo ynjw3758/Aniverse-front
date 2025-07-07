@@ -1015,7 +1015,7 @@ const textareaRef = useRef<HTMLTextAreaElement>(null);
        </div>
        <div className="Mainpage_Content_Icon">
         <img src={hearticon} id="heart" onClick={ClickHeart} key={props.conntetid} />
-        <img src="/image/reply.png" id="reply"/>
+        <img src="../assets/images/reply.png" id="reply"/>
        </div>
        <div className="Mainpage_Content_subItem">
         {checkheart && (<>
@@ -1061,7 +1061,7 @@ const textareaRef = useRef<HTMLTextAreaElement>(null);
         {!isloading && (<>
           <textarea  placeholder="댓글 달기" onChange={commentHandler} value={emoticon} ref={textareaRef}
           onKeyDown={KeyDOWNHandler} onInput={te_inpuHandler}/>  
-        <img src={"/image/emoticon.png"}  onClick={EmojiHandler}/>
+        <img src={"../assets/images/emoticon.png"}  onClick={EmojiHandler}/>
            {ispost && (<div className="Mainpage_Content_commnet_post">
             <p onClick={CommentUpload}>게시</p>
         </div>)}
@@ -1097,7 +1097,7 @@ const textareaRef = useRef<HTMLTextAreaElement>(null);
           </div>
           <div className="Mainpage_Content_Icon">
         <img src={hearticon} id="heart" onClick={ClickHeart}/>
-        <img src="/image/reply.png" id="reply"/>
+        <img src="../assets/images/reply.png" id="reply"/>
        </div>
        <div className="Mainpage_Content_subItem">
        {checkheart && (<>
@@ -1142,7 +1142,7 @@ const textareaRef = useRef<HTMLTextAreaElement>(null);
         {!isloading && (<>
           <textarea  placeholder="댓글 달기" onChange={commentHandler} value={emoticon} ref={textareaRef}
            onKeyDown={KeyDOWNHandler} onInput={te_inpuHandler}/>  
-        <img src={"/image/emoticon.png"}  onClick={EmojiHandler}/>
+        <img src={"../assets/images/emoticon.png"}  onClick={EmojiHandler}/>
            {ispost && (<div className="Mainpage_Content_commnet_post">
             <p onClick={CommentUpload}>게시</p>
         </div>)}

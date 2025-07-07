@@ -94,7 +94,7 @@ const Resetpassword =() =>{
     }
     return(
         <div className="main">
-            <img src="/image/log_test.jpg" alt="애완멀" ></img>
+            <img src="../assets/images/log_test.jpg" alt="애완멀" ></img>
             <h2>비밀번호 재설정</h2>
             <p>사용 가능 아이디 : {User_id.UserId}</p>
             <div className={EnterNewpwInputClasses}>

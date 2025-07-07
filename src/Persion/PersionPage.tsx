@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import user_info from "../Context/Userdata";
 import HiBellIcon from "../Layout/HibellIcon";
 import MyPage from "../Layout/MyPage";
-import moment from "momnet";
+import moment from"moment";
 import {Cookies} from 'react-cookie';
 import axios from "axios";
 
@@ -119,7 +119,7 @@ const PersionPage =() =>{
                    color:"black",
                     fontSize:"xx-large"}}>
                     <div className="log">
-                       <img src="/image/log_test.jpg" alt="애완멀" ></img>
+                       <img src="../assets/images/log_test.jpg" alt="애완멀" ></img>
                     </div>
                 </Link>
         </div>

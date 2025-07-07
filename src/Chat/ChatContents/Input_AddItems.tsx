@@ -491,11 +491,7 @@ const input_values= useRef<string>("");
      setFiles([]);
      setMaxsize(0);
     }
-/*
-            <div className="InputChat_upload-header">
-                <img src="/image/test.jpg" alt="upload-header" />
-            </div>
-            */
+
     return(
     <div className="AddChatItems_total">
         {isfiles &&(<div className="AddChatItems_BackDrop" onClick={FileDropClose}>
@@ -514,12 +510,12 @@ const input_values= useRef<string>("");
         </div>)}
         <div className="AddChatItems_inputchat" ref={containerRef}>
         <div className="AddChatItems_AddContents">
-            <img src="/image/ChatSend.png" onClick={sendChatHandler}/>
-            <img src="/image/emoticon.png" onClick={EmoticonHandler}/>
+            <img src="../assets/images/ChatSend.png" onClick={sendChatHandler}/>
+            <img src="../assets/images/emoticon.png" onClick={EmoticonHandler}/>
             <label  
                 draggable="true"
             >
-            <img src="/image/picture.png"/>
+            <img src="../assets/images/picture.png"/>
             <input type="file" 
                 style={{display:"none"}}
                 onChange={AddfileHandler}

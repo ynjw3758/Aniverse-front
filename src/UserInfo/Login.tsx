@@ -5,7 +5,7 @@
 import {Fragment,  useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import axios from 'axios'
-import moment from "momnet";
+import moment from"moment";
 import {Cookies} from "react-cookie";
 //#endregion
 
@@ -194,22 +194,17 @@ const Login:React.FC= (props : {})=>{
     const googlelogin =() =>{
 
     }
-      /*
-                  {isloading && (<div className="login_loading">
-                <img src="/image/login_loading.png"/>
-                <p>로딩 중....</p>
-            </div>)}
-            */
+
     return ( <Fragment>
           <form onSubmit={SubmitHandler} onKeyDown={KeydownHandler}>
                   {isloading && (<div className="login_loading">
-                <img src="/image/login_loading.png"/>
+                <img src="../assets/images/login_loading.png"/>
                 <p>로그인 중</p>
             </div>)}
             <div className="Loginmain">
                 <h2>로그인</h2>
                 <div className="Loginimage">
-                  <img src="/image/login_picture.jpg" />
+                  <img src="../assets/images/login_picture.jpg" />
                 </div>
                 <div className="LoginInput">
                     <label htmlFor="id"></label>
@@ -246,9 +241,9 @@ const Login:React.FC= (props : {})=>{
                     </ul>
                 </div>
                 <div className="Login_sns">
-                    <img src={"/image/btn_kakao.svg"} onClick={kakaologin} />
-                    <img src={"/image/btn_naver.svg"} onClick={naverlogin} />
-                    <img src={"/image/btn_google.svg"} onClick={googlelogin} />
+                    <img src={"../assets/images/btn_kakao.svg"} onClick={kakaologin} />
+                    <img src={"../assets/images/btn_naver.svg"} onClick={naverlogin} />
+                    <img src={"../assets/images/btn_google.svg"} onClick={googlelogin} />
                 </div>
             </div>
             </form>

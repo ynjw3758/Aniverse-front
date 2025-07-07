@@ -347,7 +347,7 @@ const InputOptHandler =(e:React.ChangeEvent<HTMLInputElement>) =>{
     return (
     <Fragment>
         <div className="header">
-            <img src="/image/log_test.jpg" alt="애완멀" ></img>
+            <img src="../assets/images/log_test.jpg" alt="애완멀" ></img>
             <h2>ID/PW 찾기</h2>
           </div>
            <div className="LoginFind_tag">

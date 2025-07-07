@@ -465,7 +465,7 @@ const MultiUpload =(props:upload_data) =>{
     {secondpage && (<Fragment>
         <div className="Multi_upload">
           <div className="Multi_upload_img">
-              <img src="/image/left_arrow.png" onClick={secondbackHandler}/>
+              <img src="../assets/images/left_arrow.png" onClick={secondbackHandler}/>
            </div>
             <h2>올리기</h2>
             <div className="Multi_upload_btn">
@@ -477,18 +477,18 @@ const MultiUpload =(props:upload_data) =>{
             </div>
             <div className="Multi_textbody">
             {(leftactive == false && rightactive == true) && ( <div className="slide_right">
-              <img src="/image/slideright.png" onClick={SlidenextHandler} id={right_active} />
+              <img src="../assets/images/slideright.png" onClick={SlidenextHandler} id={right_active} />
               </div>)}
               {(leftactive == true && rightactive == true) && ( <>
               <div className="slide_left">
-               <img src="/image/slideleft.png" onClick={SlidebeforeHandler} id={left_active} />
+               <img src="../assets/images/slideleft.png" onClick={SlidebeforeHandler} id={left_active} />
               </div>
               <div className="slide_right">
-              <img src="/image/slideright.png" onClick={SlidenextHandler} id={right_active} />
+              <img src="../assets/images/slideright.png" onClick={SlidenextHandler} id={right_active} />
               </div>
               </>)}
               {(leftactive == true && rightactive == false) && (<div className="slide_left">
-               <img src="/image/slideleft.png" onClick={SlidebeforeHandler} id={left_active} />
+               <img src="../assets/images/slideleft.png" onClick={SlidebeforeHandler} id={left_active} />
               </div>)}
               <div className="Multi_slide_stand_upload">
 
@@ -536,7 +536,7 @@ const MultiUpload =(props:upload_data) =>{
     {!secondpage && (<Fragment>
         <div className="Multi_first_headers">
           <div className="Multi_first_img">
-              <img src="/image/left_arrow.png" onClick={Firtst_backHandler}/>
+              <img src="../assets/images/left_arrow.png" onClick={Firtst_backHandler}/>
            </div>
             <h2>파일</h2>
             <div className="Multi_first_btn">
@@ -550,18 +550,18 @@ const MultiUpload =(props:upload_data) =>{
               
             }}>
               {(leftactive == false && rightactive == true) && ( <div className="slide_right">
-              <img src="/image/slideright.png" onClick={SlidenextHandler} id={right_active} />
+              <img src="../assets/images/slideright.png" onClick={SlidenextHandler} id={right_active} />
               </div>)}
               {(leftactive == true && rightactive == true) && ( <>
               <div className="slide_left">
-               <img src="/image/slideleft.png" onClick={SlidebeforeHandler} id={left_active} />
+               <img src="../assets/images/slideleft.png" onClick={SlidebeforeHandler} id={left_active} />
               </div>
               <div className="slide_right">
-              <img src="/image/slideright.png" onClick={SlidenextHandler} id={right_active} />
+              <img src="../assets/images/slideright.png" onClick={SlidenextHandler} id={right_active} />
               </div>
               </>)}
               {(leftactive == true && rightactive == false) && (<div className="slide_left">
-               <img src="/image/slideleft.png" onClick={SlidebeforeHandler} id={left_active} />
+               <img src="../assets/images/slideleft.png" onClick={SlidebeforeHandler} id={left_active} />
               </div>)}
               <div className="Multi_slide_stand">
 

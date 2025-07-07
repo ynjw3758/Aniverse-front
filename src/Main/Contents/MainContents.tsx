@@ -106,32 +106,14 @@ const MainContentsx=(props:user_info) =>{
 
         props.onDisActive(data);
     }
-    /*
-                    {!isloading && (<div className="login_loading">
-                <img src="/image/login_loading.png"/>
-                <p>로딩 중</p>
-            </div>)}
-            */
-/*
-        {(isdata == true && isshow ==false) && (<div className="Maincontents_body_blur">
-            <Contents  contents={props.content} disActive={DisAvtive} Img={props.img}/>
-        </div>)}
-        {(isdata == true && isshow ==true) && (<div className="Main_Contents">
-            <Contents  contents={props.content} disActive={show} Img={props.img}/>
-        </div>)}
-        */
-       /*
-               <div className="Main_Contents">
-            <Contents  contents={props.content} disActive={DisAvtive} Img={props.img}/>
-        </div>
-        */
+
        
     return(<Fragment>
         {isAlarm && (<>
         <NotificationMain ChatReceive={alchatReceive}/>
         </>)}
             {!isloading && (<div className="login_loading">
-                <img src="/image/login_loading.png"/>
+                <img src="../assets/images/login_loading.png"/>
                 <p>로딩 중</p>
             </div>)}
         <div className="Main_Contents">
@@ -148,7 +130,7 @@ const MainContentsx=(props:user_info) =>{
         </div>)}
 
         {!isdata && (<div className="upload_story">
-            <img src="/image/no_data.png"/>
+            <img src="../assets/images/no_data.png"/>
             <p>당신의 이야기를 올려보세요...</p>
             </div>)}
         {modal && (<UserUpload img={props.img} nickname={props.nickname} onClose={uploadclose} onComplete={CompleteHandler}/>)}

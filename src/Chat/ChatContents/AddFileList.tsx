@@ -100,7 +100,7 @@ const videoref=useRef<HTMLDivElement>(null);
         {isimg && (<div className="AddChatFileList_imgbox" id={imgid} ref={imgref} 
         onClick={ImageClick}>
             <div className="AddChatFileList_Cancel" >
-                   <img src="/image/delete.png"/>
+                   <img src="../assets/images/delete.png"/>
                 </div>
             <img src={img} />
             <div className="AddChatFileList_infos">
@@ -111,7 +111,7 @@ const videoref=useRef<HTMLDivElement>(null);
         {isvideo && ( <div className="AddChatFileList_videobox"  id={videoid} ref={videoref} 
         onClick={VideoClick}>
             <div className="AddChatFileList_Cancel">
-                   <img src="/image/delete.png"/>
+                   <img src="../assets/images/delete.png"/>
                 </div>
              <video src={video}/>
             <div className="AddChatFileList_infos">

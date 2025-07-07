@@ -15,7 +15,7 @@ const TagListItem =(props:TagItem) =>{
                <p>{props.Id}</p>
            </div>
            <div className="TagListItems_delete">
-            <img src="/image/delete.png"/>
+            <img src="../assets/images/delete.png"/>
            </div>
     </div>)
 

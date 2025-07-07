@@ -72,34 +72,34 @@ const MainSide =(props:user_infos) =>{
                     <h3>{props.nickname}</h3>
                 </button>
                 <button className="Main_FItem" disabled={!props.isReady}>
-                  <img src="/image/friends.png" />
+                  <img src="../assets/images/friends.png" />
                     <h3>친구</h3>
                 </button>
                 <button className="Main_MItem" onClick={NoteHandler} disabled={!props.isReady}>
-                  <img src="/image/message.png" />
+                  <img src="../assets/images/message.png" />
                     <h3>쪽지</h3>
                 </button>
                 <button className="Main_CItem" onClick={ChatHandler} disabled={!props.isReady}>
-                  <img src="/image/talk.png" />
+                  <img src="../assets/images/talk.png" />
                     <h3>메신져</h3>
                 </button>
                 <button className="Main_SItem" disabled={!props.isReady}>
-                  <img src="/image/search.png" />
+                  <img src="../assets/images/search.png" />
                     <h3>검색</h3>
                 </button>
                 <button className="Main_AlItem" disabled={!props.isReady} onClick={AlarmClick}>
-                  <img src="/image/Alarm.png" />
+                  <img src="../assets/images/Alarm.png" />
                     <h3>알람</h3>
                     {isNoti && (<div className="MainSide_Alarm_cnt">
                       <p>{"..."}</p>
                     </div>)}
                 </button>
                 <button className="Main_LItem" disabled={!props.isReady}>
-                  <img src="/image/favorite.png" />
+                  <img src="../assets/images/favorite.png" />
                     <h3>즐겨찾기</h3>
                 </button>
                 <button className="Main_AItem" disabled={!props.isReady}>
-                <img src="/image/time.png" />
+                <img src="../assets/images/time.png" />
                     <h3>활동기록</h3>
                 </button>
             </ul>

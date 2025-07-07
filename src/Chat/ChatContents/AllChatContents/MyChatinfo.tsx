@@ -159,8 +159,8 @@ const DividChatinfo =({Chatinfo, DeleteChat}:props) =>{
         </>)}
         {isError && (<>
             <div className="MyChat_Error">
-              <img src="/image/chatdelete.png" onClick={deletechat}/>
-              <img src="/image/rotate.png" onClick={retrychat}/>
+              <img src="../assets/images/chatdelete.png" onClick={deletechat}/>
+              <img src="../assets/images/rotate.png" onClick={retrychat}/>
             </div>
         </>)}
         <div className="MyChat_Context" key={Chatinfo.messageId}>

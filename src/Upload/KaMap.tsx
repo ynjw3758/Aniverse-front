@@ -235,7 +235,7 @@ useEffect(() => {
       </div>
       <div className="Kmap_search">
         <input onChange={searchHandler} placeholder='위치 검색..' onKeyDown={EnterSearch}/>
-        <img src="/image/Map_Cancel.png" onClick={CancelHandler}/>
+        <img src="../assets/images/Map_Cancel.png" onClick={CancelHandler}/>
        </div>
         {checksearch && (<div className="item_list" >
           {markers.map(({content, address, phone, position, isaddress,isphone,id

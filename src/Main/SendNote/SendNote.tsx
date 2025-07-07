@@ -468,7 +468,7 @@ const SendNote =(props:Note) =>{
                   {isnick && (<>
                     {sendList.map((data) =>(<div className="aaa" id={data} ref={sendRef}>
                      <p>{data}</p>
-                     <img src="/image/delete.png" onClick={ListDelete}/>   
+                     <img src="../assets/images/delete.png" onClick={ListDelete}/>   
                     </div>))}
                   </>)}
                     <div className="SendNote_search">

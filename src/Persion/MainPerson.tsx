@@ -1,6 +1,5 @@
 import { Fragment ,useEffect , useContext , useState} from "react";
 import "./MainPerson.scss";
-import moment from "momnet";
 import {Cookies} from 'react-cookie';
 import { useNavigate } from "react-router-dom";
 import axios from "axios";

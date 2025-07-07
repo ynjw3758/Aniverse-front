@@ -1077,7 +1077,7 @@ const ischeck = useRef<string>("");
               <div className="ShowComments_content_compare" ref={DivRef}>
                 {!reploading && (<div className="ShowComments_Input" ref={input_div}>
                   <div className="ShowComments_Imoticon">
-                    <img src={"/image/emoticon.png"}  onClick={EmojiHandler} />
+                    <img src={"../assets/images/emoticon.png"}  onClick={EmojiHandler} />
                   </div>
                     {ispost && (<div className="ShowComments_commnet_post">
                       <p onClick={sendcomment}>게시</p>
@@ -1099,8 +1099,8 @@ const ischeck = useRef<string>("");
                   </div>
                  <div className="ShowComments_content_Imglist" ref={imglist_div}>
                     <img src={hearticon}/>
-                    <img src="/image/share.png"/>
-                    <img src="/image/favorite_content.png"/>
+                    <img src="../assets/images/share.png"/>
+                    <img src="../assets/images/favorite_content.png"/>
                  </div>
                  {isemoji && (<div className="ShowComments_Input_Emoji">
                     <EmojiPicker onEmojiClick={onClickHandler}  

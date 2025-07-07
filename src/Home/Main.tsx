@@ -1,23 +1,7 @@
 import { Fragment, useState, useRef, useEffect } from "react";
 import "./Main.scss";
 import React from "react";
-import SwiperCore, { Navigation, Scrollbar, Autoplay } from 'swiper';
 
-// Swiper styles
-import 'swiper/swiper-bundle.min.css';
-import 'swiper/components/navigation/navigation.min.css';
-import 'swiper/components/pagination/pagination.min.css';
-import 'swiper/swiper.min.css';
-
-const imgSwipeArr = [
-    "https://sourcemusic.com/resources/artist/fc8bad3b-d097-4cc9-bce5-d5c026d42c6f.jpg",
-    "https://sourcemusic.com/resources/artist/8a791820-d707-4679-8ef1-2e0485800289.jpg",
-    "https://sourcemusic.com/resources/artist/61af4ae2-9739-4e5e-a672-9c60a97c17cb.jpg",
-    "https://sourcemusic.com/resources/artist/aa52511a-c39c-427b-8c3f-64f57020b27d.jpg",
-    "https://sourcemusic.com/resources/artist/b44aebd9-f5f0-49a8-89a1-65e730109285.jpg",
-];
-
-SwiperCore.use([Navigation, Scrollbar, Autoplay]);
 const services = [
   {
       title: "쪽지",
@@ -64,7 +48,7 @@ const Main = () => {
             <main className="Main_Body" onScroll={handleScroll} ref={scrollRef}>
                 <div className="slide" style={calculateStyle(0, 400)}>
                     <div className="img_list">
-                        <img src="/image/new_img.png" alt="슬라이드 이미지" />
+                        <img src="../assets/images/new_img.png" alt="슬라이드 이미지" />
                     </div>
                 </div>
 
@@ -99,28 +83,28 @@ const Main = () => {
                     <div className="Main_Note" style={calculateStyle(1100, 1400)}>
                        <h2>쪽지</h2>
                        <div className="Main_Note_Descrip">
-                        <img src="image/Main_Note.png" />
+                        <img src="../assets/images/Main_Note.png" />
                         <p>사진과 영상을 쉽게 업로드하여 다양한 콘텐츠를 공유해보세요.</p>
                       </div>
                     </div>
                     <div className="Main_Chat" style={calculateStyle(1300, 1650)}>
                        <h2>채팅</h2>
                        <div className="Main_Chat_Descript">
-                        <img src="image/Main_Note.png" />
+                        <img src="../assets/images/Main_Note.png" />
                         <p>실시간으로 친구들과 소통할 수 있는 채팅 기능입니다.</p>
                       </div>
                     </div>
                     <div className="Main_Contents_Intro" style={calculateStyle(1500, 1900)}>
                        <h2>컨텐츠 공유</h2>
                        <div className="Main_Contents_Descript">
-                        <img src="image/Main_Note.png" />
+                        <img src="../assets/images/Main_Note.png" />
                         <p>개인적인 소통을 위한 1:1 쪽지 기능을 제공합니다.</p>
                       </div>
                     </div>
                     <div className="Main_Follower" style={calculateStyle(1800, 1900)}>
                        <h2>팔로워</h2>
                        <div className="Main_Follower_Descript">
-                        <img src="image/Main_Note.png" />
+                        <img src="../assets/images/Main_Note.png" />
                         <p>관심 있는 사람들을 팔로우하고 최신 소식을 받아보세요.</p>
                       </div>
                     </div>

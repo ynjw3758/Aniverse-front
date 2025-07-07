@@ -59,18 +59,18 @@ useEffect(() =>{
 
 return(<>
               {(leftactive == false && rightactive == true) && ( <div className="Slide_right">
-              <img src="/image/slideright.png" onClick={SlidenextHandler} id={right_active} />
+              <img src="../assets/images/slideright.png" onClick={SlidenextHandler} id={right_active} />
               </div>)}
               {(leftactive == true && rightactive == true) && ( <>
               <div className="Slide_left">
-               <img src="/image/slideleft.png" onClick={SlidebeforeHandler} id={left_active} />
+               <img src="../assets/images/slideleft.png" onClick={SlidebeforeHandler} id={left_active} />
               </div>
               <div className="Slide_right">
-              <img src="/image/slideright.png" onClick={SlidenextHandler} id={right_active} />
+              <img src="../assets/images/slideright.png" onClick={SlidenextHandler} id={right_active} />
               </div>
               </>)}
               {(leftactive == true && rightactive == false) && (<div className="Slide_left">
-               <img src="/image/slideleft.png" onClick={SlidebeforeHandler} id={left_active} />
+               <img src="../assets/images/slideleft.png" onClick={SlidebeforeHandler} id={left_active} />
               </div>)}
 </>)
 

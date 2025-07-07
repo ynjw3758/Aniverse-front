@@ -36,7 +36,7 @@ interface tokenRenewal {
 
 const opendlist:string[]=["전체 공개" , "지인 공개" , "광고 공개"];
 
-//SwiperCore.use([Navigation, Scrollbar , Autoplay]);
+
 const Video =(props:video_data) =>{
     
     const[list_size , setList_size]=useState<boolean>(false); 
@@ -780,7 +780,7 @@ const Video =(props:video_data) =>{
                {nextpage && (<>               
                     <div className="video_upload">
                        <div className="video_upload_img">
-                        <img src="/image/left_arrow.png" onClick={second_backHandler}/>
+                        <img src="../assets/images/left_arrow.png" onClick={second_backHandler}/>
                        </div>
                        <h2>업로드</h2>
                     <div className="video_upload_btn">
@@ -797,18 +797,18 @@ const Video =(props:video_data) =>{
                       </div>)))}
                     {(list_size == true) && ( <div className="second_Nimg">
                       {(leftactive == false && rightactive == true) && ( <div className="slide_right">
-              <img src="/image/slideright.png" onClick={Last_Slidenext} />
+              <img src="../assets/images/slideright.png" onClick={Last_Slidenext} />
               </div>)}
               {(leftactive == true && rightactive == true) && ( <>
               <div className="slide_left">
-               <img src="/image/slideleft.png" onClick={last_Slidebefore} />
+               <img src="../assets/images/slideleft.png" onClick={last_Slidebefore} />
               </div>
               <div className="slide_right">
-              <img src="/image/slideright.png" onClick={Last_Slidenext} />
+              <img src="../assets/images/slideright.png" onClick={Last_Slidenext} />
               </div>
               </>)}
               {(leftactive == true && rightactive == false) && (<div className="slide_left">
-               <img src="/image/slideleft.png" onClick={last_Slidebefore}/>
+               <img src="../assets/images/slideleft.png" onClick={last_Slidebefore}/>
               </div>)}
               <div className="Video_slide_stand_upload">
                 
@@ -860,7 +860,7 @@ const Video =(props:video_data) =>{
                {(firstpage == true  && list_size == false) && (<>
                  <div className="first_headers">
                     <div className="first_img">
-                        <img src="/image/left_arrow.png" onClick={first_backHandler}/>
+                        <img src="../assets/images/left_arrow.png" onClick={first_backHandler}/>
                     </div>
                      <h2>동영상</h2>
                     <div className="first_btn">
@@ -878,7 +878,7 @@ const Video =(props:video_data) =>{
                     {(firstpage == true && list_size == true) &&(<>
                  <div className="first_headers">
                     <div className="first_img">
-                        <img src="/image/left_arrow.png" onClick={first_backHandler}/>
+                        <img src="../assets/images/left_arrow.png" onClick={first_backHandler}/>
                     </div>
                      <h2>동영상</h2>
                     <div className="first_btn">
@@ -890,18 +890,18 @@ const Video =(props:video_data) =>{
                   </div>
                   
                   {(leftactive == false && rightactive == true) && ( <div className="slide_right">
-              <img src="/image/slideright.png" onClick={SlidenextHandler} />
+              <img src="../assets/images/slideright.png" onClick={SlidenextHandler} />
               </div>)}
               {(leftactive == true && rightactive == true) && ( <>
               <div className="slide_left">
-               <img src="/image/slideleft.png" onClick={SlidebeforeHandler} />
+               <img src="../assets/images/slideleft.png" onClick={SlidebeforeHandler} />
               </div>
               <div className="slide_right">
-              <img src="/image/slideright.png" onClick={SlidenextHandler} />
+              <img src="../assets/images/slideright.png" onClick={SlidenextHandler} />
               </div>
               </>)}
               {(leftactive == true && rightactive == false) && (<div className="slide_left">
-               <img src="/image/slideleft.png" onClick={SlidebeforeHandler}/>
+               <img src="../assets/images/slideleft.png" onClick={SlidebeforeHandler}/>
               </div>)}
               <div className="Video_slide_stand">
                 

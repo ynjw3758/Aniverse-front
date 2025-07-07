@@ -13,7 +13,7 @@ const Header = () =>{
                    color:"black",
                     fontSize:"xx-large"}}>
             <div className="Headers_log">
-                <img src="/image/new_log.png" alt="애완멀" ></img>
+                <img src="../assets/images/new_log.png" alt="애완멀" ></img>
             </div>
                 </Link>
         </div>

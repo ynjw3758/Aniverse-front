@@ -49,28 +49,28 @@ const ChatMainSide =(props:SideBar_Active) =>{
     return(<>
         <ul className="Note_side">
                  <button className="NoteSide_Home" onClick={HomeHandler}>
-                   <img src="/image/log_test.jpg" />
+                   <img src="../assets/images/log_test.jpg" />
                  </button>
                  <button className="NoteSide_FItem">
-                   <img src="/image/friends.png" />
+                   <img src="../assets/imagesfriends.png" />
                  </button>
                  <button className="NoteSide_MItem" onClick={Notemove}>
-                   <img src="/image/message.png" />
+                   <img src="../assets/images/message.png" />
                  </button>
                  <button className="NoteSide_CItem">
-                   <img src="/image/talk.png" />
+                   <img src="../assets/images/talk.png" />
                  </button>
                  <button className="NoteSide_SItem" onClick={SearchClick} >
-                   <img src="/image/search.png" />
+                   <img src="../assets/images/search.png" />
                  </button>
                  <button className="NoteSide_RItem">
-                   <img src="/image/Alarm.png" />
+                   <img src="../assets/images/Alarm.png" />
                  </button>
                  <button className="NoteSide_LItem">
-                   <img src="/image/favorite.png" />
+                   <img src="../assets/images/favorite.png" />
                  </button>
                  <button className="NoteSide_AItem">
-                 <img src="/image/time.png" />    
+                 <img src="../assets/images/time.png" />    
                  </button>
              </ul>
      </>)

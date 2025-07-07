@@ -370,7 +370,7 @@ const UserUpload=(props:user_info) =>{
                 setOne_before(<Fragment>
                   <div className="first_headers">
                     <div className="first_img">
-                  <img src="/image/left_arrow.png" onClick={backHandler}/>
+                  <img src="../assets/images/left_arrow.png" onClick={backHandler}/>
                   </div>
                   <h2>사진</h2>
                   <div className="first_btn">
@@ -704,7 +704,7 @@ const UserUpload=(props:user_info) =>{
             {(check == true && checkmu== true)  && (<Fragment>
                   <div className="first_headers">
                     <div className="first_img">
-                  <img src="/image/left_arrow.png" onClick={backHandler}/>
+                  <img src="../assets/images/left_arrow.png" onClick={backHandler}/>
                   </div>
                   <h2>사진</h2>
                   <div className="first_btn">
@@ -717,21 +717,21 @@ const UserUpload=(props:user_info) =>{
           
                   <>
                      {(leftactive == false && rightactive == true) && ( <div className="second_slide_right">
-                       <img src="/image/slideright.png" onClick={SlidenextHandler} id={right_active} />
+                       <img src="../assets/images/slideright.png" onClick={SlidenextHandler} id={right_active} />
                      </div>)}
                      {(leftactive == true && rightactive == true) && (<>
                        <div className="second_slide_left">
-                        <img src="/image/slideleft.png" onClick={SlidebeforeHandler} id={left_active} />
+                        <img src="../assets/images/slideleft.png" onClick={SlidebeforeHandler} id={left_active} />
                        </div>
                        <div className="second_slide_right">
-                       <img src="/image/slideright.png" onClick={SlidenextHandler} id={right_active} />
+                       <img src="../assets/images/slideright.png" onClick={SlidenextHandler} id={right_active} />
                         </div>
                      </>)}
                        {(leftactive == true && rightactive == false) && (<div className="second_slide_left">
-                           <img src="/image/slideleft.png" onClick={SlidebeforeHandler} id={left_active} />
+                           <img src="../assets/images/slideleft.png" onClick={SlidebeforeHandler} id={left_active} />
                         </div>)}
                       {(leftactive == true && rightactive == false) && (<div className="second_slide_left">
-                        <img src="/image/slideleft.png" onClick={SlidebeforeHandler} id={left_active} />
+                        <img src="../assets/images/slideleft.png" onClick={SlidebeforeHandler} id={left_active} />
                        </div>)}
                       <div className="Image_slide_stand">
 
@@ -746,7 +746,7 @@ const UserUpload=(props:user_info) =>{
       {next && ( <>
         <div className="Image_upload">
           <div className="Image_upload_img">
-              <img src="/image/left_arrow.png" onClick={secondbackHandler}/>
+              <img src="../assets/images/left_arrow.png" onClick={secondbackHandler}/>
            </div>
             <h2>올리기</h2>
             <div className="Image_upload_btn">
@@ -762,21 +762,21 @@ const UserUpload=(props:user_info) =>{
               </div>)}
           {nextmu && (<>
             {(leftactive == false && rightactive == true) && ( <div className="slide_right">
-              <img src="/image/slideright.png" onClick={SlidenextHandler} id={right_active} />
+              <img src="../assets/images/slideright.png" onClick={SlidenextHandler} id={right_active} />
               </div>)}
               {(leftactive == true && rightactive == true) && ( <>
               <div className="slide_left">
-               <img src="/image/slideleft.png" onClick={SlidebeforeHandler} id={left_active} />
+               <img src="../assets/images/slideleft.png" onClick={SlidebeforeHandler} id={left_active} />
               </div>
               <div className="slide_right">
-              <img src="/image/slideright.png" onClick={SlidenextHandler} id={right_active} />
+              <img src="../assets/images/slideright.png" onClick={SlidenextHandler} id={right_active} />
               </div>
               </>)}
               {(leftactive == true && rightactive == false) && (<div className="slide_left">
-               <img src="/image/slideleft.png" onClick={SlidebeforeHandler} id={left_active} />
+               <img src="../assets/images/slideleft.png" onClick={SlidebeforeHandler} id={left_active} />
               </div>)}
               {(leftactive == true && rightactive == false) && (<div className="slide_left">
-               <img src="/image/slideleft.png" onClick={SlidebeforeHandler} id={left_active} />
+               <img src="../assets/images/slideleft.png" onClick={SlidebeforeHandler} id={left_active} />
               </div>)}
               <div className="Image_slide_stand_upload">
 
@@ -836,7 +836,7 @@ const UserUpload=(props:user_info) =>{
       {(oneimg == true && checkone == false ) && (<>
         <div className="first_headers">
           <div className="first_img">
-            <img src="/image/left_arrow.png" onClick={backHandler}/>
+            <img src="../assets/images/left_arrow.png" onClick={backHandler}/>
           </div>
             <h2>사진</h2>
           <div className="first_btn">
@@ -855,7 +855,7 @@ const UserUpload=(props:user_info) =>{
       {(check == true && checkmu== false)  && ((<>
         <div className="first_headers">
           <div className="first_img">
-            <img src="/image/left_arrow.png" onClick={backHandler}/>
+            <img src="../assets/images/left_arrow.png" onClick={backHandler}/>
           </div>
             <h2>사진</h2>
           <div className="first_btn">
@@ -866,21 +866,21 @@ const UserUpload=(props:user_info) =>{
           <hr />
         </div>
        {(leftactive == false && rightactive == true) && ( <div className="slide_right">
-              <img src="/image/slideright.png" onClick={SlidenextHandler} id={right_active} />
+              <img src="../assets/images/slideright.png" onClick={SlidenextHandler} id={right_active} />
               </div>)}
               {(leftactive == true && rightactive == true) && ( <>
               <div className="slide_left">
-               <img src="/image/slideleft.png" onClick={SlidebeforeHandler} id={left_active} />
+               <img src="../assets/images/slideleft.png" onClick={SlidebeforeHandler} id={left_active} />
               </div>
               <div className="slide_right">
-              <img src="/image/slideright.png" onClick={SlidenextHandler} id={right_active} />
+              <img src="../assets/images/slideright.png" onClick={SlidenextHandler} id={right_active} />
               </div>
               </>)}
               {(leftactive == true && rightactive == false) && (<div className="slide_left">
-               <img src="/image/slideleft.png" onClick={SlidebeforeHandler} id={left_active} />
+               <img src="../assets/images/slideleft.png" onClick={SlidebeforeHandler} id={left_active} />
               </div>)}
               {(leftactive == true && rightactive == false) && (<div className="slide_left">
-               <img src="/image/slideleft.png" onClick={SlidebeforeHandler} id={left_active} />
+               <img src="../assets/images/slideleft.png" onClick={SlidebeforeHandler} id={left_active} />
               </div>)}
               <div className="Image_slide_stand">
 
@@ -904,7 +904,7 @@ const UserUpload=(props:user_info) =>{
             draggable="true"
             className="Upload_picture"
             >
-           <img src="/image/picture.png"/>
+           <img src="../assets/images/picture.png"/>
            <input type="file" 
            style={{display:"none"}}
            onChange={onChangeImg}

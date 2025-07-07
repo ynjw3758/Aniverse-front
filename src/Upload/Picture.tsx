@@ -1,16 +1,7 @@
 import "./Picture.scss";
 import { useEffect, useState , ChangeEvent, useRef, Fragment} from "react";
 import React from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-//import SwiperCore, { Navigation, Scrollbar, Autoplay ,Pagination} from 'swiper';
-// swiper bundle styles
-// swiper core styles
-import 'swiper/swiper-bundle.min.css'
-import 'swiper/components/navigation/navigation.min.css';
-import 'swiper/swiper.min.css'
-// modules styles
-import 'swiper/components/navigation/navigation.min.css'
-import 'swiper/components/pagination/pagination.min.css'
+
 import FirstBefore from "./SecondModals";
 import KaMap from "./KaMap"; //추후에 끌것이다
 
@@ -55,7 +46,7 @@ const Picture =(props:user_info) =>{
            {oneimg && (<>
                   <div className="second_headers">
                     <div className="img">
-                  <img src="/image/left_arrow.png" /*onClick={backHandler}*//>
+                  <img src="../assets/images/left_arrow.png" /*onClick={backHandler}*//>
                   </div>
                   <h2>사진</h2>
                   <div className="btn">

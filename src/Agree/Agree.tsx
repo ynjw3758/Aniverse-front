@@ -93,7 +93,7 @@ const Agree:React.FC =()=> {
 
     return(<Fragment>
         <div className="Agree_header">
-          <img src="/image/log_test.jpg"></img>
+          <img src="../assets/images/log_test.jpg"></img>
         </div>
         <div className="text">
           <p>애니멀에 오신걸 환영합니다 회원가입 전에 이용약관 동의 해주세요</p>

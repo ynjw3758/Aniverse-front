@@ -41,7 +41,7 @@ const ChatHeader =(props:info) =>{
          <h3>{props.Count}</h3>
       </div>
       <div className="ChatHeader_showadd">
-           <img src={"/image/showadd.png"} />
+           <img src={"../assets/images/showadd.png"} />
          </div>
     </div>)
 }

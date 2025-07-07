@@ -116,7 +116,7 @@ const Comments_Items =({comment_Items ,SendComments}:props) =>{
       mentions:[]
     }])
 
-    let Like_Status = islike ? "/image/after_like.png" :"/image/base_like.png";
+    let Like_Status = islike ? "../assets/images/after_like.png" :"../assets/images/base_like.png";
     let exist_cm = iscm_cnt ? "Comments_Item_contents_extend" : "Comments_Item_contents"
     const navigate = useNavigate();
     const cookies = new Cookies();
@@ -413,11 +413,11 @@ const Comments_Items =({comment_Items ,SendComments}:props) =>{
           </div>
           {iscm_cnt && (<div className="Comments_Item_cm_cnt">
               {iscm_close && (<div className="Comments_Item_cm_row" onClick={openreplyHandler}>
-                <img src="/image/down_arrow.png"/>
+                <img src="../assets/images/down_arrow.png"/>
                 <h3>{`댓글${comment_Items.cm_cnt}`}</h3>
                 </div>)}
               {iscm_open && (<div className="Comments_Item_cm_row" onClick={openreplyHandler}>
-                <img src="/image/up_arrow.png"/>
+                <img src="../assets/images/up_arrow.png"/>
                 <h3>{`댓글${comment_Items.cm_cnt}`}</h3>
               </div>)}
               {isLoading && (<div className="CommentsItems_ReplyLoading">

@@ -5,7 +5,7 @@
 //#region type 
 import { Fragment, useContext, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
-import moment from "momnet";
+import moment from"moment";
 import {Cookies} from 'react-cookie';
 import { useNavigate  ,useParams} from "react-router-dom";
 import axios from "axios";
@@ -538,7 +538,7 @@ type ChatNoti={
     <div >
         {againlogin && (<LoginExp />)}
         <div className="MainPage_log" onClick={MainClick}>
-            <img src="/image/log_test.jpg" alt="애완멀" ></img>
+            <img src="../assets/images/log_test.jpg" alt="애완멀" ></img>
             <h3>ALL_Pets</h3>
             </div>
           <MainSide img={profile}  nickname={NickName} id={id} onside={SideHandler} onProfile={() =>{

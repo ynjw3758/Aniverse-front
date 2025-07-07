@@ -3,7 +3,7 @@ import Navigation from "../Navigation/Navigation";
 import Header from "../Layout/Header"
 //import Cleasses from"./MainHeader.module.scss";
 import "./MainHeader.scss";
-import moment from "momnet";
+import moment from"moment";
 import { Link } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import { Cookies } from "react-cookie";

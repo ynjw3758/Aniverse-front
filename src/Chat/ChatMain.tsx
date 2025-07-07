@@ -485,7 +485,7 @@ const ReceiveMessage = useContext(WebSocketChatContext);
             <div className="addchat">
                 <h3>채팅 리스트</h3>
               <div className="plusIcon">
-                <img src="/image/pluschat.png"  onClick={AddchatHandler}/>
+                <img src="../assets/images/pluschat.png"  onClick={AddchatHandler}/>
               </div>
             </div>
             <div className="verticla">
@@ -503,7 +503,7 @@ const ReceiveMessage = useContext(WebSocketChatContext);
         </div>
         {!ischat.showchat && (<>
           <div className="Initbody">
-          <img src="/image/chat.png"/>
+          <img src="../assets/images/chat.png"/>
           <p>당신의 지인과 채팅을 해보세요</p>
           <button onClick={AddchatHandler}>초대하기</button>
         </div>

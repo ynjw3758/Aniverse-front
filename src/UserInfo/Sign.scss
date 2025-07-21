@@ -18,7 +18,7 @@
         display: flex;
         align-items: center;
         justify-self: center;
-        top:68vh;
+        top:60vh;
         left:29vw;
         height: 4vh;
         border-radius: 15px;
@@ -86,7 +86,7 @@
         position: absolute;
         align-items: center;
         justify-self: center;
-        top:78vh;
+        top:70vh;
         left:29vw;
         height: 4vh;
         border-radius: 15px;
@@ -205,7 +205,7 @@
         display: flex;
         align-items: center;
         justify-self: center;
-        top:14vh;
+        top:6vh;
         left:29vw;
         height: 4vh;
         border-radius: 15px;
@@ -368,11 +368,8 @@
         justify-content: center;
         flex-wrap: nowrap;
         align-items: center;
-        //height: 90vh;
         position: absolute;
-        //top:7vh;
         left: 35vw;
-        //margin: 20px;
     
     }
     
@@ -418,6 +415,8 @@
     .Signmain h2{
         align-items: center;
         margin-right: 1vw;
+        margin-top: 0.5vh;
+        font-size: 20px;
     }
     
     
@@ -555,14 +554,13 @@
     .certifi button{
         border-radius: 20px;
         padding-left: 30px;
-        padding-top: 10px;
+        padding-top: 5px;
         padding-right: 30px;
-        padding-bottom: 10px;
+        padding-bottom: 5px;
         margin-right: 13rem;
-        margin-top: 15px;
         background-color:rgba(30, 150, 100, 0.5);
         color: white;
-        font-size: large;
+        font-size: medium;
         cursor: pointer;
     }
     

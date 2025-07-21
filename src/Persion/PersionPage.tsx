@@ -7,6 +7,7 @@ import MyPage from "../Layout/MyPage";
 import moment from"moment";
 import {Cookies} from 'react-cookie';
 import axios from "axios";
+import logimg from "../assets/images/log_test.jpg";
 
 interface ResponseDataType {
     message: string;
@@ -119,7 +120,7 @@ const PersionPage =() =>{
                    color:"black",
                     fontSize:"xx-large"}}>
                     <div className="log">
-                       <img src="../assets/images/log_test.jpg" alt="애완멀" ></img>
+                       <img src={logimg} alt="애완멀" ></img>
                     </div>
                 </Link>
         </div>

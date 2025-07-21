@@ -1,6 +1,7 @@
 import "./Picture.scss";
 import { useEffect, useState , ChangeEvent, useRef, Fragment} from "react";
 import React from 'react';
+import leftarrowimg from "../assets/images/left_arrow.png";
 
 import FirstBefore from "./SecondModals";
 import KaMap from "./KaMap"; //추후에 끌것이다
@@ -46,7 +47,7 @@ const Picture =(props:user_info) =>{
            {oneimg && (<>
                   <div className="second_headers">
                     <div className="img">
-                  <img src="../assets/images/left_arrow.png" /*onClick={backHandler}*//>
+                  <img src={leftarrowimg} /*onClick={backHandler}*//>
                   </div>
                   <h2>사진</h2>
                   <div className="btn">

@@ -4,6 +4,8 @@ import {Oval} from "react-loader-spinner";
 import "./MyChatinfo.scss";
 import WebSocketChatContext from "../../../Context/WebSocketChatContext";
 import { TranseDate } from "../../../Utils/TranseDate";
+import ChatDleteimg from "../../../assets/images/chatdelete.png";
+import rotation from "../../../assets/images/rotate.png";
 
 interface props{
     Chatinfo:MessageInfo,
@@ -159,8 +161,8 @@ const DividChatinfo =({Chatinfo, DeleteChat}:props) =>{
         </>)}
         {isError && (<>
             <div className="MyChat_Error">
-              <img src="../assets/images/chatdelete.png" onClick={deletechat}/>
-              <img src="../assets/images/rotate.png" onClick={retrychat}/>
+              <img src={ChatDleteimg} onClick={deletechat}/>
+              <img src={rotation} onClick={retrychat}/>
             </div>
         </>)}
         <div className="MyChat_Context" key={Chatinfo.messageId}>

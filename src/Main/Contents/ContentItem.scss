@@ -40,6 +40,7 @@
         height: 5.5vh;
         margin-bottom: 1vh;
         margin-left: 2vw;
+        gap:1vw;
     }
     
     .Mainpage_Content_userinfo img{
@@ -48,11 +49,13 @@
         border-radius: 50%;
     }
     .Mainpage_Content_userinfo img:hover{
+        width: 2.5vw;
         height: 6vh;  
         border-radius: 50%;
         cursor: pointer;
     }
     .Mainpage_Content_userinfo h3{
+        margin-left: -0.5vw;
         margin-top: 18px;
         margin-left: 10px;
     }
@@ -486,25 +489,27 @@
         flex-direction: row;
         width:max-content;   
         margin-left: 2vw;
+        gap:1vw;
     }
     
     .Mainpage_Content_userinfo img{  
+        width: 3vw;
         height: 6vh;  
         border-radius: 50%;
 
     }
     .Mainpage_Content_userinfo img:hover{
+        width: 3vw;
         height: 6vh;  
         border-radius: 50%;
         cursor: pointer;
     }
     .Mainpage_Content_userinfo h3{
+         margin-left: -0.5vw;
         margin-top: 1.5vh;
-        margin-left: 0.5vw;
-        width:10vw
+        width:fit-content;
     }
     .Mainpage_Content_userinfo p{
-        margin-left: -7.5vw;
         margin-top: 1.5vh;
         font-size: medium;
         color: darkgray;

@@ -1,6 +1,5 @@
-import React, { ChangeEvent, Fragment, useEffect, useState } from "react";
-import { useActionData } from "react-router-dom";
-import CheckBox from "../CheckBox/CheckBox";
+import React, {Fragment, useEffect, useState } from "react";
+import LandingCenter  from "../assets/images/log_test.jpg";
 import "./Agree.scss";
 import { useNavigate } from "react-router-dom";
 
@@ -59,23 +58,7 @@ const Agree:React.FC =()=> {
       setOthers(false)
     }
   };
-/*
-  const ServiceBtnEvent =()=>{
-    if(sercice === false) {
-      setService(true)
-    }else {
-      setService(false)
-    }
-  };
-  
-  const marketingBtnEvent =()=>{
-    if(marketingCheck === false) {
-      setMarketingCheck(true)
-    }else {
-      setMarketingCheck(false)
-    }
-  };
-   */
+
   useEffect(() =>{
     setIsFormvalue(person && solution && others);
   },[person , solution , others])
@@ -93,7 +76,7 @@ const Agree:React.FC =()=> {
 
     return(<Fragment>
         <div className="Agree_header">
-          <img src="../assets/images/log_test.jpg"></img>
+          <img src={LandingCenter}/>
         </div>
         <div className="text">
           <p>애니멀에 오신걸 환영합니다 회원가입 전에 이용약관 동의 해주세요</p>

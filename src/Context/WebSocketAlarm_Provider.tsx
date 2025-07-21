@@ -45,8 +45,8 @@ type lasgmsg={
 
     useEffect(() =>{
         const UserId:String = localStorage.getItem("id")!;
-        const ws = new WebSocket("ws://127.0.0.1:8083/alarm");
-        const socket = new SockJS(`http://127.0.0.1:8083/ws?userid=${UserId}`);
+        const ws = new WebSocket("ws://127.0.0.1:8085/alarm");
+        const socket = new SockJS(`http://127.0.0.1:8085/ws?userid=${UserId}`);
         ws.onopen =() =>{
          console.log("알람 웹 소켓 연결 확인");
          ws.send(JSON.stringify({ Id: UserId}));

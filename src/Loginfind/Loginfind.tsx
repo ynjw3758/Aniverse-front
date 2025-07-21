@@ -7,7 +7,7 @@ import Certification_pw from "../Message/Certification_pw";
 import Pw_fail from "../Message/Pw_fail";
 import Err_Network from "../Message/Err_Network";
 import Id from "../Context/Userdata";
-import JSXStyle from "styled-jsx/style";
+import logimg from "../assets/images/log_test.jpg";
 
 /*
 const lv_style = JSXStyle`
@@ -347,7 +347,7 @@ const InputOptHandler =(e:React.ChangeEvent<HTMLInputElement>) =>{
     return (
     <Fragment>
         <div className="header">
-            <img src="../assets/images/log_test.jpg" alt="애완멀" ></img>
+            <img src={logimg} alt="애완멀" ></img>
             <h2>ID/PW 찾기</h2>
           </div>
            <div className="LoginFind_tag">

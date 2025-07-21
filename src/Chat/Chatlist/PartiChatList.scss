@@ -8,7 +8,7 @@
 .PartiChatList_Main:hover{
     display: flex;
     flex-direction: row;
-    background-color: darkgrey;
+    background-color: #1f263a;
     border-bottom: 1px solid black;
     cursor: pointer;
 }
@@ -16,7 +16,7 @@
 .PartiChatList_Main_Focus:hover{
     display: flex;
     flex-direction: row;
-    background-color: darkgrey;
+    background-color: #1f263a;
     cursor: pointer;
 }
 
@@ -105,7 +105,7 @@
     .PartiChatList_Main:hover{
         display: flex;
         flex-direction: row;
-        background-color: darkgrey;
+        background-color: #1f263a;
         cursor: pointer;
         height: 13vh;
     }
@@ -113,7 +113,7 @@
     .PartiChatList_Main_Focus:hover{
     display: flex;
     flex-direction: row;
-    background-color: darkgrey;
+    background-color: #1f263a;
     cursor: pointer;
     height: 13vh;
     }

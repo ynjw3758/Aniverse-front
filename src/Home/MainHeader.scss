@@ -2,20 +2,15 @@
     font-size: xx-large;
   }
   
-.HeaderMain{
-    margin:0 auto;
-    padding: 1.5rem;  
+.HeaderMain{ 
     display: flex;
     justify-content: space-between;
-    z-index: 10;
     width: 100%;
     background: linear-gradient(to bottom, #faf8f1, #f5f5f5);
- 
 }
 
 .login{
     display: flex;
-    
 }
 .login button{
   border-radius: 15px;
@@ -30,7 +25,7 @@
 }
 .home{
   color:black;
-  font-size: larger;
+  font-size: medium;
 }
 .nav ul{
   display: flex;

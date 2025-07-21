@@ -4,16 +4,19 @@
     flex-direction: row;
 }
 .NoteItems_kind h3{
-    margin-left: -1vw;
+    margin-top: 2.1vh;
+    margin-left: -1.5vw;
     font-size: larger;
 }
 .NoteItems_kind h4{
-    padding-left: 1vw;
+    margin-top: 2.5vh;
+    padding-left: 0.5vw;
 }
 .NoteItems_kind input{
     width: 1.5%;
     margin-right: 2vw;
     margin-left: -0.2vw;
+    margin-top: 0vh;
 }
 
 
@@ -32,11 +35,12 @@
     height: 5vh;
     width: 5vw;
     margin-left: 31.5vw;
-    margin-top: 1vh;
-    background-color: white;
-    color: #666666;
+    margin-top: 1.5vh;
+    background-color: #FFE5E5;
+    color: #FF5C5C;
     cursor: not-allowed;
     border: none;
+    border-radius: 20px;
 }
 #NoteItems_selbtn{
     height: 5vh;

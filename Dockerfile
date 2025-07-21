@@ -22,5 +22,8 @@ RUN echo "✅ 빌드 완료 후 dist 폴더 확인 ===" \
 # 2단계: 배포용 Nginx
 FROM nginx:stable
 COPY --from=build /app/dist /usr/share/nginx/html
+
+# ✅ Nginx 설정 덮어쓰기
+COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]

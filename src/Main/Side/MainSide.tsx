@@ -2,7 +2,13 @@ import "./MainSide.scss";
 import { useNavigate } from "react-router-dom";
 import user_info from "../../Context/Userdata";
 import { useContext, useEffect,  useState } from "react";
-
+import Freindimg from "../../assets/images/friends.png";
+import msgimg from "../../assets/images/message.png"
+import chatimg from "../../assets/images/talk.png"
+import searchimg from "../../assets/images/search.png"
+import alarmimg from "../../assets/images/Alarm.png"
+import favoriteimg from "../../assets/images/favorite.png"
+import Timeimg from "../../assets/images/time.png"
 
 
   type user_infos ={
@@ -72,34 +78,34 @@ const MainSide =(props:user_infos) =>{
                     <h3>{props.nickname}</h3>
                 </button>
                 <button className="Main_FItem" disabled={!props.isReady}>
-                  <img src="../assets/images/friends.png" />
+                  <img src={Freindimg} />
                     <h3>친구</h3>
                 </button>
                 <button className="Main_MItem" onClick={NoteHandler} disabled={!props.isReady}>
-                  <img src="../assets/images/message.png" />
+                  <img src={msgimg}/>
                     <h3>쪽지</h3>
                 </button>
                 <button className="Main_CItem" onClick={ChatHandler} disabled={!props.isReady}>
-                  <img src="../assets/images/talk.png" />
+                  <img src={chatimg} />
                     <h3>메신져</h3>
                 </button>
                 <button className="Main_SItem" disabled={!props.isReady}>
-                  <img src="../assets/images/search.png" />
+                  <img src={searchimg} />
                     <h3>검색</h3>
                 </button>
                 <button className="Main_AlItem" disabled={!props.isReady} onClick={AlarmClick}>
-                  <img src="../assets/images/Alarm.png" />
+                  <img src={alarmimg} />
                     <h3>알람</h3>
                     {isNoti && (<div className="MainSide_Alarm_cnt">
                       <p>{"..."}</p>
                     </div>)}
                 </button>
                 <button className="Main_LItem" disabled={!props.isReady}>
-                  <img src="../assets/images/favorite.png" />
+                  <img src={favoriteimg} />
                     <h3>즐겨찾기</h3>
                 </button>
                 <button className="Main_AItem" disabled={!props.isReady}>
-                <img src="../assets/images/time.png" />
+                <img src={Timeimg} />
                     <h3>활동기록</h3>
                 </button>
             </ul>

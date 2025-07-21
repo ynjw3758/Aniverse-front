@@ -1,6 +1,9 @@
 
 import "./Comment_Slide.scss";
-import {useEffect, useState ,useRef , useContext, useSyncExternalStore, ReactNode} from "react";
+import {useEffect, useState ,useRef} from "react";
+
+import rightimg from "../../assets/images/slideright.png"
+import leftimg from "../../assets/images/slideleft.png";
 
 interface props{
     total:number,
@@ -58,18 +61,18 @@ useEffect(() =>{
   }
   return(<>
                 {(leftactive == false && rightactive == true) && ( <div className="Comments_Slide_right">
-              <img src="../assets/images/slideright.png" onClick={SlidenextHandler} id={right_active} />
+              <img src={rightimg} onClick={SlidenextHandler} id={right_active} />
               </div>)}
               {(leftactive == true && rightactive == true) && ( <>
               <div className="Comments_Slide_left">
-               <img src="../assets/images/slideleft.png" onClick={SlidebeforeHandler} id={left_active} />
+               <img src={leftimg} onClick={SlidebeforeHandler} id={left_active} />
               </div>
               <div className="Comments_Slide_right">
-              <img src="../assets/images/slideright.png" onClick={SlidenextHandler} id={right_active} />
+              <img src={rightimg} onClick={SlidenextHandler} id={right_active} />
               </div>
               </>)}
               {(leftactive == true && rightactive == false) && (<div className="Comments_Slide_left">
-               <img src="../assets/images/slideleft.png" onClick={SlidebeforeHandler} id={left_active} />
+               <img src={leftimg} onClick={SlidebeforeHandler} id={left_active} />
               </div>)}
   </>)
 

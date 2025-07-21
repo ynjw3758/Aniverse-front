@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import "./AddFileList.scss";
+import Deleteimg from "../../assets/images/delete.png";
 
 //                            +------------------
 //----------------------------+ props 정리
@@ -100,7 +101,7 @@ const videoref=useRef<HTMLDivElement>(null);
         {isimg && (<div className="AddChatFileList_imgbox" id={imgid} ref={imgref} 
         onClick={ImageClick}>
             <div className="AddChatFileList_Cancel" >
-                   <img src="../assets/images/delete.png"/>
+                   <img src={Deleteimg}/>
                 </div>
             <img src={img} />
             <div className="AddChatFileList_infos">
@@ -111,7 +112,7 @@ const videoref=useRef<HTMLDivElement>(null);
         {isvideo && ( <div className="AddChatFileList_videobox"  id={videoid} ref={videoref} 
         onClick={VideoClick}>
             <div className="AddChatFileList_Cancel">
-                   <img src="../assets/images/delete.png"/>
+                   <img src={Deleteimg}/>
                 </div>
              <video src={video}/>
             <div className="AddChatFileList_infos">

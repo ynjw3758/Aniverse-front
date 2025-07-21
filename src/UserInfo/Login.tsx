@@ -7,6 +7,12 @@ import {Link, useNavigate} from "react-router-dom";
 import axios from 'axios'
 import moment from"moment";
 import {Cookies} from "react-cookie";
+import Kakaoimg from "../assets/images/btn_kakao.svg"
+import Naverimg from "../assets/images/btn_naver.svg";
+import Googleimg from "../assets/images/btn_google.svg";
+import LoginMaminimg from "../assets/images/login_picture.png";
+import Lodingimg from "../assets/images/login_loading.png"
+import { v4 as uuidv4 } from 'uuid';
 //#endregion
 
 //                             +--------------------
@@ -41,6 +47,8 @@ const Login:React.FC= (props : {})=>{
     const [islogin, setIslogin]=useState<boolean>(false);
     const[isloading , setIsloading]=useState<boolean>(false);
     const navigate = useNavigate();
+    const Dev_Url = process.env.REACT_APP_API_DEV_BASE_URL
+    const prod_Url = process.env.REACT_APP_API_BASE_URL
 //#endregion
 
     const {
@@ -178,8 +186,8 @@ const Login:React.FC= (props : {})=>{
     }
     const client_id= process.env.REACT_APP_CLIENT_ID;
     const naver_redirect_url= process.env.REACT_APP_REDIRECT_URL_N;
-    const state = crypto.randomUUID(); // CSRF 방지용]]
-
+    //const state = crypto.randomUUID(); // CSRF 방지용]]
+     const state = uuidv4();
     console.log("client_id : " ,client_id);
     console.log("redirect_url_N" , naver_redirect_url);
 
@@ -198,13 +206,13 @@ const Login:React.FC= (props : {})=>{
     return ( <Fragment>
           <form onSubmit={SubmitHandler} onKeyDown={KeydownHandler}>
                   {isloading && (<div className="login_loading">
-                <img src="../assets/images/login_loading.png"/>
+                <img src={Lodingimg}/>
                 <p>로그인 중</p>
             </div>)}
             <div className="Loginmain">
                 <h2>로그인</h2>
                 <div className="Loginimage">
-                  <img src="../assets/images/login_picture.jpg" />
+                  <img src={LoginMaminimg} />
                 </div>
                 <div className="LoginInput">
                     <label htmlFor="id"></label>
@@ -241,9 +249,9 @@ const Login:React.FC= (props : {})=>{
                     </ul>
                 </div>
                 <div className="Login_sns">
-                    <img src={"../assets/images/btn_kakao.svg"} onClick={kakaologin} />
-                    <img src={"../assets/images/btn_naver.svg"} onClick={naverlogin} />
-                    <img src={"../assets/images/btn_google.svg"} onClick={googlelogin} />
+                    <img src={Kakaoimg} onClick={kakaologin} />
+                    <img src={Naverimg} onClick={naverlogin} />
+                    <img src={Googleimg} onClick={googlelogin} />
                 </div>
             </div>
             </form>

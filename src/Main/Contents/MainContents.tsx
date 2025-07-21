@@ -8,12 +8,17 @@ import Contents from "./Contents";
 import UploadComplate from "../../Layout/UploadComplete";
 import WebSocketAlarmContext from "../../Context/WebSocketAlarmContext";
 import NotificationMain from "../../Notification/ChatNotificationMain";
+import loadingimg from "../../assets/images/login_loading.png";
+import Nodata from "../../assets/images/no_data.png";
+
 
 type user_info ={
     img:string,
     nickname:string,
     content:string[],
+    openmodal:boolean | null | undefined,
     onload:() => void,
+    onclose:() => void,
     onDisActive:(data:object) => void
 }
 
@@ -29,7 +34,7 @@ type Receive_chat={
 }
 
 const MainContentsx=(props:user_info) =>{
-    const[modal , setModal]=useState<boolean>(false);
+    const[modal , setModal]=useState<boolean | null | undefined>(false);
     const[complete, setComplete]=useState<boolean>(false);
     const[isdata, setIsdata]=useState<boolean>(false);
     const [isshow, setIshow]=useState<boolean>(false);
@@ -55,32 +60,26 @@ const MainContentsx=(props:user_info) =>{
         setAlchatReceive(ChatReceive_Alarm.chatReceive);
         setIsAlarm(true);
             // 2초 후 알람 숨기기
-            /*
         const timer = setTimeout(() => {
             setIsAlarm(false);
         }, 7000);
     
         // 클린업
         return () => clearTimeout(timer);
-        */
+        
         }
     },[ChatReceive_Alarm])
 
-    const ModalHandler =() =>{
-        setModal(true);
-    }
-
     const uploadclose =(check:any) =>{
-        console.log("uploadHnalder :" , check);
-        setModal(check);
+        props.onclose()
         
     }
     const CompleteHandler =() =>{
-        setModal(false);
+        props.onclose()
         setComplete(true);
     }
     const closeHandler =() =>{
-        setModal(false);
+       props.onclose()
         setComplete(false);
     }
 
@@ -90,7 +89,16 @@ const MainContentsx=(props:user_info) =>{
      setIsdata(true);
      setIsloading(true);
     }
+
+    useEffect(() =>{
+        console.log("content :" , props.content)
+        console.log("넘어온 modal :" ,props.openmodal)
+        setModal(props.openmodal);
+    },[props.openmodal])
+
     useEffect(() =>{  
+        console.log("넘어온 modal :" ,props.openmodal)
+        setModal(props.openmodal);
        if(props.content.length > 0 ){
         console.log("not null");
            setIsdata(true);
@@ -113,15 +121,9 @@ const MainContentsx=(props:user_info) =>{
         <NotificationMain ChatReceive={alchatReceive}/>
         </>)}
             {!isloading && (<div className="login_loading">
-                <img src="../assets/images/login_loading.png"/>
+                <img src={loadingimg}/>
                 <p>로딩 중</p>
             </div>)}
-        <div className="Main_Contents">
-        <h2>당신의 이야기를 공유해보세요</h2>
-        <input  placeholder="당신에 반려견과의 일상을 공유해보세요"
-          disabled={!disable}
-          onClick={ModalHandler}/>
-        </div>
         {(isdata == true && isshow ==false) && (<div className="Maincontents_body_blur">
             <Contents  contents={props.content} disActive={DisAvtive} Img={props.img} Nickname={props.nickname}/>
         </div>)}
@@ -130,7 +132,7 @@ const MainContentsx=(props:user_info) =>{
         </div>)}
 
         {!isdata && (<div className="upload_story">
-            <img src="../assets/images/no_data.png"/>
+            <img src={Nodata}/>
             <p>당신의 이야기를 올려보세요...</p>
             </div>)}
         {modal && (<UserUpload img={props.img} nickname={props.nickname} onClose={uploadclose} onComplete={CompleteHandler}/>)}

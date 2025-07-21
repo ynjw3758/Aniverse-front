@@ -6,7 +6,7 @@ import { useContext } from "react";
 import axios from "axios";
 import Change_pw_success from "../Message/Change_pw_success";
 import { useNavigate } from "react-router-dom";
-
+import logimg from "../assets/images/log_test.jpg";
 interface ResponseDataType {
     message: string;
     code: number;
@@ -94,7 +94,7 @@ const Resetpassword =() =>{
     }
     return(
         <div className="main">
-            <img src="../assets/images/log_test.jpg" alt="애완멀" ></img>
+            <img src={logimg} alt="애완멀" ></img>
             <h2>비밀번호 재설정</h2>
             <p>사용 가능 아이디 : {User_id.UserId}</p>
             <div className={EnterNewpwInputClasses}>

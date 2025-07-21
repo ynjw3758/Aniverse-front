@@ -5,13 +5,11 @@
 
 .Headerlogin{
     color:black;
-    font-size: larger;
-    margin-right: 1rem;
 
 }
 
 .Headersign{
-    font-size: larger;
+
     color:black;
 
 }
@@ -23,11 +21,12 @@
     display: flex;
     list-style: none;
     cursor: pointer;
+    margin-top: 5vh;
 }
 .Headernav li{
-    font-size: large;
+    font-size: medium;
     padding-left: 5px;
     padding-right: 2rem;
-    margin-top: 5px;
+    margin-top: -2vh;
     margin-bottom: -9px;
 }

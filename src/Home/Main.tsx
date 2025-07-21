@@ -1,6 +1,8 @@
 import { Fragment, useState, useRef, useEffect } from "react";
 import "./Main.scss";
 import React from "react";
+import Image from "../assets/images/New_img.png";
+import testNote from "../assets/images/Main_Note.png" ;
 
 const services = [
   {
@@ -48,7 +50,7 @@ const Main = () => {
             <main className="Main_Body" onScroll={handleScroll} ref={scrollRef}>
                 <div className="slide" style={calculateStyle(0, 400)}>
                     <div className="img_list">
-                        <img src="../assets/images/new_img.png" alt="슬라이드 이미지" />
+                        <img src={Image} alt="슬라이드 이미지" />
                     </div>
                 </div>
 
@@ -83,28 +85,28 @@ const Main = () => {
                     <div className="Main_Note" style={calculateStyle(1100, 1400)}>
                        <h2>쪽지</h2>
                        <div className="Main_Note_Descrip">
-                        <img src="../assets/images/Main_Note.png" />
+                        <img src={testNote}/>
                         <p>사진과 영상을 쉽게 업로드하여 다양한 콘텐츠를 공유해보세요.</p>
                       </div>
                     </div>
                     <div className="Main_Chat" style={calculateStyle(1300, 1650)}>
                        <h2>채팅</h2>
                        <div className="Main_Chat_Descript">
-                        <img src="../assets/images/Main_Note.png" />
+                        <img src={testNote}/>
                         <p>실시간으로 친구들과 소통할 수 있는 채팅 기능입니다.</p>
                       </div>
                     </div>
                     <div className="Main_Contents_Intro" style={calculateStyle(1500, 1900)}>
                        <h2>컨텐츠 공유</h2>
                        <div className="Main_Contents_Descript">
-                        <img src="../assets/images/Main_Note.png" />
+                        <img src={testNote}/>
                         <p>개인적인 소통을 위한 1:1 쪽지 기능을 제공합니다.</p>
                       </div>
                     </div>
                     <div className="Main_Follower" style={calculateStyle(1800, 1900)}>
                        <h2>팔로워</h2>
                        <div className="Main_Follower_Descript">
-                        <img src="../assets/images/Main_Note.png" />
+                        <img src={testNote}/>
                         <p>관심 있는 사람들을 팔로우하고 최신 소식을 받아보세요.</p>
                       </div>
                     </div>

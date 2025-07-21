@@ -10,7 +10,7 @@
     max-width: 24vw;
     max-height: 100vh;
     overflow: auto;
-    background-color: #E0FFFF;
+    background-color: #151c2e;
     margin-left: 3.5vw;
     overflow-x: hidden;
 }
@@ -78,6 +78,10 @@
     top:40vh;
     left: 60vw;
 }
+.Initbody p{
+    font-size: 15px;
+    font-weight: bolder;
+}
 .Initbody img{
   width: 100px;
   height: 100px;
@@ -95,7 +99,21 @@
     border-left: none;
     border-top: none;
     border-radius: 37px;
-    background-color: rgb(0, 217, 255);
+    background-color: #20c6b7;
+}
+.Initbody button:hover{
+    margin-left: 2vw;
+    margin-top: 2vh;
+    cursor: pointer;
+    height: 5vh;
+    width: 6vw;
+    margin-bottom: 5vh;
+    border-bottom: none;
+    border-right: none;
+    border-left: none;
+    border-top: none;
+    border-radius: 37px;
+    background-color:#2bd3c4;
 }
 
 .search{
@@ -137,7 +155,8 @@
         max-width: 24vw;
         max-height: 100vh;
         overflow: auto;
-        background-color: #E0FFFF;
+        color: white;
+        background-color:#151c2e;
         margin-left: 4.5vw;
         //margin-top: -1vh;
         overflow-x: hidden;
@@ -209,13 +228,30 @@
         top:40vh;
         left: 60vw;
     }
+    .Initbody p{
+        font-size: 15px;
+        font-weight: bolder;
+    }
     .Initbody img{
       width: 100px;
       height: 100px;
       margin-left: 3vw;
     }
     .Initbody button{
-        margin-left: 5vw;
+        margin-left: 4vw;
+        margin-top: 2vh;
+        height: 5vh;
+        width: 6vw;
+        margin-bottom: 5vh;
+        border-bottom: none;
+        border-right: none;
+        border-left: none;
+        border-top: none;
+        border-radius: 37px;
+        background-color:#20c6b7;
+    }
+    .Initbody button:hover{
+        margin-left: 4vw;
         margin-top: 2vh;
         cursor: pointer;
         height: 5vh;
@@ -226,7 +262,7 @@
         border-left: none;
         border-top: none;
         border-radius: 37px;
-        background-color: rgb(0, 217, 255);
+        background-color:#2bd3c4;
     }
     
     .search{

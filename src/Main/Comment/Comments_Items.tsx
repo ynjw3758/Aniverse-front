@@ -13,6 +13,10 @@ import "./Comments_Items.scss";
 import LoginExp from "../../LginExpiration/LoginExp";
 import MentionList from "./MentionList";
 import Reply_List from "./Reply/Reply_List";
+import afterimg  from "../../assets/images/after_like.png";
+import beforeimg from "../../assets/images/base_like.png";
+import Uparrowimg from "../../assets/images/up_arrow.png";
+import downarrowimg from "../../assets/images/down_arrow.png";
 
 //                             +--------------------
 //-----------------------------+   인터페이스
@@ -116,7 +120,7 @@ const Comments_Items =({comment_Items ,SendComments}:props) =>{
       mentions:[]
     }])
 
-    let Like_Status = islike ? "../assets/images/after_like.png" :"../assets/images/base_like.png";
+    let Like_Status = islike ? afterimg :beforeimg;
     let exist_cm = iscm_cnt ? "Comments_Item_contents_extend" : "Comments_Item_contents"
     const navigate = useNavigate();
     const cookies = new Cookies();
@@ -413,11 +417,11 @@ const Comments_Items =({comment_Items ,SendComments}:props) =>{
           </div>
           {iscm_cnt && (<div className="Comments_Item_cm_cnt">
               {iscm_close && (<div className="Comments_Item_cm_row" onClick={openreplyHandler}>
-                <img src="../assets/images/down_arrow.png"/>
+                <img src={downarrowimg}/>
                 <h3>{`댓글${comment_Items.cm_cnt}`}</h3>
                 </div>)}
               {iscm_open && (<div className="Comments_Item_cm_row" onClick={openreplyHandler}>
-                <img src="../assets/images/up_arrow.png"/>
+                <img src={Uparrowimg}/>
                 <h3>{`댓글${comment_Items.cm_cnt}`}</h3>
               </div>)}
               {isLoading && (<div className="CommentsItems_ReplyLoading">

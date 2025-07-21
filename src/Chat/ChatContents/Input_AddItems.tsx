@@ -19,7 +19,9 @@ import Addfiles from "./Addfiles";
 import Sizemessage from "./Sizemessage";
 import WebSocketChatContext from "../../Context/WebSocketChatContext";
 import AllChat from "./AllChatContents/AllChat";
-
+import ChatSendimg from "../../assets/images/ChatSend.png";
+import emoimg from "../../assets/images/emoticon.png"
+import inputImg from "../../assets/images/picture.png";
 //#endregion
 
 
@@ -510,12 +512,12 @@ const input_values= useRef<string>("");
         </div>)}
         <div className="AddChatItems_inputchat" ref={containerRef}>
         <div className="AddChatItems_AddContents">
-            <img src="../assets/images/ChatSend.png" onClick={sendChatHandler}/>
-            <img src="../assets/images/emoticon.png" onClick={EmoticonHandler}/>
+            <img src={ChatSendimg} onClick={sendChatHandler}/>
+            <img src={emoimg}onClick={EmoticonHandler}/>
             <label  
                 draggable="true"
             >
-            <img src="../assets/images/picture.png"/>
+            <img src={inputImg}/>
             <input type="file" 
                 style={{display:"none"}}
                 onChange={AddfileHandler}

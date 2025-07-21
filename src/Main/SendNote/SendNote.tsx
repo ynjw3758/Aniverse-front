@@ -9,6 +9,7 @@ import { Fragment ,useState , useEffect, useRef, useContext} from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import user_info from "../../Context/Userdata";
+import debounce from 'lodash/debounce';
  //#endregion
 
 //                            +--------------------
@@ -18,7 +19,9 @@ import user_info from "../../Context/Userdata";
 import "./SendNote.scss";
 import Search from "./Search";
 import Addimage from "../skips/Addimage";
- //#endregion
+import Deleteimg from "../../assets/images/delete.png"
+import baseproimg from "../../assets/images/baseimg.png"
+ //#endregion 
 
 
 //                             +--------------------
@@ -104,7 +107,7 @@ const SendNote =(props:Note) =>{
           const add_pro:string[] =[...addprofile];
           const data:string = props.nickname;
           Nickname_List.push("알수 없는 사용자");
-          add_pro.push("/image/baseimg.png");
+          add_pro.push(baseproimg);
           setAddprofile(add_pro);
           setSendList(Nickname_List);
         }
@@ -128,8 +131,17 @@ const SendNote =(props:Note) =>{
 
 
     const SendPerson =(event:React.ChangeEvent<HTMLInputElement>) =>{
+      
       Input_Search.current = search;
       setSearch(event.target.value);
+      console.log("검색 길이 :" , search.length)
+      if(event.target.value ==="" && keyboard_valid.current === true){
+        console.log("초기화")
+        setLoading(false);
+        setUserinfo([]);
+        setSendcheck(false);
+      }
+      console.log("저장된 검색 리스트 :" ,userinfo)
     }
     
     const ListDelete =() =>{
@@ -235,9 +247,11 @@ const SendNote =(props:Note) =>{
     }
     //키보드 눌럿을 때 이벤트
     const KeyDOWNHandler =(event:React.KeyboardEvent<HTMLInputElement>) =>{
+      
       keyboard_valid.current = true;
       setKeycheck(true);
       setIskeyboard(true);
+
       /*
         setKeycheck(true);
         console.log("키 이벤트  :" , event);
@@ -433,6 +447,22 @@ const SendNote =(props:Note) =>{
           }
      })
   }
+  /*
+                 <div className={restruct}>
+               {limitsize && (<div className="SendNote_impossible">
+                <p>최대 3개 이미지 가능합니다</p>
+                </div>)}
+                {sizecheck && (<div className="SendNote_impossible">
+                  <p>용량을 초과하였습니다</p>
+                </div>)}
+                {(limitsize == false && sizecheck == false) && (<div className="SendNote_imagelist">
+                 {filename.map((data, i) =>(<>
+                 <Addimage name={data} image={preview[i]}/>
+                 </>))}
+                </div>)}
+                <p>{file_size.current} / 3 (0 / 8MB)</p>
+               </div>
+               */
 
   const textAra = loading ? "SendNote_sentents_active" :"SendNote_sentents";
     return(<>
@@ -468,7 +498,7 @@ const SendNote =(props:Note) =>{
                   {isnick && (<>
                     {sendList.map((data) =>(<div className="aaa" id={data} ref={sendRef}>
                      <p>{data}</p>
-                     <img src="../assets/images/delete.png" onClick={ListDelete}/>   
+                     <img src={Deleteimg} onClick={ListDelete}/>   
                     </div>))}
                   </>)}
                     <div className="SendNote_search">
@@ -483,20 +513,6 @@ const SendNote =(props:Note) =>{
                {loading && (<div className="SendNote_PersonList" >                
                   <Search List={userinfo} addName={AddHandler} Count={vercount}/>
                </div>)}
-               <div className={restruct}>
-               {limitsize && (<div className="SendNote_impossible">
-                <p>최대 3개 이미지 가능합니다</p>
-                </div>)}
-                {sizecheck && (<div className="SendNote_impossible">
-                  <p>용량을 초과하였습니다</p>
-                </div>)}
-                {(limitsize == false && sizecheck == false) && (<div className="SendNote_imagelist">
-                 {filename.map((data, i) =>(<>
-                 <Addimage name={data} image={preview[i]}/>
-                 </>))}
-                </div>)}
-                <p>{file_size.current} / 3 (0 / 8MB)</p>
-               </div>
                <div className={textAra}>
                 <textarea placeholder="쪽지를 보내보세요" onChange={textHandler}/>
                </div>

@@ -1,6 +1,6 @@
 
 import "./TagListItem.scss";
-
+import Deleteimg from "../../assets/images/delete.png"
 interface TagItem{
     Nickname:string,
     Profile:string,
@@ -15,7 +15,7 @@ const TagListItem =(props:TagItem) =>{
                <p>{props.Id}</p>
            </div>
            <div className="TagListItems_delete">
-            <img src="../assets/images/delete.png"/>
+            <img src={Deleteimg}/>
            </div>
     </div>)
 

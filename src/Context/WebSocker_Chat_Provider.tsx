@@ -122,8 +122,8 @@ useEffect(() => {
           }
 
       const userid= localStorage.getItem("id")!;
-        const ws = new WebSocket(`ws://127.0.0.1:8083/chat?userId=${userid}&chatId=${ChatId.current}`);
-        const socket = new SockJS(`http://127.0.0.1:8083/ws?userid=${userid}&chatId=${ChatId.current}`);
+        const ws = new WebSocket(`ws://127.0.0.1:8085/chat?userId=${userid}&chatId=${ChatId.current}`);
+        const socket = new SockJS(`http://127.0.0.1:8085/ws?userid=${userid}&chatId=${ChatId.current}`);
         ws.onopen = () => {
 
           //setWeb(ws);

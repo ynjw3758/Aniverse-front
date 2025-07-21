@@ -1,7 +1,5 @@
-import { Fragment, useState } from "react";
+import {useState } from "react";
 import "./SecondModals.scss";
-import SecondModal from "../Modal/SecondModal";
-import Modal from "../Modal/Modal";
 
 type activate ={
     isopen:boolean

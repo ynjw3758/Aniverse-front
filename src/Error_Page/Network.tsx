@@ -1,6 +1,7 @@
 
 import Clesses from"./Network.module.scss";
 import {useNavigate}  from "react-router-dom";
+import networkimg from "../assets/images/network.png"
 
 const Network =() =>{
     const navigate = useNavigate();
@@ -10,7 +11,7 @@ const Network =() =>{
     }
 
     return(<div className={Clesses.main}>
-          <img src="../assets/images/network.png" />
+          <img src={networkimg} />
           <h2>Network error 발생</h2>
           <p>오류가 발생하였습니다. 관리자에게 문의하세요</p>
           <button onClick={clickHandler}>이전 페이지 이동</button>

@@ -1,7 +1,8 @@
 
 import { Map , MapMarker} from 'react-kakao-maps-sdk';
 import "./KaMap.scss";
-import { Fragment, useState ,useEffect, useRef, useSyncExternalStore} from "react";
+import {  useState ,useEffect, useRef} from "react";
+import mapcancleimg from "../assets/images/Map_Cancel.png";
 interface LOcationData {
   onData :(Location_info:any) => void;
   onclose : () => void
@@ -235,7 +236,7 @@ useEffect(() => {
       </div>
       <div className="Kmap_search">
         <input onChange={searchHandler} placeholder='위치 검색..' onKeyDown={EnterSearch}/>
-        <img src="../assets/images/Map_Cancel.png" onClick={CancelHandler}/>
+        <img src={mapcancleimg} onClick={CancelHandler}/>
        </div>
         {checksearch && (<div className="item_list" >
           {markers.map(({content, address, phone, position, isaddress,isphone,id

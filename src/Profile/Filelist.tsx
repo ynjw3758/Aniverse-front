@@ -38,7 +38,7 @@ const Filelist =(props:file_list) =>{
 
     return(<>
      <div className="content_List">
-     {id.map((value, i) =>(<div  id={value}>
+     {id.map((value, i) =>(<div  id={value} className="Profile_FileListMain">
      <FileItem files={item[i]}/>
      </div>))}    
      </div>

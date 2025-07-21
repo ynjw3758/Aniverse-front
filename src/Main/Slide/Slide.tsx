@@ -1,6 +1,7 @@
 
 import {useEffect, useState ,useRef , useContext, useSyncExternalStore, ReactNode} from "react";
-
+import rightimg from "../../assets/images/slideright.png";
+import leftimg from "../../assets/images/slideleft.png"
 import "./Slide.scss";
 
 
@@ -59,18 +60,18 @@ useEffect(() =>{
 
 return(<>
               {(leftactive == false && rightactive == true) && ( <div className="Slide_right">
-              <img src="../assets/images/slideright.png" onClick={SlidenextHandler} id={right_active} />
+              <img src={rightimg} onClick={SlidenextHandler} id={right_active} />
               </div>)}
               {(leftactive == true && rightactive == true) && ( <>
               <div className="Slide_left">
-               <img src="../assets/images/slideleft.png" onClick={SlidebeforeHandler} id={left_active} />
+               <img src={leftimg} onClick={SlidebeforeHandler} id={left_active} />
               </div>
               <div className="Slide_right">
-              <img src="../assets/images/slideright.png" onClick={SlidenextHandler} id={right_active} />
+              <img src={rightimg} onClick={SlidenextHandler} id={right_active} />
               </div>
               </>)}
               {(leftactive == true && rightactive == false) && (<div className="Slide_left">
-               <img src="../assets/images/slideleft.png" onClick={SlidebeforeHandler} id={left_active} />
+               <img src={leftimg} onClick={SlidebeforeHandler} id={left_active} />
               </div>)}
 </>)
 

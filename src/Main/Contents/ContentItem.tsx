@@ -7,7 +7,7 @@
 //                             +--------------------
 //-----------------------------+  외부라이브러리
 //                             +--------------------
-import {useEffect, useState ,useRef , useContext, useSyncExternalStore, ReactNode, useMemo} from "react";
+import {useEffect, useState ,useRef , useContext,useMemo} from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
@@ -28,7 +28,12 @@ import CancelFollower from "../Modal/CancleFollower";
 import ShowComment from "../Comment/ShowComment";
 import Slide from "../Slide/Slide";
 import AddMentionMain from "../Mention/AddMentionMain";
-import { set } from "lodash";
+import replyimg from "../../assets/images/reply.png";
+import emoimg from "../../assets/images/emoticon.png";
+import profilebaseimg from "../../assets/images/baseimg.png";
+import beforeheartimg from "../../assets/images/heart.png";
+import afterhearimg from "../../assets/images/redheart.png";
+import muteimg from "../../assets/images/muted.png";
 //#endregion
 
 
@@ -133,13 +138,13 @@ const ContentItem =(props:content_info) =>{
     const[blockList, setBlockList]=useState<string[]>([]);
     const[smallcontent ,setSmallcontent]=useState<string[]>([]);
 
-    const[smallprofile ,setSmallprofile]=useState<string>("/image/baseimg.png");
+    const[smallprofile ,setSmallprofile]=useState<string>(profilebaseimg);
     const[smallnickname ,setSmallnickname]=useState<string>("");
     const[otherId, setOtherId]=useState<string>("");
     const[emoticon, setEmoticon]=useState<string>("");
-    const[hearticon,setHearticon]=useState<string>("/image/heart.png");
+    const[hearticon,setHearticon]=useState<string>(beforeheartimg);
     const[priflelist , setProfilelist]=useState<string>(props.profile);
-    const[muteicon,setMuteicon]=useState<string>("/image/muted.png");
+    const[muteicon,setMuteicon]=useState<string>(muteimg);
     const[connectid, setConnectid]=useState<string>("");
     const[userid, setUserid]=useState<string>("");
     const[nickname, setNickname]=useState<string>("");
@@ -292,10 +297,10 @@ const textareaRef = useRef<HTMLTextAreaElement>(null);
    
     useEffect(() =>{//최초 로딩시 좋아요 갯수를 가져오는 것
       if(props.Like == "N"){
-        setHearticon("/image/heart.png");
+        setHearticon(beforeheartimg);
       }
       else{
-        setHearticon("/image/redheart.png");
+        setHearticon(afterhearimg);
       }
       if(props.Commnets !==''){
         setIscommet(true);
@@ -757,17 +762,17 @@ const textareaRef = useRef<HTMLTextAreaElement>(null);
         if(props.Like == "O"){//이미 내가 누른 상태
           setHeart((prenum)=>prenum-1);
 
-          setHearticon("/image/heart.png")
+          setHearticon(beforeheartimg)
         }
         else{
           if(heart > 0){
             setHeart((prenum)=>prenum+1);
 
-            setHearticon("/image/redheart.png");
+            setHearticon(afterhearimg);
           }
           else if(heart == 1){
             setCheckheart(true)
-            setHearticon("/image/heart.png")
+            setHearticon(beforeheartimg)
           }
 
         }
@@ -997,8 +1002,10 @@ const textareaRef = useRef<HTMLTextAreaElement>(null);
       <div className="Mainpage_Content_userinfo" onMouseOver={SmallProfile}  
       onMouseLeave={Mouseout} onMouseMove={MouseMoveHandler}>
          <img src={priflelist}  id={props.UserId} ref={imgref} onClick={PeopleProfile}/>
-         <h3>{props.nickname}</h3>
-         <p>{ct_date}</p>
+         
+          <h3>{props.nickname}</h3>
+          <p>{ct_date}</p>
+        
       </div>
      
        {(one == true && multi == false) && (<>
@@ -1015,7 +1022,7 @@ const textareaRef = useRef<HTMLTextAreaElement>(null);
        </div>
        <div className="Mainpage_Content_Icon">
         <img src={hearticon} id="heart" onClick={ClickHeart} key={props.conntetid} />
-        <img src="../assets/images/reply.png" id="reply"/>
+        <img src={replyimg} id="reply"/>
        </div>
        <div className="Mainpage_Content_subItem">
         {checkheart && (<>
@@ -1061,7 +1068,7 @@ const textareaRef = useRef<HTMLTextAreaElement>(null);
         {!isloading && (<>
           <textarea  placeholder="댓글 달기" onChange={commentHandler} value={emoticon} ref={textareaRef}
           onKeyDown={KeyDOWNHandler} onInput={te_inpuHandler}/>  
-        <img src={"../assets/images/emoticon.png"}  onClick={EmojiHandler}/>
+        <img src={emoimg}  onClick={EmojiHandler}/>
            {ispost && (<div className="Mainpage_Content_commnet_post">
             <p onClick={CommentUpload}>게시</p>
         </div>)}
@@ -1097,7 +1104,7 @@ const textareaRef = useRef<HTMLTextAreaElement>(null);
           </div>
           <div className="Mainpage_Content_Icon">
         <img src={hearticon} id="heart" onClick={ClickHeart}/>
-        <img src="../assets/images/reply.png" id="reply"/>
+        <img src={replyimg} id="reply"/>
        </div>
        <div className="Mainpage_Content_subItem">
        {checkheart && (<>
@@ -1142,7 +1149,7 @@ const textareaRef = useRef<HTMLTextAreaElement>(null);
         {!isloading && (<>
           <textarea  placeholder="댓글 달기" onChange={commentHandler} value={emoticon} ref={textareaRef}
            onKeyDown={KeyDOWNHandler} onInput={te_inpuHandler}/>  
-        <img src={"../assets/images/emoticon.png"}  onClick={EmojiHandler}/>
+        <img src={emoimg}  onClick={EmojiHandler}/>
            {ispost && (<div className="Mainpage_Content_commnet_post">
             <p onClick={CommentUpload}>게시</p>
         </div>)}

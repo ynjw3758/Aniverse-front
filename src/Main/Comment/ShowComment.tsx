@@ -9,9 +9,10 @@ import { useNavigate, useResolvedPath } from "react-router-dom";
 import {Cookies} from 'react-cookie';
 import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
 import debounce from 'lodash/debounce';
-
+import emoimg from "../../assets/images/emoticon.png"
+import shareimg from "../../assets/images/share.png"
+import favoimg from "../../assets/images/favorite_content.png"
 //#endregion
-
 
 //                             +--------------------
 //-----------------------------+   내부 라이브러리리
@@ -1077,7 +1078,7 @@ const ischeck = useRef<string>("");
               <div className="ShowComments_content_compare" ref={DivRef}>
                 {!reploading && (<div className="ShowComments_Input" ref={input_div}>
                   <div className="ShowComments_Imoticon">
-                    <img src={"../assets/images/emoticon.png"}  onClick={EmojiHandler} />
+                    <img src={emoimg}  onClick={EmojiHandler} />
                   </div>
                     {ispost && (<div className="ShowComments_commnet_post">
                       <p onClick={sendcomment}>게시</p>
@@ -1099,8 +1100,8 @@ const ischeck = useRef<string>("");
                   </div>
                  <div className="ShowComments_content_Imglist" ref={imglist_div}>
                     <img src={hearticon}/>
-                    <img src="../assets/images/share.png"/>
-                    <img src="../assets/images/favorite_content.png"/>
+                    <img src={shareimg}/>
+                    <img src={favoimg}/>
                  </div>
                  {isemoji && (<div className="ShowComments_Input_Emoji">
                     <EmojiPicker onEmojiClick={onClickHandler}  

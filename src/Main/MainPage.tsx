@@ -3,7 +3,7 @@
 //----------------------------+ 외부 라이브러리
 //                            +--------------------
 //#region type 
-import { Fragment, useContext, useEffect, useState } from "react";
+import { Fragment, useContext, useEffect, useRef, useState } from "react";
 import { Outlet } from "react-router-dom";
 import moment from"moment";
 import {Cookies} from 'react-cookie';
@@ -21,10 +21,11 @@ import axios from "axios";
  import "./MainPage.scss";
  import user_info from "../Context/Userdata";
  import LoginExp from "../LginExpiration/LoginExp";
- import WebSocker_Info from"../Context/WebSocketContext";
  import WebSocker_Provider from "../Context/WebSocker_Provider";
  import WebSocketAlarm_Provider from "../Context/WebSocketAlarm_Provider";
 import AlarmMain from "./Alarm/AlarmMain";
+import logimg from "../assets/images/log.png";
+import { set } from "lodash";
  //#endregion
 
 //                            +--------------------
@@ -85,6 +86,8 @@ type ChatNoti={
       const[isAlarm , SetIsAlarm]=useState<boolean>(false);
       const[userid, setUserid]=useState<string>("");
       const[noti, setNoti]=useState<Noti_Kind>()
+      const[modal , setModal]=useState<boolean>(false);
+      const [dataloaded,setDataLoaded]= useState<boolean>(false);
 
 
 
@@ -518,7 +521,6 @@ type ChatNoti={
         navigate(`/main/${Myid}`);
         setContentitem(false);
       }
-      const [dataloaded,setDataLoaded]= useState<boolean>(false);
       const handleDataLoaded = () => {
         setDataLoaded(true); // 데이터 로딩 완료
         setIsloading(false); // 로딩 화면 해제
@@ -532,24 +534,37 @@ type ChatNoti={
         }
         
       }
+    const ModalHandler =() =>{
+      setModal(true)
+    }
 
+  const ModalClose =() =>{
+   setModal(false);
+  }
     return(<WebSocketAlarm_Provider>
     <WebSocker_Provider>
-    <div >
+    <div className="MainPage_back">
         {againlogin && (<LoginExp />)}
         <div className="MainPage_log" onClick={MainClick}>
-            <img src="../assets/images/log_test.jpg" alt="애완멀" ></img>
+            <img src={logimg} alt="애완멀" ></img>
             <h3>ALL_Pets</h3>
             </div>
           <MainSide img={profile}  nickname={NickName} id={id} onside={SideHandler} onProfile={() =>{
             contentHandler();
-          }} isReady={isready} Noti={noti} AlarmClick={AlarmClick}/>         
+          }} isReady={isready} Noti={noti} AlarmClick={AlarmClick}/>
+          <div className="Main_Contents">
+            <h2>당신의 이야기를 공유해보세요</h2>
+            <input  placeholder="당신에 반려견과의 일상을 공유해보세요"
+              /*disabled={!disable}*/
+              onClick={ModalHandler}/>
+          </div>  
           <Outlet />
           {isAlarm && (<>
           <AlarmMain AlarmData={noti}/>
           </>)}
           {contentitem && (<div>
-            <MainContentsx img={profile}  nickname={NickName} content={content} onDisActive={ContentDisActive} onload={handleDataLoaded}/>
+            <MainContentsx img={profile}  nickname={NickName} content={content} onDisActive={ContentDisActive} onload={handleDataLoaded}
+            openmodal={modal} onclose={ModalClose}/>
             </div>)}
           {dropdow===true && dropblur === false ?  (<DropDownItem img={profile}  nickname={NickName} />):<></>}
 

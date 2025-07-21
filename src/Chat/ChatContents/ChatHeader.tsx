@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 //                            +------------------
 //#region
 import "./ChatHeader.scss";
+import showAddimg from "../../assets/images/showadd.png"
 //#endregion
 
 
@@ -41,7 +42,7 @@ const ChatHeader =(props:info) =>{
          <h3>{props.Count}</h3>
       </div>
       <div className="ChatHeader_showadd">
-           <img src={"../assets/images/showadd.png"} />
+           <img src={showAddimg} />
          </div>
     </div>)
 }

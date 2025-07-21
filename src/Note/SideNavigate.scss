@@ -17,6 +17,7 @@
     border-left: none;
     border-right: none;
     border-bottom: none;
+    background-color: #FFF7F0;
 }
 .NoteSide_Home img{
     width:55px;
@@ -32,11 +33,11 @@
     position: absolute;
     top:20vh;
     left: 1vw;
-    background-color: white;
     border-top: none;
     border-left: none;
     border-right: none;
     border-bottom: none;
+    background-color: #FFF7F0;
 }
 .NoteSide_FItem img{
     width:25px;
@@ -52,11 +53,11 @@
     position: absolute;
     top:30vh;
     left: 1vw;
-    background-color: white;
     border-top: none;
     border-left: none;
     border-right: none;
     border-bottom: none;
+    background-color: #FFF7F0;
 }
 
 .NoteSide_MItem img{
@@ -74,7 +75,7 @@
     position: absolute;
     top:40vh;
     left: 1vw;
-    background-color: white;
+    background-color: #FFF7F0;
     border-top: none;
     border-left: none;
     border-right: none;
@@ -94,7 +95,7 @@
     position: absolute;
     top:50vh;
     left: 1vw;
-    background-color: white;
+    background-color: #FFF7F0;
     border-top: none;
     border-left: none;
     border-right: none;
@@ -115,7 +116,7 @@
     position: absolute;
     top:60vh;
     left: 1vw;
-    background-color: white;
+    background-color: #FFF7F0;
     border-top: none;
     border-left: none;
     border-right: none;
@@ -136,7 +137,7 @@
     position: absolute;
     top:70vh;
     left: 1vw;
-    background-color: white;
+    background-color: #FFF7F0;
     border-top: none;
     border-left: none;
     border-right: none;
@@ -157,7 +158,7 @@
     position: absolute;
     top:80vh;
     left: 1vw;
-    background-color: white;
+    background-color: #FFF7F0;
     border-top: none;
     border-left: none;
     border-right: none;
@@ -171,9 +172,7 @@
 .NoteSide_AItem img:hover{
     width:25px;
     height: 25px;
-    //background-color: rgb(169, 169, 169);
     cursor: pointer;
-    //border-radius: 10px;
 }
 
 .NoteSide_vertical hr{

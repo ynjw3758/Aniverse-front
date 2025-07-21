@@ -32,8 +32,10 @@
     display: flex;
     flex-direction: row;
     text-align: center;
+    height: 6vh;
 }
 .Content h4{
+    margin-top: 1.5vh;
     text-wrap: nowrap;
 }
 
@@ -48,7 +50,8 @@
     border-left: none;
     border-top: none;
     border-radius: 37px;
-    background-color: rgb(0, 217, 255);
+    color:white;
+    background-color:#00D5FF
 }
 .SendNote_sendlist{
     display: flex;
@@ -69,16 +72,18 @@
     display: flex;
     flex-direction: row;
     border-radius: 20px;
-    color: rgb(0, 157, 255);
-    background-color:rgb(0, 229, 255);
+    color: #000000;
+    background-color:#C5F0FF;
     height: 30px;
     margin-top: 15px;
     margin-left: 5px;
     padding-right: 10px;
+    justify-content: space-between; 
 }
 .aaa p:hover,
 .aaa p{
-    margin-top:5px;
+    font-weight: bolder;
+    margin-top:0.5vh;
     cursor: pointer;
 }
 .aaa img,
@@ -132,6 +137,11 @@
     overflow-y: auto;
 
 }
+.SendNote_sentents{
+        width: 36.6vw;
+        height: 71vh;
+        max-height: 71vh;
+}
 .SendNote_sentents textarea{
     outline: none;
     border-top: none;
@@ -172,12 +182,13 @@
     width: 5vw;
     border-radius: 37px;
     margin-top: 2.8vh;
-    background-color: rgb(0, 217, 255);
+    background-color: #C5F0FF;
     margin-left: 1vw;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    margin-top: 1vh;
 
 }
 .picture p{
@@ -299,10 +310,12 @@ height: 10vh;
         display: flex;
         flex-direction: row;
         text-align: center;
+        height: 6vh;
     }
     .Content h4{
-        margin-left: 9.5vw;
+        margin-top: 1.5vh;
         text-wrap: nowrap;
+        margin-left: 10vw;
     }
     
     .Content button{
@@ -310,15 +323,14 @@ height: 10vh;
         height: 4vh;
         width: 5vw;
         margin-top: 2.8vh;
-        margin-left: 10.5vw;
         border-bottom: none;
         border-right: none;
         border-left: none;
         border-top: none;
         border-radius: 37px;
-        background-color: rgb(0, 217, 255);
-        margin-top: 1.5vh;
-
+        background-color:#00D5FF;
+        margin-top: 1vh;
+        color:white;
     }
     .SendNote_sendlist{
         display: flex;
@@ -339,16 +351,19 @@ height: 10vh;
         display: flex;
         flex-direction: row;
         border-radius: 20px;
-        color: rgb(0, 157, 255);
-        background-color:rgb(0, 229, 255);
+        color: #333333;
+        background-color:#C5F0FF;
         height: 30px;
         margin-top: 15px;
         margin-left: 5px;
         padding-right: 10px;
+        justify-content: center;
+
     }
     .aaa p:hover,
     .aaa p{
-        margin-top:5px;
+        font-weight: bolder;
+        margin-top:0.5vh;
         cursor: pointer;
     }
     .aaa img,
@@ -401,15 +416,20 @@ height: 10vh;
         overflow-y: auto;
     
     }
+    .SendNote_sentents{
+        width: 36.6vw;
+        height: 71vh;
+        max-height: 71vh;
+    }
     .SendNote_sentents textarea{
         outline: none;
         border-top: none;
         border-left: none;
         border-right: none;
         resize: none;
-        width: 36.7vw;
-        height: 63.5vh;
-        max-height: 63.5vh;
+         width: 36.6vw;
+        height: 71vh;
+        max-height: 71vh;
         overflow-y: auto;
         font-size: large;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -418,15 +438,16 @@ height: 10vh;
        border-bottom-left-radius: 15px;
        border-bottom-right-radius: 15px;
     }
+
     .SendNote_sentents_active textarea{
         outline: none;
         border-top: none;
         border-left: none;
         border-right: none;
         resize: none;
-        width: 100%;
-        height: 45vh;
-        max-height: 45vh;
+        width: 37.7vw;
+        height: 46.5vh;
+        max-height: 46.5vh;
         overflow-y: auto;
         font-size: large;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -442,13 +463,13 @@ height: 10vh;
         width: 7vw;
         border-radius: 37px;
         margin-top: 2.8vh;
-        background-color: rgb(0, 217, 255);
+       background-color: #C5F0FF;
         margin-left: 1vw;
         display: flex;
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        margin-top: 1.5vh;
+        margin-top: 1vh;
     }
     .picture p{
         font-size: smaller;

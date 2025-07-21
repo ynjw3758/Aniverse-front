@@ -12,6 +12,8 @@ import {Cookies} from 'react-cookie';
 //----------------------------+ 내부 라이브로리
 //                            +--------------------
 //#region type 
+import chat_List from "../assets/images/pluschat.png";
+import CahtAddimg from "../assets/images/chat.png";
 import user_info from "../Context/Userdata";
 import "./ChatMain.scss";
 import AddChat from "./AddChat/AddChat";
@@ -485,7 +487,7 @@ const ReceiveMessage = useContext(WebSocketChatContext);
             <div className="addchat">
                 <h3>채팅 리스트</h3>
               <div className="plusIcon">
-                <img src="../assets/images/pluschat.png"  onClick={AddchatHandler}/>
+                <img src={chat_List}  onClick={AddchatHandler}/>
               </div>
             </div>
             <div className="verticla">
@@ -503,7 +505,7 @@ const ReceiveMessage = useContext(WebSocketChatContext);
         </div>
         {!ischat.showchat && (<>
           <div className="Initbody">
-          <img src="../assets/images/chat.png"/>
+          <img src={CahtAddimg}/>
           <p>당신의 지인과 채팅을 해보세요</p>
           <button onClick={AddchatHandler}>초대하기</button>
         </div>

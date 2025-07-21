@@ -18,6 +18,10 @@
         margin-top: 0vh;
         display: flex;
         flex-direction: column;  
+        background-color: white;
+        padding-top: 2vh; 
+        border-radius: 20px;
+        margin-bottom: 2vh;
     }
 }
 
@@ -34,7 +38,12 @@
         padding: 0px;
         margin-top: 0vh;
         display: flex;
-        flex-direction: column;   
+        flex-direction: column;  
+        background-color: white;
+        padding-top: 2vh; 
+        border-radius: 20px;
+        margin-left: 1vw;
+        margin-bottom: 2vh;
     }
     .MainContents_total_content h3{
         font-size: medium;

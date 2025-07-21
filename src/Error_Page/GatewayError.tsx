@@ -1,6 +1,7 @@
 
 import "./GatewayError.scss";
 import { useNavigate } from "react-router-dom";
+import errorimg from "../assets/images/502-error-image.png"
 
 const GatewayError =() =>{
     
@@ -11,7 +12,7 @@ const GatewayError =() =>{
     }
 
   return(<div className="Gateway_Error">  
-    <img src="../assets/images/502-error-image.png" alt="502 Bad Gateway" />
+    <img src={errorimg} alt="502 Bad Gateway" />
     <h2>502 Bad Gateway </h2>
     <div className="Gateway_Error_btn">
              <button onClick={mainpage}>메인페이지 이동</button>

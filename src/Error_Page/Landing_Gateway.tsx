@@ -1,14 +1,13 @@
-
 import "./GatewayError.scss";
 import { useNavigate } from "react-router-dom";
-import errorimg from "../assets/images/400Error.png"
+import errorimg from "../assets/images/502-error-image.png"
 
-const GatewayError =() =>{
-    
+const Landing_Gateway =()=>{
+
     const navigate = useNavigate();
 
     const mainpage =() =>{
-        navigate("/main");
+        navigate("/");
     }
 
   return(<div className="Gateway_Error">  
@@ -17,6 +16,8 @@ const GatewayError =() =>{
     <div className="Gateway_Error_btn">
              <button onClick={mainpage}>메인페이지 이동</button>
     </div>
-  </div>)
-}
-export default GatewayError;
+  </div>
+)}
+
+
+export default Landing_Gateway;

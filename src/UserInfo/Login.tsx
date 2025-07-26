@@ -21,6 +21,7 @@ import { v4 as uuidv4 } from 'uuid';
 //#region type
 import "./Login.scss";
 import UseInput from "../UseHook/UserInput";
+import {api,COMMON_URL } from "../API/Api";
 //#endregion
 
 
@@ -32,6 +33,11 @@ interface ResponseDataType {
     message: string;
     code: number;
     response:object
+  }
+
+  interface CustomError{
+    errorcode:string;
+    message :string
   }
 //#endregion
 
@@ -47,8 +53,7 @@ const Login:React.FC= (props : {})=>{
     const [islogin, setIslogin]=useState<boolean>(false);
     const[isloading , setIsloading]=useState<boolean>(false);
     const navigate = useNavigate();
-    const Dev_Url = process.env.REACT_APP_API_DEV_BASE_URL
-    const prod_Url = process.env.REACT_APP_API_BASE_URL
+
 //#endregion
 
     const {
@@ -96,21 +101,19 @@ const Login:React.FC= (props : {})=>{
      
     const submitfn = () => {
         setIsloading(true);
-        axios.post('http://localhost:8080/Pets-social/login',
-            {   
-                id: EnterId,
-                password: EnterPass
-                ,withCredentials: true
-            },
-            
-        ).then(response =>{
-            console.log("상태값 :" , response.status);
-             let re_auth:string="";
-             re_auth = response.headers.authorization;
-             
-             
-             if(response.status==200){
-                console.log("로그인 성공 : " , response);
+        const accesstoekn = localStorage.getItem("a_id");
+        console.log("엑세스 토큰 :" ,accesstoekn);
+        if(accesstoekn ===null){
+            console.log("최초 로그인 : " ,COMMON_URL)
+            //EnterId ,EnterPass
+            axios.post(`${COMMON_URL}/Pets-social/Common/login/login`,{
+                  id: EnterId,
+                  password: EnterPass
+                }, {
+                headers: { 'Content-Type': 'application/json' },withCredentials: true
+                })
+                .then(response =>{
+                    console.log("로그인 결과 :" , response);
                 localStorage.setItem("a_id" , response.data.data.access_token);
                 localStorage.setItem("id" , response.data.data.id);
                 
@@ -119,51 +122,88 @@ const Login:React.FC= (props : {})=>{
                 time =moment(transe_time).format('YYYY-MM-DD HH:mm').toString();
                 console.log("시간 변환 :" , time);
                 localStorage.setItem("p_exp" , response.data.data.exp);
-                const cookies = new Cookies();
-                let access_token:string="";
-                let refresh_token:string="";
-                refresh_token = cookies.get("refresh_token");
-                console.log("리프레쉬 : " , refresh_token)
-                access_token = localStorage.getItem("a_id")!;
-                axios.defaults.headers.common['Authorization'] = access_token;
-                axios.get("http://localhost:8080/Pets-social/valid-accesstoken" , {params:{id:EnterId}}).then(responses =>{
-                    console.log("access token response : " , responses);
-                    if(responses.status== 200){
-                        console.log("로그인 성공");
-                        setIsloading(false);
-                        navigate("/main");
+                  navigate("/main")
+                  return;
+                })
+                .catch(error =>{
+                    
+                  if(axios.isAxiosError<CustomError>(error)){
+                    console.log("에러 :" , error.response?.data.errorcode)
+                    if (!error.response) {
+                        console.warn("서버 응답 없음 (게이트웨이 연결 실패)");
+                        navigate("/error/LbGateway"); // 502로 간주
                         return;
                     }
-                }).catch(error =>{
-                    if(axios.isAxiosError<ResponseDataType>(error)){
-                        console.log("error :" , error);
-                        if(error.code == "ERR_NETWORK"){
-                          console.log("네트워크 에러 ");
-                          
-                        }
-                        if(error.response?.status==401){
-                            console.log("승인되지 않은 로그인");
+                      if(error.response?.status==400){
+                        if(error.response?.data.errorcode ==="E0010"){
+                            setIslogin(true);
                             setIsloading(false);
+                        }else{
+                            navigate("/error/LbBadRequest");
                         }
-                      }
-                })
-             }
-        }).catch(error=> {
-            if(axios.isAxiosError<ResponseDataType>(error)){
-                console.log("error code: " , error);
+                        
+                       }
+                       else if(error.response?.status==415){
+                           console.log("지원하지 않는 형식입니다.")
+                           setIsloading(false);
+                       }
+                       else if(error.response?.status==500){
+                          navigate("/error/se-error")
+                       }
+                  }})
+                    
+        }else{
+            console.log("재 로그인 게이트웨이 호출")
+            let access_token:string="";
+            access_token =localStorage.getItem("a_id")!;
+            console.log("access : " , access_token);
+            const logindata ={ id: EnterId,
+                  password: EnterPass}
+            api.defaults.headers.common['Authorization'] = access_token;
+            api.post("/Pets-social/gateway/api-proxy" ,{
+                service: "common",
+                endpoint: "/login/login",
+                method: "POST",
+                body: logindata
+            },{
+                withCredentials: true
+            }).then(response =>{
+                console.log("결과 :" , response);
+                localStorage.setItem("a_id" , response.data.data.access_token);
+                localStorage.setItem("p_exp" , response.data.data.exp);
                 
-                if(error.response?.status==400){
-                    console.log("로그인 정보가 일치하지 않습니다");
-                    setIslogin(true);
+                let transe_time:Date = new Date(response.data.exp*1000);
+                let time:string="";
+                time =moment(transe_time).format('YYYY-MM-DD HH:mm').toString();
+                console.log("시간 변환 :" , time);
+                localStorage.setItem("p_exp" , response.data.data.exp);
+                  navigate("/main")
+                  return;
+            }).catch(error =>{
+                if(axios.isAxiosError<CustomError>(error)){
+                  if (!error.response) {
+                        console.warn("서버 응답 없음 (게이트웨이 연결 실패)");
+                        navigate("/error/Gateway"); // 502로 간주
+                        return;
+                    }
+
+                    if(error.response?.status==400){
+                        console.log("400에러 발생")
+                        navigate("/error/LbBadRequest");
+                    }
+                    else if(error.response?.status==415){
+                        console.log("지원하지 않는 형식입니다.")
+                        setIsloading(false);
+                    }
+                    else if(error.response?.status==500){
+                        navigate("/error/se-error")
+                    }
+                    else if(error.response?.status==502){
+                        navigate("/error/Gateway");
+                    }
                 }
-                if(error.code == "ERR_NETWORK"){
-                  console.log("네트워크 에러 ");
-                  
-                }
-              }
-            
-            
-        })
+            })
+        }
 
         }
      

@@ -27,6 +27,8 @@ import ShowChatWrapper from "../Chat/ChatContents/ShowChatWrapper";
 import GatewayError from "../Error_Page/GatewayError";
 import BadRequest from "../Error_Page/BadRequest";
 import WebSocket_Chat_Provider from "../Context/WebSocker_Chat_Provider";
+import Landing_Gateway from "../Error_Page/Landing_Gateway";
+import Landing_BadRequest from "../Error_Page/Landing_BadRequest";
 
 const router = createBrowserRouter([
   {
@@ -96,11 +98,14 @@ const router = createBrowserRouter([
     errorElement:<Not_found />,
     children:[
       {path:"/error/auth/" , element:<Authorization_Page />},
-      {path:"/error/se-error/" , element:<Server_Error />},
+      {path:"/error/se-error" , element:<Server_Error />},
       {path:"/error/ne_error" , element:<Network />},
       {path:"/error/NoAccess" , element:<Authorization_Page />},
       {path:"/error/Gateway" , element:<GatewayError />},
-      {path:"/error/BadRequest" , element:<BadRequest />}
+      {path :"/error/LbGateway"  , element:<Landing_Gateway />},
+      {path:"/error/BadRequest" , element:<BadRequest />},
+      {path :"/error/LbBadRequest"  , element:<Landing_BadRequest />}
+      
     ]
     
  },

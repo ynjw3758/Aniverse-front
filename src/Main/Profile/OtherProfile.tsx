@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import "./OtherProfile.scss";
 import Item from "./Item";
 import SendNote from "../SendNote/SendNote";
+import {api} from"../../API/Api"
 //#endregion
 
 
@@ -53,9 +54,6 @@ interface ResponseDataType {
 
 const OtherProfile =(props:Samll_profile) =>{
    const[content, setContent]=useState<string[]>(props.content);
-   const[showItem, setShowItem]=useState<string[]>([]);
-   const[img, setImg]=useState<string[]>([]);
-   const[vid, setVid]=useState<string[]>([]);
    const[check , setCheck]=useState<any>({
       follower:false,
       following:false,
@@ -92,6 +90,40 @@ const OtherProfile =(props:Samll_profile) =>{
       Userid=props.id;
       access_token =localStorage.getItem("a_id")!;
       axios.defaults.headers.common['Authorization'] = access_token;
+      api.defaults.headers.common['Authorization'] = access_token;
+      api.post("/Pets-social/gateway/api-proxy" ,{
+         service: "common",
+         endpoint: "follow/follower",
+         method: "POST",
+         body: {Id:Myid , Userid:Userid , type:"connect"}
+      },{
+         withCredentials: true
+      }).then(response=>{
+         console.log("결과 :" , response)
+         if(response.status == 200){
+            setCheck({following:false});
+            setCheck({follower:true});
+         }
+      }).catch(error =>{
+         if(axios.isAxiosError<ResponseDataType>(error)){
+
+            if(error.response?.status==400){
+               console.log("400에러 발생")
+               navigate("/error/BadRequest");
+            }
+            else if(error.response?.status==415){
+               console.log("지원하지 않는 형식입니다.")
+               //setIsloading(false);
+            }
+            else if(error.response?.status==500){
+               navigate("/error/se-error")
+            }
+            else if(error.response?.status==502){
+               navigate("/error/Gateway");
+            }
+         }
+      })
+/*
       axios.post("http://localhost:8080/Pets-social/follower" , {Id:Myid , Userid:Userid , type:"connect"}  , {headers:{Authorization:access_token}})
       .then((response) =>{
          console.log("응답 결과 :" , response.status);
@@ -102,27 +134,26 @@ const OtherProfile =(props:Samll_profile) =>{
 
       }).catch(error =>{
          if(axios.isAxiosError<ResponseDataType>(error)){
-                     console.log("error code: " , error.response?.status);
-                     
-                     if(error.code=="ERR_BAD_REQUEST"){
-                       navigate("/error");
-                     }
-                     if(error.code == "ERR_NETWORK"){
-                       console.log("네트워크 에러 ");
-                       
-                     }
-                     if(error.response?.status==401){
-                         console.log("승인되지 않은 로그인");
-                     }
-                     if(error.response?.status==500){
-                       console.log("서버 에러발생");
-                       navigate("/error/se-error")
-                     }
+            console.log("error code: " , error.response?.status);
+            if(error.response?.status==400){
+               console.log("400에러 발생")
+               navigate("/error/BadRequest");
+            }
+            else if(error.response?.status==415){
+               console.log("지원하지 않는 형식입니다.")
+               //setIsloading(false);
+            }
+            else if(error.response?.status==500){
+               navigate("/error/se-error")
+            }
+            else if(error.response?.status==502){
+               navigate("/error/se-error")
+            }
                      
                      console.log("error response: " , error.response?.data);
                    }
      }); 
-
+*/
     }
 
     const CancelFollowerHandler =() =>{

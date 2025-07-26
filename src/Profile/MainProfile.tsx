@@ -6,7 +6,7 @@ import "./MainProfile.scss";
 import Filelist from "./Filelist";
 import user_info from "../Context/Userdata";
 import Private from "./Private";
-
+import {api } from "../API/Api";
 
 interface ResponseDataType {
     message: string;
@@ -41,11 +41,9 @@ const MainProfile =() =>{
       let access_token:string="";
       let id:any;
       id=localStorage.getItem("id");
-      //const userid:string = login_info.UserId;
       const userid:string =param.userid!;
       let UserId:string="";
       let kind:string="";
-      const my = localStorage.getItem("id");
       if(userid != id){
         console.log("다른 사람 페이지");
         id=localStorage.getItem("id");
@@ -58,7 +56,19 @@ const MainProfile =() =>{
       }
         
         access_token =localStorage.getItem("a_id")!;
-        axios.defaults.headers.common['Authorization'] = access_token;
+        //axios.defaults.headers.common['Authorization'] = access_token;
+        api.defaults.headers.common['Authorization'] = access_token;
+                api.post("/Pets-social/gateway/api-proxy" ,{
+                      service: "common",
+                      endpoint: `profile/SearchProfile`,
+                      method: "GET",
+                      body: {Id:id , type:kind , Userid:UserId}
+                  },{
+                      withCredentials: true
+                  }).then(response =>{
+                     console.log("검색 결과 :" , response);
+                  })
+        /*
         axios.get("http://localhost:8080/Pets-social/SearchProfile" , {params:{Id:id , type:kind , Userid:UserId}})
         .then((response) =>{
             console.log("응답 결과 :" , response.data.resultdata);
@@ -128,6 +138,7 @@ const MainProfile =() =>{
                         console.log("error response: " , error.response?.data);
                       }
         })
+                      */
     },[Search_id])
       const test:number=0;
     

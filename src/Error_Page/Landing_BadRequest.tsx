@@ -1,13 +1,15 @@
 
 import "./BadRequest.scss";
 import { useNavigate } from "react-router-dom";
-import errorimg from "../assets/images/502-error-image.png"
+import errorimg from "../assets/images/400Error.png"
 
-const BadRequest =() =>{
+
+const Landing_BadRequest =() =>{
+
     const navigate = useNavigate();
 
     const mainpage =() =>{
-        navigate("/main");
+        navigate("/");
     }
 
     return(<div className="BadRequest_Stand">
@@ -19,4 +21,4 @@ const BadRequest =() =>{
     </div>)
 }
 
-export default BadRequest;
+export default Landing_BadRequest;

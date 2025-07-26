@@ -16,16 +16,17 @@ declare namespace NodeJS{
             REACT_APP_API_REACT_URL:string;
             REACT_APP_API_UPLOAD_URL :string;
             REACT_APP_API_AI_URL:string;
-            REACT_APP_API_WEBCHAT_URL:string;
-            REACT_APP_API_WEBLOGIN_URL:string;
+            REACT_APP_API_WEBSOCKET_URL:string;
+            REACT_APP_API_COMMON_URL:string;
+
             REACT_APP_API_DEV_BASE_URL:string;
             REACT_APP_API_DEV_SEARCH_URL:string;
             REACT_APP_API_DEV_NOTE_URL:string;
             REACT_APP_API_DEV_REACT_URL:string;
             REACT_APP_API_DEV_UPLOAD_URL :string;
             REACT_APP_API_DEV_AI_URL:string;
-            REACT_APP_API_DEV_WEBCHAT_URL:string;
-            REACT_APP_API_DEV_WEBLOGIN_URL:string;
+            REACT_APP_API_DEV_WEBSOCKET_URL:string;
+            REACT_APP_API_DEV_COMMON_URL:string;
 
 
     }

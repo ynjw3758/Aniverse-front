@@ -215,9 +215,9 @@
     .OProfile_userinfo img{
         margin-top: 10px;
         margin-left: 10px;
-        width:4vw;    
-        border-radius: 30px;
-        border-radius: 20px;
+        width:4vw;   
+        height: 8vh; 
+        border-radius: 50%;
         margin-bottom: 10px;
     }
     .OProfile_userinfo img:hover{
@@ -225,8 +225,8 @@
         margin-top: 10px;
         margin-left: 10px;
         width:4vw;    
-        border-radius: 30px;
-        border-radius: 20px;
+        height: 8vh; 
+        border-radius: 50%;
         margin-bottom: 10px;
     }
     .OProfile_total_list{

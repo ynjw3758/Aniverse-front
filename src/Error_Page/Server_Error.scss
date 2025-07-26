@@ -1,16 +1,44 @@
+.Server_Error_Main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+.Server_Error_Main > img{
+    width: 40vw;
+    height: 50vh;
+    margin-top: 10vh;
+    margin-bottom: -6vh;
+}
 .centents{
     display: flex;
     flex-direction: row;
 
 }
 .centents img{
-    width: 8vw;
-    height: 11vh;
-    margin-top: -1.7vh;
+    width: 3vw;
+    height: 7vh;
 }
 .centents h2{
     margin-left: 0vw;
     margin-top: 1vh;
-    font: bold;
-        
+    font: bold;   
+}
+.Server_Error_btn{
+    display: flex;
+    flex-direction: row;
+    gap:20px;
+}
+.Server_Error_btn button,
+.Server_Error_btn button:hover{
+    font-size: 20px;
+    font-weight: bolder;
+    background-color:lightskyblue;
+    color:white;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-radius:10px;
+    cursor: pointer; 
 }

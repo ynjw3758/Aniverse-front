@@ -232,11 +232,9 @@ const ReceiveMessage = useContext(WebSocketChatContext);
                 myinfo.addprofile(response.data.data.Myinfo.Img)
               }
               else{
-                console.log("여기로 와야지")
                 if(response.data.data.ChatInfos =="null" && response.data.data.RoomInfo == "null" &&
                   response.data.data.ChatList !== "null"
                 ){
-                  console.log("채팅방에 아무 채팅이 없는경우 : realod경우");
                   setMyinfos(response.data.data.Myinfo);
                   setCtList_Info( response.data.data.ChatList);
                   myinfo.addeNickName(response.data.data.Myinfo.Nickname);
@@ -246,7 +244,6 @@ const ReceiveMessage = useContext(WebSocketChatContext);
                 else if(response.data.data.ChatInfos !=="null" && response.data.data.RoomInfo == "null" &&
                   response.data.data.ChatList !== "null"
                 ){
-                     console.log("채팅 리스트만 존재");
                      setMyinfos(response.data.data.Myinfo);
                      setCtList_Info(response.data.data.ChatList);
                      myinfo.addeNickName(response.data.data.Myinfo.Nickname);
@@ -258,8 +255,7 @@ const ReceiveMessage = useContext(WebSocketChatContext);
                   const ChatData:ChatInfos[] = response.data.data.ChatInfos;
                   let date:string[] =[];
                   let message:MessageInfo[][]=[];
-                  ChatData.map(Item => {
-                    console.log("11 : " , Item);  
+                  ChatData.map(Item => {  
                     date.push(Item.date);
                     message.push(Item.messages);
                     standDate.current = date;
@@ -311,7 +307,7 @@ const ReceiveMessage = useContext(WebSocketChatContext);
                               if(response.status == 200){
                                 localStorage.setItem("p_exp" ,response.data.data.exp);
                                 localStorage.setItem("a_id" ,response.data.data.access_token);
-                                navigate("/main");
+                                //navigate("/main");
                               }
                             }
                           ).catch(error =>{

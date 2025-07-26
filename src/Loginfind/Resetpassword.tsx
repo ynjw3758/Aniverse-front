@@ -7,6 +7,7 @@ import axios from "axios";
 import Change_pw_success from "../Message/Change_pw_success";
 import { useNavigate } from "react-router-dom";
 import logimg from "../assets/images/log_test.jpg";
+import {api,COMMON_URL } from "../API/Api";
 interface ResponseDataType {
     message: string;
     code: number;
@@ -55,7 +56,7 @@ const Resetpassword =() =>{
         };
     }, [enterNewpwIsValid, enterAgainpwIsValid])
     const reset_post =() =>{
-        axios.post('http://localhost:8080/Pets-social/resetpw',
+        api.post(`http://localhost:8080/Pets-social/resetpw`,
         {
              New_password : EnterAgainpw,
              id:User_id.UserId

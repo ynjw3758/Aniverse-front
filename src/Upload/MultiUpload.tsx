@@ -349,15 +349,10 @@ const MultiUpload =(props:upload_data) =>{
       if(axios.isAxiosError<ResponseDataType>(error)){
                   console.log("error code: " , error);
                   
-                  if(error.code=="ERR_BAD_REQUEST"){
+                  if(error.response?.status==400){
                     navigate("/error");
                   }
-                  if(error.code == "ERR_NETWORK"){
-                    console.log("네트워크 에러 ");
-                    
-                    
-                  }
-                  if(error.response?.status==401){
+                  else if(error.response?.status==401){
                       console.log("승인되지 않은 로그인");
                       Object.entries(error.response?.data).map(key =>{
                         if(key.at(0) == "errorcode"){

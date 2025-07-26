@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Fragment, KeyboardEvent, useRef } from "react";
 import React, { useState, useEffect } from 'react';
+import {api,COMMON_URL } from "../API/Api";
 //#endregion
 
 //                             +--------------------
@@ -28,6 +29,11 @@ interface ResponseDataType {
     code: number;
     response:object
   }
+
+interface CustomError{
+errorcode:string;
+message :string
+}
   //#endregion
 
 const Sign:React.FC=()=> {
@@ -223,7 +229,7 @@ const Sign:React.FC=()=> {
 
     const response_userinfo = () =>{
         //이름, 핸드폰 이메일, 주소, 닉네임
-        axios.post('http://localhost:8080/Pets-social/sign',
+        api.post(`${COMMON_URL}/Pets-social/Common/user/sign`,
         {
             Name:EnterName,
             /*Phone:phonnumber,*/
@@ -246,10 +252,19 @@ const Sign:React.FC=()=> {
         console.log("error : " , error.response);
         if(axios.isAxiosError<ResponseDataType>(error)){
            console.log("error code: " , error.code);
-           
-           if(error.code=="ERR_BAD_REQUEST"){
-              navigate("/error");
-           }
+            if (!error.response) {
+                console.warn("서버 응답 없음 (게이트웨이 연결 실패)");
+                navigate("/error/LbGateway"); // 502로 간주
+                return;
+            }
+           if(error.response?.status==400){
+              navigate("/error/BadRequest");
+            }else if(error.response?.status==415){
+            console.log("지원하지 않는 형식입니다.")
+            }
+            else if(error.response?.status==500){
+                navigate("/error/se-error")
+            }
 
            console.log("error response: " , error.response?.data);
          }
@@ -268,7 +283,7 @@ const Sign:React.FC=()=> {
 
     const dupl_id = async() =>{
       console.log("중복 아이디 검색");
-      axios.get("http://localhost:8080/Pets-social/dupl-id", {params:{id:EnterId}})
+      api.get(`${COMMON_URL}/Pets-social/Common/user/dupl-id`, {params:{id:EnterId}})
       .then(response => {
          console.log("결과값 : " , response.data);
          console.log("결과status : " , response.status);
@@ -280,16 +295,29 @@ const Sign:React.FC=()=> {
       })
       .catch(error =>{
          console.log("error : " , error.response);
-         if(axios.isAxiosError<ResponseDataType>(error)){
+         if(axios.isAxiosError<CustomError>(error)){
             console.log("error code: " , error.code);
-            
-            if(error.code=="ERR_BAD_REQUEST"){
-                setIdisvalid(false);
-                setDisid(true);
+            if (!error.response) {
+                console.warn("서버 응답 없음 (게이트웨이 연결 실패)");
+                navigate("/error/LbGateway"); // 502로 간주
+                return;
             }
-            if(error.code == "ERR_NETWORK"){
-              console.log("네트워크 에러 ");
-              
+            if(error.response?.status==400){
+                if(error.response?.data.errorcode ==="E0020"){
+                    setIdisvalid(false);
+                    setDisid(true);
+                }
+                else{
+                     navigate("/error/LbBadRequest");
+                }
+
+            }
+            else if(error.response?.status==415){
+                console.log("지원하지 않는 형식입니다.")
+                //setIsloading(false);
+            }
+            else if(error.response?.status==500){
+                navigate("/error/se-error")
             }
             console.log("error response: " , error.response?.data);
           }
@@ -299,7 +327,7 @@ const Sign:React.FC=()=> {
     }
     const dupl_nickname =() =>{
      console.log("중복 닉네임 검색");
-     axios.get("http://localhost:8080/Pets-social/dupl-nick", {params:{nickname:EnterNicName}})
+     api.get(`${COMMON_URL}/Pets-social/Common/user/dupl-nick`, {params:{nickname:EnterNicName}})
      .then(response => {
         console.log("결과값 : " , response.data);
         console.log("결과status : " , response.status);
@@ -310,18 +338,29 @@ const Sign:React.FC=()=> {
         }
      })
      .catch(error =>{
-        if(axios.isAxiosError<ResponseDataType>(error)){
+        if(axios.isAxiosError<CustomError>(error)){
             console.log("error code: " , error.code);
-            
-            if(error.code=="ERR_BAD_REQUEST"){
+            if (!error.response) {
+                console.warn("서버 응답 없음 (게이트웨이 연결 실패)");
+                navigate("/error/LbGateway"); // 502로 간주
+                return;
+            }
+            if(error.response?.status==400){
+                if(error.response?.data.errorcode ==="E0021"){
                 setNickisvalid(false);
                 setDisnick(true);
+                }else{
+                    navigate("/error/LbBadRequest");
+                }
 
-              
+
             }
-            if(error.code == "ERR_NETWORK"){
-              console.log("네트워크 에러 ");
-              
+            else if(error.response?.status==415){
+                console.log("지원하지 않는 형식입니다.")
+                //setIsloading(false);
+            }
+            else if(error.response?.status==500){
+                navigate("/error/se-error")
             }
 
             if(error)
@@ -334,7 +373,7 @@ const Sign:React.FC=()=> {
 
     const dupl_email =() =>{
         console.log("중복 이메일 검색");
-        axios.get("http://localhost:8080/Pets-social/dupl-email", {params:{email:EnterEmail}})
+        api.get(`${COMMON_URL}/Pets-social/Common/user/dupl-email`, {params:{email:EnterEmail}})
         .then(response => {
            console.log("결과값 : " , response.data);
            console.log("결과status : " , response.status);
@@ -345,22 +384,29 @@ const Sign:React.FC=()=> {
            }
         })
         .catch(error =>{
-           if(axios.isAxiosError<ResponseDataType>(error)){
+           if(axios.isAxiosError<CustomError>(error)){
                console.log("error code: " , error.code);
+                if (!error.response) {
+                    console.warn("서버 응답 없음 (게이트웨이 연결 실패)");
+                    navigate("/error/LbGateway"); // 502로 간주
+                    return;
+                    }
                
-               if(error.code=="ERR_BAD_REQUEST"){
-                setEmailisvalid(false);
-                setDisemail(true);
-   
-                 
+               if(error.response?.status==400){
+                  if(error.response?.data.errorcode ==="E0022"){
+                    setEmailisvalid(false);
+                    setDisemail(true);
+                  }else{
+                    navigate("/error/LbBadRequest");
+                  }
                }
-               if(error.code == "ERR_NETWORK"){
-                 console.log("네트워크 에러 ");
-                 
-               }
-   
-               if(error)
-               console.log("error response: " , error.response?.data);
+                else if(error.response?.status==415){
+                    console.log("지원하지 않는 형식입니다.")
+                    //setIsloading(false);
+                }
+                else if(error.response?.status==500){
+                    navigate("/error/se-error")
+                }
              }
    
         }).finally(() => {});

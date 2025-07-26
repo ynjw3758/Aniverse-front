@@ -34,6 +34,7 @@ import profilebaseimg from "../../assets/images/baseimg.png";
 import beforeheartimg from "../../assets/images/heart.png";
 import afterhearimg from "../../assets/images/redheart.png";
 import muteimg from "../../assets/images/muted.png";
+import {api} from"../../API/Api"
 //#endregion
 
 
@@ -907,15 +908,42 @@ const textareaRef = useRef<HTMLTextAreaElement>(null);
 
     const SmallProfile = (event:React.MouseEvent<HTMLDivElement>) =>{
       setMousepoint(event.clientY);
-      console.log("마우스 오버 아이디 :" , imgref.current?.id);
+
       let access_token:string="";
       let Userid:any;
       let Myid:any;
       Myid = localStorage.getItem("id");
       Userid=imgref.current?.id;
       access_token =localStorage.getItem("a_id")!;
-      axios.defaults.headers.common['Authorization'] = access_token;
-
+      //axios.defaults.headers.common['Authorization'] = access_token;
+        api.defaults.headers.common['Authorization'] = access_token;
+                api.post("/Pets-social/gateway/api-proxy" ,{
+                      service: "common",
+                      endpoint: `profile/Smallprofile`,
+                      method: "GET",
+                      body: {userid:Userid , id:Myid}
+                  },{
+                      withCredentials: true
+                  }).then(response =>{
+                     console.log("드래그 프로필 결과 :" , response);
+                      if(response.data.data.user_data.profile == "null"){
+                      }
+                      else{
+                        setSmallprofile(response.data.data.user_data.profile);
+                      }
+            
+                      if(response.data.data.user_data.profile != "null"){
+                        setSmallprofile(response.data.data.user_data.profile);
+                      }
+                      setSmallcheckfl(response.data.data.user_data.id_exist);
+                      setSmallnickname(response.data.data.user_data.nickname);
+                      setSmallfollowers(response.data.data.user_data.follower);
+                      setSmallfollowing(response.data.data.user_data.following);
+                      setSmallcontent(response.data.data.url);
+                      setOtherId(Userid);
+                      setMousecheck(true);
+                  })
+                  /*
       axios.get("http://localhost:8080/Pets-social/acccheck").then((response) =>{
         if(response.status == 200){
           axios.get("http://localhost:8080/Pets-social/Smallprofile" , {params:{Userid:Userid , Myid:Myid}})
@@ -973,6 +1001,7 @@ const textareaRef = useRef<HTMLTextAreaElement>(null);
           console.log("error response: " , error.response?.data);
         }
       })
+      */
     }
 //#endregion
     const te_inpuHandler =(event: React.FormEvent<HTMLTextAreaElement>) =>{

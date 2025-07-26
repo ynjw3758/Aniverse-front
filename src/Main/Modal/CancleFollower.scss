@@ -8,14 +8,22 @@
     margin-left: 7px;
     font-weight: bold;
 }
+.CancelFw_userinfo p{
+    font-size: 20px;
+  font-weight: 500;
+  color: #222;
+  margin-bottom: 24px;
+  line-height: 1.4;
+  white-space: pre-wrap;
+  word-break: keep-all;
+}
 
 .CancelFw_userinfo img{
-    margin-top: 10px;
-    margin-left: 10px;
     width:4vw;    
-    border-radius: 30px;
-    border-radius: 20px;
-    margin-bottom: 20px;
+    height: 8vh;
+    border-radius: 50%;
+    margin-top: 3vh;
+    object-fit: cover;
 }
 .MainBackDrop{
     position: fixed;
@@ -42,13 +50,41 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
     z-index: 20;
     animation: slide-down 300ms ease-out forwards;
-    height: fit-content;
+    height: 45vh;
   }
   .CancelFw_btn{
     display: flex;
     flex-direction: column;
-    width: 30vw;
+    width: 20vw;
+    align-items: center;  
+    gap: 10px; 
+    margin-left: 5vw;
   }
+  #btn_Cancel_fw{
+  background-color: #e15b51;
+  color: white;
+  border: none;
+  padding: 12px 0;
+  width: 100%;
+  border-radius: 10px;
+  font-size: 15px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: background 0.2s;
+  }
+
+  #btn_Cancel{
+      background-color: #f2f2f2;
+  color: #444;
+  border: none;
+  padding: 12px 0;
+  width: 100%;
+  border-radius: 10px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.2s;
+  }
+
 
   .CancelFw_btn button,
   .CancelFw_btn button:hover{

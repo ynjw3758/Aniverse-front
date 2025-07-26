@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import {useState} from "react";
 
 import "./CancleFollower.scss";
+import {api } from "../../API/Api"
 
 
 type user_info = {
@@ -27,8 +28,6 @@ interface ResponseDataType {
 
 const CancelFollower =(props:user_info) =>{
 
-    const [isSuccess , setIsSuccess]=useState<boolean>(false);
-
     //#region 변수초기화
 const navigate = useNavigate();
 //#endregion
@@ -49,53 +48,49 @@ const navigate = useNavigate();
         Userid=props.id;
         access_token =localStorage.getItem("a_id")!;
         axios.defaults.headers.common['Authorization'] = access_token;
-        axios.post("http://localhost:8080/Pets-social/follower" , {Id:Myid , Userid:Userid , type:"disconnect"}  , {headers:{Authorization:access_token}})
-        .then((response) =>{
-           console.log("응답 결과 :" , response.status);
-           if(response.status == 200){
-              console.log("팔로우 신청 완료");
-              props.onClose();
-           }
-  
-        }).catch(error =>{
-           if(axios.isAxiosError<ResponseDataType>(error)){
-                       console.log("error code: " , error.response?.status);
-                       
-                       if(error.response?.status ==400){
-                        navigate("/error/BadRequest");
-                        return;
-                       }
+        api.defaults.headers.common['Authorization'] = access_token;
+              api.post("/Pets-social/gateway/api-proxy" ,{
+         service: "common",
+         endpoint: "follow/follower",
+         method: "POST",
+         body: {Id:Myid , Userid:Userid , type:"disconnect"}
+      },{
+         withCredentials: true
+      }).then(response=>{
+         console.log("결과 :" , response)
+         if(response.status == 200){
+            props.onClose();
+         }
+      }).catch(error =>{
+         if(axios.isAxiosError<ResponseDataType>(error)){
 
-                       else if(error.response?.status==401){
-                           console.log("승인되지 않은 로그인");
-                       }
-                       else if(error.response?.status==500){
-                         console.log("서버 에러발생");
-                         navigate("/error/se-error")
-                       }
-                       else if(error.response?.status==403){
-                        console.log("인가 문제?");
-                        navigate("/error/NoAccess");
-                      }
-                      else if(error.response?.status==502){
-                        console.log("gateway 에러 발생");
-                        navigate("/error/Gateway");
-                        return;
-                      }
-
-                     }
-       }); 
+            if(error.response?.status==400){
+               console.log("400에러 발생")
+               navigate("/error/BadRequest");
+            }
+            else if(error.response?.status==415){
+               console.log("지원하지 않는 형식입니다.")
+               //setIsloading(false);
+            }
+            else if(error.response?.status==500){
+               navigate("/error/se-error")
+            }
+            else if(error.response?.status==502){
+               navigate("/error/Gateway");
+            }
+         }
+      })
     }
 
     return(<div className="MainBackDrop" onClick={CancelHandler}>
              <div className="CancelFw_Main" onClick={(e) => e.stopPropagation()}>
                <div className="CancelFw_userinfo">
                  <img src={props.profile} />
-                 <p>{props.nickname}님의 팔로우를 취소하시겠습니까?</p>
+                 <p>{props.nickname}님의 팔로우를<br />취소하시겠습니까?</p>
                </div>
                <div className="CancelFw_btn">
-                <button type="submit" onClick={CancelFolloerHandler}>팔로워 취소</button>
-                <button type="button" onClick={CloseModal}>취소</button>
+                <button type="submit" onClick={CancelFolloerHandler} id="btn_Cancel_fw">팔로워 취소</button>
+                <button type="button" onClick={CloseModal} id="btn_Cancel">취소</button>
                </div>
             </div>
         </div>

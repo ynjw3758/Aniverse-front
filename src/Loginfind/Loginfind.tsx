@@ -8,7 +8,7 @@ import Pw_fail from "../Message/Pw_fail";
 import Err_Network from "../Message/Err_Network";
 import Id from "../Context/Userdata";
 import logimg from "../assets/images/log_test.jpg";
-
+import {api,COMMON_URL } from "../API/Api";
 /*
 const lv_style = JSXStyle`
 .yoon-margin-0px { margin: 0; }
@@ -187,7 +187,7 @@ useEffect(() => {
         console.log(serviceid);
         console.log(accesskey);
           
-
+/*
         axios.post('http://localhost:8080/Pets-social/findpw',
         {
             service_id:serviceid,
@@ -218,6 +218,7 @@ useEffect(() => {
         console.log("error response: " , error.response?.data);
       }
     })
+      */
   }
 
   const firstnumber =(e:React.ChangeEvent<HTMLInputElement>) =>{

@@ -9,7 +9,6 @@ import { Fragment ,useState , useEffect, useRef, useContext} from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import user_info from "../../Context/Userdata";
-import debounce from 'lodash/debounce';
  //#endregion
 
 //                            +--------------------
@@ -21,6 +20,7 @@ import Search from "./Search";
 import Addimage from "../skips/Addimage";
 import Deleteimg from "../../assets/images/delete.png"
 import baseproimg from "../../assets/images/baseimg.png"
+import {api } from"../../API/Api"
  //#endregion 
 
 
@@ -176,7 +176,18 @@ const SendNote =(props:Note) =>{
         let access_token:string="";
         access_token =localStorage.getItem("a_id")!;
         console.log("access : " , access_token);
-        axios.defaults.headers.common['Authorization'] = access_token;
+        api.defaults.headers.common['Authorization'] = access_token;
+        api.post("/Pets-social/gateway/api-proxy" ,{
+              service: "common",
+              endpoint: "/Person",
+              method: "GET",
+              body: {Word:search}
+          },{
+              withCredentials: true
+          }).then(response =>{
+             console.log("검색 결과 :" , response);
+          })
+          /*
         axios.get("http://localhost:8080/Pets-social/acccheck")
         .then(response =>{
            console.log("응답 결과 확인 " , response.data);
@@ -232,7 +243,7 @@ const SendNote =(props:Note) =>{
                console.log("error response: " , error.response?.data);
              }
         })
-
+*/
      
     }
     else return;

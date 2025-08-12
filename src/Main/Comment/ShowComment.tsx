@@ -23,7 +23,7 @@ import Comment_Slide from "./Comment_Slide";
 import LoginExp from "../../LginExpiration/LoginExp";
 import Comments_List from "./Comments_List";
 import AddMentionMain from "../Mention/AddMentionMain";
-import useMentionHandler from "../../UseHook/SearchHandler";
+import {api} from"../../API/Api"
 
 //#endregion
 
@@ -153,11 +153,8 @@ const ShowComment =({ShowData, Owner, Content_cm,OnClose}:showcomments_info) =>{
     const[searchLoading, setSearchLoading]=useState<boolean>(false);
     const[iskeyboard,setIskeyboard]=useState<boolean>(false);
     const[isReply, setIsReply]=useState<boolean>(false);
-    const[showComment, setShowComment]=useState<boolean>(false);
-    const[isloading, setIsloading]=useState<boolean>(false);
     const[reploading, setRepload]=useState<boolean>(false);
     const[ischangeline, setIschangeline]=useState<boolean>(false);
-    const[isnewreply, setIsnewreply]=useState<boolean>(false);
     
     
     
@@ -165,7 +162,6 @@ const ShowComment =({ShowData, Owner, Content_cm,OnClose}:showcomments_info) =>{
     const[page, setPage]=useState<number>(1);
     const[video_last, setVideo_last]=useState<number>(0);
     const[screen_width, setScreen_width]=useState<number>(0)
-    const[emojiindex, setEmojiindex]=useState<number>()
 
 ;   const[istype, setIstype]=useState<string>("");
     const[userid, setUserid]=useState<string>("");
@@ -199,11 +195,7 @@ const ShowComment =({ShowData, Owner, Content_cm,OnClose}:showcomments_info) =>{
       Nickname:"",
     })
 
-    const[userinfo ,setUserinfo]=useState<user_info[]>([{
-      id:"",
-      nickname:"",
-      img:""
-    }]);
+    const[userinfo ,setUserinfo]=useState<user_info[]>([]);
     const[replyinfo, setReplyinfo]=useState<reply>({
       userid:"",
       nickname:"",
@@ -265,17 +257,13 @@ const ShowComment =({ShowData, Owner, Content_cm,OnClose}:showcomments_info) =>{
      }
      else if(window.innerWidth > 1550){
       setScreen_width(36)
-     }
-     console.log("Content_cm :" , Content_cm);
-
-     
+     }    
     },[])
 
 
     useEffect(() => {
       const timer = setInterval(() => {
         if (list.current[0]) {
-          console.log("🎬 video 태그 렌더링됨 : ", list.current[0]);
           setIsready(true);
           clearInterval(timer);
         }
@@ -285,13 +273,54 @@ const ShowComment =({ShowData, Owner, Content_cm,OnClose}:showcomments_info) =>{
     }, []); // ✅ 수정 완료
 
     useEffect(() =>{
-    console.log("이제 댓글 데이터를 가져오자");
     setIsLoading(true);
     let access_token:string="";          
     let id:string="";
     id=localStorage.getItem("id")!;
     access_token = localStorage.getItem("a_id")!;
-    axios.defaults.headers.common['Authorization'] = access_token;
+    api.defaults.headers.common['Authorization'] = access_token;
+    api.post("/Pets-social/gateway/api-proxy" ,{
+      service: "reaction",
+      endpoint: "/Comment/list",
+      method: "GET",
+      body: {contentId:ShowData.ContentId,
+            userId:ShowData.UserId, myId:id}
+      },{
+          withCredentials: true
+      }).then(response =>{
+            console.log("응답 데이터: ", response.data);
+            let text="";
+            if(response.data.data.owner_text !== "null") text =response.data.data.owner_text;
+            setComments_list(response.data.data.Comment_List);
+            const ownerinfo:Owner={Text:text, Id:Owner.Id, Profile:Owner.Profile, Nickname:Owner.Nickname}
+            setOwner_info(ownerinfo)
+            setIsLoading(false);
+      }).catch(error =>{
+          if(axios.isAxiosError<ResponseDataType>(error)){
+              console.log("error code: " , error.response?.status);
+              if(!error.response) {
+                    console.warn("서버 응답 없음 (게이트웨이 연결 실패)");
+                    navigate("/error/Gateway"); // 502로 간주
+                    return;
+              }
+              if(error.response?.status==400){
+                  console.log("400에러 발생")
+                  navigate("/error/BadRequest");
+                }else if(error.response?.status==415){
+                    console.log("지원하지 않는 형식입니다.")
+                    //setIsloading(false);
+                }
+                else if(error.response?.status==500){
+                    navigate("/error/se-error")
+                }
+                else if(error.response?.status==502){
+                  navigate("/error/Gateway");
+                }
+              
+          }
+      })
+
+/*
     axios.get("http://localhost:8080/Pets-social/acccheck").then(
       response =>{
         console.log("토큰 응답 : " ,response);
@@ -396,7 +425,7 @@ const ShowComment =({ShowData, Owner, Content_cm,OnClose}:showcomments_info) =>{
           console.log("error response: " , error.response?.data);
         }
        })
-
+*/
     },[isComments])
     
     useEffect(() =>{
@@ -719,7 +748,49 @@ const ischeck = useRef<string>("");
     let access_token:string="";
     access_token =localStorage.getItem("a_id")!;
     console.log("access : " , access_token);
-    axios.defaults.headers.common['Authorization'] = access_token;
+    api.defaults.headers.common['Authorization'] = access_token;
+    api.post("/Pets-social/gateway/api-proxy" ,{
+      service: "search",
+      endpoint: "Person",
+      method: "GET",
+      body: {word:values}
+      },{
+          withCredentials: true
+      }).then(response =>{
+                console.log("검색 결과 :", response.data)
+            if(response.status == 200 && response.data.length !==0){
+              setUserinfo(response.data.data);
+            }
+            else if(response.status == 200 && response.data.length ==0){
+              setUserinfo([]);
+            }
+            setIskeyboard(false);
+            setSearchLoading(true);
+      }).catch(error =>{
+           if(axios.isAxiosError<ResponseDataType>(error)){
+              console.log("error code: " , error.response?.status);
+              if(!error.response) {
+                    console.warn("서버 응답 없음 (게이트웨이 연결 실패)");
+                    navigate("/error/Gateway"); // 502로 간주
+                    return;
+              }
+              if(error.response?.status==400){
+                  console.log("400에러 발생")
+                  navigate("/error/BadRequest");
+                }else if(error.response?.status==415){
+                    console.log("지원하지 않는 형식입니다.")
+                    //setIsloading(false);
+                }
+                else if(error.response?.status==500){
+                    navigate("/error/se-error")
+                }
+                else if(error.response?.status==502){
+                  navigate("/error/Gateway");
+                }
+              
+           }
+      })
+/*
     axios.get("http://localhost:8080/Pets-social/acccheck")
     .then(response =>{
       if(response.status == 200){
@@ -823,6 +894,7 @@ const ischeck = useRef<string>("");
           }
         }
     })
+        */
    },Timeout),[textmention])
 
   const SendCommentHandler =(data:cm_userinfo) =>{
@@ -842,6 +914,113 @@ const ischeck = useRef<string>("");
     id=localStorage.getItem("id")!;
     access_token = localStorage.getItem("a_id")!;
     axios.defaults.headers.common['Authorization'] = access_token;
+    if(isReply){
+    api.defaults.headers.common['Authorization'] = access_token;
+        api.post("/Pets-social/gateway/api-proxy" ,{
+      service: "reaction",
+      endpoint: "/Comment/reply",
+      method: "POST",
+      body: {contentId:ShowData.ContentId,
+            userId:ShowData.UserId, myId:id}
+      },{
+          withCredentials: true
+      }).then(response =>{
+          console.log("댓글 추가 결과 :" , response)
+          setEmoticon("");
+          setIsLoading(false);
+      }).catch(error =>{
+           if(axios.isAxiosError<ResponseDataType>(error)){
+              console.log("error code: " , error.response?.status);
+              if(!error.response) {
+                    console.warn("서버 응답 없음 (게이트웨이 연결 실패)");
+                    navigate("/error/Gateway"); // 502로 간주
+                    return;
+              }
+              if(error.response?.status==400){
+                  console.log("400에러 발생")
+                  navigate("/error/BadRequest");
+                }else if(error.response?.status==415){
+                    console.log("지원하지 않는 형식입니다.")
+                    //setIsloading(false);
+                }
+                else if(error.response?.status==500){
+                    navigate("/error/se-error")
+                }
+                else if(error.response?.status==502){
+                  navigate("/error/Gateway");
+                }
+              
+           }
+      })
+    }else{
+        api.defaults.headers.common['Authorization'] = access_token;
+        api.post("/Pets-social/gateway/api-proxy" ,{
+      service: "reaction",
+      endpoint: "/Comment/Create",
+      method: "POST",
+      body: {contentId:ShowData.ContentId,
+            userId:ShowData.UserId, myId:id}
+      },{
+          withCredentials: true
+      }).then(response =>{
+                  let UserId:string= "";
+                  UserId = localStorage.getItem("id")!;
+                  const today = new Date();
+                  const todayString = today.toISOString(); 
+                  let new_list:Commentslist[]=[...comments_list];
+                  if(emoticon.length ===0){
+                    const newdata ={ cm_cnt:0,
+                      cm_favorite:0,comment_text:emoticon,commentid: response.data.data,
+                      nickname:Content_cm.nickname,
+                      profile:Content_cm.img,
+                      userid:UserId,
+                      like_status:"N",
+                      cm_date:todayString,
+                      contentid:ShowData.ContentId,
+                      mentions:[]}; 
+                      new_list.unshift(newdata);
+                  }
+                  else{
+                    const newdata ={ cm_cnt:0,
+                      cm_favorite:0,comment_text:emoticon,commentid: response.data.data,
+                      nickname:Content_cm.nickname,
+                      profile:Content_cm.img,
+                      userid:UserId,
+                      like_status:"N",
+                      cm_date:todayString,
+                      contentid:ShowData.ContentId,
+                      mentions:mentioninfo}; 
+                      new_list.unshift(newdata);
+                  }
+                  setComments_list(new_list);
+                 setEmoticon("");
+                 setIsLoading(false);
+      }).catch(error =>{
+           if(axios.isAxiosError<ResponseDataType>(error)){
+              console.log("error code: " , error.response?.status);
+              if(!error.response) {
+                    console.warn("서버 응답 없음 (게이트웨이 연결 실패)");
+                    navigate("/error/Gateway"); // 502로 간주
+                    return;
+              }
+              if(error.response?.status==400){
+                  console.log("400에러 발생")
+                  navigate("/error/BadRequest");
+                }else if(error.response?.status==415){
+                    console.log("지원하지 않는 형식입니다.")
+                    //setIsloading(false);
+                }
+                else if(error.response?.status==500){
+                    navigate("/error/se-error")
+                }
+                else if(error.response?.status==502){
+                  navigate("/error/Gateway");
+                }
+              
+           }
+      })
+    }
+      /*
     axios.get("http://localhost:8080/Pets-social/acccheck").then(
       response =>{
         if(response.status === 200){
@@ -853,8 +1032,6 @@ const ischeck = useRef<string>("");
               CommentId:replyinfo.commentid ,MentionUser:replyinfo.userid, 
               MentionNickname:replyinfo.nickname ,MyId :id , MyNick:Content_cm.nickname , MyProrile:Content_cm.img}).then(response =>{
                 console.log("응답 처리 :" , response);
-
-                const data={cm_cnt:0, cm_favorite:0 ,comment_text:emoticon, CommentId:response.data.data};
                 setEmoticon("");
                 setIsLoading(false);
 
@@ -885,15 +1062,13 @@ const ischeck = useRef<string>("");
             access_token = localStorage.getItem("a_id")!;
             UserId = localStorage.getItem("id")!;
             axios.defaults.headers.common['Authorization'] = access_token;
-
+            
                
              axios.post("http://localhost:8090/Pets-social/comment/Create", {UserId :UserId ,Comments:emoticon ,
                contentid:Content_cm.contentid, profile:Content_cm.img, nickname:Content_cm.nickname, MentionInfos:mentioninfo
              }).then((response) =>{
                   const today = new Date();
                   const todayString = today.toISOString(); 
-                  const comments_info={commentid:response.data.data, id:UserId, comments:emoticon, 
-                  nickname:Content_cm.nickname, profile:Content_cm.img};
                   let new_list:Commentslist[]=[...comments_list];
                   if(emoticon.length ===0){
                     const newdata ={ cm_cnt:0,
@@ -921,10 +1096,6 @@ const ischeck = useRef<string>("");
                       new_list.unshift(newdata);
                   }
                   setComments_list(new_list);
-
-                  
-                 
-                 //setCommentsinfos(comments_info);
                  setEmoticon("");
                  setIsLoading(false);
                  
@@ -1022,7 +1193,7 @@ const ischeck = useRef<string>("");
           console.log("error response: " , error.response?.data);
         }
        })
-
+*/
   }
 
   

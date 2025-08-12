@@ -1,7 +1,7 @@
 
 import "./GatewayError.scss";
 import { useNavigate } from "react-router-dom";
-import errorimg from "../assets/images/400Error.png"
+import errorimg from "../assets/images/502-error-image.png"
 
 const GatewayError =() =>{
     

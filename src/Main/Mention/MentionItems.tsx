@@ -24,6 +24,7 @@ const MentionItems =({Userinfo, idx, total,isready ,onShow ,AddMention}:Mention_
     const[isShow, setIsShow]=useState<boolean>(false);
 
     useEffect(() =>{
+        console.log("준비됐니?")
      if(idx === total-1){
         onShow();
      }

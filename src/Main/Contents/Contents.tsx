@@ -1,6 +1,8 @@
 import { Fragment, useEffect, useState } from "react";
 import "./Contents.scss";
 import ContentItem from "./ContentItem";
+import baseprofile from "../../assets/images/baseimg.png"
+
 
 
 type Content ={
@@ -49,8 +51,8 @@ const Contents =(props:Content) =>{
                 setNickname(nicknames);
             }
             else if(key.at(0) == "profile"){
-                if(key.at(1) == "null"){
-                    prfile.push("/image/baseimg.png");
+                if(key.at(1) == "N"){
+                    prfile.push(baseprofile);
 
                 }
                 else{

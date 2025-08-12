@@ -10,7 +10,9 @@ declare namespace NodeJS{
             REACT_APP_REST_API_KEY:string;
             REACT_APP_CLIENT_ID:string;
             REACT_APP_REDIRECT_URL_N:string;
-            REACT_APP_API_BASE_URL:string;
+
+            REACT_APP_API_PUBGATEWAY_URL:string;
+            REACT_APP_API_AUTHGATEWAY_URL:string;
             REACT_APP_API_SEARCH_URL:string;
             REACT_APP_API_NOTE_URL:string;
             REACT_APP_API_REACT_URL:string;
@@ -19,7 +21,8 @@ declare namespace NodeJS{
             REACT_APP_API_WEBSOCKET_URL:string;
             REACT_APP_API_COMMON_URL:string;
 
-            REACT_APP_API_DEV_BASE_URL:string;
+            REACT_APP_API_DEV_PUBGATEWAY_URL:string;
+            REACT_APP_API_DEV_AUTHGATEWAY_URL:string;
             REACT_APP_API_DEV_SEARCH_URL:string;
             REACT_APP_API_DEV_NOTE_URL:string;
             REACT_APP_API_DEV_REACT_URL:string;

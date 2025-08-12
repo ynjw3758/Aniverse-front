@@ -3,8 +3,9 @@ import "./Item.scss";
 import { useEffect, useRef, useState } from "react";
 
 
-type Samll_profile = {
-    content:string[],
+interface Samll_profile{
+    content:string[];
+    onLoaded :() => void
 
   }
 
@@ -22,7 +23,6 @@ const Item =(props:Samll_profile) =>{
 
         let image:string[]=[...img];
         let video:string[]=[...vid];
-        console.log("Item :" , Item.length);
         Object.entries((props.content)).map((key) =>{
             console.log("key :" , key);
             let url:string = key[1];
@@ -41,15 +41,20 @@ const Item =(props:Samll_profile) =>{
               }
             })
    },[props.content]);
+   
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      props.onLoaded(); // 로딩 종료 콜백
+    }, 100); // 또는 200~300으로 늘려도 OK
 
+    return () => clearTimeout(timer);
+  }, []);
 
 
     return(<div className="MainPage_ContetItem">
     {Item.map((data) =>(<div className="MainPage_Contetimg"> 
       <img src={data}/>
       </div>))}
-
-
     </div>)
 
 }

@@ -1,12 +1,15 @@
 // src/api.ts
 import axios from 'axios';
-import moment from 'moment';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
+export const PUBGATEWAY_URL = isProduction 
+  ? process.env.REACT_APP_API_PUBGATEWAY_URL
+  : process.env.REACT_APP_API_DEV_PUBGATEWAY_URL;
+
 export const GATEWAY_URL = isProduction
-  ? process.env.REACT_APP_API_BASE_URL
-  : process.env.REACT_APP_API_DEV_BASE_URL;
+  ? process.env.REACT_APP_API_AUTHGATEWAY_URL
+  : process.env.REACT_APP_API_DEV_AUTHGATEWAY_URL;
 
 export const SEARCH_URL = isProduction
   ? process.env.REACT_APP_API_SEARCH_URL
@@ -45,15 +48,21 @@ export const api = axios.create({
 // ✅ access_token 자동 갱신 인터셉터
 
 api.interceptors.request.use(async (config) => {
-    console.log("인터셉트 config :" , config.data)
+    console.log("인터셉트 config :" , config)
   const exp = Number(localStorage.getItem("p_exp"));
   const currentTime = Math.floor(Date.now() / 1000); // 초 단위
   const timeLeft = exp - currentTime;
   const context = config.url?.includes("login") ? "login" : "service";
+ const isPublic = config.url?.includes(PUBGATEWAY_URL!);
+    // ✅ public 요청이면 토큰 로직 생략
+  if (isPublic) {
+    console.log("🟢 공용 서비스 요청 → 토큰 확인 생략");
+    return config;
+  }
 
   if (timeLeft < 60) {
     console.log("🔁 access_token 만료 → refresh_token으로 재발급 시도");
-
+33
     try {
       const id = localStorage.getItem("id");
       const response = await axios.post(

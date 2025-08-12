@@ -28,7 +28,7 @@ const AddMentionMain =({Userinfo ,AddMentionData}:Mention_info) =>{
         setIsready(true);
         setIsempty(true);
      }
-    },[]);
+    },[Userinfo]);
 
     const finishloading =() =>{
         setFini_loading(true);
@@ -57,10 +57,16 @@ const AddMentionMain =({Userinfo ,AddMentionData}:Mention_info) =>{
                   height={50} 
                   width={50}
         />
-        {Userinfo.map((values, idx) =>(<>
-            <MentionItems Userinfo={values} idx={idx} total={Userinfo.length} 
-            onShow={finishloading} isready={false} AddMention={nothing}/>
-        </>))}
+        {Array.isArray(Userinfo) && Userinfo.map((values, idx) => (
+            <MentionItems
+                Userinfo={values}
+                idx={idx}
+                total={Userinfo.length}
+                onShow={finishloading}
+                isready={false}
+                AddMention={nothing}
+            />
+        ))}
         
     </div>)}
     {(isready == true && fini_loading == true) && (<div className="ddMentionMain_Show">

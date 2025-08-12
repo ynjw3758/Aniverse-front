@@ -8,6 +8,7 @@ import {Cookies} from 'react-cookie';
 import "./Callback_Naver.scss";
 import user_info from "../Context/Userdata";
 import LoginExp from "../LginExpiration/LoginExp";
+import {api ,PUBGATEWAY_URL} from "../API/Api"
 
 
 interface ResponseDataType {
@@ -24,6 +25,37 @@ interface ResponseDataType {
 
   }
 
+    interface CustomError{
+    errorcode:string;
+    message :string;
+    data:Connect_id_info;
+    status:string;
+    timestamp:string;
+  }
+
+  type Connect_id_info={
+    createdate:string,
+    id:string,
+    username:string,
+    email:string;
+    profile:string;
+    nickname:string,
+    gender:string,
+    birthday:string,
+    phone:string,
+    newid:string,
+  }
+  type naver_infos={
+    id:string,
+    username:string,
+    email:string,
+    profile:string,
+    nickname:string,
+    gender:string,
+    birthday:string,
+    phone:string,
+} 
+
 const Callback_Naver =() =>{
     const[againlogin, setAgainlogin]=useState<boolean>(false);
     const[isperist, setIsperist]=useState<boolean>(false);
@@ -33,6 +65,7 @@ const Callback_Naver =() =>{
     const[isunvalid, setIsunvalid]=useState<boolean>(false);
     const[isSubmit, setIsSubmit]=useState<boolean>(true);
     const[nickname, setNickname]=useState<string>("");
+    const[createdt, setCreatedt]=useState<string>("");
 
     const isblur=isperist ? "Naver_Isblur " : "Naver_loding_main"; 
     let Code = new URL(window.location.href).searchParams.get("code");
@@ -49,6 +82,44 @@ const Callback_Naver =() =>{
           console.log("access_token존재 : " , header);
           if(header !== null){
             console.log("엑세스 토큰 존재");
+             api.defaults.headers.common['Authorization'] = header;
+             api.post("/Pets-social/gateway/api-proxy" ,{
+                    service: "common",
+                    endpoint: "login/oauth/naver",
+                    method: "GET",
+                    body: {code:Code, state:state}
+                },{
+                    withCredentials: true
+                }).then(response =>{
+                    login_info.addprofile(response.data.data.profile_img);
+                    //login_info.addthumbnail(response.data.data.thumbnail_img);
+                    login_info.addeNickName(response.data.data.nickname);
+                    navigate("/main");
+                }).catch(error =>{
+              if(axios.isAxiosError<ResponseDataType>(error)){
+                  console.log("error code: " , error.response?.status);
+                  if(!error.response) {
+                        console.warn("서버 응답 없음 (게이트웨이 연결 실패)");
+                        navigate("/error/Gateway"); // 502로 간주
+                        return;
+                  }
+                  if(error.response?.status==400){
+                      console.log("400에러 발생")
+                      navigate("/error/BadRequest");
+                    }else if(error.response?.status==415){
+                        console.log("지원하지 않는 형식입니다.")
+                        //setIsloading(false);
+                    }
+                    else if(error.response?.status==500){
+                        navigate("/error/se-error")
+                    }
+                    else if(error.response?.status==502){
+                       navigate("/error/Gateway");
+                    }
+                  
+              }
+            })
+/*
            axios.defaults.headers.common['Authorization'] = header;
            axios.get("http://localhost:8080/Pets-social/oauth/naver" , {params:{Code:Code, State:state}})
            .then(response =>{
@@ -143,9 +214,68 @@ const Callback_Naver =() =>{
                            console.log("error response: " , error.response?.data.response);
                          }
            })
+                         */
        }
        else{
            console.log("신규 회원");
+           api.get(`${PUBGATEWAY_URL}/login/oauth/naver`, {params:{code:Code, state:state} ,withCredentials: true})
+           .then(response =>{
+              console.log("네이버 로그인 결과 :", response)
+                if(response.status == 201){
+                    login_info.addprofile(response.data.data.profile_img);
+                    login_info.addeNickName(response.data.data.nickname);
+        
+                    localStorage.setItem("a_id" , response.headers.authorization);
+                    localStorage.setItem("p_exp" , response.data.data.exp);
+                    localStorage.setItem("id" , response.data.data.id);
+                    //setIsperist(true);
+                    setIsfirst(true);
+            }
+                           //navigate("/main");
+
+           }).catch(error =>{
+               if(axios.isAxiosError<CustomError>(error)){
+                  if(!error.response) {
+                        console.warn("서버 응답 없음 (게이트웨이 연결 실패)");
+                        navigate("/error/LbGateway"); // 502로 간주
+                        return;
+                  }if(error.response?.status==400){
+                      console.log("400에러 발생")
+                      navigate("/error/LbBadRequest");
+                    }else if(error.response?.status==409){
+                      const infos=error.response?.data.data; 
+                      const naver_insert:naver_infos={id:error.response?.data.data.newid, username:error.response?.data.data.username,
+                        email:error.response?.data.data.email,
+                        profile:error.response?.data.data.profile,
+                        nickname:error.response?.data.data.nickname, gender : error.response?.data.data.gender,birthday:error.response?.data.data.birthday,
+                         phone:error.response?.data.data.phone
+                      }
+                      console.log("날짜 및 아이디 :" ,infos )
+                      setUserid(error.response?.data.data.id);
+                      setCreatedt(error.response?.data.data.createdate);
+                      login_info.addnaverinfo(naver_insert);
+                      setIsperist(true);
+
+                    }else if(error.response?.status==401){
+                         
+                    }
+                    else if(error.response?.status==404){
+                         navigate("/error/LbNotFound");
+                    }
+                    else if(error.response?.status==415){
+                        console.log("지원하지 않는 형식입니다.")
+                        //setIsloading(false);
+                    }
+                    else if(error.response?.status==500){
+                        navigate("/error/Lbse-error")
+                    }
+                    else if(error.response?.status==502){
+                       navigate("/error/LbGateway");
+                    }
+
+               }
+           })
+           /*
            axios.get("http://localhost:8080/Pets-social/oauth/naver" , {params:{Code:Code, State:state} ,withCredentials: true})
            .then(response =>{
           console.log("결과 : " ,response)
@@ -162,15 +292,6 @@ const Callback_Naver =() =>{
               setIsfirst(true);
               console.log("isfirst :" , isfirst);
             }
-            else{
-              if(response.data.Customcode == "01"){
-                console.log("모든 토큰 재발급 ");
-                localStorage.setItem("p_exp" , response.data.data.exp);
-                localStorage.setItem("a_id" , response.data.data.access_token);
-                localStorage.setItem("id" , response.data.data.id);
-              }
-            }
-
                navigate("/main");
                 return ;
    
@@ -193,8 +314,10 @@ const Callback_Naver =() =>{
                            }
                          }
            })
-           
+           */
        }
+
+       
 
     },[])
 
@@ -207,62 +330,40 @@ const Callback_Naver =() =>{
     }
 
     const dupleHandler =() =>{
-      let access_token:string="";
-      access_token =localStorage.getItem("a_id")!;
-      console.log("access : " , access_token);
-      axios.defaults.headers.common['Authorization'] = access_token;
-      axios.get("http://localhost:8080/Pets-social/acccheck").then(  response =>{
-        if(response.status == 200){
-          console.log("엑세스 토큰 인증 완료");
-          axios.get("http://localhost:8080/Pets-social/dupl-nick", {params:{nickname:nickname}})
-          .then(response => {
-             console.log("결과값 : " , response.data);
-             if(response.status == 200){
-                 console.log("닉네임 성공");
+        api.get(`${PUBGATEWAY_URL}/user/dupl-nick` ,{params:{nickname:nickname}
+                })
+                .then(response =>{
                  setIsvalid(true);
                  setIsunvalid(false);
-             }
-          })
-          .catch(error =>{
-             if(axios.isAxiosError<ResponseDataType>(error)){
-                 console.log("error code: " , error.code);
-                 
-                 if(error.response?.status ==400){
-                    setIsunvalid(true);
-                    setIsvalid(false);
-                    navigate("/error/BadRequest");
-                   
-                 }
-                 if(error.code == "ERR_NETWORK"){
-                   console.log("네트워크 에러 ");
-                   
-                 }
-     
-                 if(error)
-                 console.log("error response: " , error.response?.data);
-               }
-     
-          });
-        }
-      }).catch((error) =>{
-        if(axios.isAxiosError<ResponseDataType>(error)){
-            console.log("error code: " , error.response?.status);
-            
-            if(error.response?.status ==400){
-              navigate("/error/BadRequest");
-            }
-            if(error.code == "ERR_NETWORK"){
-              console.log("네트워크 에러 ");
-              
-            }
-            if(error.response?.status==500){
-              console.log("서버 에러발생");
-              navigate("/error/se-error")
-            }
-            
-            console.log("error response: " , error.response?.data);
-          }
-         })
+                }).catch(error =>{
+                    console.log("error : " , error.response);
+                        if(axios.isAxiosError<CustomError>(error)){
+                        console.log("error code: " , error.code);
+                            if (!error.response) {
+                                console.warn("서버 응답 없음 (게이트웨이 연결 실패)");
+                                navigate("/error/LbGateway"); // 502로 간주
+                                return;
+                            }
+                        if(error.response?.status==400){
+                                if(error.response?.data.errorcode ==="E0021"){
+                                    setIsunvalid(true);
+                                    setIsvalid(false);
+                                }else{
+                                    navigate("/error/LbBadRequest");
+                                }
+                            }else if(error.response?.status==415){
+                            console.log("지원하지 않는 형식입니다.")
+                            }
+                            else if(error.response?.status==500){
+                                navigate("/error/Lbse-error")
+                            }
+                            else if(error.response?.status==502){
+                                navigate("/error/LbGateway")
+                            }
+
+                        console.log("error response: " , error.response?.data);
+                }
+        })
      
     }
 
@@ -277,11 +378,62 @@ const Callback_Naver =() =>{
     },[isvalid, isSubmit])
 
     const submitHandler =() =>{
-       
+      console.log("네이버 계정 생성")
+      setIsfirst(false)
+        const modifiedNaverInfo = {
+          ...login_info.naver_info,
+          nickname: nickname,
+        };
+         api.post(`${PUBGATEWAY_URL}/login/naver/create` , 
+             modifiedNaverInfo,{
+              withCredentials: true
+             })
+            .then(response =>{
+                console.log("response :" , response);
+                localStorage.setItem("a_id" , response.headers.authorization);
+                localStorage.setItem("p_exp" , response.data.data.exp);
+                localStorage.setItem("id" , response.data.data.id);
+
+                navigate("/main");
+
+            }).catch(error =>{
+                if(axios.isAxiosError<CustomError>(error)){
+                  console.log("error code: " , error.response);
+                    if(!error.response) {
+                          console.warn("서버 응답 없음 (게이트웨이 연결 실패)");
+                          navigate("/error/LbGateway"); // 502로 간주
+                          return;
+                    }
+                    if(error.response?.status==400){
+                      navigate("/error/LbBadRequest");
+                    }
+                    else if(error.response?.status==401){
+                         
+                    }
+                    else if(error.response?.status==404){
+                         navigate("/error/LbNotFound");
+                    }
+                    else if(error.response?.status==415){
+                        console.log("지원하지 않는 형식입니다.")
+                        //setIsloading(false);
+                    }
+                    else if(error.response?.status==500){
+                        navigate("/error/Lbse-error")
+                    }
+                    else if(error.response?.status==502){
+                       navigate("/error/Gateway");
+                    }
+
+                }
+            })
+    }
+    const Exist_login =() =>{
+      navigate("/login");
     }
 
-    const movelogin =() =>{
-      navigate("/login")
+    const Create_login =() =>{
+          setIsperist(false);
+          setIsfirst(true);
     }
 
     return(<>
@@ -300,6 +452,18 @@ const Callback_Naver =() =>{
             </>)}
              <button onClick={submitHandler} disabled={isSubmit}>완료</button>
            </div>)}
+            {isperist && (<>
+              <div className="kakao_perist">
+                  <h2>🐾 다시 만나서 반가워요!</h2>
+                  <h4><strong>{`(${userid}) 계정이 확인되었습니다.`}</strong></h4>
+                  <p>가입일: {createdt}</p>
+                  <h3>위 계정과 연결하시겠습니까?</h3>
+                  <div className="kakao_btn">
+                  <button type="submit" onClick={Exist_login} id="Kakao_Connect">기존 계정으로 로그인</button>
+                  <button type="submit" onClick={Create_login} id="kakao_Create">새 계정으로 가입</button>
+                  </div>
+              </div>
+          </>)}
 
             <div className={isblur}>
                 <h2>로그인 중입니다</h2>

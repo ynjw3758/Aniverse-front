@@ -17,6 +17,7 @@ import afterimg  from "../../assets/images/after_like.png";
 import beforeimg from "../../assets/images/base_like.png";
 import Uparrowimg from "../../assets/images/up_arrow.png";
 import downarrowimg from "../../assets/images/down_arrow.png";
+import {api} from"../../API/Api"
 
 //                             +--------------------
 //-----------------------------+   인터페이스
@@ -162,11 +163,45 @@ const Comments_Items =({comment_Items ,SendComments}:props) =>{
      let id:string="";
      id=localStorage.getItem("id")!;
      access_token = localStorage.getItem("a_id")!;
-     axios.defaults.headers.common['Authorization'] = access_token;
+      api.defaults.headers.common['Authorization'] = access_token;
+      api.post("/Pets-social/gateway/api-proxy" ,{
+        service: "react",
+        endpoint: "/Comment/likes",
+        method: "GET",
+        body: {commentId : comment_Items.commentid , id:id }
+        },{
+            withCredentials: true
+        }).then(response =>{
+          console.log("좋아요 결과 :" , response);
+        }).catch(error =>{
+              if(axios.isAxiosError<ResponseDataType>(error)){
+                  console.log("error code: " , error.response?.status);
+                  if(!error.response) {
+                        console.warn("서버 응답 없음 (게이트웨이 연결 실패)");
+                        navigate("/error/Gateway"); // 502로 간주
+                        return;
+                  }
+                  if(error.response?.status==400){
+                      console.log("400에러 발생")
+                      navigate("/error/BadRequest");
+                    }else if(error.response?.status==415){
+                        console.log("지원하지 않는 형식입니다.")
+                        //setIsloading(false);
+                    }
+                    else if(error.response?.status==500){
+                        navigate("/error/se-error")
+                    }
+                    else if(error.response?.status==502){
+                      navigate("/error/Gateway");
+                    }
+                  
+              }
+           })
+          /* 
      axios.get("http://localhost:8080/Pets-social/acccheck").then(
         response =>{
           if(response.status ===200){
-            axios.post("http://localhost:8090/Pets-social/comment/likes" , {CommentId : comment_Items.commentid , Id:id, }
+            axios.post("http://localhost:8090/Pets-social/comment/likes" , {CommentId : comment_Items.commentid , Id:id }
             ).then(response =>{
               console.log("응답 :" , response)
             })
@@ -248,7 +283,7 @@ const Comments_Items =({comment_Items ,SendComments}:props) =>{
             console.log("error response: " , error.response?.data);
           }
          })
-
+*/
     }
 
     const openreplyHandler =() =>{
@@ -261,7 +296,49 @@ const Comments_Items =({comment_Items ,SendComments}:props) =>{
         let id:string="";
         id=localStorage.getItem("id")!;
         access_token = localStorage.getItem("a_id")!;
-        axios.defaults.headers.common['Authorization'] = access_token;
+                 api.defaults.headers.common['Authorization'] = access_token;
+         api.post("/Pets-social/gateway/api-proxy" ,{
+           service: "react",
+           endpoint: "/Comment/cmlist",
+           method: "GET",
+           body: {commentId : comment_Items.commentid , id:id }
+           },{
+               withCredentials: true
+           }).then(response =>{
+                console.log("대댓글 응답 : ",response );
+                setReply(response.data.data);
+                setIsLoading(false);
+                setIsReply(true);
+           }).catch(error =>{
+                          if(axios.isAxiosError<ResponseDataType>(error)){
+                  console.log("error code: " , error.response?.status);
+                  if(!error.response) {
+                        console.warn("서버 응답 없음 (게이트웨이 연결 실패)");
+                        navigate("/error/Gateway"); // 502로 간주
+                        return;
+                  }
+                  if(error.response?.status==400){
+                      console.log("400에러 발생")
+                      navigate("/error/BadRequest");
+                    }else if(error.response?.status==415){
+                        console.log("지원하지 않는 형식입니다.")
+                        //setIsloading(false);
+                    }
+                    else if(error.response?.status==500){
+                        navigate("/error/se-error")
+                    }
+                    else if(error.response?.status==502){
+                      navigate("/error/Gateway");
+                    }
+                  
+              }
+           })
+          }else{
+              setIscm_open(false);
+              setIscm_close(true);
+              setIsReply(false);
+          }
+          /*
         axios.get("http://localhost:8080/Pets-social/acccheck").then(
           response =>{
             if(response.status ===200){
@@ -369,6 +446,7 @@ const Comments_Items =({comment_Items ,SendComments}:props) =>{
         setIscm_close(true);
         setIsReply(false);
       }
+        */
     }
 
     const CommentHandler =() =>{

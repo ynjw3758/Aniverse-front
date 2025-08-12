@@ -43,12 +43,12 @@
     
   }
   
-  .first_img{
+  .Picture_first_img{
     margin-top:22px;
     margin-left: 5px;
   }
-  .first_img img,   
-  .first_img img:hover{
+  .Picture_first_img img,   
+  .Picture_first_img img:hover{
       width: 30px;
       height: 30px;
       cursor: pointer;
@@ -751,6 +751,7 @@ justify-content: center;
         display: flex;
         flex-direction: row;
         overflow: hidden;
+        margin-top: -1.2vh;
       }
       .Image_slide_stand_upload img{
         width: 40vw;
@@ -780,12 +781,12 @@ justify-content: center;
         
       }
       
-      .first_img{
+      .Picture_first_img{
         margin-top:22px;
         margin-left: 5px;
       }
-      .first_img img,   
-      .first_img img:hover{
+      .Picture_first_img img,   
+      .Picture_first_img img:hover{
           width: 30px;
           height: 30px;
           cursor: pointer;

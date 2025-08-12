@@ -6,10 +6,12 @@ export interface UserStateInterface {
     Thumbnail:string;
     email:string;
     date:string;
-    kakao_info:any;
+    kakao_info:Kakao_infos;
+    naver_info:naver_infos;
     check:boolean;
     count:number;
-    addkakaoinfo:(kakao_info:any) => void;
+    addkakaoinfo:(kakao_info:Kakao_infos) => void;
+    addnaverinfo:(naver_infos:naver_infos) => void
     adddate:(date:string) => void;
     addemail:(email:string) => void;
     addid: (text: string) => void;
@@ -19,6 +21,26 @@ export interface UserStateInterface {
     addthumbnail :(text:string) => void;
     addcount:(Count:number) => void;
   }
+
+type Kakao_infos={
+  id:string,
+  email:string,
+  profile:string,
+  thumbnail:string,
+  nickname:string,
+  gender:string,
+} 
+
+type naver_infos={
+  id:string,
+  username:string,
+  email:string,
+  profile:string,
+  nickname:string,
+  gender:string,
+  birthday:string,
+  phone:string,
+}
   
   const initialState: UserStateInterface = {
     UserId: '',
@@ -29,8 +51,27 @@ export interface UserStateInterface {
     check:false,
     date:'',
     count:0,
-    kakao_info:{},
+    kakao_info:{
+        id:"",
+        email:"",
+        profile:"",
+        thumbnail:"",
+        nickname:"",
+        gender:""
+    },
+    naver_info:{
+        id:"",
+        username:"",
+        email:"",
+        profile:"",
+        nickname:"",
+        gender:"",
+        birthday:"",
+        phone:"",
+
+    },
     addkakaoinfo :() =>{},
+    addnaverinfo : () =>{},
     adddate: () => {},
     addemail : () =>{},
     addid: () => {},

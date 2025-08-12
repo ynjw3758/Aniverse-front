@@ -16,6 +16,7 @@ import "./OtherProfile.scss";
 import Item from "./Item";
 import SendNote from "../SendNote/SendNote";
 import {api} from"../../API/Api"
+import { Oval } from "react-loader-spinner";
 //#endregion
 
 
@@ -54,6 +55,7 @@ interface ResponseDataType {
 
 const OtherProfile =(props:Samll_profile) =>{
    const[content, setContent]=useState<string[]>(props.content);
+   const[isloading, setIsloading]=useState<boolean>(true);
    const[check , setCheck]=useState<any>({
       follower:false,
       following:false,
@@ -123,37 +125,6 @@ const OtherProfile =(props:Samll_profile) =>{
             }
          }
       })
-/*
-      axios.post("http://localhost:8080/Pets-social/follower" , {Id:Myid , Userid:Userid , type:"connect"}  , {headers:{Authorization:access_token}})
-      .then((response) =>{
-         console.log("응답 결과 :" , response.status);
-         if(response.status == 200){
-            setCheck({following:false});
-            setCheck({follower:true});
-         }
-
-      }).catch(error =>{
-         if(axios.isAxiosError<ResponseDataType>(error)){
-            console.log("error code: " , error.response?.status);
-            if(error.response?.status==400){
-               console.log("400에러 발생")
-               navigate("/error/BadRequest");
-            }
-            else if(error.response?.status==415){
-               console.log("지원하지 않는 형식입니다.")
-               //setIsloading(false);
-            }
-            else if(error.response?.status==500){
-               navigate("/error/se-error")
-            }
-            else if(error.response?.status==502){
-               navigate("/error/se-error")
-            }
-                     
-                     console.log("error response: " , error.response?.data);
-                   }
-     }); 
-*/
     }
 
     const CancelFollowerHandler =() =>{
@@ -181,6 +152,9 @@ const OtherProfile =(props:Samll_profile) =>{
     setSend({isClick:false});
    props.onBlock(data);
    }
+   const handleItemLoaded =() =>{
+      setIsloading(false);
+   }
 
     return(<Fragment >
       {!send.isClick && (<> <div className="OProfile_userinfo"  ref={divRef}>
@@ -201,7 +175,14 @@ const OtherProfile =(props:Samll_profile) =>{
          <p>팔로잉</p>
       </div>   
      </div>
-     <Item content={content}/>
+     {isloading && (<>
+         <Oval 
+               color="#ff0000" 
+               height={100} 
+               width={100}
+            />
+     </>)}
+      <Item content={content} onLoaded={handleItemLoaded}/>
      {check.following && (<div className="OProfile_fwbtn">
       <button onClick={FollowerHandler} type="submit">팔로워</button>
      </div>)}

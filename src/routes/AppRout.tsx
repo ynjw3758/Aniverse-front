@@ -29,6 +29,9 @@ import BadRequest from "../Error_Page/BadRequest";
 import WebSocket_Chat_Provider from "../Context/WebSocker_Chat_Provider";
 import Landing_Gateway from "../Error_Page/Landing_Gateway";
 import Landing_BadRequest from "../Error_Page/Landing_BadRequest";
+import LandingServerError from "../Error_Page/LandingServerError";
+import NotFound from "../Error_Page/NotFound";
+import LbNotFound from "../Error_Page/LbNotFound";
 
 const router = createBrowserRouter([
   {
@@ -41,7 +44,7 @@ const router = createBrowserRouter([
       {path:'/Agree' , element:<Agree />},
       {path:'/sign' , element:<Sign />},
       {path:'/find' , element:<Loginfind />},
-      {path:"/reset" , element:<Resetpassword />},
+      {path:"/reset" , element:<Resetpassword Userid={""} />},
       {path:"/link" , element:<Kconnet />}
     ]
     
@@ -102,9 +105,12 @@ const router = createBrowserRouter([
       {path:"/error/ne_error" , element:<Network />},
       {path:"/error/NoAccess" , element:<Authorization_Page />},
       {path:"/error/Gateway" , element:<GatewayError />},
-      {path :"/error/LbGateway"  , element:<Landing_Gateway />},
       {path:"/error/BadRequest" , element:<BadRequest />},
-      {path :"/error/LbBadRequest"  , element:<Landing_BadRequest />}
+       {path :"/error/NotFound"  , element:<NotFound />},
+      {path :"/error/LbGateway"  , element:<Landing_Gateway />},
+      {path :"/error/LbBadRequest"  , element:<Landing_BadRequest />},
+      {path :"/error/LbNotFound"  , element:<LbNotFound />},
+     
       
     ]
     

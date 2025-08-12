@@ -1,7 +1,7 @@
 
 import "./BadRequest.scss";
 import { useNavigate } from "react-router-dom";
-import errorimg from "../assets/images/502-error-image.png"
+import errorimg from "../assets/images/400Error.png"
 
 const BadRequest =() =>{
     const navigate = useNavigate();

@@ -117,7 +117,6 @@ type ChatNoti={
           //setIsready(false);
           access_token =localStorage.getItem("a_id")!;
           
-          axios.defaults.headers.common['Authorization'] = access_token;
           api.defaults.headers.common['Authorization'] = access_token;
           api.post("/Pets-social/gateway/api-proxy" ,{
               service: "common",

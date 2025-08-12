@@ -5,6 +5,26 @@ import Id from "./Userdata";
 type Props = {
     children?: React.ReactNode
   };
+
+type Kakao_infos={
+  id:string,
+  email:string,
+  profile:string,
+  thumbnail:string,
+  nickname:string,
+  gender:string,
+} 
+
+type naver_infos={
+  id:string,
+  username:string,
+  email:string,
+  profile:string,
+  nickname:string,
+  gender:string,
+  birthday:string,
+  phone:string,
+}
 const IdProvider:React.FC<Props> = (props) =>{
 
   const[userid , setUserid] = useState<string>("");
@@ -13,7 +33,24 @@ const IdProvider:React.FC<Props> = (props) =>{
   const[thumbnail , setThumbnail] = useState<string>("");
   const[email , setEmail] = useState<string>("");
   const[date , setDate] = useState<string>("");
-  const[kakaoinfo , setKakaoinfo] = useState<any>({});
+  const[kakaoinfo , setKakaoinfo] = useState<Kakao_infos>({
+      id:"",
+      email:"",
+      profile:"",
+      thumbnail:"",
+      nickname:"",
+      gender:"",
+  });
+    const[naverinfo , setNaverinfo] = useState<naver_infos>({
+      id:"",
+      username:"",
+      email:"",
+      profile:"",
+      nickname:"",
+      gender:"",
+      birthday:"",
+      phone:"",
+  });
   const[check , setCheck] = useState<boolean>(false);
   const[count , setCount] = useState<number>(0);
 
@@ -37,8 +74,11 @@ const IdProvider:React.FC<Props> = (props) =>{
   const adddateHandler =(date:string) =>{
     setDate(date);
   }
-  const addkakaoHandler =(info:any) =>{
+  const addkakaoHandler =(info:Kakao_infos) =>{
     setKakaoinfo(info);
+  }
+  const addNaverHandler =(info:naver_infos) =>{
+    setNaverinfo(info);
   }
   const addcheckHandler =(check:boolean) =>{
     setCheck(check);
@@ -56,8 +96,10 @@ const LogData ={
     email:email,
     date:date,
     kakao_info:kakaoinfo,
+    naver_info:naverinfo,
     count:count,
     addkakaoinfo:addkakaoHandler,
+    addnaverinfo:addNaverHandler,
     adddate:adddateHandler,
     addprofile:addprofileHandler,
     addemail:addemailHandler,

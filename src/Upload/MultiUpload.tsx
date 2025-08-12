@@ -308,12 +308,20 @@ const MultiUpload =(props:upload_data) =>{
                 const taglist:any =JSON.stringify(tagItems);
                 let id:any;
                 id=localStorage.getItem("id");
+                const uploadInfo = {
+                  id,
+                  text: textArea,
+                  location: localdata,        // 객체 그대로 보냄 → 서버에서 DTO로 매핑
+                  openkind,                   // 오타 주의! (opendkind X)
+                  tagList: tagItems
+                };
                   filedata.append("text" ,textArea);
                   filedata.append("location" , location_info);
                   filedata.append("opendkind" , openkind);
                   filedata.append("id" , id);
                   filedata.append("Taginfo", taglist)
                   console.log("파일 업로드 :" , filedata);
+                  
             let access_token:string="";          
             access_token = localStorage.getItem("a_id")!;
             console.log("access token :" , access_token);

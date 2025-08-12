@@ -1,5 +1,6 @@
 import React, { Fragment, useContext, useEffect, useState } from "react";
 import axios from "axios";
+import {Oval} from "react-loader-spinner";
 import "./Loginfind.scss";
 import UseInput from "../UseHook/UserInput";
 import { useNavigate } from "react-router-dom";
@@ -7,8 +8,10 @@ import Certification_pw from "../Message/Certification_pw";
 import Pw_fail from "../Message/Pw_fail";
 import Err_Network from "../Message/Err_Network";
 import Id from "../Context/Userdata";
-import logimg from "../assets/images/log_test.jpg";
-import {api,COMMON_URL } from "../API/Api";
+import logimg from "../assets/images/log.png";
+import {api,COMMON_URL, PUBGATEWAY_URL } from "../API/Api";
+import CertifiTimer from "../Utils/CertifiTimer";
+import Resetpassword from "./Resetpassword";
 /*
 const lv_style = JSXStyle`
 .yoon-margin-0px { margin: 0; }
@@ -19,6 +22,11 @@ interface ResponseDataType {
   code: number;
   response:object
 }
+
+  interface CustomError{
+    errorcode:string;
+    message :string
+  }
 
 
 const Loginfind= () =>{
@@ -40,16 +48,26 @@ const Loginfind= () =>{
     const[name , setName] = useState<string>("");
     const[phone_number , setPhone_number] = useState<string>("");
     const[certifi_number , setCertifi_number] = useState<string>("");
-    const[selectid , setSelectid] = useState<string>("");
     const[inputId ,setInputId]=useState<string>("");
     const[inputEmail, setInputEmail]=useState<string>("");
     const[isnotfound, setIsnotfound]=useState<boolean>(false)
     const[sendEmail, setSendEmail]=useState<boolean>(false);
     const[isopt, setIsopt]=useState<string>("");
     const[inputopt, setInputopt]=useState<string>("");
+    const[againtime, setAgaintime]=useState<boolean>(false);
+    const[isRetry, setIsRetry]=useState<boolean>(false);
+    const[isDisable, setIsDisable]=useState<boolean>(true);
+    const[isLoading, setIsLoading]=useState<boolean>(true);
+    const[expiredCode , setExpiredCode]=useState<boolean>(false);
+    const[codemiss, setCodemiss]=useState<boolean>(false);
+    const[verifyloading, setVerifyloading]=useState<boolean>(false);
+    const[verify_Success, setVerify_Success]=useState<boolean>(false);
+    const[sendUi, setSendUi]=useState<boolean>(false);
+
 
     const navigate = useNavigate();
     const useid = useContext(Id);
+    let Component_Contain = verify_Success ? "VerifyEmail_Main" :"LoginFind_Verifi_Email"
     
     const id_button =() =>{
      console.log("아이디 찾기");
@@ -58,17 +76,15 @@ const Loginfind= () =>{
      setSuccessid(false);
      setFailid(false);
      setCerphon(false);
-     console.log("idfind : " , idfind);
     }
 
     const pw_button =() =>{
-      console.log("비밀번호 찾기");
       setPwfind(true);
       setIdfind(false);
       setCerphon(false);
       setCeremail(false);
       setSuccessid(false);
-      console.log("pwfind : " , pwfind);
+      setFailid(false);
     }
     const {
       value: EnternName,
@@ -84,267 +100,350 @@ const Loginfind= () =>{
     isValid: enterEmailIsValid,
     valueChangeHandler: EmailChangeHandler,
     inputBlurHandler: EmailBlurHandler,
-} = UseInput((value:string) => value.trim().includes('@') && value.trim() != '');
+    } = UseInput((value:string) => value.trim().includes('@') && value.trim() != '');
 
-useEffect(() => {
-  const identifier = setTimeout(() => {
-      console.log("Checking form validity!");
-      setFormIsValid(enterNameIsValid && enterEmailIsValid);
-      setPhone_certifi(certifi_button && check_certifi);
-  }, 200);
-  return () => {
-      console.log("CLEANUP");
-      clearTimeout(identifier);
-  };
-}, [enterEmailIsValid, enterNameIsValid , certifi_button , check_certifi]);
+    useEffect(() => {
+      const identifier = setTimeout(() => {
+          console.log("Checking form validity!");
+          setFormIsValid(enterNameIsValid && enterEmailIsValid);
+          setPhone_certifi(certifi_button && check_certifi);
+      }, 200);
+      return () => {
+          console.log("CLEANUP");
+          clearTimeout(identifier);
+      };
+    }, [enterEmailIsValid, enterNameIsValid , certifi_button , check_certifi]);
 
+    useEffect(() =>{
+      if(inputopt.length ==10) setIsDisable(false)
+      else return;
+    },[inputopt])
+      // ✅ 인증 성공 시 2초 후 자동 이동
+      /*
+    useEffect(() => {
+      if (verify_Success) {
+        const timer = setTimeout(() => {
+          navigate("/login");
+        }, 3000);
 
-  const submit =() =>{
-    console.log("아이디 찾기 조회");
-    axios.post('http://localhost:8080/Pets-social/findId',
-    {
-        Username: EnternName,
-        Email: EnterEmail
-    }
-).then(response =>{
-
-     if(response.status==200){
-        console.log("아이디 조회 성공 : " ,response.data);
-        if(response.data.Success === true){
-          setAvailid(response.data.id);
-          setFailid(false);
-          setIdfind(false);
-          setSuccessid(true);
-        }else{
-          setSuccessid(false);
-          setIdfind(false);
-          setFailid(true);
-        }
-
-     }
-}).catch(error =>{
-    console.log("error : " , error.response);
-    if(axios.isAxiosError<ResponseDataType>(error)){
-      console.log("error code: " , error);
-      
-      if(error.response?.status == 400){
-                        navigate("/error/BadRequest");
-                return;
+        return () => clearTimeout(timer); // cleanup
       }
-      else if(error.response?.status==500){
-        console.log("서버 에러발생");
-        navigate("/error/se-error")
-      }
-      else if(error.response?.status==403){
-           console.log("인가 문제?");
-           navigate("/error/NoAccess");
-      }
-      else if(error.response?.status==502){
-       console.log("gateway 에러 발생");
-       navigate("/error/Gateway");
-       return;
-      }
-      console.log("error response: " , error.response?.data);
-    }
+    }, [verify_Success]);
+*/
 
-    
-})
-  }
-
-    const login_page =() =>{
-      console.log("로그인 페이지 이동");
-      navigate("/login");
-    }
-
-    const return_input =() =>{
-      console.log("다시 입력");
-      setSuccessid(false);
-      setIdfind(true);
-      setFailid(false);
-    }
-
-    const return_sign =() =>{
-      console.log("회원 가입 이동");
-      navigate("/sign");
-    }
-
-    const email_button =() =>{
-      setCeremail(true);
-      setPwfind(false);
-    }
-
-    const phon_button =() =>{
-       setCerphon(true);
-       setPwfind(false);
-    }
-
-    const Number_Receive =() =>{
-      // 복호화 키 지정   
-      const seckey = process.env.REACT_APP_SECRET_KEY;
-      const serviceid = process.env.REACT_APP_SERVICE_ID;
-      const accesskey =process.env.REACT_APP_ACCESS_KEY;
-        console.log(seckey);
-        console.log(serviceid);
-        console.log(accesskey);
-          
-/*
-        axios.post('http://localhost:8080/Pets-social/findpw',
+      const submit =() =>{
+        console.log("아이디 찾기 조회");
+        api.post(`${PUBGATEWAY_URL}/user/findId`,
         {
-            service_id:serviceid,
-            secret_key:seckey,
-            access_key :accesskey,
-            Phone_number :phone_number,
-            Name:name,
-            Id:id,
-            Reset:true,
-            
+            username: EnternName,
+            email: EnterEmail
         }
     ).then(response =>{
-      console.log("response : " , response);
-      setModalOpen(true);
-    })
-    .catch(error =>{
-      console.log("error  :" , error);
-      if(axios.isAxiosError<ResponseDataType>(error)){
-        console.log("error code: " , error);
+
+        if(response.status==200){
+            if(response.data.Success === true){
+              setAvailid(response.data.id);
+              setFailid(false);
+              setIdfind(false);
+              setSuccessid(true);
+            }else{
+              setSuccessid(false);
+              setIdfind(false);
+              setFailid(true);
+            }
+
+        }
+    }).catch(error =>{
+        if(axios.isAxiosError<CustomError>(error)){
+          console.log("error code: " , error);
+            if (!error.response) {
+                console.warn("서버 응답 없음 (게이트웨이 연결 실패)");
+                navigate("/error/LbGateway"); // 502로 간주
+                return;
+              }
+          
+          if(error.response?.status == 400){
+              if(error.response?.data.errorcode ==="E0011"){
+                  setSuccessid(false);
+                  setFailid(true)
+              }else{
+                  navigate("/error/LbBadRequest");
+              }
+          }
+          else if(error.response?.status==500){
+            console.log("서버 에러발생");
+            navigate("/error/Lbse-error")
+          }
+          else if(error.response?.status==502){
+          console.log("gateway 에러 발생");
+          navigate("/error/LbGateway");
+          return;
+          }
+          else if(error.response?.status==404){
+                console.log("잘못된 url 요청")
+          }
+          else if(error.response?.status==415){
+            console.log("타입 문제")
+          }
+          console.log("error response: " , error.response?.data);
+        }
+
         
-        if(error.code=="ERR_BAD_REQUEST"){
+    })
+      }
+
+        const login_page =() =>{
+          navigate("/login");
+        }
+
+        const return_input =() =>{
+          console.log("다시 입력");
+          setSuccessid(false);
+          setIdfind(true);
+          setFailid(false);
+        }
+
+        const return_sign =() =>{
+          navigate("/sign");
+        }
+
+        const email_button =() =>{
+          setCeremail(true);
+          setPwfind(false);
+        }
+
+        const phon_button =() =>{
+          setCerphon(true);
+          setPwfind(false);
+        }
+
+        const Number_Receive =() =>{
+          // 복호화 키 지정   
+          const seckey = process.env.REACT_APP_SECRET_KEY;
+          const serviceid = process.env.REACT_APP_SERVICE_ID;
+          const accesskey =process.env.REACT_APP_ACCESS_KEY;
+            console.log(seckey);
+            console.log(serviceid);
+            console.log(accesskey);
+      }
+
+      const firstnumber =(e:React.ChangeEvent<HTMLInputElement>) =>{
+        setPhone_number(e.target.value);
+        if(phone_number.length >=10){
+          setCertifi_button(true);
+        }
+      } 
+      const namehandler = (e:React.ChangeEvent<HTMLInputElement>) =>{
+
+        setName(e.target.value);
+
+      }
+      const idhandler =(e:React.ChangeEvent<HTMLInputElement>) =>{
+          setId(e.target.value);
+
+      }
+      const certifinumber =(e:React.ChangeEvent<HTMLInputElement>) =>{
+        setCertifi_number(e.target.value);
+        if(certifi_number.length>=7){
+          setCheck_certifi(true);
+        }
+      }  
+      const closemodal = () => {
+        setModalOpen(false);
+    }
+    const certifi_closemodal = () =>{
+      setCertifi(false);
+    }
+
+
+
+    const resetpwhandler =() =>{
+      api.post('http://localhost:8080/Pets-social/reset-pass',
+      {
+          phonnumber:phone_number,
+        certifi_number:certifi_number
+      }
+    ).then(function(response){
+      console.log("핸드폰 번호 : "  , phone_number);
+    console.log("응답 데이터 : " , response.data.id);
+        if(response.status == 200){
+        useid.addid(response.data.id);     
+          navigate("/reset");
+        }
+
+    }).catch(function(e){
+      if(axios.isAxiosError<ResponseDataType>(e)){
+        console.log("error code: " , e);
+        
+        if(e.code=="ERR_BAD_REQUEST"){
           setCertifi(true);
         }
-        if(error.code == "ERR_NETWORK"){
+        if(e.code == "ERR_NETWORK"){
           console.log("네트워크 에러 ");
           setNetwork(true);
         }
+        console.log("error response: " , e.response?.data);
+      }
+    });
+    }
+    const network_closemodal =() =>{
+      setNetwork(false);
+    }
+
+    const InputIdHandler =(e:React.ChangeEvent<HTMLInputElement>) =>{
+    setInputId(e.target.value)
+    }
+
+    const InputEmailHandler =(e:React.ChangeEvent<HTMLInputElement>) =>{
+      setInputEmail(e.target.value);
+    }
+
+    const SendEmail =() =>{
+     setSendEmail(true);
+      api.post(`${PUBGATEWAY_URL}/certifi/sendemail`,
+        {
+          id:inputId,
+          email:inputEmail
+            
+        },{  
+          headers: {
+              "X-Platform-Type": "web"
+        }}
+    ).then(response =>{
+      console.log("response : " , response);
+      setIsopt(response.data.opt);
+      setIsLoading(false);
+      setSendUi(true);
+
+    })
+    .catch(error =>{
+      console.log("error  :" , error);
+      if(axios.isAxiosError<CustomError>(error)){
+              if (!error.response) {
+                console.warn("서버 응답 없음 (게이트웨이 연결 실패)");
+                navigate("/error/LbGateway"); // 502로 간주
+                return;
+              }
+
+              if(error.response?.status == 400){
+              if(error.response?.data.errorcode ==="E0031"){
+                setIsnotfound(true);
+                setSendEmail(false);
+              }else if(error.response?.data.errorcode ==="E0030"){
+                setCertifi(true);
+                setSendEmail(false);
+                  
+              }else{
+                navigate("/error/LbBadRequest");
+              }
+          }
+          else if(error.response?.status==500){
+            console.log("서버 에러발생");
+            navigate("/error/Lbse-error")
+          }
+          else if(error.response?.status==502){
+          console.log("gateway 에러 발생");
+          navigate("/error/LbGateway");
+          return;
+          }
+          else if(error.response?.status==415){
+            console.log("타입 문제")
+          }
+
         console.log("error response: " , error.response?.data);
       }
     })
-      */
+
+    }
+
+  const nfmodalClose =() =>{
+    setIsnotfound(false);
+  }
+  const SendEmailClose =() =>{
+    console.log("왜?")
+    setSendEmail(false);
+    //navigate("/login");
   }
 
-  const firstnumber =(e:React.ChangeEvent<HTMLInputElement>) =>{
-     console.log("전화번호 :" , e.target.value);
-     setPhone_number(e.target.value);
-     console.log("결과 : " , phone_number.length);
-     if(phone_number.length >=10){
 
-      console.log("전화 번호 자릿숫자 확인");
-      setCertifi_button(true);
-     }
-  } 
-  const namehandler = (e:React.ChangeEvent<HTMLInputElement>) =>{
+  const InputOptHandler =(e:React.ChangeEvent<HTMLInputElement>) =>{
+    setInputopt(e.target.value);
+  }
 
-    setName(e.target.value);
+  const TimeFinish =(data:boolean) =>{
+    setIsRetry(data);
+  }
+
+  const againSendMail =() =>{
+    console.log("이메일 재전송")
+    setInputopt("");
+    setCodemiss(false);
+    setExpiredCode(false);
+    setIsRetry(false);
+    setIsLoading(true);
+    SendEmail();
 
   }
-  const idhandler =(e:React.ChangeEvent<HTMLInputElement>) =>{
-      setId(e.target.value);
 
+  const EmailCertifi =() =>{
+      setVerifyloading(true);
+      api.get(`${PUBGATEWAY_URL}/certifi/verifiCertifi`,{
+        params:{
+          id:inputId,
+          code:inputopt
+            
+        }}
+    ).then(response =>{
+      setVerifyloading(false);
+        console.log("응답 결과 :" , response);
+        setSendUi(false);
+        setVerify_Success(true);
+
+    }).catch(error =>{
+            if(axios.isAxiosError<CustomError>(error)){
+              if (!error.response) {
+                console.warn("서버 응답 없음 (게이트웨이 연결 실패)");
+                navigate("/error/LbGateway"); // 502로 간주
+                return;
+              }
+
+              if(error.response?.status == 400){
+              if(error.response?.data.errorcode ==="E0032"){
+                setVerifyloading(false);
+                setInputopt("");
+                setExpiredCode(true);
+              }else if(error.response?.data.errorcode ==="E0033"){
+                setVerifyloading(false);
+                setInputopt("");
+                setCodemiss(true);
+                  
+              }else{
+                setVerifyloading(false);
+                navigate("/error/LbBadRequest");
+              }
+          }
+          else if(error.response?.status==404){
+                console.log("잘못된 url 요청")
+                navigate("/error/LbNotFound")
+          }
+          else if(error.response?.status==500){
+            console.log("서버 에러발생");
+            navigate("/error/Lbse-error")
+          }
+          else if(error.response?.status==502){
+          console.log("gateway 에러 발생");
+          navigate("/error/LbGateway");
+          return;
+          }
+          else if(error.response?.status==415){
+            console.log("타입 문제")
+          }
+
+        console.log("error response: " , error.response?.data);
+      }
+    })
   }
-  const certifinumber =(e:React.ChangeEvent<HTMLInputElement>) =>{
-    setCertifi_number(e.target.value);
-    if(certifi_number.length>=7){
-      setCheck_certifi(true);
-    }
-  }  
-  const closemodal = () => {
-    setModalOpen(false);
-}
-const certifi_closemodal = () =>{
-  setCertifi(false);
-}
-
-
-
-const resetpwhandler =() =>{
-  axios.post('http://localhost:8080/Pets-social/reset-pass',
-  {
-      phonnumber:phone_number,
-     certifi_number:certifi_number
-  }
-).then(function(response){
-  console.log("핸드폰 번호 : "  , phone_number);
-console.log("응답 데이터 : " , response.data.id);
-    if(response.status == 200){
-     useid.addid(response.data.id);     
-      navigate("/reset");
-    }
-
-}).catch(function(e){
-  if(axios.isAxiosError<ResponseDataType>(e)){
-    console.log("error code: " , e);
-    
-    if(e.code=="ERR_BAD_REQUEST"){
-      setCertifi(true);
-    }
-    if(e.code == "ERR_NETWORK"){
-      console.log("네트워크 에러 ");
-      setNetwork(true);
-    }
-    console.log("error response: " , e.response?.data);
-  }
-});
-}
-console.log("id : " , selectid);
-const network_closemodal =() =>{
-  setNetwork(false);
-}
-
-const InputIdHandler =(e:React.ChangeEvent<HTMLInputElement>) =>{
- setInputId(e.target.value)
-}
-
-const InputEmailHandler =(e:React.ChangeEvent<HTMLInputElement>) =>{
-  setInputEmail(e.target.value);
-}
-
-const SendEmail =() =>{
-
-  axios.post('http://localhost:8080/Pets-social/certification/sendemail',
-    {
-       Id:inputId,
-       Email:inputEmail
-        
-    }
-).then(response =>{
-  console.log("response : " , response);
-  setIsopt(response.data.opt);
-  setSendEmail(true);
-})
-.catch(error =>{
-  console.log("error  :" , error);
-  if(axios.isAxiosError<ResponseDataType>(error)){
-    const status = error.response?.status;
-    if(status == 404){
-      console.log("입력한 정보가 존재하지 않는다")
-      setIsnotfound(true);
-    }
-    
-    if(status == 400){
-      setCertifi(true);
-    }
-    if(error.code == "ERR_NETWORK"){
-      console.log("네트워크 에러 ");
-      setNetwork(true);
-    }
-    console.log("error response: " , error.response?.data);
-  }
-})
-
-}
-
-const nfmodalClose =() =>{
-  setIsnotfound(false);
-}
-const SendEmailClose =() =>{
-  setSendEmail(false);
-  //navigate("/login");
-}
-
-const InputOptHandler =(e:React.ChangeEvent<HTMLInputElement>) =>{
-  setInputopt(e.target.value);
-
-}
-//                 <style> {lv_style}</style>
+//<p>인증이 완료되었습니다. 잠시 후 로그인 페이지로 이동합니다.</p>
     return (
     <Fragment>
         <div className="header">
@@ -415,10 +514,41 @@ const InputOptHandler =(e:React.ChangeEvent<HTMLInputElement>) =>{
                   </div>
                   </div>}
                   {sendEmail && (<div className="LoginFind_again_input_backdrop" onClick={SendEmailClose}>
-                    <div className="LoginFind_Verifi_Email">
-                      <p>인증번호가 이메일에 전송되었습니다.</p>
-                      <input type="text" placeholder="인증번호를 입력해주세요."  onChange={InputOptHandler}/>
-                      <button>인증번호 확인</button>
+                    <div className={Component_Contain} onClick={(e) => e.stopPropagation()}>
+                    {isLoading && (<>
+                        <Oval 
+                          color="#ff0000" 
+                          height={150} 
+                          width={50}
+                        />
+                    </>)}
+                    {sendUi && (<>
+                        <h2>이메일 인증</h2>
+                        <p>인증번호가 이메일로 전송되었습니다<br />{inputEmail}</p>
+                        <input type="text" placeholder="인증번호 입력"  onChange={InputOptHandler}/>
+                          {codemiss && (<div className="Verify_Miss">
+                          <p>번호가 맞지 않습니다.</p>
+                          </div>)}
+                          {expiredCode && (<div className="Verify_expired">
+                             <p>인증번호 유효 시간이 만료되었습니다. 다시 요청해주세요.</p>
+                          </div>)}
+                         <CertifiTimer IsFinish={TimeFinish} Retry={againtime}/>
+                         {isRetry && (<div className="Again_SendEmail" onClick={againSendMail}>
+                         <p>인증번호 다시 받기</p>
+                         </div>)}
+                        <button disabled={isDisable} onClick={EmailCertifi}>인증하기</button>
+                          {verifyloading && (<div className="VerifyLoadinf">
+                              <Oval 
+                                color="#ff0000" 
+                                height={150} 
+                                width={50}
+                              />
+                          </div>)}
+
+                    </>)}
+                    {verify_Success && (<div className="Verify_Success">
+                       <Resetpassword Userid={inputId}/>
+                    </div>)}
                     </div>
                   </div>)}
                   {isnotfound && (<div className="LoginFind_again_input_backdrop" onClick={nfmodalClose}>

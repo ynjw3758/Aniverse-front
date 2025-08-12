@@ -14,7 +14,7 @@ const Landing_BadRequest =() =>{
 
     return(<div className="BadRequest_Stand">
         <img src={errorimg} alt="400 Bad Request" />
-    <h2>400 Bad Request</h2>
+        <h2>400 Bad Request</h2>
     <div className="BadRequest_Stand_btn">
      <button onClick={mainpage}>메인페이지 이동</button>
     </div>

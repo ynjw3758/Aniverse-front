@@ -21,7 +21,7 @@ import { v4 as uuidv4 } from 'uuid';
 //#region type
 import "./Login.scss";
 import UseInput from "../UseHook/UserInput";
-import {api,COMMON_URL } from "../API/Api";
+import {api,COMMON_URL , PUBGATEWAY_URL} from "../API/Api";
 //#endregion
 
 
@@ -104,26 +104,24 @@ const Login:React.FC= (props : {})=>{
         const accesstoekn = localStorage.getItem("a_id");
         console.log("엑세스 토큰 :" ,accesstoekn);
         if(accesstoekn ===null){
-            console.log("최초 로그인 : " ,COMMON_URL)
-            //EnterId ,EnterPass
-            axios.post(`${COMMON_URL}/Pets-social/Common/login/login`,{
+            axios.post(`${PUBGATEWAY_URL}/login/login`,{
                   id: EnterId,
                   password: EnterPass
                 }, {
-                headers: { 'Content-Type': 'application/json' },withCredentials: true
+                headers: { 'Content-Type': 'application/json' },
+                withCredentials: true
                 })
                 .then(response =>{
-                    console.log("로그인 결과 :" , response);
-                localStorage.setItem("a_id" , response.data.data.access_token);
-                localStorage.setItem("id" , response.data.data.id);
-                
-                let transe_time:Date = new Date(response.data.exp*1000);
-                let time:string="";
-                time =moment(transe_time).format('YYYY-MM-DD HH:mm').toString();
-                console.log("시간 변환 :" , time);
-                localStorage.setItem("p_exp" , response.data.data.exp);
-                  navigate("/main")
-                  return;
+                        console.log("로그인 결과 :" , response);
+                        localStorage.setItem("a_id" , response.data.data.access_token);
+                        localStorage.setItem("id" , response.data.data.id);
+                        
+                        let transe_time:Date = new Date(response.data.exp*1000);
+                        let time:string="";
+                        time =moment(transe_time).format('YYYY-MM-DD HH:mm').toString();
+                        console.log("시간 변환 :" , time);
+                        localStorage.setItem("p_exp" , response.data.data.exp);
+                        navigate("/main")
                 })
                 .catch(error =>{
                     
@@ -222,21 +220,17 @@ const Login:React.FC= (props : {})=>{
         console.log("redirect_url" , redirect_url);
         const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${redirect_url}&response_type=code`;
         window.location.href = KAKAO_AUTH_URL;
-        let Code = new URL(window.location.href).searchParams.get("code");
     }
-    const client_id= process.env.REACT_APP_CLIENT_ID;
-    const naver_redirect_url= process.env.REACT_APP_REDIRECT_URL_N;
-    //const state = crypto.randomUUID(); // CSRF 방지용]]
-     const state = uuidv4();
-    console.log("client_id : " ,client_id);
-    console.log("redirect_url_N" , naver_redirect_url);
+
 
     const naverlogin =() =>{
-
-
+            const client_id= process.env.REACT_APP_CLIENT_ID;
+            const naver_redirect_url= process.env.REACT_APP_REDIRECT_URL_N;
+            const state = uuidv4();
+            console.log("client_id : " ,client_id);
+            console.log("redirect_url_N" , naver_redirect_url);
             const url = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${client_id}&redirect_uri=${naver_redirect_url}&state=${state}`;
             window.location.href = url;
-
     }
 
     const googlelogin =() =>{

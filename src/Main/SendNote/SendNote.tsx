@@ -178,7 +178,7 @@ const SendNote =(props:Note) =>{
         console.log("access : " , access_token);
         api.defaults.headers.common['Authorization'] = access_token;
         api.post("/Pets-social/gateway/api-proxy" ,{
-              service: "common",
+              service: "search",
               endpoint: "/Person",
               method: "GET",
               body: {Word:search}

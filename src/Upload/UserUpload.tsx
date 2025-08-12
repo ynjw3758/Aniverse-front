@@ -18,6 +18,7 @@ import LeftArrowimg from "../assets/images/left_arrow.png";
 import rightimg from "../assets/images/slideright.png";
 import leftimg from "../assets/images/slideleft.png";
 import inputimg from "../assets/images/picture.png";
+import {api ,UPLOAD_URL} from "../API/Api";
 
 type user_info ={
     img:string,
@@ -77,13 +78,10 @@ const UserUpload=(props:user_info) =>{
   const[uploadlocal ,setUploadlocal]=useState<string>("");
   const[openkind ,setOpenkind]=useState<string>("전체 공개");
   const[openactive , setOpenavtive]=useState<boolean>(false);
-  const[openlist ,setOpenlist]=useState<string[]>([]);
   const[tagbasic, setTagbasic]=useState<boolean>(true);
   const[tagList, setTagList]=useState<boolean>(false);
   const[isActivSearch , setIsActivSearch] = useState<boolean>(false);
   const[againlogin, setAgainlogin]=useState<boolean>(false);
-  const[userid, setUserid]=useState<string>("");
-  const[isfirst, setIsfirst]=useState<boolean>(false);
   const[isGetKeyword, setIsGetKeyword]=useState<boolean>(false);
 
 
@@ -92,7 +90,7 @@ const UserUpload=(props:user_info) =>{
 
   const left_active = leftactive ? "left_active" : "left_unactive";
   const right_active = rightactive ? "right_active" : "right_unactive";
-  const max_size=1024*1024*100;
+  const max_size=1024*1024*50;
   const navigate = useNavigate();
   const cookies = new Cookies();
   const file_infos = useRef<FileList | null>(null);
@@ -374,7 +372,7 @@ const UserUpload=(props:user_info) =>{
                 setCheckone(true);
                 setOne_before(<Fragment>
                   <div className="first_headers">
-                    <div className="first_img">
+                    <div className="Picture_first_img">
                   <img src={LeftArrowimg} onClick={backHandler}/>
                   </div>
                   <h2>사진</h2>
@@ -510,133 +508,100 @@ const UserUpload=(props:user_info) =>{
               console.log("파일 업로드 일상공유하기");
               console.log("파일 업로드 submit");
               
-              let access_token:string="";          
-              access_token = localStorage.getItem("a_id")!;
-              console.log("access token :" , access_token);
-              axios.defaults.headers.common['Authorization'] = access_token;
-              axios.get("http://localhost:8080/Pets-social/acccheck")
-              .then(response =>{
-                 console.log("응답 결과 확인 " , response.data);
-                if(response.status == 200){
+                  let access_token:string="";          
+                  access_token = localStorage.getItem("a_id")!;
                   const filedata = new FormData();
                
                   if(uploadFile !== null && uploadFile !== undefined){
                    console.log("length :" , uploadFile.length);
-                   for(let count=0; count<uploadFile.length;count++){
-                     filedata.append("UploadFile" , uploadFile[count]);
-                   }
-                  }
-                  let local:any=localdata;
-                  const location_info:any=JSON.stringify(local);
-                  let id:any;
-                  id=localStorage.getItem("id");
-                  const taglist:any =JSON.stringify(tagItems);
-    
-                 filedata.append("text" ,textArea);
-                 filedata.append("location" , location_info);
-                 filedata.append("opendkind" , openkind);
-                 filedata.append("id" , id);
-                 filedata.append("Taginfo", taglist)
-    
-                 axios.post("http://localhost:8081/Pets-social/Fileupload" , filedata,
-                 {headers:{"Content-Type": "multipart/form-data","processData":false , "contentType":false} })
-                 .then((response) =>{
-                   console.log("response :" , response);
-                   props.onComplete();
-                 }).catch(error =>{
-                  if(axios.isAxiosError<ResponseDataType>(error)){
-                              console.log("error code: " , error.response?.status);
-                              
-                              if(error.code=="ERR_BAD_REQUEST"){
-                                navigate("/error");
-                              }
-                              else if(error.response?.status==500){
-                                console.log("서버 에러발생");
-                                navigate("/error/se-error")
-                              }
-                              
-                              console.log("error response: " , error.response?.data);
-                            }
-              })
-                  
-                }
-        }).catch(error =>{
-          if(axios.isAxiosError<ResponseDataType>(error)){
-                      console.log("error code: " , error);
-                      
-                      if(error.code=="ERR_BAD_REQUEST"){
-                        navigate("/error");
-                      }
-                      if(error.code == "ERR_NETWORK"){
-                        console.log("네트워크 에러 ");
-                        
-                        
-                      }
-                      if(error.response?.status==401){
-                          console.log("승인되지 않은 로그인");
-                          Object.entries(error.response?.data).map(key =>{
-                            if(key.at(0) == "errorcode"){
-                              if(key.at(1) == "00"){
-                                navigate("/error/auth/");
-                                return;
-                              }
-                              
-                              else if(key.at(1) == "01"){
-                                console.log("토큰 시간 만료 refresh token을 보낸다");
-                                refresh_token= cookies.get('refresh_token');
-                                const id= localStorage.getItem("id");
-                                axios.post("http://localhost:8080/Pets-social/token/refresh", {
-                                  refresh_token : refresh_token,
-                                  id : id})
-                                  .then(
-                                  response =>{
-                                    console.log("응답 결과 :" , response)
-                                    if(response.status == 200){
-                                      localStorage.setItem("p_exp" ,response.data.data.exp);
-                                      localStorage.setItem("a_id" ,response.data.data.access_token);
-                                      navigate("/main");
-                                    }
-                                  }
-                                ).catch(error =>{
-                                  if(axios.isAxiosError<tokenRenewal>(error)){
-                                              console.log("error code: " , error.response?.status);
-                      
-                                              if(error.response?.status==400){
-                                                navigate("/error");
-                                                return;
-                                              }
-                                              else if(error.code == "ERR_NETWORK"){
-                                                console.log("네트워크 에러 ");
-                                                return;
-                                                
-                                              }
-                                              else if(error.response?.status == 401){
-                                                  console.log("다시 로그인해야 된다.");
-                                                  localStorage.clear();
-                                                  setAgainlogin(true);
 
-                   
-                                              }
-                                              else if(error.response?.status==301){
-                                                  console.log("기존 아이디 존재");
-                                                  setIsfirst(true);
-                                                  setUserid(error.response?.data.data);
-                                              }
-                                            }
-                              })
-                                
-                              }
-                            }
-                          })
-                      }
-                      if(error.response?.status==500){
-                        console.log("서버 에러발생");
-                        navigate("/error/se-error")
-                      }
+                   for(let count=0; count<uploadFile.length;count++){
+                     filedata.append("uploadFile" , uploadFile[count]);
+                   }
+                      let local:any=localdata;
+                      const locationInfo:any=JSON.stringify(local);
+                      let id:any;
+                      id=localStorage.getItem("id");
+                      const tagList:any =JSON.stringify(tagItems);
+                      const text:string = textArea;
                       
-                      console.log("error response: " , error.response?.data);
-                    }
-      })
+                      const uploadInfo = {
+                          service: "upload",
+                          endpoint: "Fileupload",
+                          method: "POST",
+                          body: {
+                            id,
+                            text,
+                            locationInfo,
+                            openkind,
+                            tagList
+                          }
+                        };
+                      filedata.append(
+                        "uploadInfo",
+                        new Blob([JSON.stringify(uploadInfo)], { type: "application/json" })
+                      );
+                      
+                  }
+                
+                  api.defaults.headers.common['Authorization'] = access_token;
+                  api.post(`${UPLOAD_URL}/Fileupload`,filedata,{withCredentials: true})
+                  .then(response =>{
+                      console.log("파일 업로드 완료 :" , response);
+                  }).catch(error =>{
+                     if(axios.isAxiosError<ResponseDataType>(error)){
+                          console.log("error code: " , error.response?.status);
+                          if(!error.response) {
+                                console.warn("서버 응답 없음 (게이트웨이 연결 실패)");
+                                navigate("/error/Gateway"); // 502로 간주
+                                return;
+                          }
+                          if(error.response?.status==400){
+                              console.log("400에러 발생")
+                              navigate("/error/BadRequest");
+                            }
+                            else if(error.response?.status==415){
+                                console.log("지원하지 않는 형식입니다.")
+                                //setIsloading(false);
+                            }
+                            else if(error.response?.status==500){
+                                navigate("/error/se-error")
+                            }
+                            else if(error.response?.status==502){
+                                navigate("/error/Gateway");
+                            }
+                      }
+                  })
+                  /*
+                  api.post("/Pets-social/gateway/api-upload" ,filedata,{
+                        withCredentials: true
+                    }).then(response =>{
+                        console.log("파일 업로드 완료 :" , response);
+                    }).catch(error =>{
+                      if(axios.isAxiosError<ResponseDataType>(error)){
+                          console.log("error code: " , error.response?.status);
+                          if(!error.response) {
+                                console.warn("서버 응답 없음 (게이트웨이 연결 실패)");
+                                navigate("/error/Gateway"); // 502로 간주
+                                return;
+                          }
+                          if(error.response?.status==400){
+                              console.log("400에러 발생")
+                              navigate("/error/BadRequest");
+                            }
+                            else if(error.response?.status==415){
+                                console.log("지원하지 않는 형식입니다.")
+                                //setIsloading(false);
+                            }
+                            else if(error.response?.status==500){
+                                navigate("/error/se-error")
+                            }
+                            else if(error.response?.status==502){
+                                navigate("/error/Gateway");
+                            }
+                      }
+                    })
+                      */
 
             }
             const textHandler =(e:React.ChangeEvent<HTMLTextAreaElement>) =>{
@@ -708,7 +673,7 @@ const UserUpload=(props:user_info) =>{
            
             {(check == true && checkmu== true)  && (<Fragment>
                   <div className="first_headers">
-                    <div className="first_img">
+                    <div className="Picture_first_img">
                   <img src={LeftArrowimg} onClick={backHandler}/>
                   </div>
                   <h2>사진</h2>
@@ -840,7 +805,7 @@ const UserUpload=(props:user_info) =>{
       isinitila={initialpage}/>)}
       {(oneimg == true && checkone == false ) && (<>
         <div className="first_headers">
-          <div className="first_img">
+          <div className="Picture_first_img">
             <img src={LeftArrowimg} onClick={backHandler}/>
           </div>
             <h2>사진</h2>
@@ -859,7 +824,7 @@ const UserUpload=(props:user_info) =>{
       </>)}
       {(check == true && checkmu== false)  && ((<>
         <div className="first_headers">
-          <div className="first_img">
+          <div className="Picture_first_img">
             <img src={LeftArrowimg} onClick={backHandler}/>
           </div>
             <h2>사진</h2>

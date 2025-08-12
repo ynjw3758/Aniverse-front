@@ -22,8 +22,6 @@ const Certification:React.FC<{onClose : () => void ,
     let Certification:string = ""; 
     let isValuenumber:string = "";
     const user_nuber =(e:React.ChangeEvent<HTMLInputElement>) =>{
-    console.log("test : " , e.target.value);
-    console.log("입력값 확인 : ", Certification);
     Certification = e.target.value;
     }
     const isvaluenumber = (e:React.ChangeEvent<HTMLInputElement>) =>{

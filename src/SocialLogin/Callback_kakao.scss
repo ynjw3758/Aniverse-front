@@ -17,11 +17,11 @@
     transition: filter 0.3s ease, pointer-events 0s ease 0.3s;
 }
 .kakao_perist{
-    width: 38vw;
-    height: 40vh;
+    width: 35vw;
+    height: 45vh;
     position: fixed;
-    top: 12vh;
-    left: 32vw;
+    top: 25vh;
+    left: 37vw;
     background-color:white;
     border-radius: 14px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
@@ -32,12 +32,43 @@
     align-items: center;
 }
 .kakao_perist h3{
-    font-size: xx-large;
+    font-size: 20;
     font-weight: bolder;
-    margin-top: 5vh;
+    margin-top: 1vh;
+}
+.kakao_perist h4{
+    margin-top: 1vh;
+    font-size: 20px;
 }
 .kakao_perist p{
     font-weight: bolder;
+    font-size: 20px;
+    margin-top: -1vh;
+}
+.kakao_btn{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap:1vw;
+}
+#Kakao_Connect{
+    background-color: #2f1b46;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+}
+#kakao_Create{
+          background-color: white;
+      color: #2f1b46;
+      padding: 0.75rem 1.5rem;
+      border: 2px solid #2f1b46;
+      border-radius: 12px;
+      font-weight: 500;
+      cursor: pointer;
 }
 .kakao_refresh_token_again_BackDrop{
     position: fixed;

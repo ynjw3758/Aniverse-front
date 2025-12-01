@@ -1,0 +1,32 @@
+.SlideButton_Main,
+.SlideButton_Main:hover{
+  display: flex;
+  flex-direction: row;
+  margin-top: 1vh;
+  cursor: pointer; 
+  justify-content: center;
+  align-items: center;
+}
+.SlideButton_Main img{
+    height: 7vh;
+}
+
+#SlideButton_Left{
+    display: block;  
+    cursor: pointer;
+}
+#SlideButton_Right{
+  margin-left: -1vw; 
+  padding: 0;
+  display: block;  
+  cursor: pointer;
+
+}
+
+#SlideButton_Left.disabled,
+#SlideButton_Right.disabled {
+  opacity: 0.3;
+  pointer-events: none;
+  cursor: default;
+  filter: grayscale(70%);
+}

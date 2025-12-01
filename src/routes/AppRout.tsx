@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import {createBrowserRouter, RouterProvider } from "react-router-dom";
-import MainHeader from "../Home/MainHeader";
+import MainHeader from "../Home/LandingPage";
 import Main from "../Home/Main";
 import Login from "../UserInfo/Login";
 import Agree from "../Agree/Agree";
@@ -32,6 +32,7 @@ import Landing_BadRequest from "../Error_Page/Landing_BadRequest";
 import LandingServerError from "../Error_Page/LandingServerError";
 import NotFound from "../Error_Page/NotFound";
 import LbNotFound from "../Error_Page/LbNotFound";
+import MainPlatform from "../newMainPage/MainPlatform";
 
 const router = createBrowserRouter([
   {
@@ -40,15 +41,31 @@ const router = createBrowserRouter([
     errorElement:<Not_found />,
     children:[
       {path:'/' , element:<Main />},
-      {path:'/login' , element:<Login />},
-      {path:'/Agree' , element:<Agree />},
-      {path:'/sign' , element:<Sign />},
       {path:'/find' , element:<Loginfind />},
       {path:"/reset" , element:<Resetpassword Userid={""} />},
       {path:"/link" , element:<Kconnet />}
     ]
     
   },
+  {
+    path:'/Agree',
+    element: <Agree />,
+    errorElement:<Not_found />,
+  },
+    {
+    path:'/sign',
+    element: <Sign />,
+    errorElement:<Not_found />,
+  },
+  {
+    path:'/login',
+    element: <Login />,
+    errorElement:<Not_found />,
+  },
+  {
+    path:"/main" , element : <MainPlatform />
+  },
+  /*
   {
     path:"/main",
     element:<MapinPage />,
@@ -58,6 +75,7 @@ const router = createBrowserRouter([
     ]
 
  },
+ */
  {
   path:"/main/person/",
   element:<PersionPage />,

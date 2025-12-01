@@ -3,95 +3,6 @@
     @media screen and (min-width:1536px) {
 
 
-        .Main_Service_Intro{
-            display: flex;
-            flex-direction: column;
-            margin-top: 2vh;
-        }
-        .Main_Chat{
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            align-items: flex-end;
-        }
-        .Main_Chat h2{
-            margin-right: 20vw;
-        }
-        .Main_Chat_Descript{
-            display: flex;
-            flex-direction: row-reverse;
-        }
-        .Main_Chat_Descript img{
-            width: 15vw;
-            height: 20vh;
-            margin-right: 1.5vw;
-        }
-        .Main_Chat_Descript p{
-            margin-right: 2vw;
-            margin-top: 9vh;
-            font-weight: 600;
-        }
-
-        .Main_Follower{
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            align-items: flex-end;
-        }
-        .Main_Follower h2{
-            margin-right: 20vw;
-        }
-        .Main_Follower_Descript{
-            display: flex;
-            flex-direction: row-reverse;
-        }
-        .Main_Follower_Descript img{
-            width: 15vw;
-            height: 20vh;
-            margin-right: 1.5vw;
-        }
-        .Main_Follower_Descript p{
-            margin-right: 2vw;
-            margin-top: 9vh;
-            font-weight: 600;
-        }
-
-        .Main_Note{
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: flex-start;
-             
-        }
-        .Main_Note h2{
-           margin-left: 20vw;
-        }
-        .Main_Note_Descrip{
-            display: flex;
-            flex-direction: row;
-        }
-        .Main_Note_Descrip img{
-            width: 15vw;
-            height: 20vh;
-            margin-left: 1.5vw;
-
-        }
-        .Main_Note_Descrip p{
-            margin-left: 2vw;
-            margin-top: 7vh;
-            font-weight: 600;
-        }
-
-        .Main_Contents_Intro{
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: flex-start;
-             
-        }
-        .Main_Contents_Intro h2{
-           margin-left: 20vw;
-        }
         .Main_Contents_Descript{
             display: flex;
             flex-direction: row;
@@ -115,6 +26,7 @@
             overflow-y: auto; /* 스크롤은 유지 */
             scrollbar-width: none; /* Firefox에서 스크롤바 숨기기 */
             -ms-overflow-style: none; /* IE에서 스크롤바 숨기기 */
+            height: fit-content;
         }
         /* Chrome, Safari에서 스크롤바 숨기기 */
        .Main_Body::-webkit-scrollbar {
@@ -146,7 +58,9 @@
         
         .service{
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
         
         }
         .service h2{
@@ -154,6 +68,133 @@
              top:5vh;
              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             
+        }
+        .service_Communi{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-left: 1vw;
+        }
+        .service_Communi img{
+            width: 20vw;
+            height: 25vh;
+        }
+        .service_Communi h3{
+           margin-top: -2vh;
+           font-weight: bolder;
+           font-size: larger;
+        }
+        .service_Communi p{
+            margin-top: -1vh;
+        }
+        .service_share{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-left: 2vw;
+        }
+        .service_share img{
+            width: 20vw;
+            height: 25vh;
+        }
+        .service_share h3{
+           margin-top: -2vh;
+           font-weight: bolder;
+           font-size: larger;
+        }
+        .service_share p{
+            margin-top: -1vh;
+        }
+        .service_realtime{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-left: 2vw;   
+        }
+        .service_realtime img{
+            width: 20vw;
+            height: 25vh;
+        }
+        .service_realtime h3{
+           margin-top: -2vh;
+           font-weight: bolder;
+           font-size: larger;
+        }
+        .service_realtime p{
+            margin-top: -1vh;
+        }
+        .landing_cta{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .landing_cta h2{
+            font-size: 30px;
+            font-weight: bolder;
+        }
+        .landing_cta p{
+          margin-top: -2vh;
+          font-weight: bold;
+        }
+        .landing_cta button{
+            background-color: #000;
+            color: white;
+            padding: 10px 30px 10px 30px;
+            border-radius: 20px;
+            font-size: 20px;
+            margin-bottom: 2vh;
+        }
+        .landing_ask{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap:2vw;
+            margin-bottom: 2vh;
+        }
+        .ask_box{
+            background: linear-gradient(135deg, #0f766e, #155e75);
+            color: #ffffff;
+            padding: 16px 24px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            min-width: 220px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .ask_box p{
+            margin-top: -1vh;
+        }
+        .landing_footer{
+            display: flex;
+            flex-direction: row;
+            //margin-top: 5vh;
+            color: white;
+            background: linear-gradient(180deg, #0e9aa7 0%, #0a5664 40%, #0b1220 100%);
+            //padding: 14px 18px;
+            color: #eaf5ff;
+            overflow: hidden;
+            box-shadow:
+                0 -6px 18px rgba(0,0,0,.18),           /* 위쪽 외부 그림자 */
+                inset 0 1px 0 rgba(255,255,255,.18);   /* 상단 얇은 경계 하이라이트 */
+        }
+        .landing_footer h2{
+           font-size: larger;
+           font-weight: bolder;
+           margin-left: 1vw;
+        }
+        .ldfooter_order{
+            display: flex;
+            flex-direction: row;
+            margin-left: 37vw;
+            gap:2vw;
         }
         .scroll-down {
             text-align: center;

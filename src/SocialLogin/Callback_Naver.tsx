@@ -83,7 +83,7 @@ const Callback_Naver =() =>{
           if(header !== null){
             console.log("엑세스 토큰 존재");
              api.defaults.headers.common['Authorization'] = header;
-             api.post("/Pets-social/gateway/api-proxy" ,{
+             api.post("/gateway/api-proxy" ,{
                     service: "common",
                     endpoint: "login/oauth/naver",
                     method: "GET",

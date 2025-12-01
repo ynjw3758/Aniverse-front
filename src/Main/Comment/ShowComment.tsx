@@ -279,7 +279,7 @@ const ShowComment =({ShowData, Owner, Content_cm,OnClose}:showcomments_info) =>{
     id=localStorage.getItem("id")!;
     access_token = localStorage.getItem("a_id")!;
     api.defaults.headers.common['Authorization'] = access_token;
-    api.post("/Pets-social/gateway/api-proxy" ,{
+    api.post("/gateway/api-proxy" ,{
       service: "reaction",
       endpoint: "/Comment/list",
       method: "GET",
@@ -749,7 +749,7 @@ const ischeck = useRef<string>("");
     access_token =localStorage.getItem("a_id")!;
     console.log("access : " , access_token);
     api.defaults.headers.common['Authorization'] = access_token;
-    api.post("/Pets-social/gateway/api-proxy" ,{
+    api.post("/gateway/api-proxy" ,{
       service: "search",
       endpoint: "Person",
       method: "GET",
@@ -916,7 +916,7 @@ const ischeck = useRef<string>("");
     axios.defaults.headers.common['Authorization'] = access_token;
     if(isReply){
     api.defaults.headers.common['Authorization'] = access_token;
-        api.post("/Pets-social/gateway/api-proxy" ,{
+        api.post("/gateway/api-proxy" ,{
       service: "reaction",
       endpoint: "/Comment/reply",
       method: "POST",
@@ -954,7 +954,7 @@ const ischeck = useRef<string>("");
       })
     }else{
         api.defaults.headers.common['Authorization'] = access_token;
-        api.post("/Pets-social/gateway/api-proxy" ,{
+        api.post("/gateway/api-proxy" ,{
       service: "reaction",
       endpoint: "/Comment/Create",
       method: "POST",

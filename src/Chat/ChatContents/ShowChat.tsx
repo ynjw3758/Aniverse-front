@@ -17,6 +17,7 @@ import "./ShowChat.scss";
 import AddItems from "./Input_AddItems";
 import WebSocket_Chat_Provider from "../../Context/WebSocker_Chat_Provider";
 import WebSocketChatContext from "../../Context/WebSocketChatContext";
+import {api} from"../../API/Api";
 
 //#endregion
 
@@ -161,12 +162,12 @@ const ShowChat =(props:info) =>{
       let access_token:string="";
       const UserId:string= localStorage.getItem("id")!;
       access_token =localStorage.getItem("a_id")!;
-      axios.defaults.headers.common['Authorization'] = access_token;
-      axios.post("http://localhost:8080/Pets-social/gateway/api-proxy", {
+      api.defaults.headers.common['Authorization'] = access_token;
+      api.post("/gateway/api-proxy", {
        service: "chat",
        endpoint: "/chatinfo",
        method: "GET",
-       body: {Id:UserId, ChatId:props.Chat_id}
+       body: {id:UserId, chatId:props.Chat_id}
      })
       .then(response =>{
              const ChatInfos:ChatInfos[] =response.data.data.MessageInfo;

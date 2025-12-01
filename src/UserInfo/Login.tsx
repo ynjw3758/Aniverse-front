@@ -11,6 +11,7 @@ import Kakaoimg from "../assets/images/btn_kakao.svg"
 import Naverimg from "../assets/images/btn_naver.svg";
 import Googleimg from "../assets/images/btn_google.svg";
 import LoginMaminimg from "../assets/images/login_picture.png";
+import LoginImg from "../assets/images/loginimg.png";
 import Lodingimg from "../assets/images/login_loading.png"
 import { v4 as uuidv4 } from 'uuid';
 //#endregion
@@ -158,7 +159,7 @@ const Login:React.FC= (props : {})=>{
             const logindata ={ id: EnterId,
                   password: EnterPass}
             api.defaults.headers.common['Authorization'] = access_token;
-            api.post("/Pets-social/gateway/api-proxy" ,{
+            api.post("/gateway/api-proxy" ,{
                 service: "common",
                 endpoint: "/login/login",
                 method: "POST",
@@ -237,17 +238,17 @@ const Login:React.FC= (props : {})=>{
 
     }
 
-    return ( <Fragment>
+    return ( <div className="LoginWrapper">
           <form onSubmit={SubmitHandler} onKeyDown={KeydownHandler}>
                   {isloading && (<div className="login_loading">
                 <img src={Lodingimg}/>
                 <p>로그인 중</p>
             </div>)}
+            <div className="Loginimage">
+               <img src={LoginImg} />
+            </div>
             <div className="Loginmain">
                 <h2>로그인</h2>
-                <div className="Loginimage">
-                  <img src={LoginMaminimg} />
-                </div>
                 <div className="LoginInput">
                     <label htmlFor="id"></label>
                     <input
@@ -277,19 +278,24 @@ const Login:React.FC= (props : {})=>{
                 </div>
                 
                 <div className="Loginuserinfo">
-                    <ul>
-                        <li><Link to="/Agree">회원가입</Link></li>
-                        <li><Link to="/find">id/password 찾기</Link></li>
-                    </ul>
+                    <span></span>
+                        <Link to="/find">비밀번호 찾기</Link>      
+                    <span></span>             
                 </div>
                 <div className="Login_sns">
                     <img src={Kakaoimg} onClick={kakaologin} />
                     <img src={Naverimg} onClick={naverlogin} />
                     <img src={Googleimg} onClick={googlelogin} />
                 </div>
+                <div className="Login_Sign">
+                  <p>계정이 없으신가요?<br />
+                    <a href="/sign" className="Link">회원가입</a>
+                  </p>
+                  
+                </div>
             </div>
             </form>
-    </Fragment>
+    </div>
     );
 }
 

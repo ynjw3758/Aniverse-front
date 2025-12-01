@@ -15,6 +15,7 @@ type readchatinfo={
   chatId:string;
   msg:string;
   messageIds:string[];
+  userId:string;
 }
 type Receive_Message={
     MessageId:string
@@ -58,7 +59,8 @@ const WebSocket_Chat_Provider =({children}:Props) =>{
   const[readChat, setReadChat]=useState<readchatinfo>({
        chatId:"",
        msg:"",
-       messageIds:[]
+       messageIds:[],
+       userId:""
    });
   const[receivemsg, setReceivemsg]=useState<MessageInfo>()
   
@@ -86,6 +88,7 @@ useEffect(() => {
         console.warn("STOMP 연결이 되어 있지 않습니다.");
         return;
       }
+      console.log("웹 소켓으로 보내는 프로파일 :" ,Profile)
       const payload = {
         chatId,
         sendId,

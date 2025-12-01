@@ -19,7 +19,8 @@ const Initial:Socket_Info ={
     ReadChat:{
     chatId:"",
     msg:"",
-    messageIds:[]
+    messageIds:[],
+    userId:"",
     },
     receivemsg:{    
     chatId:"",
@@ -54,6 +55,7 @@ type readchatinfo={
   chatId:string;
   msg:string;
   messageIds:string[];
+  userId:string;
 }
 
 

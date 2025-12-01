@@ -1,0 +1,85 @@
+.UploadPicture_Main{
+
+    width: 65vw;
+    height: 75vh;
+    border-radius: 40px;
+    /* 카드 안쪽 배경 그라데이션 */
+    background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.06), transparent 55%),
+        linear-gradient(135deg, #0b7a7d 0%, #0f9c91 50%, #11b3a3 100%);
+
+  /* 외곽선 느낌 */
+  border: 1px solid rgba(255, 255, 255, 0.18);
+
+  /* 살짝 떠 있는 느낌 */
+  box-shadow:
+    0 24px 80px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(0, 0, 0, 0.1);
+
+  display: flex;
+  align-items: stretch;
+}
+
+.UploadPicture_LeftSide{
+    position: relative;
+    top:4vh;
+    left: 2vw;
+    width: 25vw;
+    height: 68vh;
+    max-width: 25vw;
+    max-height: 70vh;
+}
+
+.UploadPicture_LeftSide > img{
+    width: 25vw;
+    height: 68vh;
+    object-fit: fill;
+    border-radius: 32px;
+}
+.UploadPicture_PictureList{
+    width: max-content;
+    height: 11vh;
+    position: relative;
+    top:-11.5vh;
+    left: 2.5vw;
+    display: flex;
+    flex-direction: row;
+    background-color: #11b3a3;
+    border-radius: 20px 32px 32px 20px ;
+
+}
+.UploadPicture_PictureArea{
+    width: max-content;
+    max-width: 14vw;
+    height: 11vh;
+    max-height: 11vh;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    border-radius: 20px 0px 0px 20px;
+}
+
+.UploadPicture_MoveDiv,
+.UploadPicture_MoveDiv:hover{
+    width: max-content;
+    height: max-content;
+    cursor: pointer;
+     
+}
+
+.UploadPicture_MoveDiv > img{
+    width: 7.4vw;
+    height: 11vh;
+    object-fit: fill;
+    border: none;
+}
+.UploadPicture_MoveDiv > img.selected{
+    width: 7.4vw;
+    height: 11vh;
+    object-fit: fill;
+    border: 1px solid #0fdbb5; 
+}
+
+.UploadPicture_MoveDiv:first-child img {
+  border-radius: 20px 0px 0px 20px;
+}

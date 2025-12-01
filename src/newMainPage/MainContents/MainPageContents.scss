@@ -1,0 +1,47 @@
+.MainPageContents_Body{
+    display: flex;
+    flex-direction: column;
+    background-color: transparent;
+}
+
+.MainPageContents_FavoriteContents{
+    display: flex;
+    flex-direction: column;
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    margin-top: 5vh;
+    width: 43vw;
+    height: 30vh;
+    
+}
+.MainPageContents_FavoriteContents h2{
+    font-size: xx-large;
+    font-weight: bolder;
+    color: white;
+    margin-left: 1.5vw;
+
+}
+
+.MainPageContents_UploadContents,
+.MainPageContents_UploadContents:hover{
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    width: 8vw;
+    height: 5vh;
+    height: auto;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    margin-left: 1vw;
+    cursor: pointer;
+}
+.MainPageContents_UploadContents h3{
+    margin-top: 1vh;
+}
+.MainPageContents_UploadContents img{
+   width: 3vw;
+   height: 6vh;
+   margin-top: 1vh;
+}

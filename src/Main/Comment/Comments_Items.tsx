@@ -164,7 +164,7 @@ const Comments_Items =({comment_Items ,SendComments}:props) =>{
      id=localStorage.getItem("id")!;
      access_token = localStorage.getItem("a_id")!;
       api.defaults.headers.common['Authorization'] = access_token;
-      api.post("/Pets-social/gateway/api-proxy" ,{
+      api.post("/gateway/api-proxy" ,{
         service: "react",
         endpoint: "/Comment/likes",
         method: "GET",
@@ -297,7 +297,7 @@ const Comments_Items =({comment_Items ,SendComments}:props) =>{
         id=localStorage.getItem("id")!;
         access_token = localStorage.getItem("a_id")!;
                  api.defaults.headers.common['Authorization'] = access_token;
-         api.post("/Pets-social/gateway/api-proxy" ,{
+         api.post("/gateway/api-proxy" ,{
            service: "react",
            endpoint: "/Comment/cmlist",
            method: "GET",

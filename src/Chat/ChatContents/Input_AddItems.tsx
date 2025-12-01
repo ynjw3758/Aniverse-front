@@ -22,6 +22,8 @@ import AllChat from "./AllChatContents/AllChat";
 import ChatSendimg from "../../assets/images/ChatSend.png";
 import emoimg from "../../assets/images/emoticon.png"
 import inputImg from "../../assets/images/picture.png";
+import {api} from"../../API/Api";
+import user_info from "../../Context/Userdata";
 //#endregion
 
 
@@ -108,6 +110,7 @@ const[files, setFiles]=useState<files[]>([]);
 
 
 const[maxsize, setMaxsize]=useState<number>(0);
+const[rdCnt, setRdCnt]=useState<number>(1);
 const[allChat, setAllChat]=useState<MessageInfo[][]>(/*props.messages*/[]);
 //#endregion
 
@@ -126,6 +129,7 @@ const newDate = useRef<string>("");
 const allChatRef = useRef<MessageInfo[][]>(props.messages);
 const ismychat= useRef<boolean>(false);
 const input_values= useRef<string>("");
+const myinfo=useContext(user_info);
 //#endregion
 
 
@@ -285,11 +289,61 @@ const input_values= useRef<string>("");
             let RdCount=0;
             console.log("카운트 :" , props.count)
             if(props.isPartiZero === true){
+              console.log("처음 채팅 이 후 ")
                 RdCount =props.realcnt;
             }
-            else RdCount =props.count-1;
+            else {
+              console.log("처음 채팅 칠 때")
+              api.defaults.headers.common['Authorization'] = access_token;
+              api.post("/gateway/api-proxy",{
+                service: "chat",
+                endpoint: "/readcnt",
+                method: "GET",
+                body:  {chatId:props.ChatId, id:UserId}
+              })
+              .then(response =>{
+                console.log("참여 리스트 :" , response.data.data)
+                //setRdCnt(response.data.data)
+                RdCount =response.data.data;
+              }).catch(error =>{
+                  if(axios.isAxiosError<ResponseDataType>(error)){
+                        console.log("error code: " , error.response?.status);
+                        if(!error.response) {
+                              console.warn("서버 응답 없음 (게이트웨이 연결 실패)");
+                              navigate("/error/Gateway"); // 502로 간주
+                              return;
+                        }
+                        if(error.response?.status==400){
+                            console.log("400에러 발생")
+                            navigate("/error/BadRequest");
+                          }
+                          else if(error.response?.status==415){
+                              console.log("지원하지 않는 형식입니다.")
+                              //setIsloading(false);
+                          }
+                          else if(error.response?.status==500){
+                              navigate("/error/se-error")
+                          }
+                          else if(error.response?.status==502){
+                              navigate("/error/Gateway");
+                          }
+                    }
+              })
+              
+            }
+            console.log("rdCnt :" , props.Profile);
+            console.log("my :" , myinfo.Profile);
+            let Profile:string =""; 
+            if(props.Profile ===""){
+              console.log("1");
+               Profile = myinfo.Profile;
+            }
+            else{
+              console.log("2");
+              Profile = props.Profile;
+            }
             let newMessage = {chatId:props.ChatId,message:input_values.current, messageId:messageId,nickname:props.MyNickname,
-              profile:props.Profile,
+              profile:Profile,
               recount:RdCount,
               sendId:UserId,
               timestamp:nowTime,
@@ -302,10 +356,10 @@ const input_values= useRef<string>("");
                 const lastIdx = newChat.length - 1;
                 newChat[lastIdx] = [...newChat[lastIdx], newMessage]
               }
-              
+              console.log("이거 처음이 되야되")
             setAllChat([...newChat]);
             setIsMyChat(true);
-            Chat_Context.sendMessage(props.ChatId, input_values.current, UserId, props.MyNickname ,props.Profile,  
+            Chat_Context.sendMessage(props.ChatId, input_values.current, UserId, props.MyNickname ,Profile,  
             true, props.ChSendId,props.count ,messageId ,props.RoomName)
              input_values.current = "";
               if (TextRef.current) TextRef.current.value = "";
@@ -466,6 +520,13 @@ const input_values= useRef<string>("");
       },[isMyChat])
 
       useEffect(() =>{
+        console.log("여기로 읽음 실시간으로 오나보나? :" ,Chat_Context.ReadChat)
+        console.log("내가 친 채팅 :" , allChat[allChat.length-1]);
+        if(allChat !== undefined){
+          console.log("내가 친거 맞다 그리고 누가 읽었다.")
+
+
+        }
       },[Chat_Context.ReadChat])
 
       function AutoDownScroll (){

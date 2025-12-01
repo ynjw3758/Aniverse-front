@@ -49,7 +49,7 @@ const navigate = useNavigate();
         access_token =localStorage.getItem("a_id")!;
         axios.defaults.headers.common['Authorization'] = access_token;
         api.defaults.headers.common['Authorization'] = access_token;
-              api.post("/Pets-social/gateway/api-proxy" ,{
+              api.post("/gateway/api-proxy" ,{
          service: "common",
          endpoint: "follow/follower",
          method: "POST",

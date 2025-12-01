@@ -3,10 +3,8 @@
 //----------------------------+ 외부 라이브러리
 //                            +--------------------
 //#region type 
-import { Fragment, useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect,  useState } from "react";
 import { Outlet } from "react-router-dom";
-import moment from"moment";
-import {Cookies} from 'react-cookie';
 import { useNavigate  ,useParams} from "react-router-dom";
 import axios from "axios";
  //#endregion
@@ -118,7 +116,7 @@ type ChatNoti={
           access_token =localStorage.getItem("a_id")!;
           
           api.defaults.headers.common['Authorization'] = access_token;
-          api.post("/Pets-social/gateway/api-proxy" ,{
+          api.post("/gateway/api-proxy" ,{
               service: "common",
               endpoint: "main/refresh-main",
               method: "GET",
@@ -195,7 +193,7 @@ type ChatNoti={
           setIsready(false);
           access_token =localStorage.getItem("a_id")!;
           api.defaults.headers.common['Authorization'] = access_token;
-          api.post("/Pets-social/gateway/api-proxy" ,{
+          api.post("/gateway/api-proxy" ,{
               service: "common",
               endpoint: "main/refresh-main",
               method: "GET",

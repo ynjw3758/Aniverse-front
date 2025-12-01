@@ -1,8 +1,10 @@
 import { Fragment, useState, useRef, useEffect } from "react";
 import "./Main.scss";
 import React from "react";
-import Image from "../assets/images/New_img.png";
 import testNote from "../assets/images/Main_Note.png" ;
+import Communication from "../assets/images/communi.png";
+import Share from "../assets/images/Ldshare.png";
+import RealTime from "../assets/images/realtime.png";
 
 const services = [
   {
@@ -45,25 +47,8 @@ const Main = () => {
         return { opacity, transform: `translateY(${translateY}px)` };
     };
 
-    return (
-        <Fragment>
-            <main className="Main_Body" onScroll={handleScroll} ref={scrollRef}>
-                <div className="slide" style={calculateStyle(0, 400)}>
-                    <div className="img_list">
-                        <img src={Image} alt="슬라이드 이미지" />
-                    </div>
-                </div>
-
-                <div className="Intro" style={calculateStyle(510, 550)}>
-                    <h2>세상의 모든 애완동물을 위한 소셜 공간</h2>
-                    <label>
-                        희귀동물을 키우는 사람들의 고민을 함께 풀면서 사육 노하우를 공유하며
-                        사람도 동물도 모두 행복한 삶을 만들어 보고 싶습니다.
-                    </label>
-                </div>
-
-                <div className="service" style={calculateStyle(680, 820)}>
-                    <h2>왜 이 공간이 필요한가요?</h2>
+/*
+    <h2>왜 이 공간이 필요한가요?</h2>
                     <div className="service_comumication">
                         <p className="intro-description">
                             그래서 우리는 이 공간을 만들었습니다.
@@ -76,54 +61,69 @@ const Main = () => {
                             당신의 이야기를 들려주세요. 그리고 함께 만들어가요.
                         </p>
                     </div>
-                </div>
-                <div  className="Main_Service_Intro" style={calculateStyle(860, 950)}>
-                      <h2>제공하는 서비스</h2>
-                      <p>우리 플랫폼에서 제공하는 다양한 서비스를 만나보세요.</p>
-                    </div>
+                    */
+                   /*
 
-                    <div className="Main_Note" style={calculateStyle(1100, 1400)}>
-                       <h2>쪽지</h2>
-                       <div className="Main_Note_Descrip">
-                        <img src={testNote}/>
-                        <p>사진과 영상을 쉽게 업로드하여 다양한 콘텐츠를 공유해보세요.</p>
-                      </div>
-                    </div>
-                    <div className="Main_Chat" style={calculateStyle(1300, 1650)}>
-                       <h2>채팅</h2>
-                       <div className="Main_Chat_Descript">
-                        <img src={testNote}/>
-                        <p>실시간으로 친구들과 소통할 수 있는 채팅 기능입니다.</p>
-                      </div>
-                    </div>
-                    <div className="Main_Contents_Intro" style={calculateStyle(1500, 1900)}>
-                       <h2>컨텐츠 공유</h2>
-                       <div className="Main_Contents_Descript">
-                        <img src={testNote}/>
-                        <p>개인적인 소통을 위한 1:1 쪽지 기능을 제공합니다.</p>
-                      </div>
-                    </div>
-                    <div className="Main_Follower" style={calculateStyle(1800, 1900)}>
-                       <h2>팔로워</h2>
-                       <div className="Main_Follower_Descript">
-                        <img src={testNote}/>
-                        <p>관심 있는 사람들을 팔로우하고 최신 소식을 받아보세요.</p>
-                      </div>
-                    </div>
-                    <div className="vision-section">
-                    <h2>우리의 미래 계획</h2>
-                     <p>
-                        우리 플랫폼은 단순한 소셜 공간을 넘어, 희귀 동물과 애완동물을 키우는 모든 사람들의 삶을 풍요롭게 만들고자 합니다. <br /><br />
-
-                       <span className="market-highlight">
-                           <strong>사육에 필요한 용품, 먹이, 장비 등을 거래할 수 있는 마켓과 커머스 서비스</strong>
-                       </span>를 통해 사용자들의 거래를 더욱 쉽게 만들 계획입니다. <br /><br /> 
-                        또한, <strong>AI 기반 산책 경로 추천 서비스</strong>를 도입하여 각 지역별로 애완동물에게 적합한 산책 경로와 시간을 분석하고, 실시간으로 알림을 제공할 예정입니다.
-                        <br /><br />
-                        우리는 단순히 소통을 위한 플랫폼이 아닌, <strong>실질적인 도움을 주고, 삶의 질을 향상시킬 수 있는 플랫폼</strong>을 만들어가고자 합니다.<br /><br /> 
-                        <strong>여러분의 소중한 의견과 참여로 함께 만들어가는 공간을 기대합니다.</strong>
-                     </p>
+                   */
+    return (
+        <Fragment>
+            <main className="Main_Body" onScroll={handleScroll} ref={scrollRef}>
+                <div className="Intro" style={calculateStyle(510, 550)}>
+                    <h2>왜 Aniverse인가요?</h2>
+                    <label>
+                        Aniverse는 반려동물과 사람 모두가 행복한 삶을 만들기 위해 시작된 공간입니다.<br/>
+                        희귀동물을 포함한 모든 반려동물 키우는 사람들의 경험과 노하우를 공유하며,<br/>
+                        함께 성장하는 커뮤니티를 만들어가고 있습니다.
+                    </label>
                 </div>
+
+                <section className="service" style={calculateStyle(680, 820)}>
+                    <div className="service_Communi">
+                        <img src ={Communication}/>
+                        <h3>소통</h3>
+                        <p>사진과 영상을 공유하며 전세계 <br />
+                        애완동물 집사들과 소통하세요.</p>
+                    </div>
+                    <div className="service_share">
+                            <img src ={Share}/>
+                            <h3>지식 공유</h3>
+                            <p>사육법, 훈련법, 건강관리 등<br />
+                            다양한 노하우를 교류할 수 있습니다.</p>
+                    </div>
+                     <div className="service_realtime">
+                        <img src ={RealTime}/>
+                        <h3>실시간 연결</h3>
+                        <p>채팅과 쪽지를 통해 반려인들과 즉시 연결되어 함께 성장하세요.</p>
+                     </div>
+                  <div>
+                  </div>
+                </section>
+                
+                <section className="landing_cta">
+                    <h2>지금 바로 Aniverse에 합류하세요!</h2>
+                    <p>첫 번째 이야기, 지금부터 시작됩니다</p>
+                    <button>시작하기</button>
+                </section>
+
+                <section className="landing_ask">
+                  <div className="ask_box">
+                   <h2>Email</h2>
+                   <p>yoonjw7894@naver.com</p>
+                  </div>
+                  <div className="ask_box"> 
+                   <h2>phone</h2>
+                   <p>010-9989-1234</p>
+                  </div>
+                </section>
+
+                <footer className="landing_footer">
+                   <h2>Aniverse</h2>
+                   <div className="ldfooter_order">
+                      <p>이용약관</p>
+                      <p>개인정보처리방침</p>
+                    </div>
+                </footer>
+                
             </main>
         </Fragment>
     );

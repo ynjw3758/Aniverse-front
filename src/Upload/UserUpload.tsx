@@ -1,8 +1,9 @@
 
-import axios from "axios";
+import axios, { AxiosProgressEvent } from "axios";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState ,  useRef, Fragment} from "react";
 import React from 'react';
+import { v4 as uuidv4 } from "uuid";
 
 import SecondModals from "./SecondModals";
 import KaMap from "./KaMap"; //추후에 끌것이다
@@ -45,6 +46,7 @@ const UserUpload=(props:user_info) =>{
 
   const [ previewImg, setPreviewImg ] = useState<any>(""); 
   const [imgFile, setImgFile] = useState<File | null>();
+  const[fileList, setFileList]=useState<File[]>([]);
 
   const [videoFile, setVideoFile] = useState<File | null>();
   const [preview, setPreview] = useState<string[]>([]);
@@ -83,6 +85,7 @@ const UserUpload=(props:user_info) =>{
   const[isActivSearch , setIsActivSearch] = useState<boolean>(false);
   const[againlogin, setAgainlogin]=useState<boolean>(false);
   const[isGetKeyword, setIsGetKeyword]=useState<boolean>(false);
+  const[onProgres, setOnProgres]=useState<number>(0);
 
 
   const[tagItems, setTagItems]=useState<any[]>([]);
@@ -94,11 +97,44 @@ const UserUpload=(props:user_info) =>{
   const navigate = useNavigate();
   const cookies = new Cookies();
   const file_infos = useRef<FileList | null>(null);
-  let refresh_token:string =""
+  const controllersRef = useRef<AbortController[]>([]);
+  const masterAbortRef = useRef<AbortController | null>(null);
+  const batchIdRef = useRef<string | null>(null);
+  const userIdRef = useRef<string | null>(null);
   
+  const abortAllUploads = () => {
+  masterAbortRef.current?.abort();
+  controllersRef.current.forEach(c => c.abort());
+  };
+   useEffect(() => {
+  const onPageHide = () => {
+    abortAllUploads();
+    const batchId = batchIdRef.current;
+    const userId = userIdRef.current;
+    if (batchId && userId) {
+      const payload = new Blob(
+        [JSON.stringify({ batchId, userId })],
+        { type: "application/json" }
+      );
+      navigator.sendBeacon("/gateway/upload/cancel-batch", payload);
+    }
+  };
+  window.addEventListener("beforeunload", onPageHide);
+  window.addEventListener("pagehide", onPageHide);
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) onPageHide();
+  });
+
+  return () => {
+    onPageHide(); // 언마운트 시에도 안전하게 중단
+    window.removeEventListener("beforeunload", onPageHide);
+    window.removeEventListener("pagehide", onPageHide);
+    // visibilitychange 리스너는 익명이라 생략(필요하면 ref로 빼서 제거)
+  };
+}, []);
 
   const onChangeImg = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const array :any=event.target.files;
+    const array:any=event.target.files;
     file_infos.current = array;
     let file_list:string[]=[...preview];
     let video_list:string[]=[...videolist];
@@ -107,12 +143,15 @@ const UserUpload=(props:user_info) =>{
     let url_list:string[] = [...urlList];
     let total_size:number=0;
     let files:string[]=[...multilist];
+    let origin_file :File[]=[...fileList];
     for(let count =0; count<array.length;count++){
       if (array[count] !== null) {
           const file = array[count];
           files.push(file);
-          setMultilist(files);
+          origin_file.push(file);
           upload_list.push(file);
+          setMultilist(files);
+          setFileList(origin_file)
           setUploadFile(upload_list);
           total_size+=file.size;
           if(total_size > max_size){
@@ -504,20 +543,130 @@ const UserUpload=(props:user_info) =>{
              setMultilist([]);
 
             }
-            const upload =() =>{
-              console.log("파일 업로드 일상공유하기");
+
+            const upload =async () =>{
               console.log("파일 업로드 submit");
               
-                  let access_token:string="";          
+                  let access_token:string=""; 
+                  let Id:string ="";
+                  Id=localStorage.getItem("id")!;          
                   access_token = localStorage.getItem("a_id")!;
                   const filedata = new FormData();
-               
+                  const Batch_Id:string = uuidv4();
+                  const controllers: AbortController[] = Array.from({ length: fileList.length }, () => new AbortController());
+                   abortAllUploads();
+                    controllersRef.current = Array.from(
+                      { length: fileList.length },
+                      () => new AbortController()
+                    );
                   if(uploadFile !== null && uploadFile !== undefined){
-                   console.log("length :" , uploadFile.length);
-
-                   for(let count=0; count<uploadFile.length;count++){
-                     filedata.append("uploadFile" , uploadFile[count]);
+                   console.log("length :" , fileList.length);
+                   for(let count=0; count<fileList.length;count++){
+                     if (masterAbortRef.current?.signal.aborted) break;
+                     const Total_cnt:number =fileList.length; 
+                    console.log("파일 올리기 : " , Total_cnt)
+                     const file_info = fileList[count];
+                      await api.post("/gateway/api-upload", file_info, {headers:{
+                          Authorization: access_token,
+                          "Content-Type": "application/octet-stream",
+                          "X-Proxy-Service": "upload",
+                          "X-Proxy-Endpoint": "Fileupload",
+                          "X-Proxy-Method": "POST",
+                          "X-File-Count": String(fileList.length),
+                          "X-File-Index":count,
+                          "X-Filename": encodeURIComponent(file_info.name),
+                          "X-UserId" : Id,
+                          "X-Batch_Id":Batch_Id
+                        },
+                        withCredentials: true,
+                        signal: controllers[count].signal,
+                        onUploadProgress :(e:AxiosProgressEvent) =>{
+                          if (e.total && onProgres) setOnProgres(Math.round((e.loaded / e.total) * 100));
+                          console.log("진행률 :" , onProgres)
+                          
+                  }}).then(response =>{
+                    console.log("파일만 업로드 결과  :" , response);
+                  }).catch(error =>{
+                    if(axios.isAxiosError<ResponseDataType>(error)){
+                          if(!error.response) {
+                                console.warn("서버 응답 없음 (게이트웨이 연결 실패)");
+                                navigate("/error/Gateway"); // 502로 간주
+                                return;
+                          }
+                          if(error.response?.status==400){
+                              console.log("400에러 발생")
+                              navigate("/error/BadRequest");
+                            }
+                            else if(error.response?.status==415){
+                                console.log("지원하지 않는 형식입니다.")
+                                //setIsloading(false);
+                            }
+                            else if(error.response?.status==500){
+                                navigate("/error/se-error")
+                            }
+                            else if(error.response?.status==502){
+                              
+                                navigate("/error/Gateway");
+                                
+                            }
+                    }
+                  })
                    }
+                      let local:any=localdata;
+                      const locationInfo:any=JSON.stringify(local);
+                      let id:any;
+                      id=localStorage.getItem("id");
+                      const tagList:any =JSON.stringify(tagItems);
+                      const text:string = textArea;
+                      
+                      const uploadInfo = {
+                          service: "upload",
+                          endpoint: "Commit",
+                          method: "POST",
+                          body: {
+                            id,
+                            text,
+                            locationInfo,
+                            openkind,
+                            tagList
+                          }
+                        };
+                      filedata.append(
+                        "UploadInfo",
+                        new Blob([JSON.stringify(uploadInfo)], { type: "application/json" })
+                      );
+                      /*
+                   api.post("/gateway/api-upload/commit", uploadInfo,
+                     {
+                      withCredentials: true
+                    }).then(response =>{
+                       console.log("업로드 결과 :" , response)
+                    }).catch(error =>{
+                        if(axios.isAxiosError<ResponseDataType>(error)){
+                          console.log("error code: " , error.response?.status);
+                          if(!error.response) {
+                                console.warn("서버 응답 없음 (게이트웨이 연결 실패)");
+                                navigate("/error/Gateway"); // 502로 간주
+                                return;
+                          }
+                          if(error.response?.status==400){
+                              console.log("400에러 발생")
+                              navigate("/error/BadRequest");
+                            }
+                            else if(error.response?.status==415){
+                                console.log("지원하지 않는 형식입니다.")
+                                //setIsloading(false);
+                            }
+                            else if(error.response?.status==500){
+                                navigate("/error/se-error")
+                            }
+                            else if(error.response?.status==502){
+                                navigate("/error/Gateway");
+                            }
+                      }
+                    })*/
+                  }
+                   /*
                       let local:any=localdata;
                       const locationInfo:any=JSON.stringify(local);
                       let id:any;
@@ -543,8 +692,8 @@ const UserUpload=(props:user_info) =>{
                       );
                       
                   }
-                
-                  api.defaults.headers.common['Authorization'] = access_token;
+
+
                   api.post(`${UPLOAD_URL}/Fileupload`,filedata,{withCredentials: true})
                   .then(response =>{
                       console.log("파일 업로드 완료 :" , response);
@@ -572,6 +721,7 @@ const UserUpload=(props:user_info) =>{
                             }
                       }
                   })
+                  */
                   /*
                   api.post("/Pets-social/gateway/api-upload" ,filedata,{
                         withCredentials: true

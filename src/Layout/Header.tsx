@@ -5,7 +5,7 @@ import img from "../assets/images/log.png"
 
 const Header = () =>{
 
-
+//<img src={img} alt="애완멀" ></img>
 
     return(
        <div className="Headers">
@@ -14,7 +14,7 @@ const Header = () =>{
                    color:"black",
                     fontSize:"xx-large"}}>
             <div className="Headers_log">
-                <img src={img} alt="애완멀" ></img>
+                <p>Aniverse</p>
             </div>
                 </Link>
         </div>

@@ -15,7 +15,7 @@ import {Oval} from "react-loader-spinner";
 import "./AddChat.scss";
 import MatList from "./MatList";
 import AddList from "./AddList";
-import Chatmember from "./Chatmember";
+import {api} from"../../API/Api";
 //#endregion
 
 //                             +--------------------
@@ -176,7 +176,51 @@ else return;
         let access_token:string="";
         access_token =localStorage.getItem("a_id")!;
         console.log("access : " , access_token);
-        axios.defaults.headers.common['Authorization'] = access_token;
+        const id:string =localStorage.getItem("id")!;
+        //axios.defaults.headers.common['Authorization'] = access_token;
+        api.defaults.headers.common['Authorization'] = access_token;
+        api.post("/gateway/api-proxy",{
+          service: "common",
+          endpoint: "follow/MatList",
+          method: "GET",
+          body:{id:id}})
+          .then(response =>{
+              console.log("친구 리스트  :" , response)
+              
+                if(response.data.data=="null" ){
+                  setIsnotmat(true);
+                  setLoading(true);
+                }
+                else{
+                  setMatlist(response.data.data);
+                  setFirstMat(response.data.data);
+                  setLoading(true);
+                }
+          }).catch(error =>{
+           if(axios.isAxiosError<ResponseDataType>(error)){
+               console.log("error code: " , error.response?.status);
+                if(!error.response) {
+                        console.warn("서버 응답 없음 (게이트웨이 연결 실패)");
+                        navigate("/error/Gateway"); // 502로 간주
+                        return;
+                  }
+               if(error.response?.status ==400){
+                navigate("/error/BadRequest");
+                return;
+               }
+               else if(error.response?.status==500){
+                 console.log("서버 에러발생");
+                 navigate("/error/se-error")
+               }
+               else if(error.response?.status == 502){
+                navigate("/error/Gateway");
+                return;
+               }
+               
+               console.log("error response: " , error.response?.data);
+             }
+          })
+/*
         axios.get("http://localhost:8080/Pets-social/acccheck")
         .then(response =>{
            console.log("응답 결과 확인 " , response.data);
@@ -246,6 +290,7 @@ else return;
                console.log("error response: " , error.response?.data);
              }
         })
+        */
     },[])
 
     useEffect(() =>{

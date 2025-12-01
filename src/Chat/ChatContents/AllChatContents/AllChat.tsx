@@ -34,6 +34,7 @@ type readchatinfo={
   chatId:string;
   msg:string;
   messageIds:string[];
+  userId:string;
 }
 
 

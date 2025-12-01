@@ -556,7 +556,7 @@ const textareaRef = useRef<HTMLTextAreaElement>(null);
       let access_token:string="";
       access_token =localStorage.getItem("a_id")!;
       api.defaults.headers.common['Authorization'] = access_token;
-      api.post("/Pets-social/gateway/api-proxy" ,{
+      api.post("/gateway/api-proxy" ,{
       service: "search",
       endpoint: "Person",
       method: "GET",
@@ -725,7 +725,7 @@ const textareaRef = useRef<HTMLTextAreaElement>(null);
       console.log("id :" , contentid);
 
       api.defaults.headers.common['Authorization'] = access_token;
-      api.post("/Pets-social/gateway/api-proxy" ,{
+      api.post("/gateway/api-proxy" ,{
       service: "reaction",
       endpoint: "/Heart/likes",
       method: "POST",
@@ -819,7 +819,7 @@ const textareaRef = useRef<HTMLTextAreaElement>(null);
      access_token = localStorage.getItem("a_id")!;
      UserId = localStorage.getItem("id")!;
      api.defaults.headers.common['Authorization'] = access_token;
-      api.post("/Pets-social/gateway/api-proxy" ,{
+      api.post("/gateway/api-proxy" ,{
       service: "reaction",
       endpoint: "/Comment/Create",
       method: "POST",
@@ -922,7 +922,7 @@ const textareaRef = useRef<HTMLTextAreaElement>(null);
       Userid=imgref.current?.id;
       access_token =localStorage.getItem("a_id")!;
         api.defaults.headers.common['Authorization'] = access_token;
-                api.post("/Pets-social/gateway/api-proxy" ,{
+                api.post("/gateway/api-proxy" ,{
                       service: "common",
                       endpoint: `profile/Smallprofile`,
                       method: "GET",

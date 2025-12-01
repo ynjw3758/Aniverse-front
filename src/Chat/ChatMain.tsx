@@ -29,6 +29,7 @@ import WebSocketAlarm_Provider from "../Context/WebSocketAlarm_Provider";
 import ChatNotificationMain from "../Notification/ChatNotificationMain";
 import WebSocketAlarmContext from "../Context/WebSocketAlarmContext";
 import WebSocketChatContext from "../Context/WebSocketChatContext";
+import {api} from"../API/Api";
 //#endregion
 
 
@@ -203,7 +204,7 @@ const ReceiveMessage = useContext(WebSocketChatContext);
       if(chatRoomId !==UserId){
         console.log("채팅 가져오기;")
         endPoint.current="/getFocusList";
-        Body.current={Id:UserId ,ChatId:chatRoomId};
+        Body.current={id:UserId ,chatId:chatRoomId};
       }
       else{
         console.log("리로드")
@@ -213,15 +214,15 @@ const ReceiveMessage = useContext(WebSocketChatContext);
         let access_token:string="";
         access_token =localStorage.getItem("a_id")!;
         console.log("access : " , access_token);
-        axios.defaults.headers.common['Authorization'] = access_token;
-        axios.post("http://localhost:8080/Pets-social/gateway/api-proxy",{
+        api.defaults.headers.common['Authorization'] = access_token;
+        api.post("/gateway/api-proxy",{
           service: "chat",
           endpoint: endPoint.current,
           method: "GET",
           body:  Body.current})
         .then(response =>{
           if(response.status == 200){
-            console.log("토큰 인증 성공 : " ,response);
+            console.log("채팅방 리로드 : " ,response);
             if(response.status ==200){
               const sucode:string = response.data.succode;
               if(sucode ==="00"){

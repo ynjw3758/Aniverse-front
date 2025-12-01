@@ -1,0 +1,25 @@
+.MainSearch_Main{
+    display: flex;
+    flex-direction: row;
+    //gap: 5vw;
+}
+.MainSearch_Main img{
+    width: 3vw;
+    height: 5vh;
+    position: absolute;
+    top:5.7vh;
+    left: 21vw;
+}
+.MainSearch_Main input{
+    outline: none;
+    padding-left: 3vw;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    border-radius: 20px;
+    width: 40vw;
+    background: transparent;
+    color: white;
+}
+.MainSearch_Main input::placeholder{
+    color: white;
+}

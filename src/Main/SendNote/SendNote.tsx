@@ -177,7 +177,7 @@ const SendNote =(props:Note) =>{
         access_token =localStorage.getItem("a_id")!;
         console.log("access : " , access_token);
         api.defaults.headers.common['Authorization'] = access_token;
-        api.post("/Pets-social/gateway/api-proxy" ,{
+        api.post("/gateway/api-proxy" ,{
               service: "search",
               endpoint: "/Person",
               method: "GET",

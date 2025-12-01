@@ -1,0 +1,119 @@
+.Header{
+    font-size: xx-large;
+  }
+  
+.HeaderMain{ 
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    background: linear-gradient(to bottom, #faf8f1, #f5f5f5);
+}
+.HeaderMain img{
+  width: 100vw;
+  height: 80vh;
+  object-fit: fill;
+}
+.Landing_Text{
+    text-align: center;
+    margin-top: 3rem;
+}
+
+.Landing_Text p{
+  position: absolute;
+  top:8vh;
+  left: 40vw;
+  font-size: clamp(20px, 2vw, 28px);
+  font-weight: 500;
+  color: #fff;
+  margin: 0;
+  line-height: 1;
+  text-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  
+}
+.Landing_Text p .BrandName {
+  display: block;
+  font-size: clamp(40px, 7vw, 80px);
+  font-weight: 800;
+  color: #3DFFB5; /* 네온 민트 */
+  text-shadow: 0 0 10px rgba(61, 255, 181, 0.7),
+               0 0 20px rgba(61, 255, 181, 0.5),
+               0 0 30px rgba(61, 255, 181, 0.4);
+  margin-top: 8px;
+}
+.Landing_Button{
+  position: absolute;
+  top:25vh;
+  left: 45vw;
+  display: flex;
+  justify-content: center;              /* 중앙 정렬 */
+  align-items: center;
+  gap: clamp(10px, 2vw, 18px);          /* 버튼 사이 간격 */
+  margin-top: clamp(8px, 1.5vw, 16px);  /* 위 여백(선택) */
+  flex-wrap: wrap;                      /* 좁은 화면에서 줄바꿈 */
+}
+#Landing_Sign{
+  cursor: pointer;
+  background-color: #111827; /* 거의 블랙 */
+  color: #fff;
+  padding: 12px 28px;
+  border-radius: 14px;
+  font-size: 18px;
+  font-weight: 700;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  transition: all 0.2s ease;
+
+}
+#Landing_Sign:hover{
+    background-color: #0f172a;
+  transform: translateY(-2px);
+}
+#Landing_Login{
+  cursor: pointer;
+  background-color: rgba(255,255,255,0.25);
+  color: #0f172a;
+  padding: 12px 28px;
+  border-radius: 14px;
+  font-size: 18px;
+  font-weight: 700;
+  border: 1px solid rgba(255,255,255,0.45);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 4px 12px rgba(16,185,129,0.15);
+  transition: all 0.2s ease;
+}
+
+#Landing_Login:hover{
+  background-color: rgba(255,255,255,0.35);
+  transform: translateY(-2px);
+}
+
+.login{
+    display: flex;
+}
+.login button{
+  border-radius: 15px;
+  background-color:rgba(30, 150, 100, 0.5);
+    font-size: large;
+    padding-left: 50px;
+    padding-right: 2rem;
+    margin-left: -170px;
+    margin-bottom: -60px;
+    outline: none;
+    
+}
+.home{
+  color:black;
+  font-size: medium;
+}
+.nav ul{
+  display: flex;
+  list-style: none;
+  cursor: pointer;
+  margin-left: -140px;
+}
+.nav li{
+  font-size: large;
+  margin-bottom: -10px;
+
+}

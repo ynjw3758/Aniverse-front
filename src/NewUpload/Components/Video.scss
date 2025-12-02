@@ -1,4 +1,84 @@
 .UploadVideo_Main{
-    width: 30vw;
-    height: 30vh;
+    width: 65vw;
+    height: 75vh;
+    border-radius: 40px;
+    /* 카드 안쪽 배경 그라데이션 */
+    background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.06), transparent 55%),
+        linear-gradient(135deg, #0b7a7d 0%, #0f9c91 50%, #11b3a3 100%);
+
+    /* 외곽선 느낌 */
+    border: 1px solid rgba(255, 255, 255, 0.18);
+
+    /* 살짝 떠 있는 느낌 */
+    box-shadow:
+        0 24px 80px rgba(0, 0, 0, 0.45),
+        0 0 0 1px rgba(0, 0, 0, 0.1);
+
+    display: flex;
+    align-items: stretch;
+}
+
+.UploadVideo_LeftSide{
+    position: relative;
+    top:4vh;
+    left: 2vw;
+    width: 25vw;
+    height: 68vh;
+    max-width: 25vw;
+    max-height: 70vh;
+}
+
+.UploadVideo_LeftSide > video{
+    width: 25vw;
+    height: 59vh;
+    object-fit: fill;
+    border-radius: 32px;
+}
+.UploadVideo_VideoList{
+    width: max-content;
+    height: 11vh;
+    position: relative;
+    top:63vh;
+    left:-20vw;
+    display: flex;
+    flex-direction: row;
+    background-color: #11b3a3;
+    border-radius: 20px 32px 32px 20px ;
+}
+.UploadVideo_VideoArea{
+    width: max-content;
+    max-width: 14vw;
+    height: 11vh;
+    max-height: 11vh;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    border-radius: 20px 0px 0px 20px;
+}
+
+.UploadVideo_MoveDiv,
+.UploadVideo_MoveDiv:hover{
+    position: relative;
+    width: max-content;
+    height: max-content;
+    cursor: pointer;
+     
+}
+
+.UploadVideo_MoveDiv > video{
+    width: 7.4vw;
+    height: 11vh;
+    object-fit: fill;
+    border: none;
+}
+.UploadVideo_MoveDiv > video.selected{
+    width: 7.4vw;
+    height: 11vh;
+    object-fit: fill;
+    border: 1px solid #0fdbb5; 
+}
+
+.UploadVideo_MoveDiv:first-child video {
+  border-radius: 20px 0px 0px 20px;
 }

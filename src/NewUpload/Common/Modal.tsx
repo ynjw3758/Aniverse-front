@@ -42,17 +42,6 @@ const Modal:React.FC<props> =({FileType ,FileUrl ,ImgList ,VideoList}:props) =>{
         }
 
     },[FileType, FileUrl, ImgList, VideoList])
-    /*
-            {isImg && (<>
-        <Picture FileInfo={ImgList} UrlInfo={FileUrl}/>
-        </>)}
-        {isVideo && (<>
-        <Video FileInfo={VideoList} UrlInfo={FileUrl}/>
-        </>)}
-        {isMulti && (<>
-        <Multi />
-        </>)}
-        */
   
     return(<div className="FileUpload_BackDrop">
         <div className="FileUpload_Modal">
@@ -64,6 +53,9 @@ const Modal:React.FC<props> =({FileType ,FileUrl ,ImgList ,VideoList}:props) =>{
         )}
         {isImg && (<>
         <Picture FileInfo={ImgList} UrlInfo={FileUrl} onReady={() => setIsLoading(false)}/>
+        </>)}
+        {isVideo && (<>
+        <Video FileInfo={VideoList} UrlInfo={FileUrl} onReady={() => setIsLoading(false)}/>
         </>)}
         </div>
     </div>)

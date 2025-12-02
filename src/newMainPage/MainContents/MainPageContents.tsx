@@ -81,9 +81,6 @@ const MainPageContents:React.FC =() =>{
             setIsVideo(true);
         }
     }
-
-
-   console.log("isUpload : " , isUpload)
     return (<div className="MainPageContents_Body">
              <div className="MainPageContents_FavoriteContents">
                <h2>환영합니다 , {`${login_info.UserNickName}`}님</h2>

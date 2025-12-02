@@ -32,7 +32,6 @@ const Picture : React.FC<props> =({FileInfo , UrlInfo ,onReady} :props) =>{
   const[img, setImg]=useState<string>("");
   const[selected ,setSelected]=useState<string>("");
   const[isCnt, setIsCnt]=useState<boolean>(false);
-  //const[fileIdx ,setFileIdx]=useState<number>(0);
   const[fileSize, setFileSize]=useState<number>(0);
   const[moveWidth ,setMoveWidth]=useState<number>(0);
   const[idxValue, setIdxValue]=useState<number>(0);
@@ -42,7 +41,6 @@ const Picture : React.FC<props> =({FileInfo , UrlInfo ,onReady} :props) =>{
 
     useEffect(() =>{
       if(FileInfo.length > 1) {
-         const map = new Map<number, string>();
         setIsCnt(true);
         setSelected(UrlInfo[0].fileUrl);
 

@@ -1,0 +1,129 @@
+.UploadFormPanel_Main{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    background-color: transparent;
+    width: 33vw;
+    margin-left: 5vw;
+}
+.UploadFormPanel_Main h2{
+   color: white;
+}
+.UploadFormPanel_TextAreaWrapper{
+  width: 100%;
+  padding-left: 16px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  position: relative;
+  backdrop-filter: blur(6px);
+  box-sizing: border-box;   // ⭐⭐⭐ 이거 넣는 게 핵심
+  display: flex;
+  flex-direction: column;
+}
+.UploadForm_TextArea {
+  width: 100%;
+  height: 140px;
+  overflow-y: auto;
+  background: transparent;
+  border: none;
+  outline: none;
+  resize: none;
+  color: #e8f9f8;
+  font-size: 16px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 300;
+  line-height: 1.6;
+  letter-spacing: -0.2px;
+
+  /* placeholder */
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.95);
+    font-size: large;
+    white-space: pre-line;
+  }
+}
+.UploadForm_CharCount{
+  margin-bottom: 1vh;
+  margin-right: 0.5vw;
+  margin-top: 8px;
+  font-size: 13px;
+  text-align: right;
+  color: rgba(255, 255, 255, 0.55);
+}
+.UploadFormPanel_Contents,
+.UploadFormPanel_Contents:hover{
+    border-radius: 20px;
+    margin-top: 3vh;
+    //margin-bottom: -1vh;
+    display: flex;
+    flex-direction: row;  
+    width: 100%;
+    height: 9vh;
+    //padding: 0 16px;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.06);   /* 글래스 느낌 */
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 14px;
+    box-sizing: border-box;
+    backdrop-filter: blur(6px);
+
+    color: rgba(255, 255, 255, 0.92);
+    font-size: 15px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+.UploadFormPanel_Contents img{
+    width: 4vw;
+    height: 6vh;
+}
+.UploadFormPanel_Contents h4{
+  margin-left: -0.5vw;
+  padding: 0;
+  font-size: 15px;
+  font-weight: 500; /* 너무 굵지 않게, 깔끔한 중간 굵기 */
+  color: rgba(255, 255, 255, 0.92);
+  letter-spacing: -0.2px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+}
+.ActiveLocal_Main{
+  display: flex;
+  flex-direction: column;
+
+}
+.ActiveLocal_Main p{
+  margin-top: 1vh;
+  font-size: 13px;
+}
+
+.ActiveLocal_Main h2{
+  margin: 0;               // ⭐ 기본 margin 제거
+  flex: 1;                 // ⭐ 남는 공간 차지
+  min-width: 0;            // ⭐ 말줄임/줄바꿈 안정화
+  margin-top: 1vh;
+  font-size: 20px;
+}
+
+.ActiveLocal_Main button{     // ⭐ 무조건 오른쪽으로
+  position: absolute;        // ⭐ 혹시 다른 전역 CSS가 absolute 주는 경우 방지
+  top:3vh;
+  left: 29vw;
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  font-weight: 600;
+  color: white;
+  border-radius: 20px;
+  padding: 5px 10px 5px 10px;
+  background: rgba(255, 255, 255, 0.14);
+  border: none;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.25),
+    0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+}

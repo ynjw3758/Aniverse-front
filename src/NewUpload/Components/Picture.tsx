@@ -1,6 +1,8 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 import "./Picture.scss";
 import SlideButton from "../Common/SlideButton";
+import UploadFormPanel from "../Common/UploadFormPanel";
+import KaMap from "../../Upload/KaMap";
 
 interface props{
     FileInfo: File[]
@@ -26,15 +28,26 @@ type MoveInfo={
   Event:string
 }
 
+type localinfo={
+  Content:string,
+  Address:string,
+  isActive:boolean
+}
+
 
 const Picture : React.FC<props> =({FileInfo , UrlInfo ,onReady} :props) =>{
    
   const[img, setImg]=useState<string>("");
   const[selected ,setSelected]=useState<string>("");
+  const[uploadlocal ,setUploadlocal]=useState<string>("");
   const[isCnt, setIsCnt]=useState<boolean>(false);
+  const[isLocal, setIsLocal]=useState<boolean>(false);
+  const[islocalform , setIslocalform]=useState<boolean>(false);
   const[fileSize, setFileSize]=useState<number>(0);
   const[moveWidth ,setMoveWidth]=useState<number>(0);
   const[idxValue, setIdxValue]=useState<number>(0);
+  const[localdata , setLocaldata] = useState<any[]>([]);
+  const[localInfo , setLocalInfo]=useState<localinfo>();
 
   const readyCalledRef = useRef(false);
   let RealMoveIdx = useRef<number>(0);
@@ -59,7 +72,6 @@ const Picture : React.FC<props> =({FileInfo , UrlInfo ,onReady} :props) =>{
     }
     const ChangeIdxHandler =(Idx:MoveInfo) =>{
       if(Idx.Direct=="R"){
-        console.log("변수 :" , Idx)
         if(Idx.Event == "F"){
             setIdxValue(Idx.FileIdx);
             setImg(UrlInfo[Idx.FileIdx].fileUrl);
@@ -72,9 +84,7 @@ const Picture : React.FC<props> =({FileInfo , UrlInfo ,onReady} :props) =>{
         }
 
       }else{
-        console.log("왼쪽으로 인덱스 변환 : ", Idx.FileIdx)
         if(Idx.Event =="F"){
-          console.log("포커스만 이동");
             setIdxValue(Idx.FileIdx);
             setImg(UrlInfo[Idx.FileIdx].fileUrl);
             setSelected(UrlInfo[Idx.FileIdx].fileUrl);
@@ -104,6 +114,26 @@ const Picture : React.FC<props> =({FileInfo , UrlInfo ,onReady} :props) =>{
     const RightMoveHandler =() =>{
      setMoveWidth((prev) => prev + 14.8)
   }
+
+  const LocalHandler =() =>{
+    setIsLocal(true);
+  }
+
+  const LocationdataHandler =(info:any) =>{
+
+    
+        setIsLocal(false);
+        setLocaldata(info);
+        setUploadlocal(info.content);
+        setIslocalform(true);
+        setLocalInfo({Content:info.content , Address:info.address, isActive:true})
+  }
+  const MapClose =() =>{
+    setIsLocal(false);
+  }
+  const AgLocalHandler =() =>{
+   setIsLocal(true);
+  }
     return(<Fragment>
       <div className="UploadPicture_Main">
         <section className="UploadPicture_LeftSide">
@@ -125,7 +155,11 @@ const Picture : React.FC<props> =({FileInfo , UrlInfo ,onReady} :props) =>{
              </section>
            </>)}
         </section>
+        <UploadFormPanel IsLocal={LocalHandler} ChageLocal={localInfo} AgainLocal={AgLocalHandler}/>
       </div>
+      {isLocal && (<>
+      <KaMap onData={LocationdataHandler} onclose={MapClose}/>
+      </>)}
     </Fragment>)
 }
 

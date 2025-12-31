@@ -80,6 +80,9 @@ const LandingPage:React.FC =()=> {
   const Login =() =>{
      navigate("/login")
   }
+  const StartHandler =() =>{
+    navigate("/main")
+  }
 
 
     return(<Fragment>
@@ -94,6 +97,9 @@ const LandingPage:React.FC =()=> {
               {!login && (<>
                 <button id="Landing_Sign" onClick={Sign}>회원가입</button>
                 <button id="Landing_Login" onClick={Login}>로그인</button>
+              </>)}
+              {login && (<>
+              <button id="Landing_Start" onClick={StartHandler}>시작하기</button>
               </>)}
                
             </div>

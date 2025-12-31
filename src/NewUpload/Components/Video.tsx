@@ -1,6 +1,8 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 import "./Video.scss";
 import PlayButton from "../Common/PlayButton";
+import PlayBar from "../Common/PlayBar";
+import SlideButton from "../Common/SlideButton";
 
 interface props{
     FileInfo: File[]
@@ -11,13 +13,15 @@ interface props{
 type UrlInfo={
   fileName:string,
   fileUrl:string,
-  fileType:string
+  fileType:string,
+  fileTime:number
 }
 
 type SlideInfo={
   fileUrl:string,
   fileidx:number,
-  filesize:number
+  filesize:number,
+  filetime:number
 }
 
 type MoveInfo={
@@ -36,6 +40,8 @@ const Video : React.FC<props> =({FileInfo, UrlInfo ,onReady}:props) =>{
       const[video, setVideo]=useState<string>("");
       const[moveWidth ,setMoveWidth]=useState<number>(0);
       const[idxValue, setIdxValue]=useState<number>(0);
+      const[duration, setDuration]=useState<number>(UrlInfo[0].fileTime);
+      const [currentTime, setCurrentTime] = useState(0);
       const[showOverlay, setShowOverlay] = useState(true);
       const[isPlaying, setIsPlaying]=useState<boolean>(false);
       const[isType,setIsType]=useState<string>("main");
@@ -58,21 +64,22 @@ const Video : React.FC<props> =({FileInfo, UrlInfo ,onReady}:props) =>{
              
           },[FileInfo, UrlInfo])
 
-        const handleMainVideoLoad = () => {
-                console.log("로딩 완료")
-                // 이미지가 실제로 브라우저에 로드된 순간
-                if (!readyCalledRef.current) {
-                readyCalledRef.current = true;
-                onReady && onReady();   // 👈 Modal의 setIsLoading(false) 호출
-                }
-        };
+          const handleMainVideoLoad = () => {
+                  console.log("로딩 완료")
+                  // 이미지가 실제로 브라우저에 로드된 순간
+                  if (!readyCalledRef.current) {
+                  readyCalledRef.current = true;
+                  onReady && onReady();   // 👈 Modal의 setIsLoading(false) 호출
+                  }
+          };
 
     const SelectVideo =(info:SlideInfo) =>{
       setIsPlaying(false);  
       setVideo(info.fileUrl);
       setSelected(info.fileUrl);
       setIdxValue(info.fileidx);
-      //setIsType("thumb")
+      setDuration(info.filetime)
+
     }
 
      const ChangeIdxHandler =(Idx:MoveInfo) =>{
@@ -130,6 +137,34 @@ const Video : React.FC<props> =({FileInfo, UrlInfo ,onReady}:props) =>{
      
     }
 
+      const LeftMoveHandler =() =>{
+        setMoveWidth((prev) => prev -14.8)
+      }
+        const RightMoveHandler =() =>{
+        setMoveWidth((prev) => prev + 14.8)
+      }
+
+    const handleTimeUpdate = () => {
+      if (videoRef.current) {
+        setCurrentTime(videoRef.current.currentTime);
+      }
+    };
+
+    const handleSeek = (value: number) => {
+      if (!videoRef.current) return;
+      videoRef.current.currentTime = value; // ★ 비디오 재생 위치 변경
+      setCurrentTime(value);
+    };
+
+    const VideoEndHandler =() =>{
+        setIsPlaying(false);          // 재생버튼도 정지 상태로 바뀌게
+        setCurrentTime(0);            // 진행바를 0초로 되돌림
+
+        if (videoRef.current) {
+          videoRef.current.currentTime = 0;  // 실제 비디오 재생 위치도 0초로
+        }
+    }
+
     return(<Fragment>
         <div className="UploadVideo_Main">
           <section className="UploadVideo_LeftSide"
@@ -137,16 +172,20 @@ const Video : React.FC<props> =({FileInfo, UrlInfo ,onReady}:props) =>{
                    //onMouseOver={MouseOverHandler}
                    //onMouseOut={MouseOutHandler}
                    >
-            <video src={video}  
-                   muted
-                   preload="metadata"
-                   onLoadedData={handleMainVideoLoad}
-                   ref={videoRef}
-/>
+            <div className="UploadVideo_VideoWrapper">
+                    <video src={video}  
+                        muted
+                        preload="metadata"
+                        onLoadedData={handleMainVideoLoad}
+                        ref={videoRef}
+                        onTimeUpdate={handleTimeUpdate}
+                        onEnded={VideoEndHandler}
+                    />
+             <PlayBar FileTime={duration} currentTime ={currentTime} onSeek={handleSeek}/>
+             </div>
             {showOverlay && (
                 <PlayButton IsPlaying={isPlaying} variant="main"/>
             )}
-            
           </section>
             {isCnt && (<>
                <section className="UploadVideo_VideoList">
@@ -156,14 +195,15 @@ const Video : React.FC<props> =({FileInfo, UrlInfo ,onReady}:props) =>{
                         style={{transition:"all 0.3s ease-in-out" ,
                         transform:`translateX(${ moveWidth}vw)`}}>
                             <video muted src={video.fileUrl} key={id} onClick={() =>SelectVideo({fileUrl: video.fileUrl , 
-                            fileidx:id , filesize:UrlInfo.length})}
+                            fileidx:id , filesize:UrlInfo.length, filetime:video.fileTime})}
                             className={selected == video.fileUrl ? "selected" : ""}/>
                             <PlayButton  IsPlaying={false} variant="thumb"/>
                         </div>
-                        
                         </>) 
                     )}
                  </div>
+                  <SlideButton FileIdx={idxValue} FileSize={fileSize} 
+                    onChangeIndex={ChangeIdxHandler} onLeftMove={LeftMoveHandler} onRightMove={RightMoveHandler}/>
                </section>
             </>)}
         </div>

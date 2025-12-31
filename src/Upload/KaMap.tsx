@@ -3,6 +3,7 @@ import { Map , MapMarker} from 'react-kakao-maps-sdk';
 import "./KaMap.scss";
 import {  useState ,useEffect, useRef} from "react";
 import mapcancleimg from "../assets/images/Map_Cancel.png";
+import mapSearch from"../assets/images/kmap_search.png";
 interface LOcationData {
   onData :(Location_info:any) => void;
   onclose : () => void
@@ -56,6 +57,7 @@ useEffect(() => {
      }
 
     //todo: 추후에 수정해야될 것
+    /*
     const test =(data:any) =>{
       displayMarker1(data);
       function displayMarker1(place:any) {
@@ -81,7 +83,7 @@ useEffect(() => {
       }
           }
 
-
+*/
 
   const EnterSearch=(event: React.KeyboardEvent<HTMLInputElement>) =>{
 
@@ -98,7 +100,7 @@ useEffect(() => {
                   const marker_array:MarkerData[]=[];
                   for (let i=0; i<data.length; i++) {
                           
-                    
+                    console.log("위치 정보 : " , data)
                     const lat = parseFloat(data[i].y);
                     const lng = parseFloat(data[i].x);
                     const position = new window.kakao.maps.LatLng(lat, lng);
@@ -107,7 +109,7 @@ useEffect(() => {
                     const imageSize = new kakao.maps.Size(36, 37);
                     const spriteSize = new kakao.maps.Size(36, 691); // 전체 sprite 크기
                     const spriteOrigin = new kakao.maps.Point(0, (i * 46)); // index = 0부터 시작
-
+/*
                     const markerImage = new kakao.maps.MarkerImage(
                           imageSrc,
                           imageSize,
@@ -117,12 +119,11 @@ useEffect(() => {
                          offset: new kakao.maps.Point(13, 37),
                         }
                       );
-                  
+  */                
                     const marker = new kakao.maps.Marker({
                       map: mapRef1.current,
                       position,
                     });
-                    console.log("위치 정보 : " ,data[i]);
                    marker_array.push({
                       marker,
                       position: { lat, lng },
@@ -222,23 +223,8 @@ useEffect(() => {
   const CancelHandler =() =>{
     props.onclose()
   }
+
 /*
-                   <h3>{id.content}</h3>
-           {id.isaddress ? (<p>{id.address}</p>) :(<></>)}
-           {id.isphone ? (<p>{id.phone}</p>) :(<></>)}
-           */
-    return (<>
-     <div className="KMap_main" >     
-      <div id='myMap' style={{
-          width: '63vw', 
-          height: '81.5vh'
-      }} />
-      </div>
-      <div className="Kmap_search">
-        <input onChange={searchHandler} placeholder='위치 검색..' onKeyDown={EnterSearch}/>
-        <img src={mapcancleimg} onClick={CancelHandler}/>
-       </div>
-        {checksearch && (<div className="item_list" >
           {markers.map(({content, address, phone, position, isaddress,isphone,id
 
           }, idx) =>(<div  key={idx} className="Kamp_list" onMouseOver={() =>{ 
@@ -283,8 +269,72 @@ useEffect(() => {
            <p>{address}</p>
            <p>{phone}</p>
           </div>))}
-       </div>)}
-       
+          */
+    return (<>
+     <div className="KMap_main" >     
+      <div id='myMap' style={{
+          width: '63vw', 
+          height: '81.5vh'
+      }} />
+      </div>
+      <div className="Kmap_search">
+        <input onChange={searchHandler} placeholder='장소 검색..' onKeyDown={EnterSearch}/>
+       </div>
+        <div className="item_list" >
+          {checksearch && (<>
+             <p>{markers.length}개의 결과를 찾았습니다</p>
+             {markers.map(({content, address, phone, position, isaddress,isphone,id
+
+          }, idx) =>(<div  key={idx} className="Kamp_list" onMouseOver={() =>{ 
+              if (!mapRef1.current) return;
+
+              if (infoRef.current instanceof kakao.maps.CustomOverlay) {
+                infoRef.current.setMap(null);
+              }
+
+              const latLng = new kakao.maps.LatLng(position.lat, position.lng);
+
+              const overlayContent = `
+                <div style="
+                  background: #3182f6;
+                  color: white;
+                  font-size: 14px;
+                  padding: 6px 10px;
+                  border-radius: 999px;
+                  border: 2px solid white;
+                  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+                  white-space: nowrap;
+                  font-weight: bold;
+                ">
+                  ${content}
+                </div>
+              `;
+
+              const customOverlay = new kakao.maps.CustomOverlay({
+                position: latLng,
+                content: overlayContent,
+                yAnchor: 2,
+              });
+
+              customOverlay.setMap(mapRef1.current);
+              infoRef.current = customOverlay;
+           }}
+           onClick={() =>{
+            const location_data = {content, address, phone, position ,isaddress, isphone, id};
+            props.onData(location_data);
+           }}>
+            <h3>{content}</h3>
+           <p>{address}</p>
+           <div className='KMap_PhoneInfo'>
+            {phone !== "" ? (<>
+            <span>📞</span>
+            <span>{phone || "전화번호 없음"}</span></>) : (<></>) }
+           </div>
+          </div>))}
+          </>) }
+       </div>
+       <img src={mapcancleimg} onClick={CancelHandler} id="Kmap_Cancel"/>
+       <img src={mapSearch}  id='kmap_Search'/>
        </>)
 }
 

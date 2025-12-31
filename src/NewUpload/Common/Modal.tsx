@@ -3,6 +3,7 @@ import Picture from"../../NewUpload/Components/Picture";
 import Video from"../../NewUpload/Components/Video";
 import Multi from"../../NewUpload/Components/Multi";
 import "./Modal.scss";
+import UploadFormPanel from "./UploadFormPanel";
 
 interface props{
 FileType:string
@@ -15,6 +16,7 @@ type UrlInfo={
   fileName:string,
   fileUrl:string,
   fileType:string
+  fileTime:number
 }
 
 
@@ -52,11 +54,15 @@ const Modal:React.FC<props> =({FileType ,FileUrl ,ImgList ,VideoList}:props) =>{
           </div>
         )}
         {isImg && (<>
-        <Picture FileInfo={ImgList} UrlInfo={FileUrl} onReady={() => setIsLoading(false)}/>
+        <Picture FileInfo={ImgList} UrlInfo={FileUrl} onReady={() => setIsLoading(false)} />
         </>)}
         {isVideo && (<>
-        <Video FileInfo={VideoList} UrlInfo={FileUrl} onReady={() => setIsLoading(false)}/>
+        <Video FileInfo={VideoList} UrlInfo={FileUrl} onReady={() => setIsLoading(false)} />
         </>)}
+        {isMulti && (<>
+        <Multi VideoList={VideoList} PictureList={ImgList} UrlInfo={FileUrl} onReady={() => setIsLoading(false)}/>
+        </>)}
+        
         </div>
     </div>)
 }

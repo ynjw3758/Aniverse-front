@@ -1,7 +1,7 @@
 .UploadVideo_Main{
     width: 65vw;
     height: 75vh;
-    border-radius: 40px;
+    border-radius: 20px;
     /* 카드 안쪽 배경 그라데이션 */
     background:
         radial-gradient(circle at top left, rgba(255,255,255,0.06), transparent 55%),
@@ -28,13 +28,20 @@
     max-width: 25vw;
     max-height: 70vh;
 }
-
-.UploadVideo_LeftSide > video{
+.UploadVideo_VideoWrapper {
+  position: relative;      // ★ 이게 PlayBar 기준!
+  width: 100%;
+  height: 100%;
+  border-radius: 40px;
+  overflow: hidden;        // 라운드 밖으로 안 튀어나가게
+}
+.UploadVideo_VideoWrapper > video{
     width: 25vw;
     height: 59vh;
     object-fit: fill;
-    border-radius: 32px;
+    border-radius: 20px;
 }
+
 .UploadVideo_VideoList{
     width: max-content;
     height: 11vh;

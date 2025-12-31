@@ -2,7 +2,7 @@
 .KMap_main{
     position:absolute;
     top:-1.5vh;
-    left:15vw;
+    left:20vw;
     width: 63vw;
     border: 1px solid black;
     text-align: center;
@@ -11,24 +11,27 @@
 .Kmap_search{
     position:absolute;
     top:0vh;
-    left: 30vw;
-    z-index: 9999;
+    left: 0vw;
+    z-index: 20;
     display: flex;
     flex-direction: row;
-
+    margin-left: 1.5vw;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+    background: rgba(255, 255, 255, 0.95);
 }
 .Kmap_search input{
-    margin-bottom: 20px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 20px;
-    padding-right: 20px;
-    border-radius: 25px;
-    width: 80%;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    padding-left: 1vw;
+    border-radius: 10px;
+    width: 16vw;
 }
 .Kmap_search img,
 .Kmap_search img:hover{
-    margin-left: 15vw;
+    margin-left: 20vw;
     width: 2vw;
     height: 4vh;
     cursor: pointer;
@@ -42,14 +45,23 @@
 
 .item_list{
     position: absolute;
-    top:-2vh;
-    width:15vw;
+    top:-1.3vh;
+    left: 0vw;
+    width:20vw;
     background-color:white;  
     max-height: 81.5vh;
+    height: 81.5vh;
     overflow-y: auto;
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none;  /* IE & Edge */
     border-right: 2px solid black;
+}
+.item_list p{
+    color:black;
+    font-size: 15px;
+    margin-top: 10vh;
+    margin-left: 1.7vw;
+
 }
 .item_list::-webkit-scrollbar{
     display: none;
@@ -59,40 +71,37 @@
     list-style: none;
 }
 .Kamp_list{
-width:14vw;
-height: fit-content;
-display: flex;
-flex-direction: column;
-border :1px solid black;
-border-radius: 15px;
-margin-bottom: 1vh;
-margin-top: 3vh;
-margin-left: 0.5vw;
+    width: 18vw;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    background: rgba(255,255,255,0.95);
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    box-shadow: 0 10px 26px rgba(15, 23, 42, 0.08);
+    border-radius: 10px;
+    margin-bottom: 1vh;
+    margin-top: 3vh;
+    margin-left: 1vw;                   /* 기존보다 진한 파스텔 블루 */
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    padding-bottom: 1vh;
+    cursor: pointer;
 }
+.Kamp_list:hover{
+    background: rgba(255,255,255,0.95);
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    box-shadow: 0 10px 26px rgba(15, 23, 42, 0.08);
+}
+
 .Kamp_list h3{
-    padding-left: 1vw;
+    color:black;
+    padding-left: 2.5vw;
     font-weight: bold;
 }
 .Kamp_list p{
     padding-left: 1vw;
     margin-top: -1vh;
 }
-.Kamp_list:hover{
-    width:14vw;
-    height: fit-content;
-    display: flex;
-    flex-direction: column;
-    border :1px solid black;
-    border-radius: 15px;
-    margin-bottom: 1vh;
-    margin-top: 3vh;
-    margin-left: 0.5vw;
-    background-color: #d0ebff;
-    transition: background-color 0.2s ease;
-    cursor: pointer;
 
-    
-}
 
 .list h3{
     font-size: medium;
@@ -105,6 +114,20 @@ margin-left: 0.5vw;
     font-size: small;
     color: red;
 }
+.KMap_PhoneInfo{
+    display: flex;
+    flex-direction: row;
+    max-width: max-content;
+    max-height: max-content;
+    align-items: center;
+    justify-content: space-between;
+    gap:1px;
+    margin-left: 2.7vw;
+}
+.KMap_PhoneInfo span{
+    color:black;
+}
+
 
 #input_id{
     background-image: url("https://cdn-icons-png.freepik.com/256/2311/2311526.png?ga=GA1.1.687570470.1709256290&");
@@ -113,12 +136,29 @@ margin-left: 0.5vw;
     background-repeat: no-repeat;
     
 }
+    #Kmap_Cancel{
+        position: absolute;
+        top:-1vh;
+        left: 80.5vw;
+        width: 2vw;
+        height: 4vh;
+        z-index: 999;
+        cursor: pointer;
+}
+#kmap_Search{
+    position: absolute;
+    top:-1vh;
+    left: 15vw;
+    z-index: 30;
+    width: 5vw;
+    height: 9vh;
+}
 }
 @media (min-width: 1550px) and (max-width: 1920px) {
     .KMap_main{
         position:absolute;
         top:-1.5vh;
-        left:15vw;
+        left:20vw;
         width: 63vw;
         border: 1px solid black;
         text-align: center;
@@ -128,7 +168,7 @@ margin-left: 0.5vw;
         position:absolute;
         top:0vh;
         left: 37vw;
-        z-index: 9999;
+        z-index: 20;
         display: flex;
         flex-direction: row;
     
@@ -161,13 +201,15 @@ margin-left: 0.5vw;
     .item_list{
         position: absolute;
         top:-2vh;
-        width:15vw;
+        width:20vw;
         background-color:white;  
         max-height: 81.5vh;
+        height: 81.5vh;
         overflow-y: auto;
         scrollbar-width: none; /* Firefox */
         -ms-overflow-style: none;  /* IE & Edge */
         border-right: 2px solid black;
+
     }
     .item_list::-webkit-scrollbar{
         display: none;
@@ -177,18 +219,21 @@ margin-left: 0.5vw;
         list-style: none;
     }
     .Kamp_list{
-    width:14vw;
+    width:18vw;
     height: fit-content;
     display: flex;
     flex-direction: column;
-    border :1px solid black;
-    border-radius: 15px;
+    background: rgba(255,255,255,0.95);
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    box-shadow: 0 10px 26px rgba(15, 23, 42, 0.08);
+    border-radius: 10px;
     margin-bottom: 1vh;
     margin-top: 3vh;
-    margin-left: 0.5vw;
+    margin-left: 1vw;
+    padding-bottom: 1vh;
     }
     .Kamp_list h3{
-        padding-left: 1vw;
+        padding-left: 2.5vw;
         font-weight: bold;
     }
     .Kamp_list p{
@@ -196,23 +241,29 @@ margin-left: 0.5vw;
         margin-top: -1vh;
     }
     .Kamp_list:hover{
-        width:14vw;
-        height: fit-content;
-        display: flex;
-        flex-direction: column;
-        border :1px solid black;
+
+        background: rgba(255,255,255,0.95);
+        border: 1px solid rgba(15, 23, 42, 0.08);
+        box-shadow: 0 10px 26px rgba(15, 23, 42, 0.08);
+        /*
         border-radius: 15px;
         margin-bottom: 1vh;
         margin-top: 3vh;
         margin-left: 0.5vw;
         background-color: #d0ebff;
         transition: background-color 0.2s ease;
+        width:14vw;
+        height: fit-content;
+        display: flex;
+        flex-direction: column;
+        */
         cursor: pointer;
     
         
     }
     
     .list h3{
+        color:black;
         font-size: medium;
         font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
         font-weight: 300px;
@@ -223,6 +274,19 @@ margin-left: 0.5vw;
         font-size: small;
         color: red;
     }
+    .KMap_PhoneInfo{
+        display: flex;
+        flex-direction: row;
+        max-width: max-content;
+        max-height: max-content;
+        align-items: center;
+        justify-content: space-between;
+        gap:1px;
+        margin-left: 2.7vw;
+}
+.KMap_PhoneInfo span{
+    color:black;
+}
     
     #input_id{
         background-image: url("https://cdn-icons-png.freepik.com/256/2311/2311526.png?ga=GA1.1.687570470.1709256290&");
@@ -231,4 +295,21 @@ margin-left: 0.5vw;
         background-repeat: no-repeat;
         
     }
+    #Kmap_Cancel{
+        position: absolute;
+        top:-1vh;
+        left: 80.5vw;
+        width: 2vw;
+        height: 4vh;
+        z-index: 999;
+        cursor: pointer;
+}
+#kmap_Search{
+    position: absolute;
+    top:-1vh;
+    left: 15vw;
+    z-index: 30;
+    width: 5vw;
+    height: 9vh;
+}
 }

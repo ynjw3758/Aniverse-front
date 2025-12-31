@@ -36,10 +36,12 @@ interface ResponseDataType {
     response:object
   }
 
-  interface CustomError{
-    errorcode:string;
-    message :string
-  }
+interface CustomError {
+  status: number;
+  errorcode: string;
+  message: string;
+  timestamp?: string;
+}
 //#endregion
 
   
@@ -127,7 +129,6 @@ const Login:React.FC= (props : {})=>{
                 .catch(error =>{
                     
                   if(axios.isAxiosError<CustomError>(error)){
-                    console.log("에러 :" , error.response?.data.errorcode)
                     if (!error.response) {
                         console.warn("서버 응답 없음 (게이트웨이 연결 실패)");
                         navigate("/error/LbGateway"); // 502로 간주
@@ -148,6 +149,8 @@ const Login:React.FC= (props : {})=>{
                        }
                        else if(error.response?.status==500){
                           navigate("/error/se-error")
+                       }else if(error.response?.status==502){
+                        navigate("/error/LbGateway");
                        }
                   }})
                     
@@ -180,6 +183,7 @@ const Login:React.FC= (props : {})=>{
                   return;
             }).catch(error =>{
                 if(axios.isAxiosError<CustomError>(error)){
+
                   if (!error.response) {
                         console.warn("서버 응답 없음 (게이트웨이 연결 실패)");
                         navigate("/error/Gateway"); // 502로 간주

@@ -87,6 +87,25 @@
   background-color: rgba(255,255,255,0.35);
   transform: translateY(-2px);
 }
+#Landing_Start{
+    background-color: #000;
+    color: white;
+    padding: 10px 30px 10px 30px;
+    border-radius: 20px;
+    font-size: 20px;
+    margin-bottom: 2vh;
+    margin-left: 3vw;
+}
+#Landing_Start:hover{
+    cursor: pointer;
+    background-color: gray;
+    color: white;
+    padding: 10px 30px 10px 30px;
+    border-radius: 20px;
+    font-size: 20px;
+    margin-bottom: 2vh;
+    margin-left: 3vw;
+}
 
 .login{
     display: flex;

@@ -9,6 +9,7 @@ type UrlInfo={
   fileName:string,
   fileUrl:string,
   fileType:string
+  fileTime:number
 }
 
 const MainPageContents:React.FC =() =>{
@@ -17,31 +18,61 @@ const MainPageContents:React.FC =() =>{
     const[videoList ,setVideoList]=useState<File[]>([]);
     const[urlInfo,setUrlInfo]=useState<UrlInfo[]>([]);
     const[fileType, setFileType]=useState<string>("");
-    const[isImg, setIsImg]=useState<boolean>(false);
-    const[isVideo, setIsVideo]=useState<boolean>(false);
     const[isUpload ,setIsUpload]=useState<boolean>(false);
 
     const login_info = useContext(user_info);
 
     useEffect(() =>{
-      if(!isImg && !isVideo) return;
-        if(isImg == true){
-          setFileType("P");
+     console.log("isUpload : " , isUpload)
+    },[isUpload])
+/*
+    useEffect(() =>{
+
+       const hasImg = imgList.length > 0;
+        const hasVideo = videoList.length > 0;
+
+        if (!hasImg && !hasVideo) {
+          setIsUpload(false);
+          return;
         }
-        else if(isVideo == true){
+
+        if (hasImg && hasVideo) {
+          console.log("멀티 컴포넌트 활성화");
+          setFileType("M");
+        } else if (hasImg) {
+          console.log("2222")
+          setFileType("P");
+        } else if (hasVideo) {
+          console.log("2");
           setFileType("V");
         }
 
-        else if(isImg && isVideo){
-            console.log("멀티 컴포넌트 활성화");
-            setFileType("M");
-
-        }
-       setIsUpload(true);
+        setIsUpload(true);
       
     }, [imgList, videoList])
+     */
+    const GetDurationHandler =async(file:File):Promise<number> =>{
+      return new Promise((resolve, reject) => {
+        const url = URL.createObjectURL(file);
+        const video = document.createElement("video");
+          video.preload = "metadata";
 
-    const onChangeImg = (event: React.ChangeEvent<HTMLInputElement>) => {
+      video.onloadedmetadata = () => {
+        const duration = video.duration; // 초 단위
+        URL.revokeObjectURL(url);
+        resolve(duration);
+      };
+
+      video.onerror = (e) => {
+        URL.revokeObjectURL(url);
+        reject(e);
+      };
+
+      video.src = url;
+    });
+    }
+
+    const onChangeImg = async(event: React.ChangeEvent<HTMLInputElement>) => {
       const array=event.target.files;
       if(!array) return;
         const newImages: File[] = [];
@@ -58,28 +89,60 @@ const MainPageContents:React.FC =() =>{
                       fileName: file.name,
                       fileUrl: ImageUrl,
                       fileType: "image",
+                      fileTime:0
                     });
            }else{
                console.log("동영상");
                const VideoUrl = URL.createObjectURL(file);
+               const Duration:number = await GetDurationHandler(file);
+               const SecondDuration = Math.floor(Duration);
+               console.log("총 영상 길이 :" ,SecondDuration )
                newVideos.push(file);
                UrlInfos.push({
                       fileName: file.name,
                       fileUrl: VideoUrl,
                       fileType: "video",
+                      fileTime:SecondDuration
                });
            }
         }
       }
-      setUrlInfo(UrlInfos);
+      
         if (newImages.length > 0) {
             setImgList(prev => [...prev, ...newImages]);
-            setIsImg(true);
         }
         if (newVideos.length > 0) {
             setVideoList(prev => [...prev, ...newVideos]);
-            setIsVideo(true);
+
         }
+        const nextImgList = [...imgList, ...newImages];
+        const nextVideoList = [...videoList, ...newVideos];
+
+        const hasImg = nextImgList.length > 0;
+        const hasVideo = nextVideoList.length > 0;
+
+        console.log("nextImgList :", nextImgList, "nextVideoList :", nextVideoList);
+          if (!hasImg && !hasVideo) {
+                setIsUpload(false);
+                setFileType("");
+          } else {
+            if (hasImg && hasVideo) {
+                console.log("멀티 컴포넌트 활성화");
+                setFileType("M");
+            } else if (hasImg) {
+                console.log("2222");
+                setFileType("P");
+            } else if (hasVideo) {
+                console.log("2");
+                setFileType("V");
+            }
+                
+          }
+            setUrlInfo(UrlInfos);
+            setImgList(nextImgList);
+            setVideoList(nextVideoList);
+            setIsUpload(true);
+        
     }
     return (<div className="MainPageContents_Body">
              <div className="MainPageContents_FavoriteContents">
@@ -95,7 +158,7 @@ const MainPageContents:React.FC =() =>{
                     <h3>업로드</h3>
                </label>
                {isUpload && (<>
-                   <Modal FileType={fileType} ImgList={imgList} VideoList={videoList} FileUrl={urlInfo}/>
+                   <Modal FileType={fileType} ImgList={imgList} VideoList={videoList} FileUrl={urlInfo} />
                </>)}
              </div>
     </div>)

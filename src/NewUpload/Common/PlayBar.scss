@@ -1,0 +1,59 @@
+.PlayBar_Wrapper{
+  position: absolute;
+  margin-top: -6vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20vw;
+  border-radius: 20px;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(0, 0, 0, 0.40);
+  backdrop-filter: blur(12px);
+  display: flex;
+  justify-content: center; // 중앙 정렬
+  align-items: center;
+  color: #fff;
+  opacity: 1;        // ★ 일단 항상 보이게!
+  z-index: 10;       // 비디오 위에 올라오도록
+}
+.PlayBar_Progress{
+  height: 4px;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 2px;
+  cursor: pointer;
+
+  outline: none;
+
+  /* 트랙 */
+  &::-webkit-slider-runnable-track {
+    height: 4px;
+    border-radius: 2px;
+  }
+
+  /* 핸들 (●) */
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+
+    width: 14px;
+    height: 14px;
+
+    border-radius: 50%;
+    background: #ffffff;
+    border: 2px solid #00e4c7;    // 네 UI 기준 민트색
+    box-shadow: 0 0 6px rgba(0, 255, 200, 0.6);
+
+    margin-top: -5px; // 트랙 중앙 정렬
+
+    transition: transform .15s ease;
+
+    &:hover {
+      transform: scale(1.25);
+    }
+}
+}

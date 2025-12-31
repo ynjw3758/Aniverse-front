@@ -88,7 +88,7 @@ api.interceptors.request.use(async (config) => {
       console.warn("❌ refresh_token도 만료됨. 로그인 필요");
       localStorage.clear();
       window.location.href = "/login";
-      return Promise.reject(error);
+      //return Promise.reject(error);
     }
   }
 

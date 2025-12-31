@@ -2,7 +2,7 @@ import { Fragment, useEffect, useState } from "react";
 import "./UploadFormPanel.scss";
 import MapImg from"../../assets/images/uploadMap.png";
 import TapImg from"../../assets/images/uploadtap.png";
-import PublicImg from"../../assets/images/publicArea.png";
+import AnimalCh from"../../assets/images/UploadAnimal.png";
 
 interface props{
    IsLocal?:() => void;
@@ -70,8 +70,12 @@ const UploadFormPanel:React.FC<props> =({IsLocal ,AgainLocal ,ChageLocal}:props)
              <h4>태그 추가</h4>
            </div>
             <div className="UploadFormPanel_Contents">
-             <img src={PublicImg}/>
-             <h4>공개 범위</h4>
+             <img src={AnimalCh}/>
+             <h4>반려동물 선택</h4>
+           </div>
+           <div className="UploadFormPanel_Btn">
+            <button className="CancelBtn">취소</button>
+            <button className="UploadBtn">업로드</button>
            </div>
         </div>
     </Fragment>)

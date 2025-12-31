@@ -3,6 +3,7 @@ import "./Picture.scss";
 import SlideButton from "../Common/SlideButton";
 import UploadFormPanel from "../Common/UploadFormPanel";
 import KaMap from "../../Upload/KaMap";
+import {TagNormalizeHnadler} from"../../Utils/TagNormalize"
 
 interface props{
     FileInfo: File[]
@@ -33,6 +34,27 @@ type localinfo={
   Address:string,
   isActive:boolean
 }
+type MarkerData ={
+  marker: any; // kakao.maps.Marker
+  content: string;
+  id: string;
+  position: {
+    lat: number;
+    lng: number;
+  };
+  address?: string;
+  phone?: string;
+  isaddress: boolean;
+  isphone: boolean;
+  category_group_code?: string;
+  category_group_name?: string;
+  category_name?: string;
+}
+type NomalizeData={
+  category_group_code?: string;
+  category_group_name?: string;
+  category_name?: string;
+}
 
 
 const Picture : React.FC<props> =({FileInfo , UrlInfo ,onReady} :props) =>{
@@ -46,13 +68,16 @@ const Picture : React.FC<props> =({FileInfo , UrlInfo ,onReady} :props) =>{
   const[fileSize, setFileSize]=useState<number>(0);
   const[moveWidth ,setMoveWidth]=useState<number>(0);
   const[idxValue, setIdxValue]=useState<number>(0);
-  const[localdata , setLocaldata] = useState<any[]>([]);
+  const[localdata , setLocaldata] = useState<MarkerData>();
   const[localInfo , setLocalInfo]=useState<localinfo>();
+  const[tagData, setTagData]=useState<string[]>([]);
 
   const readyCalledRef = useRef(false);
   let RealMoveIdx = useRef<number>(0);
 
+
     useEffect(() =>{
+      if(!UrlInfo || UrlInfo.length ==0) return;
       if(FileInfo.length > 1) {
         setIsCnt(true);
         setSelected(UrlInfo[0].fileUrl);
@@ -65,38 +90,42 @@ const Picture : React.FC<props> =({FileInfo , UrlInfo ,onReady} :props) =>{
        
     },[FileInfo, UrlInfo])
 
+
+    useEffect(() =>{ //위치 데이터를 받고 카테고리 맵핑하기 위한 useeffect
+      console.log("맵핑하자");
+      if(!localdata) return;
+
+      const TagList = TagNormalizeHnadler({category_group_code:localdata.category_group_code,
+        category_group_name:localdata.category_group_name,
+        category_name:localdata.category_name
+      })
+
+      console.log("추출된 태그 리스트 :" , TagList)
+
+    },[localdata])
+
     const SelectPicture =(info:SlideInfo) =>{
       setImg(info.fileUrl);
       setSelected(info.fileUrl);
       setIdxValue(info.fileidx);
     }
+
+    const ApplyIndex =(idx: number, syncRealIdx = false) =>{
+        if (!UrlInfo[idx]) return;
+
+        if (syncRealIdx) {
+          RealMoveIdx.current = idx;
+        }
+
+        setIdxValue(idx);
+        setImg(UrlInfo[idx].fileUrl);
+        setSelected(UrlInfo[idx].fileUrl);
+    }
     const ChangeIdxHandler =(Idx:MoveInfo) =>{
-      if(Idx.Direct=="R"){
-        if(Idx.Event == "F"){
-            setIdxValue(Idx.FileIdx);
-            setImg(UrlInfo[Idx.FileIdx].fileUrl);
-            setSelected(UrlInfo[Idx.FileIdx].fileUrl);
-        }else{
-          RealMoveIdx.current = Idx.FileIdx;
-          setIdxValue(Idx.FileIdx);
-          setImg(UrlInfo[Idx.FileIdx].fileUrl);
-          setSelected(UrlInfo[Idx.FileIdx].fileUrl);
-        }
-
-      }else{
-        if(Idx.Event =="F"){
-            setIdxValue(Idx.FileIdx);
-            setImg(UrlInfo[Idx.FileIdx].fileUrl);
-            setSelected(UrlInfo[Idx.FileIdx].fileUrl);
-        }else{
-          RealMoveIdx.current =Idx.FileIdx; 
-            setImg(UrlInfo[Idx.FileIdx].fileUrl);
-            setSelected(UrlInfo[Idx.FileIdx].fileUrl);
-            setIdxValue(Idx.FileIdx);
-        }
-
-      }
-
+      
+      const { FileIdx, Event } = Idx;
+      const shouldSyncRealIdx = Event !== "F";
+      ApplyIndex(FileIdx, shouldSyncRealIdx)
       
     }
 
@@ -119,14 +148,13 @@ const Picture : React.FC<props> =({FileInfo , UrlInfo ,onReady} :props) =>{
     setIsLocal(true);
   }
 
-  const LocationdataHandler =(info:any) =>{
-
-    
+  const LocationdataHandler =(info:MarkerData) =>{
         setIsLocal(false);
         setLocaldata(info);
         setUploadlocal(info.content);
         setIslocalform(true);
-        setLocalInfo({Content:info.content , Address:info.address, isActive:true})
+        setLocalInfo({Content:info.content , Address:info.address ?? "", isActive:true})
+
   }
   const MapClose =() =>{
     setIsLocal(false);

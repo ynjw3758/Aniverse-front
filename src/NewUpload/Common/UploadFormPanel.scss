@@ -1,7 +1,6 @@
 .UploadFormPanel_Main{
     display: flex;
     flex-direction: column;
-    border: 1px solid black;
     background-color: transparent;
     width: 33vw;
     margin-left: 5vw;
@@ -55,13 +54,11 @@
 .UploadFormPanel_Contents,
 .UploadFormPanel_Contents:hover{
     border-radius: 20px;
-    margin-top: 3vh;
-    //margin-bottom: -1vh;
+    margin-top: 2vh;
     display: flex;
     flex-direction: row;  
     width: 100%;
-    height: 9vh;
-    //padding: 0 16px;
+    height: 7.5vh;
     align-items: center;
     background: rgba(255, 255, 255, 0.06);   /* 글래스 느낌 */
     border: 1px solid rgba(255, 255, 255, 0.12);
@@ -104,17 +101,17 @@
   flex: 1;                 // ⭐ 남는 공간 차지
   min-width: 0;            // ⭐ 말줄임/줄바꿈 안정화
   margin-top: 1vh;
-  font-size: 20px;
+  font-size: 15px;
 }
 
 .ActiveLocal_Main button{     // ⭐ 무조건 오른쪽으로
   position: absolute;        // ⭐ 혹시 다른 전역 CSS가 absolute 주는 경우 방지
-  top:3vh;
+  top:2vh;
   left: 29vw;
   display: flex;
   align-items: center;
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 400;
   color: white;
   border-radius: 20px;
   padding: 5px 10px 5px 10px;
@@ -126,4 +123,68 @@
     inset 0 0 0 1px rgba(255, 255, 255, 0.25),
     0 4px 10px rgba(0, 0, 0, 0.2);
   transition: all 0.2s ease;
+}
+.UploadFormPanel_Btn{
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  margin-top: 2vh;
+  justify-content: center;
+  align-items: center;
+
+}
+.UploadFormPanel_Btn button{
+  min-width: 3vw;
+  height: 5vh;
+  padding: 0 24px;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.UploadFormPanel_Btn .CancelBtn {
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.85);
+
+  backdrop-filter: blur(6px);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+.UploadFormPanel_Btn .CancelBtn:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.UploadFormPanel_Btn .UploadBtn {
+  background: linear-gradient(
+    135deg,
+    #1fe3c2,
+    #18c8aa
+  );
+
+  color: #ffffff;
+
+  box-shadow:
+    0 8px 20px rgba(24, 200, 170, 0.4);
+}
+
+.UploadFormPanel_Btn .UploadBtn:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 12px 28px rgba(24, 200, 170, 0.55);
+}
+
+.UploadFormPanel_Btn .UploadBtn:active {
+  transform: translateY(0);
+}
+
+.UploadFormPanel_Btn .UploadBtn:disabled {
+  background: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.5);
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
 }

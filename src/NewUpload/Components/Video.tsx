@@ -81,7 +81,25 @@ const Video : React.FC<props> =({FileInfo, UrlInfo ,onReady}:props) =>{
       setDuration(info.filetime)
 
     }
+    const ApplyIndex =(idx: number, syncRealIdx = false) =>{
+        if (!UrlInfo[idx]) return;
 
+        if (syncRealIdx) {
+          RealMoveIdx.current = idx;
+        }
+
+        setIdxValue(idx);
+        setVideo(UrlInfo[idx].fileUrl);
+        setSelected(UrlInfo[idx].fileUrl);
+    }
+    const ChangeIdxHandler =(Idx:MoveInfo) =>{
+      
+      const { FileIdx, Event } = Idx;
+      const shouldSyncRealIdx = Event !== "F";
+      ApplyIndex(FileIdx, shouldSyncRealIdx)
+      
+    }
+    /*
      const ChangeIdxHandler =(Idx:MoveInfo) =>{
       if(Idx.Direct=="R"){
         console.log("변수 :" , Idx)
@@ -112,6 +130,7 @@ const Video : React.FC<props> =({FileInfo, UrlInfo ,onReady}:props) =>{
 
       
     }
+      */
     const PlayHandler =(IsPlay:boolean) =>{
         if(IsPlay == true){
             videoRef.current?.play();

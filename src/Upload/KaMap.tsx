@@ -27,6 +27,9 @@ interface MarkerData {
   phone?: string;
   isaddress: boolean;
   isphone: boolean;
+  category_group_code?: string;
+  category_group_name?: string;
+  category_name?: string;
 }
 
 const KaMap =(props:LOcationData) =>{
@@ -133,6 +136,9 @@ useEffect(() => {
                       phone: data[i].phone,
                       isaddress: !!data[i].road_address_name,
                       isphone: !!data[i].phone,
+                      category_group_code:data[i].category_group_code,
+                      category_group_name:data[i].category_group_name,
+                      category_name:data[i].category_name
                     });
 
                     let iwPosition= new kakao.maps.LatLng(data[i].y, data[i].x)//인포윈도우 표시 위치입니다
@@ -283,7 +289,8 @@ useEffect(() => {
         <div className="item_list" >
           {checksearch && (<>
              <p>{markers.length}개의 결과를 찾았습니다</p>
-             {markers.map(({content, address, phone, position, isaddress,isphone,id
+             {markers.map(({content, address, phone, position, isaddress,isphone,id,category_group_code,
+             category_group_name ,category_name
 
           }, idx) =>(<div  key={idx} className="Kamp_list" onMouseOver={() =>{ 
               if (!mapRef1.current) return;
@@ -320,7 +327,9 @@ useEffect(() => {
               infoRef.current = customOverlay;
            }}
            onClick={() =>{
-            const location_data = {content, address, phone, position ,isaddress, isphone, id};
+            const location_data = {content, address, phone, position ,isaddress, isphone, id,
+              category_group_code, category_group_name, category_name
+            };
             props.onData(location_data);
            }}>
             <h3>{content}</h3>

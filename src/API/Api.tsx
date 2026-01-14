@@ -1,5 +1,5 @@
 // src/api.ts
-import axios from 'axios';
+import axios , { InternalAxiosRequestConfig }from 'axios';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -45,15 +45,91 @@ export const api = axios.create({
   withCredentials: true, // 쿠키 사용 시 필요
 });
 
+const refreshClient = axios.create({
+  baseURL: GATEWAY_URL,
+  withCredentials: true,
+});
+
+// ===============================
+// Refresh 상태 관리
+// ===============================
+let isRefreshing = false;
+let refreshQueue: ((token: string) => void)[] = [];
+
+const subscribeRefresh = (cb: (token: string) => void) => {
+  refreshQueue.push(cb);
+};
+
+const onRefreshed = (token: string) => {
+  refreshQueue.forEach((cb) => cb(token));
+  refreshQueue = [];
+};
+
+
 // ✅ access_token 자동 갱신 인터셉터
 
-api.interceptors.request.use(async (config) => {
-    console.log("인터셉트 config :" , config)
-  const exp = Number(localStorage.getItem("p_exp"));
-  const currentTime = Math.floor(Date.now() / 1000); // 초 단위
-  const timeLeft = exp - currentTime;
-  const context = config.url?.includes("login") ? "login" : "service";
- const isPublic = config.url?.includes(PUBGATEWAY_URL!);
+api.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
+  const url = config.url ?? "";
+
+  // ✅ refresh / login 요청은 인터셉터 로직 제외 (루프 방지)
+  if (url.includes("/token/refresh") || url.includes("/login")) {
+    return config;
+  }
+
+  const accessToken = localStorage.getItem("a_id");
+  const expRaw = localStorage.getItem("p_exp");
+
+  // 토큰/exp 없으면 그냥 통과
+  if (!accessToken || !expRaw) {
+    return config;
+  }
+
+  const exp = Number(expRaw);
+  const now = Math.floor(Date.now() / 1000);
+  const timeLeft = exp - now;
+
+  // ✅ 만료 60초 전 선제 갱신
+  if (timeLeft < 60) {
+    if (!isRefreshing) {
+      isRefreshing = true;
+      try {
+        // refresh 호출은 refreshClient로 (인터셉터 없는 인스턴스)
+        const res = await refreshClient.post("/token/refresh");
+        const newToken = res.data.data.access_token;
+        const newExp = res.data.data.exp;
+
+        localStorage.setItem("a_id", newToken);
+        localStorage.setItem("p_exp", String(newExp));
+
+        onRefreshed(newToken);
+      } catch (e) {
+        localStorage.clear();
+        window.location.href = "/login";
+        return Promise.reject(e);
+      } finally {
+        isRefreshing = false;
+      }
+    }
+
+    // refresh 끝날 때까지 대기했다가 새 토큰으로 진행
+    return await new Promise<InternalAxiosRequestConfig>((resolve) => {
+      subscribeRefresh((token) => {
+        config.headers.Authorization = `Bearer ${token}`;
+        resolve(config);
+      });
+    });
+  }
+
+  // 정상 토큰이면 그대로 헤더 세팅
+  config.headers.Authorization = `Bearer ${accessToken}`;
+  return config;
+});
+/*
+    const exp = Number(localStorage.getItem("p_exp"));
+    const currentTime = Math.floor(Date.now() / 1000); // 초 단위
+    const timeLeft = exp - currentTime;
+    const context = config.url?.includes("login") ? "login" : "service";
+    const isPublic = config.url?.includes(PUBGATEWAY_URL!);
     // ✅ public 요청이면 토큰 로직 생략
   if (isPublic) {
     console.log("🟢 공용 서비스 요청 → 토큰 확인 생략");
@@ -102,4 +178,4 @@ api.interceptors.request.use(async (config) => {
   return config;
 }, (error) => {
   return Promise.reject(error);
-});
+  */

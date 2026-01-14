@@ -8,6 +8,9 @@ interface props{
    IsLocal?:() => void;
    AgainLocal?:() => void;
    ChageLocal:localinfo | undefined;
+   IsTag?:() => void;
+   //AgainTag?:() => void;
+   //ChageTag:localinfo | undefined;
 }
 
 type localinfo={
@@ -16,12 +19,18 @@ type localinfo={
   isActive:boolean
 }
 
-const UploadFormPanel:React.FC<props> =({IsLocal ,AgainLocal ,ChageLocal}:props) =>{
+type TagInfo={
+TagList:string[]
+isActive:boolean
+}
+
+const UploadFormPanel:React.FC<props> =({IsLocal ,AgainLocal ,IsTag ,ChageLocal, }:props) =>{
 
     const[text, setText]=useState<string>("");
     const[textCnt, setTextCnt]=useState<number>(0);
     const[isLocalActive ,setIsLocalActive]=useState<boolean>(false);
     const[localInfo, setLocalInfo]=useState<localinfo>();
+    const[tagInfo, setTagInfo]=useState<TagInfo>();
    
 
      useEffect(() =>{
@@ -41,6 +50,10 @@ const UploadFormPanel:React.FC<props> =({IsLocal ,AgainLocal ,ChageLocal}:props)
 
     const ChangeLocalHandler =() =>{
       AgainLocal && AgainLocal();
+    }
+
+    const TagHandler =() =>{
+      IsTag && IsTag();
     }
 
     return(<Fragment>
@@ -65,9 +78,13 @@ const UploadFormPanel:React.FC<props> =({IsLocal ,AgainLocal ,ChageLocal}:props)
                <p>{ChageLocal?.Address}</p>
              </div>)}
            </div>
-            <div className="UploadFormPanel_Contents">
+            <div className="UploadFormPanel_Contents" 
+            onClick={TagHandler}>
              <img src={TapImg}/>
-             <h4>태그 추가</h4>
+             {tagInfo?.isActive ? (<h4>태그 추가</h4>) : (<>
+             <p>test</p>
+             </>)
+             }
            </div>
             <div className="UploadFormPanel_Contents">
              <img src={AnimalCh}/>

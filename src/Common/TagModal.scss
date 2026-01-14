@@ -1,0 +1,20 @@
+.TagModal_Main{
+  position: absolute;      // ✅ absolute → fixed
+  inset: 0;             // top:0 left:0 right:0 bottom:0
+  z-index: 40;       // ✅ 최상단
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 6vh;     // 모달 박스 위쪽 위치
+  width: 20vw;
+  height: 20vh;
+  background-color: brown;
+  top:10vh;
+  left: 10vw;
+  border-radius: 30px;
+}
+.TagModal_Main h2{
+    color: white;
+
+}

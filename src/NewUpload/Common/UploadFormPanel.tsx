@@ -82,7 +82,7 @@ const UploadFormPanel:React.FC<props> =({IsLocal ,AgainLocal ,IsTag ,ChageLocal,
             onClick={TagHandler}>
              <img src={TapImg}/>
              {tagInfo?.isActive ? (<h4>태그 추가</h4>) : (<>
-             <p>test</p>
+             <p>태그 추가</p>
              </>)
              }
            </div>

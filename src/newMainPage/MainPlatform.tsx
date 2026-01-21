@@ -18,14 +18,10 @@ import Main from "src/Home/Main";
 interface ResponseDataType {
       message: string;
       code: number;
-      response:object
+      errorcode:string;
+      timestamp:String;
+      
     }
-interface ResponseDataType {
-  message: string;
-  code: number;
-  response:object;
-  resultdata:any;
-}
 
 interface CustomError{
   errorcode:string;
@@ -145,7 +141,7 @@ const MainPlatform:React.FC =() =>{
                 setIsloading(false)
           }).catch(error =>{
               if(axios.isAxiosError<ResponseDataType>(error)){
-                  console.log("error code: " , error.response?.status);
+                  console.log("error code: " , error.response);
                   if(!error.response) {
                         console.warn("서버 응답 없음 (게이트웨이 연결 실패)");
                         navigate("/error/Gateway"); // 502로 간주
@@ -154,6 +150,11 @@ const MainPlatform:React.FC =() =>{
                   if(error.response?.status==400){
                       console.log("400에러 발생")
                       navigate("/error/BadRequest");
+                    }
+                    else if(error.response?.status==401){
+                           if(error.response.data.errorcode){
+                            
+                           }
                     }
                     else if(error.response?.status==415){
                         console.log("지원하지 않는 형식입니다.")

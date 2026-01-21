@@ -1,20 +1,50 @@
 .TagModal_Main{
   position: absolute;      // ✅ absolute → fixed
-  inset: 0;             // top:0 left:0 right:0 bottom:0
-  z-index: 40;       // ✅ 최상단
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  padding-top: 6vh;     // 모달 박스 위쪽 위치
-  width: 20vw;
-  height: 20vh;
-  background-color: brown;
-  top:10vh;
-  left: 10vw;
-  border-radius: 30px;
-}
-.TagModal_Main h2{
-    color: white;
+  left:16vw;
+  top:40vh;  
+  z-index: 20;       // ✅ 최상단
+  background: linear-gradient(
+    180deg,
+    #1fb3a6 0%,
+    #159f95 100%
+  );
+  border-radius: 22px;
+  box-shadow:
+    0 18px 36px rgba(0, 0, 0, 0.18),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    width: 40vw;
+    height: 40vh;
+    text-align: center;
 
+}
+.TagModal_Search{
+  display: flex;
+  flex-direction: row;
+
+}
+.TagModal_Search img{
+  width: 7vw;
+  height: 10vh;
+  position: relative;
+  left: -0.7vw;
+  top:-1vh;
+
+}
+.TagModal_Search input,
+.TagModal_Search input:hover,
+.TagModal_Search input:active{
+  border: none;
+  border-bottom: 1.5px solid rgba(255, 255, 255, 0.5);
+  background: transparent;
+  width: 35vw;
+  height: 5vh;
+  padding-left: 1.7vw;
+  margin-top: 1vh;
+  margin-left: -5vw;
+  color:white;
+}
+.TagModal_Search input::placeholder{
+   color:white;
 }

@@ -55,6 +55,7 @@
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none;  /* IE & Edge */
     border-right: 2px solid black;
+    z-index: 10;
 }
 .item_list p{
     color:black;
@@ -209,6 +210,7 @@
         scrollbar-width: none; /* Firefox */
         -ms-overflow-style: none;  /* IE & Edge */
         border-right: 2px solid black;
+        z-index: 10;
 
     }
     .item_list::-webkit-scrollbar{

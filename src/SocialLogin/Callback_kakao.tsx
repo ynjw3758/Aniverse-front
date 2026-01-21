@@ -121,6 +121,16 @@ const Callbackkakao =() =>{
           }
         ).then(response =>{
                 console.log("신규 회원 가입 :" , response)
+
+                login_info.addprofile(response.data.data.profile_img);
+                login_info.addeNickName(response.data.data.nickname);
+
+                localStorage.setItem("a_id" , response.headers.authorization);
+                localStorage.setItem("p_exp" , response.data.data.exp);
+                localStorage.setItem("id" , response.data.data.id);
+                refresh_token= cookies.get('refresh_token');
+                console.log("refreshToken : " ,refresh_token)
+                /*
               if(response.status == 201){
                 login_info.addprofile(response.data.data.profile_img);
                 login_info.addeNickName(response.data.data.nickname);
@@ -130,7 +140,18 @@ const Callbackkakao =() =>{
                 localStorage.setItem("id" , response.data.data.id);
                 refresh_token= cookies.get('refresh_token');
                 console.log("refreshToken : " ,refresh_token)
+              }else{
+                console.log("기존 게정 말고 다른 계정으로 새로 로그인 하는 경우")
+                                login_info.addprofile(response.data.data.profile_img);
+                login_info.addeNickName(response.data.data.nickname);
+
+                localStorage.setItem("a_id" , response.headers.authorization);
+                localStorage.setItem("p_exp" , response.data.data.exp);
+                localStorage.setItem("id" , response.data.data.id);
+                refresh_token= cookies.get('refresh_token');
+                console.log("refreshToken : " ,refresh_token)
               }
+                */
         }).catch(error =>{
             if(axios.isAxiosError<CustomError>(error)){
                   console.log("error code: " , error.response?.data.data);

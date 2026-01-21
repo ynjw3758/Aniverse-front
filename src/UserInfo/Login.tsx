@@ -162,6 +162,50 @@ const Login:React.FC= (props : {})=>{
             const logindata ={ id: EnterId,
                   password: EnterPass}
             api.defaults.headers.common['Authorization'] = access_token;
+             axios.post(`${PUBGATEWAY_URL}/login/login`,{
+                  id: EnterId,
+                  password: EnterPass
+                }, {
+                headers: { 'Content-Type': 'application/json' },
+                withCredentials: true
+                }).then(response =>{
+                console.log("결과 :" , response);
+                localStorage.setItem("a_id" , response.data.data.access_token);
+                localStorage.setItem("p_exp" , response.data.data.exp);
+                
+                let transe_time:Date = new Date(response.data.exp*1000);
+                let time:string="";
+                time =moment(transe_time).format('YYYY-MM-DD HH:mm').toString();
+                console.log("시간 변환 :" , time);
+                localStorage.setItem("p_exp" , response.data.data.exp);
+                  navigate("/main")
+                  return;
+            }).catch(error =>{
+                if(axios.isAxiosError<CustomError>(error)){
+
+                  if (!error.response) {
+                        console.warn("서버 응답 없음 (게이트웨이 연결 실패)");
+                        navigate("/error/Gateway"); // 502로 간주
+                        return;
+                    }
+
+                    if(error.response?.status==400){
+                        console.log("400에러 발생")
+                        navigate("/error/LbBadRequest");
+                    }
+                    else if(error.response?.status==415){
+                        console.log("지원하지 않는 형식입니다.")
+                        setIsloading(false);
+                    }
+                    else if(error.response?.status==500){
+                        navigate("/error/se-error")
+                    }
+                    else if(error.response?.status==502){
+                        navigate("/error/Gateway");
+                    }
+                }
+            })
+                /*
             api.post("/gateway/api-proxy" ,{
                 service: "common",
                 endpoint: "/login/login",
@@ -206,6 +250,7 @@ const Login:React.FC= (props : {})=>{
                     }
                 }
             })
+                */
         }
 
         }

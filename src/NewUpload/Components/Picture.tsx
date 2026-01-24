@@ -4,7 +4,7 @@ import SlideButton from "../Common/SlideButton";
 import UploadFormPanel from "../Common/UploadFormPanel";
 import KaMap from "../../Upload/KaMap";
 import {TagNormalizeHnadler} from"../../Utils/TagNormalize";
-import TagModal from "../../Common/TagModal";
+import TagModal from "../Common/TagModal";
 
 interface props{
     FileInfo: File[]

@@ -72,11 +72,47 @@
 .TagModal_Contents{
   display: flex;
   flex-direction: column;
-  //background-color: aqua;
   text-align: left;
 }
 .TagModal_Contents h4{
   margin-left: 2vw;
+}
+.TagModal_Edittor{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;  /* ✅ 양끝 정렬 */
+  flex-wrap: nowrap;              /* ✅ 줄바꿈 금지 */
+  gap: 0;                         /* ✅ vw gap 제거 */
+  width: 100%;
+}
+.TagModal_Edittor button{
+    border: none;
+  background: transparent;
+  cursor: pointer;
+  line-height: 1;
+  padding: 1vh 1vw;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.85);
+  transition:
+    background 0.15s ease,
+    box-shadow 0.15s ease,
+    color 0.15s ease,
+    transform 0.12s ease;
+}
+.TagModal_Edittor button:hover{
+  
+    background: rgba(255, 255, 255, 0.14);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+}
+.TagModal_Edittor button:active{
+    background: rgba(255, 255, 255, 0.85);
+  color: rgba(24, 120, 110, 0.95);
+
+  box-shadow:
+    0 6px 12px rgba(0, 0, 0, 0.15),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.6);
 }
 .TagModal_Divider{
   margin-top: -2vh;
@@ -112,6 +148,18 @@
 }
 .TagModal_SugTagsList p{
     margin: 0;                 // ⭐ 핵심
+  line-height: 1;            // 또는 1.1~1.2
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+.TagModal_SelTagsMain{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6vw;
+  margin-left: 1.5vw;
+}
+.TagModal_SelTagsMain > p{
+  margin: 0;                 // ⭐ 핵심
   line-height: 1;            // 또는 1.1~1.2
   font-size: 0.85rem;
   font-weight: 700;

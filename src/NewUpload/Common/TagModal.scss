@@ -89,3 +89,30 @@
     rgba(255, 255, 255, 0.05)
   );
 }
+.TagModal_SugTagsMain,
+.TagModal_SugTagsMain:hover{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6vw;
+  margin-left: 1.5vw;
+  cursor: pointer;
+}
+.TagModal_SugTagsList{
+  margin-top: 1vh;
+  padding: 1.5vh 1.5vw;   // 🔥 세로/가로 둘 다 줄임
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.95);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.35),
+    0 4px 10px rgba(0, 0, 0, 0.12);
+
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+.TagModal_SugTagsList p{
+    margin: 0;                 // ⭐ 핵심
+  line-height: 1;            // 또는 1.1~1.2
+  font-size: 0.85rem;
+  font-weight: 700;
+}

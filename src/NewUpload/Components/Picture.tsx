@@ -103,7 +103,7 @@ const Picture : React.FC<props> =({FileInfo , UrlInfo ,onReady} :props) =>{
       })
 
       console.log("추출된 태그 리스트 :" , TagList)
-
+       setTagData(TagList);
     },[localdata])
 
     const SelectPicture =(info:SlideInfo) =>{
@@ -196,7 +196,7 @@ const Picture : React.FC<props> =({FileInfo , UrlInfo ,onReady} :props) =>{
       <KaMap onData={LocationdataHandler} onclose={MapClose}/>
       </>)}
       {isTag && (<>
-      <TagModal />
+      <TagModal localTag={tagData}/>
       </>)}
     </Fragment>)
 }

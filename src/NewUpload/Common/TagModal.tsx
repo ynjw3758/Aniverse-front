@@ -1,9 +1,19 @@
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import "./TagModal.scss";
 import TagAddImg from"../../assets/images/Tagsearch.png";
 
 
-const TagModal =() =>{
+interface props{
+  localTag:string[]
+}
+const TagModal:React.FC<props> =({localTag}:props) =>{
+
+   const[selTags, setSelTags]=useState<string[]>([]);
+   const[sugTags,setSugTags]=useState<string[]>([])
+
+  useEffect(() =>{
+   console.log("위치 태그 데이터:" , localTag)
+  },[localTag])
 
 
     return(<Fragment>
@@ -18,7 +28,11 @@ const TagModal =() =>{
                 <p>test</p>
               <h4>추천 태그</h4>
               <div className="TagModal_Divider" />
-                <p>test</p>
+              <div className="TagModal_SugTagsMain">
+                {localTag.map((value, id) =>(<div className="TagModal_SugTagsList">
+                <p>{value}</p>
+                </div>))}
+              </div>
             </div>
         </div>
     </Fragment>)

@@ -7,8 +7,10 @@ interface props{
   localTag:string[]
 }
 const TagModal:React.FC<props> =({localTag}:props) =>{
-
+  
+   const[addTag, setAddTag]=useState<string>("")
    const[selTags, setSelTags]=useState<string[]>([])
+   const[editStatus, setEditStatus]=useState<boolean>(false);
 
     const sugTags = useMemo<string[]>(() => {
       console.log("위치 태그 데이터:", localTag);
@@ -21,23 +23,47 @@ const TagModal:React.FC<props> =({localTag}:props) =>{
     }, [localTag]);
 
 
+    const EditHandler =() =>{
+      if(editStatus == true){
+        setEditStatus(false)
+      }else setEditStatus(true);
+    }
+
+    const AddTagHandler =(Event :React.ChangeEvent<HTMLInputElement>) =>{
+       setAddTag(Event.target.value)
+    }
+
+    const KeyBordHandler =(Event:React.KeyboardEvent<HTMLInputElement>) =>{
+      if(Event.key == 'Enter'){
+        const test:string[]=[...selTags]
+        test.unshift(addTag);
+        setSelTags(test);
+      }
+    }
+
+
     return(<Fragment>
         <div className="TagModal_Main">
           <div className="TagModal_Search">
             <img src={TagAddImg}/>
-              <input placeholder="태그를 입력하세요"/>
+              <input placeholder="태그를 입력하세요"
+              onChange={AddTagHandler}
+              onKeyDown={KeyBordHandler}/>
             </div>
             <div className="TagModal_Contents">
               <div className="TagModal_Edittor">
                  <h4>현재 태그</h4>
-                 <button>편집</button>
+                 <button type="button" onClick={EditHandler}>편집</button>
               </div>
               
               <div className="TagModal_Divider" />
               <div className="TagModal_SelTagsMain">
                 {selTags.length == 0 ? (<div className="TagModal_SelTagsList">
                   <p>추가된 태그가 없습니다.</p>
-                    </div>):(<div>
+                    </div>):(<div className="test123445">
+                      {selTags.map((value, id) =>(<div className="TagModal_SugTagsList" >
+                <p>{value}</p>
+                </div>))}
                     </div>)}
               </div>
               <h4>추천 태그</h4>

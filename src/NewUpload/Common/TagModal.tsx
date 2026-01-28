@@ -15,26 +15,12 @@ const TagModal:React.FC<props> =({localTag}:props) =>{
    const [hiddenSug, setHiddenSug] = useState<Set<string>>(new Set());
 
    const edit :string = editStatus ? "TagModal_seledit" :"TagModal_SugTagsList";
-/*
-   useEffect(()=>{
-     setReSugTags(localTag)
-   },[localTag])
-   */
+
    const sugTags = useMemo(() => {
   if (!localTag?.length) return [];
   return Array.from(new Set(localTag)).filter(t => !hiddenSug.has(t));
 }, [localTag, hiddenSug]);
-/*
-    const sugTags = useMemo<string[]>(() => {
-      console.log("위치 태그 데이터:", localTag);
-      setReSugTags(localTag)
-      // 안전 처리 (null/undefined 대비)
-      if (!localTag || localTag.length === 0) return [];
 
-      // 중복 제거 + 최대 개수 제한 (선택)
-      return Array.from(new Set(localTag)).slice(0, 10);
-    }, [localTag]);
-*/
 
     const EditHandler =() =>{
       if(editStatus == true){
@@ -61,6 +47,14 @@ const TagModal:React.FC<props> =({localTag}:props) =>{
     useEffect(() =>{
       if(selTags.length===0) setEditStatus(false);
     },[selTags])
+
+    const CancelHandler =() =>{
+
+    }
+
+    const ConfirmHandler =() =>{
+
+    }
 
 
     return(<Fragment>
@@ -115,6 +109,10 @@ const TagModal:React.FC<props> =({localTag}:props) =>{
                 </div>))}
               </div>
             </div>
+             <div className="TagModal_Btn">
+              <button id="TagModal_cancel" onClick={CancelHandler}>취소</button>
+              <button id="TagModal_confirm" onClick={ConfirmHandler}>확인</button>
+             </div>
         </div>
       </div>
     </Fragment>)

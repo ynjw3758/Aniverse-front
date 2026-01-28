@@ -26,7 +26,7 @@
   backdrop-filter: blur(3px);
   -webkit-backdrop-filter: blur(3px);
     width: 40vw;
-    height: 40vh;
+    height: 48vh;
     text-align: center;
 
 }
@@ -213,4 +213,49 @@
   line-height: 1;            // 또는 1.1~1.2
   font-size: 0.85rem;
   font-weight: 700;
+}
+.TagModal_Btn{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2vh;
+  gap:2vw;
+}
+.TagModal_Btn button{
+    min-width: 140px;
+  height: 48px;
+  padding: 0 28px;
+  border-radius: 999px; /* 캡슐 */
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+
+  /* 글래스 느낌 */
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  color: rgba(255, 255, 255, 0.9);
+
+    transition: 
+    background 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.15s ease;
+}
+#TagModal_cancel{
+  background: rgba(255, 255, 255, 0.22);
+  color: rgba(255, 255, 255, 0.8);
+}
+#TagModal_confirm{
+  background: linear-gradient(
+    180deg,
+    rgba(120, 255, 240, 0.35),
+    rgba(40, 200, 190, 0.35)
+  );
+  box-shadow: 
+    0 4px 14px rgba(0, 0, 0, 0.15),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.3);
 }

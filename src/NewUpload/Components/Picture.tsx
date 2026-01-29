@@ -72,7 +72,8 @@ const Picture : React.FC<props> =({FileInfo , UrlInfo ,onReady} :props) =>{
   const[idxValue, setIdxValue]=useState<number>(0);
   const[localdata , setLocaldata] = useState<MarkerData>();
   const[localInfo , setLocalInfo]=useState<localinfo>();
-  const[tagData, setTagData]=useState<string[]>([]);
+  const[sugtagData, setSugtagData]=useState<string[]>([]);
+  const[orginTag, setOrigin]=useState<string[]>([]);
 
   const readyCalledRef = useRef(false);
   let RealMoveIdx = useRef<number>(0);
@@ -103,7 +104,7 @@ const Picture : React.FC<props> =({FileInfo , UrlInfo ,onReady} :props) =>{
       })
 
       console.log("추출된 태그 리스트 :" , TagList)
-       setTagData(TagList);
+       setSugtagData(TagList);
     },[localdata])
 
     const SelectPicture =(info:SlideInfo) =>{
@@ -168,6 +169,15 @@ const Picture : React.FC<props> =({FileInfo , UrlInfo ,onReady} :props) =>{
   const TagHandler =() =>{
     setIsTag(true);
   }
+
+  const TagCancelHandler =() =>{
+     setIsTag(false);
+  }
+
+  const TagConfirmHandler =(data:string[]) =>{
+      setOrigin(data);
+      setIsTag(false);
+  }
     return(<Fragment>
       <div className="UploadPicture_Main">
         <section className="UploadPicture_LeftSide">
@@ -190,13 +200,13 @@ const Picture : React.FC<props> =({FileInfo , UrlInfo ,onReady} :props) =>{
            </>)}
         </section>
         <UploadFormPanel IsLocal={LocalHandler} ChageLocal={localInfo} AgainLocal={AgLocalHandler} 
-        IsTag={TagHandler}/>
+        IsTag={TagHandler} TagData={orginTag}/>
       </div>
       {isLocal && (<>
       <KaMap onData={LocationdataHandler} onclose={MapClose}/>
       </>)}
       {isTag && (<>
-      <TagModal localTag={tagData}/>
+      <TagModal localTag={sugtagData} OnCancel={TagCancelHandler} OnConfirm={TagConfirmHandler}/>
       </>)}
     </Fragment>)
 }

@@ -5,8 +5,10 @@ import XImg from"../../assets/images/ximg.png";
 
 interface props{
   localTag:string[]
+  OnCancel : () => void
+  OnConfirm :(data:string[]) => void
 }
-const TagModal:React.FC<props> =({localTag}:props) =>{
+const TagModal:React.FC<props> =({localTag ,OnCancel ,OnConfirm}:props) =>{
   
    const[addTag, setAddTag]=useState<string>("")
    const[selTags, setSelTags]=useState<string[]>([])
@@ -15,6 +17,7 @@ const TagModal:React.FC<props> =({localTag}:props) =>{
    const [hiddenSug, setHiddenSug] = useState<Set<string>>(new Set());
 
    const edit :string = editStatus ? "TagModal_seledit" :"TagModal_SugTagsList";
+
 
    const sugTags = useMemo(() => {
   if (!localTag?.length) return [];
@@ -35,10 +38,13 @@ const TagModal:React.FC<props> =({localTag}:props) =>{
     const KeyBordHandler =(Event:React.KeyboardEvent<HTMLInputElement>) =>{
       if(Event.key == 'Enter'){
         if(addTag.length !==0){
-          const sletag:string[]=[...selTags]
-          sletag.unshift(addTag);
-          setSelTags(sletag);
-          setAddTag("");
+          if(selTags.length < 5){
+            const sletag:string[]=[...selTags]
+            sletag.unshift(addTag);
+            setSelTags(sletag);
+            setAddTag("");
+          }else return;
+
         }else return
 
       }
@@ -49,11 +55,11 @@ const TagModal:React.FC<props> =({localTag}:props) =>{
     },[selTags])
 
     const CancelHandler =() =>{
-
+          OnCancel();
     }
 
     const ConfirmHandler =() =>{
-
+        OnConfirm(selTags);
     }
 
 
@@ -67,6 +73,7 @@ const TagModal:React.FC<props> =({localTag}:props) =>{
               onKeyDown={KeyBordHandler}
               value={addTag}/>
             </div>
+            <p id="TagModal_maxInfo">최대 <strong>5개</strong>까지 선택 가능합니다</p>
             <div className="TagModal_Contents">
               <div className="TagModal_Edittor">
                  <h4>현재 태그</h4>
@@ -77,7 +84,8 @@ const TagModal:React.FC<props> =({localTag}:props) =>{
               <div className="TagModal_SelTagsMain">
                 {selTags.length == 0 ? (<div className="TagModal_SelTagsList">
                   <p>추가된 태그가 없습니다.</p>
-                    </div>):(<div className="TagModal_SelTagsList">
+                    </div>):(
+                      <div className="TagModal_SelTagsList">
                       {selTags.map((value, id) =>(<div className={edit} >
                         {!editStatus && (<>
                            <p>{value}</p>
@@ -96,13 +104,16 @@ const TagModal:React.FC<props> =({localTag}:props) =>{
               <div className="TagModal_SugTagsMain">
                 {sugTags.map((value, id) =>(<div className="TagModal_SugTagsList" onClick={
                   ()=>{
-                     setHiddenSug(prev => {
-                        const next = new Set(prev);
-                        next.add(value);
-                        return next;
-                      });
+                    if(selTags.length < 5){
+                      setHiddenSug(prev => {
+                          const next = new Set(prev);
+                          next.add(value);
+                          return next;
+                        });
 
                       setSelTags(prev => (prev.includes(value) ? prev : [...prev, value]));
+                    }else return;
+
                   }
                 }>
                 <p>{value}</p>

@@ -7,6 +7,7 @@ import AnimalCh from"../../assets/images/UploadAnimal.png";
 interface props{
    IsLocal?:() => void;
    AgainLocal?:() => void;
+   TagData:string[];
    ChageLocal:localinfo | undefined;
    IsTag?:() => void;
    //AgainTag?:() => void;
@@ -24,7 +25,7 @@ TagList:string[]
 isActive:boolean
 }
 
-const UploadFormPanel:React.FC<props> =({IsLocal ,AgainLocal ,IsTag ,ChageLocal, }:props) =>{
+const UploadFormPanel:React.FC<props> =({IsLocal ,AgainLocal ,IsTag ,ChageLocal,TagData }:props) =>{
 
     const[text, setText]=useState<string>("");
     const[textCnt, setTextCnt]=useState<number>(0);
@@ -78,11 +79,21 @@ const UploadFormPanel:React.FC<props> =({IsLocal ,AgainLocal ,IsTag ,ChageLocal,
                <p>{ChageLocal?.Address}</p>
              </div>)}
            </div>
-            <div className="UploadFormPanel_Contents" 
+            <div className="UploadFormPanel_TagContents" 
             onClick={TagHandler}>
-             <img src={TapImg}/>
-             {tagInfo?.isActive ? (<h4>태그 추가</h4>) : (<>
-             <p>태그 추가</p>
+              <div className="UploadFormPanel_header">
+                <img src={TapImg}/>
+                <h4>태그</h4>
+             </div>
+             {tagInfo?.isActive ? (<>
+             </>) : (<>
+                <div className="UploadFormPanel_TagData">
+                  <div className="UploadFormPanel_TagListWrapper">
+                {TagData.map((value, idx) =>(<div className="UploadFormPanel_TagList">
+               <p>{value}</p>
+             </div>))}
+              </div>
+             </div>
              </>)
              }
            </div>

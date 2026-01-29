@@ -1,4 +1,4 @@
-@media (max-width: 1540px){
+@media (max-width: 1549px){
 .KMap_main{
     position:absolute;
     top:-1.5vh;
@@ -155,11 +155,11 @@
     height: 9vh;
 }
 }
-@media (min-width: 1550px) and (max-width: 1920px) {
+@media (min-width: 1550px) {
     .KMap_main{
         position:absolute;
         top:-1.5vh;
-        left:20vw;
+        left:15vw;
         width: 63vw;
         border: 1px solid black;
         text-align: center;
@@ -168,7 +168,7 @@
     .Kmap_search{
         position:absolute;
         top:0vh;
-        left: 37vw;
+        left: -3.5vw;
         z-index: 20;
         display: flex;
         flex-direction: row;
@@ -178,10 +178,10 @@
         margin-bottom: 20px;
         padding-top: 10px;
         padding-bottom: 10px;
-        padding-left: 20px;
+        padding-left: 30px;
         padding-right: 20px;
         border-radius: 25px;
-        width: 20vw;
+        width: 15vw;
         margin-top: -1.2vh;
     }
     .Kmap_search img,
@@ -201,7 +201,8 @@
     
     .item_list{
         position: absolute;
-        top:-2vh;
+        top:-1.5vh;
+        left:-5vw;
         width:20vw;
         background-color:white;  
         max-height: 81.5vh;
@@ -221,47 +222,37 @@
         list-style: none;
     }
     .Kamp_list{
-    width:18vw;
-    height: fit-content;
-    display: flex;
-    flex-direction: column;
-    background: rgba(255,255,255,0.95);
-    border: 1px solid rgba(15, 23, 42, 0.08);
-    box-shadow: 0 10px 26px rgba(15, 23, 42, 0.08);
-    border-radius: 10px;
-    margin-bottom: 1vh;
-    margin-top: 3vh;
-    margin-left: 1vw;
-    padding-bottom: 1vh;
+        width:18vw;
+        height: fit-content;
+        display: flex;
+        flex-direction: column;
+        background: rgba(255,255,255,0.95);
+        border: 1px solid rgba(15, 23, 42, 0.08);
+        box-shadow: 0 10px 26px rgba(15, 23, 42, 0.08);
+        border-radius: 10px;
+        margin-bottom: 1vh;
+        margin-top: 3vh;
+        margin-left: 1vw;
+        padding-bottom: 1vh;
     }
     .Kamp_list h3{
         padding-left: 2.5vw;
         font-weight: bold;
+        color:black
     }
     .Kamp_list p{
-        padding-left: 1vw;
+        padding-left: 2.5vw;
         margin-top: -1vh;
+        color: black;
+
     }
     .Kamp_list:hover{
 
         background: rgba(255,255,255,0.95);
         border: 1px solid rgba(15, 23, 42, 0.08);
         box-shadow: 0 10px 26px rgba(15, 23, 42, 0.08);
-        /*
-        border-radius: 15px;
-        margin-bottom: 1vh;
-        margin-top: 3vh;
-        margin-left: 0.5vw;
-        background-color: #d0ebff;
-        transition: background-color 0.2s ease;
-        width:14vw;
-        height: fit-content;
-        display: flex;
-        flex-direction: column;
-        */
         cursor: pointer;
-    
-        
+
     }
     
     .list h3{
@@ -308,10 +299,10 @@
 }
 #kmap_Search{
     position: absolute;
-    top:-1vh;
-    left: 15vw;
+    top:-2vh;
+    left: -4.5vw;
     z-index: 30;
-    width: 5vw;
-    height: 9vh;
+    width: 4vw;
+    height: 6vh;
 }
 }

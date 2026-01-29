@@ -1,3 +1,4 @@
+@media (max-width: 1549px){
 .MainPlatformSide{
    display: flex;
    flex-direction: column;
@@ -78,4 +79,89 @@
     margin-top: 0vh;
     margin-left: 1vw;
     cursor: pointer;
+}
+}
+
+@media (min-width: 1550px) {
+
+    .MainPlatformSide{
+   display: flex;
+   flex-direction: column;
+  background: linear-gradient(180deg, #053c59 0%, #074c5d 100%);
+  color: #e6faff; /* 밝은 흰-민트톤 텍스트 */
+  font-family: 'Inter', 'Noto Sans KR', sans-serif;
+  font-size: 15px;
+  box-sizing: border-box;
+  width: 15vw;
+  height: 90vh;
+  position: relative;
+  top:5vh;
+  left: 2vw;
+  border-radius: 25px;
+  padding-top: 1vh;
+  padding-left: 2vw;
+}
+.MainPlatformSideTitle{
+    display: flex;
+    flex-direction: row;
+    margin-left: -1vw;
+}
+.MainPlatformSideTitle img{
+    width: 5vw;
+    height: 5vh;
+    margin-top: 2.5vh;
+}
+.MainPlatformSideTitle H2{
+    margin-left: -0.5VW;
+}
+.MainPlatformSideList,
+.MainPlatformSideList:hover{
+    display: flex;
+    flex-direction: row;
+    margin-left: -1vw;
+    cursor: pointer;
+    margin-top: 2vh;
+}
+.MainPlatformSideList img{
+    width: 5vw;
+    height: 6vh;
+    margin-top: 1vh;
+}
+.MainPlatformSideList h2{
+    margin-top: 1.5vh;
+}
+.MainPlatformSideSetting,
+.MainPlatformSideSetting:hover{
+    display: flex;
+    flex-direction: row;
+    margin-left: 0vw;
+    cursor: pointer;
+    margin-top: 2vh;
+}
+.MainPlatformSideSetting img{
+    width: 3vw;
+    height: 5vh;
+    margin-top: 1vh;
+}
+.MainPlatformSideSetting h2{
+   margin-top: 1.5vh;
+   margin-left: 1vw;
+}
+.MainPlatformSidePlus,
+.MainPlatformSidePlus:hover{
+    display: flex;
+    flex-direction: row;
+    margin-top: 30vh;
+    margin-left: 0vw;
+    cursor: pointer;
+}
+.MainPlatformSidePlus img{
+    width: 3vw;
+    height: 5vh;
+}
+.MainPlatformSidePlus h2{
+    margin-top: 0vh;
+    margin-left: 1vw;
+    cursor: pointer;
+}
 }

@@ -71,7 +71,7 @@ const onRefreshed = (token: string) => {
 api.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
   const url = config.url ?? "";
 
-  
+
   // ✅ refresh / login 요청은 인터셉터 로직 제외 (루프 방지)
   if (url.includes("/token/refresh") || url.includes("/login")) {
     return config;
@@ -105,8 +105,8 @@ api.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
         onRefreshed(newToken);
       } catch (e) {
         localStorage.clear();
-        window.location.href = "/login";
-        return Promise.reject(e);
+        //window.location.href = "/login";
+        //return Promise.reject(e);
       } finally {
         isRefreshing = false;
       }

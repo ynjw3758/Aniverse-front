@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react"
-import Picture from"../../NewUpload/Components/Picture";
-import Video from"../../NewUpload/Components/Video";
-import Multi from"../../NewUpload/Components/Multi";
+import Picture from"../../Components/Picture";
+import Video from"../../Components/Video";
+import Multi from"../../Components/Multi";
 import "./Modal.scss";
-import UploadFormPanel from "./UploadFormPanel";
 
 interface props{
 FileType:string
 FileUrl:UrlInfo[]
 ImgList:File[]
 VideoList:File[]
+onReady?: () => void;
 }
 
 type UrlInfo={
@@ -20,7 +20,7 @@ type UrlInfo={
 }
 
 
-const Modal:React.FC<props> =({FileType ,FileUrl ,ImgList ,VideoList}:props) =>{
+const Modal:React.FC<props> =({FileType ,FileUrl ,ImgList ,VideoList ,onReady}:props) =>{
 
     const[isImg, setIsImg]=useState<boolean>(false);
     const[isVideo, setIsVideo]=useState<boolean>(false);
@@ -29,17 +29,13 @@ const Modal:React.FC<props> =({FileType ,FileUrl ,ImgList ,VideoList}:props) =>{
 
     useEffect(() =>{
         setIsLoading(true)
-        console.log("url정보 :" , FileUrl)
         if(FileType === "P"){
-           console.log("사진 파일")
            setIsImg(true);
         }
         else if(FileType === "V"){
-           console.log("영상 파일 ")
            setIsVideo(true);
 
         }else if(FileType === "M"){
-           console.log("멀티 파일 ")
            setIsMulti(true);
         }
 

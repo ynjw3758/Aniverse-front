@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useMemo, useState } from "react";
 import "./TagModal.scss";
-import TagAddImg from"../../assets/images/Tagsearch.png";
-import XImg from"../../assets/images/ximg.png";
+import TagAddImg from"../../../../assets/images/Tagsearch.png";
+import XImg from"../../../../assets/images/ximg.png";
 
 interface props{
   localTag:string[]
@@ -12,7 +12,6 @@ const TagModal:React.FC<props> =({localTag ,OnCancel ,OnConfirm}:props) =>{
   
    const[addTag, setAddTag]=useState<string>("")
    const[selTags, setSelTags]=useState<string[]>([])
-   const[reSugTags,setReSugTags]=useState<string[]>([])
    const[editStatus, setEditStatus]=useState<boolean>(false);
    const [hiddenSug, setHiddenSug] = useState<Set<string>>(new Set());
 

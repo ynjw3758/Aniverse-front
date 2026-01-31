@@ -134,7 +134,6 @@ const AllChatItems =({ChatInfoList ,StandDate ,newDate,ReadChatcnt ,DeleteChat ,
                <div key={date}>
                 <button>{date}</button>
                 {chats.map((data) => {
-                const test = IsMine ? "" :"" 
                 const className = data.type === "mine" ? "AllChatDiv_MyStand" : "AllChatDiv_OtherStand";
                 return (
                     <div key={data.messageId} className={className}>

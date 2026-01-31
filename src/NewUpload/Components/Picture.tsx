@@ -1,10 +1,11 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 import "./Picture.scss";
-import SlideButton from "../Common/SlideButton";
-import UploadFormPanel from "../Common/UploadFormPanel";
+import SlideButton from "../Common/buttons/SlideButton";
+import UploadFormPanel from "../Common/features/form/UploadFormPanel";
 import KaMap from "../../Upload/KaMap";
 import {TagNormalizeHnadler} from"../../Utils/TagNormalize";
-import TagModal from "../Common/TagModal";
+import TagModal from "../Common/features/Tags/TagModal";
+import PetSelectModal from "../Common/features/petsel/PetSelectModal";
 
 interface props{
     FileInfo: File[]
@@ -65,7 +66,8 @@ const Picture : React.FC<props> =({FileInfo , UrlInfo ,onReady} :props) =>{
   const[uploadlocal ,setUploadlocal]=useState<string>("");
   const[isCnt, setIsCnt]=useState<boolean>(false);
   const[isLocal, setIsLocal]=useState<boolean>(false);
-   const[isTag, setIsTag]=useState<boolean>(false);
+  const[isTag, setIsTag]=useState<boolean>(false);
+  const[isPet, setIsPet]=useState<boolean>(false);
   const[islocalform , setIslocalform]=useState<boolean>(false);
   const[fileSize, setFileSize]=useState<number>(0);
   const[moveWidth ,setMoveWidth]=useState<number>(0);
@@ -178,6 +180,10 @@ const Picture : React.FC<props> =({FileInfo , UrlInfo ,onReady} :props) =>{
       setOrigin(data);
       setIsTag(false);
   }
+
+  const PetHandler =() =>{
+    setIsPet(true);
+  }
     return(<Fragment>
       <div className="UploadPicture_Main">
         <section className="UploadPicture_LeftSide">
@@ -200,13 +206,16 @@ const Picture : React.FC<props> =({FileInfo , UrlInfo ,onReady} :props) =>{
            </>)}
         </section>
         <UploadFormPanel IsLocal={LocalHandler} ChageLocal={localInfo} AgainLocal={AgLocalHandler} 
-        IsTag={TagHandler} TagData={orginTag}/>
+        IsTag={TagHandler} TagData={orginTag} IsPet={PetHandler}/>
       </div>
       {isLocal && (<>
       <KaMap onData={LocationdataHandler} onclose={MapClose}/>
       </>)}
       {isTag && (<>
       <TagModal localTag={sugtagData} OnCancel={TagCancelHandler} OnConfirm={TagConfirmHandler}/>
+      </>)}
+      {isPet && (<>
+       <PetSelectModal />
       </>)}
     </Fragment>)
 }

@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import user_info from "../../Context/Userdata";
 import "./MainPageContents.scss";
 import UploadImg from"../../assets/images/Mainplus.png";
-import Modal from "../../NewUpload/Common/Modal";
+import Modal from "../../NewUpload/Common/Modal/Modal";
 
 
 type UrlInfo={
@@ -19,38 +19,10 @@ const MainPageContents:React.FC =() =>{
     const[urlInfo,setUrlInfo]=useState<UrlInfo[]>([]);
     const[fileType, setFileType]=useState<string>("");
     const[isUpload ,setIsUpload]=useState<boolean>(false);
+    const [isModalReady, setIsModalReady] = useState(false);
 
     const login_info = useContext(user_info);
 
-    useEffect(() =>{
-     console.log("isUpload : " , isUpload)
-    },[isUpload])
-/*
-    useEffect(() =>{
-
-       const hasImg = imgList.length > 0;
-        const hasVideo = videoList.length > 0;
-
-        if (!hasImg && !hasVideo) {
-          setIsUpload(false);
-          return;
-        }
-
-        if (hasImg && hasVideo) {
-          console.log("멀티 컴포넌트 활성화");
-          setFileType("M");
-        } else if (hasImg) {
-          console.log("2222")
-          setFileType("P");
-        } else if (hasVideo) {
-          console.log("2");
-          setFileType("V");
-        }
-
-        setIsUpload(true);
-      
-    }, [imgList, videoList])
-     */
     const GetDurationHandler =async(file:File):Promise<number> =>{
       return new Promise((resolve, reject) => {
         const url = URL.createObjectURL(file);
@@ -74,6 +46,7 @@ const MainPageContents:React.FC =() =>{
 
     const onChangeImg = async(event: React.ChangeEvent<HTMLInputElement>) => {
       const array=event.target.files;
+       setIsUpload(true);
       if(!array) return;
         const newImages: File[] = [];
         const newVideos: File[] = [];
@@ -107,7 +80,7 @@ const MainPageContents:React.FC =() =>{
            }
         }
       }
-      
+        
         if (newImages.length > 0) {
             setImgList(prev => [...prev, ...newImages]);
         }
@@ -141,7 +114,7 @@ const MainPageContents:React.FC =() =>{
             setUrlInfo(UrlInfos);
             setImgList(nextImgList);
             setVideoList(nextVideoList);
-            setIsUpload(true);
+            //setIsUpload(true);
         
     }
     return (<div className="MainPageContents_Body">
@@ -157,8 +130,15 @@ const MainPageContents:React.FC =() =>{
                         />
                     <h3>업로드</h3>
                </label>
+             {isUpload && (<>
+               {!isModalReady  && (<div className="UploadModal_Loading_Overlay">
+             <div className="UploadModal_Spinner" />
+              <p>파일 준비 중입니다...</p>
+             </div>)}
+             </>)}
                {isUpload && (<>
-                   <Modal FileType={fileType} ImgList={imgList} VideoList={videoList} FileUrl={urlInfo} />
+                   <Modal FileType={fileType} ImgList={imgList} VideoList={videoList} FileUrl={urlInfo} 
+                   onReady={() => setIsModalReady(true)} />
                </>)}
              </div>
     </div>)

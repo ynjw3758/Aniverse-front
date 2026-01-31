@@ -1,6 +1,6 @@
 import "./SlideButton.scss";
-import RrightImg from"../../assets/images/RightArrow.png";
-import LeftImg from"../../assets/images/LeftArrow.png";
+import RrightImg from"../../../assets/images/RightArrow.png";
+import LeftImg from"../../../assets/images/LeftArrow.png";
 import { useEffect, useState } from "react";
 
 

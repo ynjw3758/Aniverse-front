@@ -1,8 +1,8 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 import "./Multi.scss";
-import PlayButton from "../Common/PlayButton";
-import PlayBar from "../Common/PlayBar";
-import SlideButton from "../Common/SlideButton";
+import PlayButton from "../Common/buttons/PlayButton";
+import PlayBar from "../Common/player/PlayBar";
+import SlideButton from "../Common/buttons/SlideButton";
 
 
 interface props{

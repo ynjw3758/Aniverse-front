@@ -1,8 +1,8 @@
 import { Fragment, useEffect, useState } from "react";
 import "./UploadFormPanel.scss";
-import MapImg from"../../assets/images/uploadMap.png";
-import TapImg from"../../assets/images/uploadtap.png";
-import AnimalCh from"../../assets/images/UploadAnimal.png";
+import MapImg from"../../../../assets/images/uploadMap.png";
+import TapImg from"../../../../assets/images/uploadtap.png";
+import AnimalCh from"../../../../assets/images/UploadAnimal.png";
 
 interface props{
    IsLocal?:() => void;
@@ -10,6 +10,7 @@ interface props{
    TagData:string[];
    ChageLocal:localinfo | undefined;
    IsTag?:() => void;
+   IsPet? :() => void
    //AgainTag?:() => void;
    //ChageTag:localinfo | undefined;
 }
@@ -25,7 +26,7 @@ TagList:string[]
 isActive:boolean
 }
 
-const UploadFormPanel:React.FC<props> =({IsLocal ,AgainLocal ,IsTag ,ChageLocal,TagData }:props) =>{
+const UploadFormPanel:React.FC<props> =({IsLocal ,AgainLocal ,IsTag ,ChageLocal,TagData, IsPet}:props) =>{
 
     const[text, setText]=useState<string>("");
     const[textCnt, setTextCnt]=useState<number>(0);
@@ -55,6 +56,9 @@ const UploadFormPanel:React.FC<props> =({IsLocal ,AgainLocal ,IsTag ,ChageLocal,
 
     const TagHandler =() =>{
       IsTag && IsTag();
+    }
+    const PetHandler =() =>{
+      IsPet && IsPet();
     }
 
     return(<Fragment>
@@ -97,7 +101,7 @@ const UploadFormPanel:React.FC<props> =({IsLocal ,AgainLocal ,IsTag ,ChageLocal,
              </>)
              }
            </div>
-            <div className="UploadFormPanel_Contents">
+            <div className="UploadFormPanel_Contents" onClick={PetHandler}>
              <img src={AnimalCh}/>
              <h4>반려동물 선택</h4>
            </div>

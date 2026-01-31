@@ -20,6 +20,7 @@ const MainPageContents:React.FC =() =>{
     const[fileType, setFileType]=useState<string>("");
     const[isUpload ,setIsUpload]=useState<boolean>(false);
     const [isModalReady, setIsModalReady] = useState(false);
+    const [pendingFiles, setPendingFiles] = useState<File[]>([]);
 
     const login_info = useContext(user_info);
 
@@ -44,77 +45,89 @@ const MainPageContents:React.FC =() =>{
     });
     }
 
-    const onChangeImg = async(event: React.ChangeEvent<HTMLInputElement>) => {
-      const array=event.target.files;
-       setIsUpload(true);
-      if(!array) return;
+  useEffect(() => {
+      if (!pendingFiles || pendingFiles.length === 0) return;
+
+      let cancelled = false;
+
+      const FileSave = async () => {
         const newImages: File[] = [];
         const newVideos: File[] = [];
-        const UrlInfos:UrlInfo[]=[];
-      for(let count =0; count<array.length;count++){
-        if (array[count] !== null) {
-            const file:File = array[count];
-           if (file && file.type.substring(0, 5) === "image") {
-               console.log("이미지");
-               const ImageUrl = URL.createObjectURL(file);
-               newImages.push(file);
-               UrlInfos.push({
-                      fileName: file.name,
-                      fileUrl: ImageUrl,
-                      fileType: "image",
-                      fileTime:0
-                    });
-           }else{
-               console.log("동영상");
-               const VideoUrl = URL.createObjectURL(file);
-               const Duration:number = await GetDurationHandler(file);
-               const SecondDuration = Math.floor(Duration);
-               console.log("총 영상 길이 :" ,SecondDuration )
-               newVideos.push(file);
-               UrlInfos.push({
-                      fileName: file.name,
-                      fileUrl: VideoUrl,
-                      fileType: "video",
-                      fileTime:SecondDuration
-               });
-           }
-        }
-      }
-        
-        if (newImages.length > 0) {
-            setImgList(prev => [...prev, ...newImages]);
-        }
-        if (newVideos.length > 0) {
-            setVideoList(prev => [...prev, ...newVideos]);
+        const urlInfos: UrlInfo[] = [];
 
-        }
-        const nextImgList = [...imgList, ...newImages];
-        const nextVideoList = [...videoList, ...newVideos];
+        for (let i = 0; i < pendingFiles.length; i++) {
+          if (cancelled) return;
 
-        const hasImg = nextImgList.length > 0;
-        const hasVideo = nextVideoList.length > 0;
+          const file = pendingFiles[i];
+          if (!file) continue;
 
-        console.log("nextImgList :", nextImgList, "nextVideoList :", nextVideoList);
-          if (!hasImg && !hasVideo) {
-                setIsUpload(false);
-                setFileType("");
-          } else {
-            if (hasImg && hasVideo) {
-                console.log("멀티 컴포넌트 활성화");
-                setFileType("M");
-            } else if (hasImg) {
-                console.log("2222");
-                setFileType("P");
-            } else if (hasVideo) {
-                console.log("2");
-                setFileType("V");
-            }
-                
+          if (file.type.startsWith("image")) {
+            const imageUrl = URL.createObjectURL(file);
+            newImages.push(file);
+            urlInfos.push({
+              fileName: file.name,
+              fileUrl: imageUrl,
+              fileType: "image",
+              fileTime: 0,
+            });
+          } else if (file.type.startsWith("video")) {
+            const videoUrl = URL.createObjectURL(file);
+
+            const duration = await GetDurationHandler(file);
+            if (cancelled) return;
+
+            urlInfos.push({
+              fileName: file.name,
+              fileUrl: videoUrl,
+              fileType: "video",
+              fileTime: Math.floor(duration),
+            });
+            newVideos.push(file);
           }
-            setUrlInfo(UrlInfos);
-            setImgList(nextImgList);
-            setVideoList(nextVideoList);
-            //setIsUpload(true);
+        }
+
+        if (cancelled) return;
+
+        // ✅ 상태 업데이트는 "한 번씩"만 (prev 기반 append)
+        setImgList((prev) => [...prev, ...newImages]);
+        setVideoList((prev) => [...prev, ...newVideos]);
+        setUrlInfo(urlInfos);
+
+        // ✅ fileType 계산: 기존 길이 + 새로 추가된 길이로 계산
+        // (imgList/videoList는 stale일 수 있으니 length만 ref로 들고 가는게 더 완벽하지만,
+        //  지금 구조가 "선택 후 바로 모달" 단발이면 이 방식도 잘 동작하는 편)
+        const hasImg = (imgList.length + newImages.length) > 0;
+        const hasVideo = (videoList.length + newVideos.length) > 0;
+
+        if (!hasImg && !hasVideo) {
+          setIsUpload(false);
+          setFileType("");
+        } else if (hasImg && hasVideo) {
+          setFileType("M");
+        } else if (hasImg) {
+          setFileType("P");
+        } else {
+          setFileType("V");
+        }
+
+        // ✅ 처리 끝났으면 pendingFiles 비우기
+        setPendingFiles([]);
+      };
+
+      FileSave();
+
+      return () => {
+        cancelled = true;
+      };
+}, [pendingFiles]);
+
+     
+    const onChangeImg = async(event: React.ChangeEvent<HTMLInputElement>) => {
+        const files = event.target.files;
+        if (!files || files.length === 0) return;
+          setPendingFiles(Array.from(files));
+          event.target.value = "";
+          setIsUpload(true);
         
     }
     return (<div className="MainPageContents_Body">
@@ -130,15 +143,12 @@ const MainPageContents:React.FC =() =>{
                         />
                     <h3>업로드</h3>
                </label>
+
              {isUpload && (<>
-               {!isModalReady  && (<div className="UploadModal_Loading_Overlay">
-             <div className="UploadModal_Spinner" />
-              <p>파일 준비 중입니다...</p>
-             </div>)}
              </>)}
                {isUpload && (<>
                    <Modal FileType={fileType} ImgList={imgList} VideoList={videoList} FileUrl={urlInfo} 
-                   onReady={() => setIsModalReady(true)} />
+                   onReady={() => setIsModalReady(false)} />
                </>)}
              </div>
     </div>)

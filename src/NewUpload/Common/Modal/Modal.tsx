@@ -50,13 +50,15 @@ const Modal:React.FC<props> =({FileType ,FileUrl ,ImgList ,VideoList ,onReady}:p
           </div>
         )}
         {isImg && (<>
-        <Picture FileInfo={ImgList} UrlInfo={FileUrl} onReady={() => setIsLoading(false)} />
+        <Picture FileInfo={ImgList} UrlInfo={FileUrl} onReady={() => {setIsLoading(false)
+          onReady && onReady()
+        }} />
         </>)}
         {isVideo && (<>
         <Video FileInfo={VideoList} UrlInfo={FileUrl} onReady={() => setIsLoading(false)} />
         </>)}
         {isMulti && (<>
-        <Multi VideoList={VideoList} PictureList={ImgList} UrlInfo={FileUrl} onReady={() => setIsLoading(false)}/>
+        <Multi VideoList={VideoList} PictureList={ImgList} UrlInfo={FileUrl} onReady={() => {setIsLoading(false)}}/>
         </>)}
         
         </div>

@@ -94,11 +94,9 @@
     margin-top: 2vh;
     display: flex;
     flex-wrap: wrap;
-    flex-direction: row;  
+    flex-direction: column;  
     width: 100%;
     height: auto;
-    //max-height: 10vh;
-    //align-items: center;
     background: rgba(255, 255, 255, 0.06);   /* 글래스 느낌 */
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 14px;
@@ -177,7 +175,7 @@
   margin-top: 2vh;
   justify-content: center;
   align-items: center;
-
+  margin-bottom: 1vh;
 }
 .UploadFormPanel_Btn button{
   min-width: 3vw;
@@ -474,6 +472,7 @@
   margin-top: 2vh;
   justify-content: center;
   align-items: center;
+  
 
 }
 .UploadFormPanel_Btn button{

@@ -65,10 +65,11 @@ const onRefreshed = (token: string) => {
   refreshQueue = [];
 };
 
-
+console.log("32323")
 // ✅ access_token 자동 갱신 인터셉터
 
 api.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
+  console.log("11111 : " , config)
   const url = config.url ?? "";
 
 
@@ -79,22 +80,26 @@ api.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
 
   const accessToken = localStorage.getItem("a_id");
   const expRaw = localStorage.getItem("p_exp");
-
+   console.log("accessToken :"  ,accessToken)
+   console.log("expRaw:" ,expRaw)
   // 토큰/exp 없으면 그냥 통과
   if (!accessToken || !expRaw) {
+    console.log("통과?")
     return config;
   }
 
   const exp = Number(expRaw);
   const now = Math.floor(Date.now() / 1000);
   const timeLeft = exp - now;
-
+  console.log("아니 이게 뭐애")
   // ✅ 만료 60초 전 선제 갱신
   if (timeLeft < 60) {
     if (!isRefreshing) {
       isRefreshing = true;
+      console.log("2")
       try {
         // refresh 호출은 refreshClient로 (인터셉터 없는 인스턴스)
+        console.log("1")
         const res = await refreshClient.post("/token/refresh");
         const newToken = res.data.data.access_token;
         const newExp = res.data.data.exp;
@@ -122,6 +127,7 @@ api.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
   }
 
   // 정상 토큰이면 그대로 헤더 세팅
+  console.log("3")
   config.headers.Authorization = `Bearer ${accessToken}`;
   return config;
 });

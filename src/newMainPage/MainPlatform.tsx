@@ -91,7 +91,6 @@ const MainPlatform:React.FC =() =>{
           navigate(`/main/${param.userid}`);
         }
         else{
-            console.log("2")
           setIsready(true);
           //setIsready(false);
           access_token =localStorage.getItem("a_id")!;
@@ -153,7 +152,7 @@ const MainPlatform:React.FC =() =>{
                     }
                     else if(error.response?.status==401){
                            if(error.response.data.errorcode){
-                            
+
                            }
                     }
                     else if(error.response?.status==415){
@@ -161,7 +160,7 @@ const MainPlatform:React.FC =() =>{
                         setIsloading(false);
                     }
                     else if(error.response?.status==500){
-                        navigate("/error/se-error")
+                        //navigate("/error/se-error")
                     }
                     else if(error.response?.status==502){
                         navigate("/error/Gateway");

@@ -3,6 +3,9 @@ import "./Video.scss";
 import PlayButton from "../Common/buttons/PlayButton";
 import PlayBar from "../Common/player/PlayBar";
 import SlideButton from "../Common/buttons/SlideButton";
+import KaMap from "src/Upload/KaMap";
+import TagModal from "../Common/features/Tags/TagModal";
+import PetSelectModal from "../Common/features/petsel/PetSelectModal";
 
 interface props{
     FileInfo: File[]
@@ -44,6 +47,9 @@ const Video : React.FC<props> =({FileInfo, UrlInfo ,onReady}:props) =>{
       const [currentTime, setCurrentTime] = useState(0);
       const[showOverlay, setShowOverlay] = useState(true);
       const[isPlaying, setIsPlaying]=useState<boolean>(false);
+      const[isLocal, setIsLocal]=useState<boolean>(false);
+      const[isTag, setIsTag]=useState<boolean>(false);
+      const[isPet, setIsPet]=useState<boolean>(false);
       const[isType,setIsType]=useState<string>("main");
 
       const readyCalledRef = useRef(false);
@@ -99,38 +105,7 @@ const Video : React.FC<props> =({FileInfo, UrlInfo ,onReady}:props) =>{
       ApplyIndex(FileIdx, shouldSyncRealIdx)
       
     }
-    /*
-     const ChangeIdxHandler =(Idx:MoveInfo) =>{
-      if(Idx.Direct=="R"){
-        console.log("변수 :" , Idx)
-        if(Idx.Event == "F"){
-            setIdxValue(Idx.FileIdx);
-            setVideo(UrlInfo[Idx.FileIdx].fileUrl);
-            setSelected(UrlInfo[Idx.FileIdx].fileUrl);
-        }else{
-          RealMoveIdx.current = Idx.FileIdx;
-          setIdxValue(Idx.FileIdx);
-          setVideo(UrlInfo[Idx.FileIdx].fileUrl);
-          setSelected(UrlInfo[Idx.FileIdx].fileUrl);
-        }
 
-      }else{
-        if(Idx.Event =="F"){
-            setIdxValue(Idx.FileIdx);
-            setVideo(UrlInfo[Idx.FileIdx].fileUrl);
-            setSelected(UrlInfo[Idx.FileIdx].fileUrl);
-        }else{
-          RealMoveIdx.current =Idx.FileIdx; 
-            setVideo(UrlInfo[Idx.FileIdx].fileUrl);
-            setSelected(UrlInfo[Idx.FileIdx].fileUrl);
-            setIdxValue(Idx.FileIdx);
-        }
-
-      }
-
-      
-    }
-      */
     const PlayHandler =(IsPlay:boolean) =>{
         if(IsPlay == true){
             videoRef.current?.play();
@@ -183,7 +158,18 @@ const Video : React.FC<props> =({FileInfo, UrlInfo ,onReady}:props) =>{
           videoRef.current.currentTime = 0;  // 실제 비디오 재생 위치도 0초로
         }
     }
-
+/*
+        
+          {isLocal && (<>
+          <KaMap onData={LocationdataHandler} onclose={MapClose}/>
+          </>)}
+          {isTag && (<>
+          <TagModal localTag={sugtagData} OnCancel={TagCancelHandler} OnConfirm={TagConfirmHandler}/>
+          </>)}
+          {isPet && (<>
+          <PetSelectModal />
+          </>)}
+          */
     return(<Fragment>
         <div className="UploadVideo_Main">
           <section className="UploadVideo_LeftSide"
@@ -226,6 +212,7 @@ const Video : React.FC<props> =({FileInfo, UrlInfo ,onReady}:props) =>{
                </section>
             </>)}
         </div>
+
     </Fragment>)
 }
 export default Video;

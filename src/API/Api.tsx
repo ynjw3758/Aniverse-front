@@ -110,8 +110,8 @@ api.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
         onRefreshed(newToken);
       } catch (e) {
         localStorage.clear();
-        //window.location.href = "/login";
-        //return Promise.reject(e);
+        window.location.href = "/login";
+        return Promise.reject(e);
       } finally {
         isRefreshing = false;
       }

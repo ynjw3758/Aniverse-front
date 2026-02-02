@@ -8,7 +8,7 @@
 .PetSelectModal_Main{
   position: absolute;      // ✅ absolute → fixed
   left:25vw;
-  top:40vh;  
+  top:20vh;  
   z-index: 20;       // ✅ 최상단
   background: linear-gradient(
     180deg,
@@ -16,17 +16,191 @@
     rgba(33,183,169,0.55) 35%,
     rgba(18,152,142,0.60) 100%
   );
-
   border-radius: 22px;
-
   box-shadow:
     0 18px 36px rgba(0, 0, 0, 0.18),
     inset 0 0 0 1px rgba(255, 255, 255, 0.25);
-
   backdrop-filter: blur(3px);
   -webkit-backdrop-filter: blur(3px);
     width: 40vw;
     height: auto;
     text-align: center;
 
+}
+.PetSelectModal_Title{
+  position: relative;
+  margin: 0;
+  padding: 16px 0 20px;   /* 아래 공간 = 수평선 자리 */
+  text-align: center;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: rgba(255,255,255,0.95);
+}
+
+/* ✅ 제목 아래 수직선 */
+.PetSelectModal_Title::after{
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+
+  width: 72%;             /* ← 가로선 길이 (조절 포인트) */
+  height: 1px;
+
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.00),
+    rgba(255,255,255,0.35),
+    rgba(255,255,255,0.00)
+  );
+}
+.PetSelectModal_Card{
+    margin-left: 4vw;
+    width: 30vw;
+    display: flex;
+    flex-direction: column;
+    padding: 18px 16px 20px;
+    border-radius: 16px;
+
+    /* ✅ 배경 (유리 느낌 핵심) */
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.10),
+        rgba(255, 255, 255, 0.04)
+    );
+
+    /* ✅ 테두리 */
+    border: 1px solid rgba(255, 255, 255, 0.22);
+
+    /* ✅ 깊이감 */
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.18),
+        0 8px 24px rgba(0, 0, 0, 0.15);
+}
+.PetSelectModal_Card p{
+    margin: 0 0 14px;
+    font-size: 0.9rem;
+    line-height: 1.45;
+    color: rgba(255, 255, 255, 0.70);
+    text-align: center;
+}
+.PetSelectModal_Header{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+
+}
+.PetSelectModal_Header p{
+  margin: 0;
+  white-space: nowrap;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  z-index: 1; /* 이미지 위로 */
+}
+
+.PetSelectModal_Header img{
+  width: 5vw;
+  height: 8vh;
+  object-fit: contain;
+  flex-shrink: 0;
+  margin-top: 0.5vh;
+}
+/* 👉 텍스트 기준으로 붙이기 */
+.PetSelectModal_Header .left {
+  margin-right: -1.5vw;       /* 텍스트 바로 옆 */
+}
+
+.PetSelectModal_Header .right {
+  margin-left: -1.5vw;
+}
+.PetSelectModal_AddBtn{
+  margin-left: 3vw;
+  width: 80%;
+  height: 50px;
+  border-radius: 999px;
+
+  background: rgba(20, 180, 170, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 1rem;
+  font-weight: 800;
+
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.12s ease;
+}
+
+.PetSelectModal_AddBtn:hover {
+  background: rgba(30, 210, 195, 0.32);
+  transform: translateY(-1px);
+}
+
+.PetSelectModal_bottomBt{
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 16px !important;
+  width: 100% !important;
+  margin-top: 18px;
+  margin-left: -2vw;
+}
+
+/* 버튼: 전역 button 스타일/absolute 같은 거 다 무력화 */
+.PetSelectModal_bottomBt .PetSelectModal_Btn{
+  position: static !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 auto !important;
+  width: 30% !important;
+  max-width: 180px;
+
+  height: 52px;
+  border-radius: 999px;
+
+  border: 1px solid rgba(255,255,255,0.25);
+  color: rgba(255,255,255,0.9);
+
+  cursor: pointer;
+  background: rgba(255,255,255,0.10);
+
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+/* 취소 */
+.PetSelectModal_bottomBt .PetSelectModal_Btn.Cancel{
+  background: rgba(255,255,255,0.10);
+}
+
+/* 확인 */
+.PetSelectModal_bottomBt .PetSelectModal_Btn.Confirm{
+  background: rgba(45,220,200,0.35);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.25),
+    0 8px 20px rgba(0,0,0,0.18);
+}
+
+.PetSelectModal_bottomBt .PetSelectModal_Btn.Cancel:hover {
+  background: rgba(255,255,255,0.16);
+  transform: translateY(-1px);
+}
+
+
+.PetSelectModal_bottomBt .PetSelectModal_Btn.Confirm:hover {
+  background: rgba(55,235,215,0.45);
+  transform: translateY(-1px);
+}
+@media (max-width: 768px) {
+  .PetSelectModal_Header .left{
+    margin-right: -16px;
+  }
+  .PetSelectModal_Header .right{
+    margin-left: -16px;
+  }
 }

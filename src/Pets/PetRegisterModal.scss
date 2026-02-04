@@ -1,0 +1,71 @@
+.PetRegisterModal_Main{
+    display: flex;
+    flex-direction: column;
+
+}
+.PetRegisterModal_Title{
+  font-size: 1rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+  margin: 0;
+}
+.PetRegisterModal_Title::after{
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+
+  width: 72%;             /* ← 가로선 길이 (조절 포인트) */
+  height: 1px;
+
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.00),
+    rgba(255,255,255,0.35),
+    rgba(255,255,255,0.00)
+  );
+}
+.PetRegisterModal_Header{
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 56px; /* 모바일 헤더 정석 높이 */
+  padding: 0 16px;
+  margin-bottom: 2vh;
+}
+.PetRegisterModal_Header img{
+    position: absolute;
+    top:-3vh;
+    left: -3vw;
+    height:15vh;
+}
+.PetRegisterModal_Contents{
+    display: flex;
+    flex-direction: column;
+}
+.PetRegister_ProfileCircle {
+  position: relative;
+
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+}
+
+.PetRegister_PlusIcon {
+  font-size: 32px;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1;
+}

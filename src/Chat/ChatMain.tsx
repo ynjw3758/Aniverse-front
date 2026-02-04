@@ -23,7 +23,7 @@ import WebSocket_Chat_Provider from "../Context/WebSocker_Chat_Provider";
 import ChatList from "./Chatlist/ChatList";
 import Dupleroom from "./AddChat/Dupleroom";
 import ChatMainSide from "./ChatMainSide";
-import Side_Search from "../CommonSide/Side_Search";
+import Side_Search from "../Common/Side_Search";
 import ShowChatContext from "../Context/ShowChatContext";
 import WebSocketAlarm_Provider from "../Context/WebSocketAlarm_Provider";
 import ChatNotificationMain from "../Notification/ChatNotificationMain";

@@ -2,14 +2,23 @@ import "./PetRegisterModal.scss";
 import beforeImg from"../assets/images/begorearrow.png";
 import MaleImg from"../assets/images/male.png";
 import FemaleImg from"../assets/images/female.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import SpeciesPicker from "./components/SpeciesPicker";
 
 const PetRegisterModal =() =>{
     const[isprofile, setIsprofile]=useState<boolean>(false);
-    const[imgfile, setimgfile]=useState<string>("");
-    const [sex, setSex] = useState("");
+    const[isType, setIsType]=useState<string>("form")
+    const[imgfile, setimgfile]=useState<string>("")
+    const[species, setSpecies]=useState<boolean>(false)
+    const [gender, setGender] = useState<'male' | 'female' | null>(null);
 
-    const handleChange =(event: React.ChangeEvent<HTMLInputElement>) =>{
+    useEffect(() =>{
+        return () => {
+            if (imgfile) URL.revokeObjectURL(imgfile);
+        };
+    },[imgfile])
+
+        const handleChange =(event: React.ChangeEvent<HTMLInputElement>) =>{
        const files = event.target.files;
        if (!files || files.length === 0) return;
        const file = files[0];
@@ -18,12 +27,17 @@ const PetRegisterModal =() =>{
        setIsprofile(true);
     }
 
+    const openSpeciesModal =() =>{
+         setIsType("species")
+    }
+
     return(<div className="PetRegisterModal_Main">
-        <div className="PetRegisterModal_Header">
-            <img src={beforeImg} />
-            <h3 className="PetRegisterModal_Title">새 애완동물 등록</h3>
-        </div>
-        <div className="PetRegisterModal_Contents">
+        {isType == "form" && (<>
+            <div className="PetRegisterModal_Header">
+                <img src={beforeImg} />
+                <h3 className="PetRegisterModal_Title">새 애완동물 등록</h3>
+            </div>
+                    <div className="PetRegisterModal_Contents">
             {!isprofile && (<>
                       <label className="PetRegister_ProfileCircle">
                 <input
@@ -45,21 +59,34 @@ const PetRegisterModal =() =>{
                     <input placeholder="이름을 입력해주세요..."/>
                </div>
                <div className="PetRegister_SelectSex">
-                  <div className="PetRegister_male" onClick={() =>{
-                    setSex("male")
+                  <div className={`PetRegister_male ${gender === 'male' ? 'active' : ''}`} onClick={() =>{
+                    setGender("male")
                   }}>
                       <img src={MaleImg}/>
                       <p>수컷</p>
                   </div>
-                  <div className="PetRegister_female" onClick={() =>{
-                    setSex("female")
+                  <div className={`PetRegister_female ${gender === 'female' ? 'active' : ''}`} onClick={() =>{
+                    setGender("female")
                   }}>
                       <img src={FemaleImg}/>
                       <p>암컷</p>
                   </div>
                </div>
+                <div className="PetRegister_Field">
+                    <label>종</label>
+                    <button 
+                        type="button"
+                        className="PetRegister_Select"
+                        onClick={openSpeciesModal}
+                    >
+                        {species ? "test" : "어떤 종인가요?"}
+                    </button>
+                </div>
             </div>
         </div>
+        </>)}
+        {isType == "species" && (<SpeciesPicker />)}
+
     </div>)
 
 }

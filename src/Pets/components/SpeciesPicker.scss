@@ -1,0 +1,87 @@
+.SpeciesPicker_Title{
+  font-size: 1rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+  margin: 0;
+}
+.SpeciesPicker_Title::after{
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+
+  width: 72%;             /* ← 가로선 길이 (조절 포인트) */
+  height: 1px;
+
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.00),
+    rgba(255,255,255,0.35),
+    rgba(255,255,255,0.00)
+  );
+}
+.SpeciesPicker_Header{
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 56px; /* 모바일 헤더 정석 높이 */
+  padding: 0 16px;
+  margin-bottom: 2vh;
+}
+.SpeciesPicker_Header img{
+    position: absolute;
+    top:-3vh;
+    left: -3vw;
+    height:15vh;
+}
+.SpeciesPicker_container{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(140px, 170px));
+  justify-content: center; /* 그리드 덩어리 가운데 */
+  gap: 28px;
+  padding: 20px;   
+}
+
+.SpeciesPicker_item {
+    display: flex;
+    flex-direction: column;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(12px);
+    cursor: pointer;
+    transition: 0.2s ease;
+    border-radius: 18px;
+    align-items: center;
+    justify-content: center;
+    /*
+  aspect-ratio: 1 / 1;
+  border-radius: 18px;
+
+  display: flex;
+  flex-direction: column;  
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(12px);
+
+  cursor: pointer;
+  transition: 0.2s ease;
+  */
+}
+
+.SpeciesPicker_item img {
+  width: clamp(60px, 7vw, 92px);
+  height: clamp(60px, 7vw, 92px);
+  object-fit: contain;
+  display:block;
+}
+
+.SpeciesPicker_item span {
+  font-size: 14px;
+  color: white;
+}

@@ -8,7 +8,7 @@
 .PetSelectModal_Main{
   position: absolute;      // ✅ absolute → fixed
   left:25vw;
-  top:20vh;  
+  top:11vh;  
   z-index: 20;       // ✅ 최상단
   background: linear-gradient(
     180deg,
@@ -23,7 +23,8 @@
   backdrop-filter: blur(3px);
   -webkit-backdrop-filter: blur(3px);
     width: 40vw;
-    height: auto;
+    height: 100%;
+    max-height: max-content;
     text-align: center;
 
 }

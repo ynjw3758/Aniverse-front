@@ -230,9 +230,21 @@ const Sign:React.FC=()=> {
     const response_userinfo = () =>{
 
         console.log("아이디 :" ,EnterId)
+        axios.post("http://localhost:8091/api/auth/sign", {
+                name:EnterName,
+                //phone:phonnumber,
+                email:EnterEmail,
+                address : main_address+" "+Enteraddress,
+                nickname:EnterNicName,
+                password:EnterPass,
+                id:EnterId
+        }).then((response =>{
+            
+        }))
+        /*
         api.post(`${PUBGATEWAY_URL}/user/sign` ,{
                 name:EnterName,
-                /*phone:phonnumber,*/
+                //phone:phonnumber,
                 email:EnterEmail,
                 address : main_address+" "+Enteraddress,
                 nickname:EnterNicName,
@@ -266,7 +278,7 @@ const Sign:React.FC=()=> {
                 console.log("error response: " , error.response?.data);
          }
             })
-
+*/
     }
 
     const resultcerfitication =() =>{

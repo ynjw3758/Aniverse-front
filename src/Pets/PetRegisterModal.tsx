@@ -1,11 +1,13 @@
 import "./PetRegisterModal.scss";
 import beforeImg from"../assets/images/begorearrow.png";
-import CameraImg from "../assets/images/cameraimg.png";
+import MaleImg from"../assets/images/male.png";
+import FemaleImg from"../assets/images/female.png";
 import { useState } from "react";
 
 const PetRegisterModal =() =>{
     const[isprofile, setIsprofile]=useState<boolean>(false);
     const[imgfile, setimgfile]=useState<string>("");
+    const [sex, setSex] = useState("");
 
     const handleChange =(event: React.ChangeEvent<HTMLInputElement>) =>{
        const files = event.target.files;
@@ -31,17 +33,32 @@ const PetRegisterModal =() =>{
                     style={{ display: "none" }}
                         />
              <span className="PetRegister_PlusIcon">+</span>
-                 <img
-                    src={CameraImg}
-                    alt="camera"
-                    className="PetRegister_CameraIcon"
-                    />
           </label>
             </>)}
             {isprofile && (<div className="PetRegister_ProfileCircle">
                 <img src={imgfile} className="PetRegister_ProfileImg"/>
             </div>)}
             <p >사진을 업로드 해주세요</p>
+            <div className="PetRegister_InputForm">
+               <div className="PetRegister_InputName">
+                   <h4>이름</h4>
+                    <input placeholder="이름을 입력해주세요..."/>
+               </div>
+               <div className="PetRegister_SelectSex">
+                  <div className="PetRegister_male" onClick={() =>{
+                    setSex("male")
+                  }}>
+                      <img src={MaleImg}/>
+                      <p>수컷</p>
+                  </div>
+                  <div className="PetRegister_female" onClick={() =>{
+                    setSex("female")
+                  }}>
+                      <img src={FemaleImg}/>
+                      <p>암컷</p>
+                  </div>
+               </div>
+            </div>
         </div>
     </div>)
 

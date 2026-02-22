@@ -47,9 +47,11 @@
     flex-direction: column;
     align-items: center;
 }
-.PetRegisterModal_Contents p{
+.PetRegisterModal_Contents > p{
     color: white;
-    
+    padding: 0;
+    font-size: 15px;
+    font-weight: 300;
 }
 .PetRegister_ProfileCircle {
   position: relative;
@@ -65,7 +67,6 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  margin-bottom: 2vh;
 }
 .PetRegister_ProfileImg{
     width: 100%;
@@ -80,11 +81,134 @@
   color: rgba(255, 255, 255, 0.9);
   line-height: 1;
 }
-.PetRegister_CameraIcon {
-  position: absolute;
-  left:-0.2vw;
-  top: 2vh;
-  width: 10vw;
-  height: 105h;
-  opacity: 0.9;
+
+.PetRegister_InputForm{
+  padding: 18px 16px 16px;
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.10);
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  width: 100%;
+  max-width: 30vw;
+
+}
+.PetRegister_InputName{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  /* ✅ 상위에서 가운데 정렬 먹는 것 방지 */
+  text-align: left;
+}
+.PetRegister_InputName h4{
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.85);
+  margin: 0;
+}
+.PetRegister_InputName input{
+  height: 46px;
+  padding: 0 14px;
+
+  /* ✅ input이 input처럼 보이게 */
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.20);
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  outline: none;
+
+  font-size: 14px;
+  font-weight: 500; /* 600은 너무 진해서 ‘타이틀’처럼 보임 */
+  color: rgba(255,255,255,0.92);
+
+  /* ✅ 중앙정렬 방지 */
+  text-align: left;
+
+  box-shadow:
+    inset 0 1px 2px rgba(255,255,255,0.10),
+    0 10px 20px rgba(0,0,0,0.12);
+
+  transition: 0.2s ease;
+}
+.PetRegister_InputName input::placeholder{
+  color: rgba(255,255,255,0.45);
+}
+
+.PetRegister_InputName input:focus{
+  border-color: rgba(120,255,210,0.65);
+  box-shadow:
+    0 0 0 3px rgba(120,255,210,0.18),
+    inset 0 1px 2px rgba(255,255,255,0.12);
+}
+.PetRegister_SelectSex{
+  display: flex;
+  gap: 14px;
+  margin-top: 12px;
+}
+.PetRegister_SelectSex  img{
+  width: 5vw;
+  object-fit: contain;
+  transition: 0.25s ease;
+  margin-left: -2vw;
+}
+.PetRegister_SelectSex p{
+    color: white;
+    padding: 0;
+    font-size: 15px;
+    font-weight: 300;
+    margin-left: -2vw;
+}
+
+.PetRegister_male,
+.PetRegister_female{
+  flex: 1;
+  height: 5vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  border-radius: 16px;
+  cursor: pointer;
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  font-size: 14px;
+  font-weight: 600;
+
+  transition: 0.25s ease;
+  outline: none;
+}
+
+.PetRegister_male{
+  background: rgba(120,255,210,0.10);
+  border: 1px solid rgba(120,255,210,0.35);
+  color: rgba(180,255,235,0.95);
+}
+
+.PetRegister_male img{
+  filter: drop-shadow(0 0 6px rgba(120,255,210,0.6));
+}
+.PetRegister_female{
+  background: rgba(255,160,210,0.10);
+  border: 1px solid rgba(255,160,210,0.35);
+  color: rgba(255,200,235,0.95);
+}
+
+.PetRegister_female img{
+  filter: drop-shadow(0 0 6px rgba(255,160,210,0.6));
 }

@@ -41,11 +41,15 @@ const router = createBrowserRouter([
     errorElement:<Not_found />,
     children:[
       {path:'/' , element:<Main />},
-      {path:'/find' , element:<Loginfind />},
       {path:"/reset" , element:<Resetpassword Userid={""} />},
       {path:"/link" , element:<Kconnet />}
     ]
     
+  },
+    {
+    path:'/find',
+    element: <Loginfind />,
+    errorElement:<Not_found />,
   },
   {
     path:'/Agree',

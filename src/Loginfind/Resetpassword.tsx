@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Resetpassword.scss";
-import UseInput from "../UseHook/UserInput";
+import useInput from "../UseHook/UserInput";
 import Id from "../Context/Userdata";
 import { useContext } from "react";
 import axios from "axios";
@@ -35,7 +35,7 @@ const Resetpassword =({Userid} :Userinfo) =>{
         isValid: enterNewpwIsValid,
         valueChangeHandler: NewChangeHandler,
         inputBlurHandler: NewBlurHandler,
-    } = UseInput((value:string) => value.trim().length >=11 && value.match(passwordRegExp) != null);
+    } = useInput((value:string) => value.trim().length >=11 && value.match(passwordRegExp) != null);
 
     const {
         value: EnterAgainpw,
@@ -43,7 +43,7 @@ const Resetpassword =({Userid} :Userinfo) =>{
         isValid: enterAgainpwIsValid,
         valueChangeHandler: AgainChangeHandler,
         inputBlurHandler: AgainBlurHandler,
-    } = UseInput((value:string) => value.match(passwordRegExp) != null
+    } = useInput((value:string) => value.match(passwordRegExp) != null
     && value == EnterNewpw);
     const EnterNewpwInputClasses = EnterNewpwHassError ? "Resetpw_invalid" : "Resetpw_input";
     const EnterAgainInputClasses = EnterAgaintpwHassError ? "Resetpw_invalid" : "Resetpw_input";

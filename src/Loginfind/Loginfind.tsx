@@ -12,6 +12,7 @@ import logimg from "../assets/images/log.png";
 import {api,COMMON_URL, PUBGATEWAY_URL } from "../API/Api";
 import CertifiTimer from "../Utils/CertifiTimer";
 import Resetpassword from "./Resetpassword";
+import { set } from "lodash";
 /*
 const lv_style = JSXStyle`
 .yoon-margin-0px { margin: 0; }
@@ -32,20 +33,15 @@ interface ResponseDataType {
 const Loginfind= () =>{
   const [modalopen, setModalOpen] = useState<boolean>(false);
   const [certifi, setCertifi] = useState<boolean>(false);
-    const[idfind , setIdfind] = useState<boolean>(false);
-    const[pwfind , setPwfind] = useState<boolean>(false);
-    const[successid ,setSuccessid] = useState<boolean>(false);
     const[availid ,setAvailid] = useState<string>("");
-    const[failid , setFailid] = useState<boolean>(false);
     const[fomrIsValid, setFormIsValid] = useState<boolean>(false);
-    const[ceremail , setCeremail] = useState<boolean>(false);
-    const[cerphon , setCerphon] = useState<boolean>(false);
     const[phone_certifi , setPhone_certifi] = useState<boolean>(false);
     const[certifi_button , setCertifi_button] = useState<boolean>(false);
     const[check_certifi , setCheck_certifi] = useState<boolean>(false);
     const[network , setNetwork] = useState<boolean>(false);
     const[id , setId] = useState<string>("");
     const[name , setName] = useState<string>("");
+    const[email, setEmail]=useState<string>("")
     const[phone_number , setPhone_number] = useState<string>("");
     const[certifi_number , setCertifi_number] = useState<string>("");
     const[inputId ,setInputId]=useState<string>("");
@@ -63,7 +59,11 @@ const Loginfind= () =>{
     const[verifyloading, setVerifyloading]=useState<boolean>(false);
     const[verify_Success, setVerify_Success]=useState<boolean>(false);
     const[sendUi, setSendUi]=useState<boolean>(false);
-
+    const [activeTab, setActiveTab] = useState("id");
+    const [authType, setAuthType] = useState<"email" | "phone">("email");
+    const[resultId, setResultId]=useState<boolean>(false)
+    const[failId, setFailId]=useState<boolean>(false)
+    
 
     const navigate = useNavigate();
     const useid = useContext(Id);
@@ -71,20 +71,15 @@ const Loginfind= () =>{
     
     const id_button =() =>{
      console.log("아이디 찾기");
-     setIdfind(true);
-     setPwfind(false);
-     setSuccessid(false);
-     setFailid(false);
-     setCerphon(false);
+     setResultId(false)
+     setFailId(false);
+     setActiveTab("id")
     }
 
     const pw_button =() =>{
-      setPwfind(true);
-      setIdfind(false);
-      setCerphon(false);
-      setCeremail(false);
-      setSuccessid(false);
-      setFailid(false);
+      setResultId(false)
+      setFailId(false);
+      setActiveTab("pw")
     }
     const {
       value: EnternName,
@@ -92,6 +87,7 @@ const Loginfind= () =>{
       isValid: enterNameIsValid,
       valueChangeHandler: IdChangeHandler,
       inputBlurHandler: IdBlurHandler,
+      ResetValue: resetName,
   } = UseInput((value:string) => value.trim() != '');
 
   const {
@@ -100,6 +96,7 @@ const Loginfind= () =>{
     isValid: enterEmailIsValid,
     valueChangeHandler: EmailChangeHandler,
     inputBlurHandler: EmailBlurHandler,
+    ResetValue: resetEmail,
     } = UseInput((value:string) => value.trim().includes('@') && value.trim() != '');
 
     useEffect(() => {
@@ -139,17 +136,16 @@ const Loginfind= () =>{
             email: EnterEmail
         }
     ).then(response =>{
-
+       console.log("결과 :"   ,response.data.id)
         if(response.status==200){
-            if(response.data.Success === true){
+            if(response.data.id !== null){
               setAvailid(response.data.id);
-              setFailid(false);
-              setIdfind(false);
-              setSuccessid(true);
+              setFailId(false);
+              setResultId(true)
             }else{
-              setSuccessid(false);
-              setIdfind(false);
-              setFailid(true);
+              setResultId(false)
+              setFailId(true)
+
             }
 
         }
@@ -164,8 +160,8 @@ const Loginfind= () =>{
           
           if(error.response?.status == 400){
               if(error.response?.data.errorcode ==="E0011"){
-                  setSuccessid(false);
-                  setFailid(true)
+                  setResultId(false)
+                  setFailId(true)
               }else{
                   navigate("/error/LbBadRequest");
               }
@@ -198,23 +194,10 @@ const Loginfind= () =>{
 
         const return_input =() =>{
           console.log("다시 입력");
-          setSuccessid(false);
-          setIdfind(true);
-          setFailid(false);
-        }
-
-        const return_sign =() =>{
-          navigate("/sign");
-        }
-
-        const email_button =() =>{
-          setCeremail(true);
-          setPwfind(false);
-        }
-
-        const phon_button =() =>{
-          setCerphon(true);
-          setPwfind(false);
+          setResultId(false)
+          setFailId(false);
+          resetName()
+          resetEmail()
         }
 
         const Number_Receive =() =>{
@@ -444,75 +427,244 @@ const Loginfind= () =>{
     })
   }
 //<p>인증이 완료되었습니다. 잠시 후 로그인 페이지로 이동합니다.</p>
-    return (
-    <Fragment>
-        <div className="header">
-            <img src={logimg} alt="애완멀" ></img>
-            <h2>ID/PW 찾기</h2>
-          </div>
-           <div className="LoginFind_tag">
-             <button type="button" onClick={id_button}>아이디</button>
-             <button typeof="button" onClick={pw_button}>비밀번호</button>
-           </div>
-           {idfind && <div className="LoginFind_id">
-              <h2>아이디 찾기</h2>
-              <input placeholder="이름"
-                            type="text"
-                            value={EnternName}
-                            onChange={IdChangeHandler}
-                            onBlur={IdBlurHandler}
-                            id="LoginFind_input_id"
-                        /> 
-               <input
-                            placeholder="이메일"
-                            type="email"
-                            value={EnterEmail}
-                            onChange={EmailChangeHandler}
-                            onBlur={EmailBlurHandler}
-                            id="LoginFind_input_Email"
-                        />
-                        <button type="submit" onClick={submit} disabled={!fomrIsValid}>아이디 조회</button>
-            </div>}
-            {successid && (<div className="useid">
-              <p>사용 가능 id :{availid}</p>
-              <button type="button" onClick={login_page}>로그인</button>
-              </div>)}
-            {failid && <div className="fail">
-              <p>등록된 정보가 없습니다</p>
-              <div className="failbtn">
-              <button onClick={return_input}>다시 입력하기</button>
-              <button onClick={return_sign}>회원가입</button>
-              </div>
-              </div>}
-            {pwfind && <div className="pw">
-              <h2>비밀번호 찾기 </h2>
-               <h3>인증 방식 선택해주세요</h3>
-               <div className="certitype">
-               <input type="checkbox" onClick={email_button}/>
-               <label>Email인증</label>
-               <input type="checkbox" onClick={phon_button}/>
-               <label>핸드폰인증</label>
-               </div>
-              </div>}
-              {ceremail && <div className="email">
-                <h2>이메일 인증</h2>
+/*
+<div className="email">
                 <input placeholder="이메일를 입력해주세요" onChange={InputEmailHandler}/>
                 <input placeholder="아이디를 입력해주세요" onChange={InputIdHandler}/>
                 <button type="submit" onClick={SendEmail}>이메일 발송</button>
-                </div>}
-                {cerphon && <div className="phon">
-                  <h2>핸드폰 인증</h2>
-                  <input placeholder="아이디를 입력해주세요" onChange={idhandler}/>
-                  <input placeholder="이름를 입력해주세요" onChange={namehandler}/>
-                  <div className="divi_input">
-                   <input type="number" onChange={firstnumber} placeholder="전화번호를 입력해주세요"/>
-                   <button onClick={Number_Receive} disabled={!certifi_button}>인증번호</button>
+                </div>
+                */
+               /*
+               <div className="useid">
+              <p>사용 가능 id :{availid}</p>
+              <button type="button" onClick={login_page}>로그인</button>
+              </div>
+              */
+    return (
+    <Fragment>
+        <div className="header">
+          <div className="logoWrap">
+             <img src={logimg} alt="Aniverse logo" />
+            </div>
+            <h2>ID/PW 찾기</h2>
+          </div>
+           <div className="LoginFind_tag">
+             <button 
+             className={`tab ${activeTab === "id" ? "active" : ""}`}
+             type="button" 
+             onClick={id_button}>아이디</button>
+             <button
+             className={`tab ${activeTab === "pw" ? "active" : ""}`}
+             typeof="button" 
+             onClick={pw_button}>비밀번호</button>
+           </div>
+           <div className="LoginFind_Body">
+            <div className="LoginFind_Title">
+              <h3>{activeTab === "id" ? "아이디 찾기" : "비밀번호 재설정"}</h3>
+              <p>
+                {activeTab === "id"
+                  ? "가입 시 입력한 정보로 아이디를 안내해드려요."
+                  : "가입 이메일로 비밀번호 재설정 링크를 보내드려요."}
+              </p>
+            </div>
+           {(activeTab === "id" && resultId === false && failId === false) && 
+             <form className="LoginFind_id"
+               onSubmit={(e) => {
+                e.preventDefault();   // 🔥 새로고침 방지
+                submit();      // 기존 submit 로직 실행
+              }}>
+                      <input 
+                            placeholder="이름"
+                            type="text"
+                            className="LoginFind_Input"
+                            value={EnternName}
+                            onChange={IdChangeHandler}
+                            onBlur={IdBlurHandler}
+                        /> 
+                      <input
+                            placeholder="이메일"
+                            type="email"
+                            className="LoginFind_Input"
+                            value={EnterEmail}
+                            onChange={EmailChangeHandler}
+                            onBlur={EmailBlurHandler}
+                        />
+                        <button className="LoginFind_Button" type="submit" disabled={!EnternName || !EnterEmail.includes('@')}>
+                        아이디 안내 받기
+                      </button>
+            </form>}
+            {resultId && (
+                    <div className="ResultCard success">
+                      <div className="ResultTop">
+                        <span className="ResultBadge">조회 완료</span>
+                        <h3 className="ResultTitle">아이디를 찾았어요</h3>
+                        <p className="ResultDesc">아래 아이디로 로그인할 수 있어요.</p>
+                      </div>
+
+                      <div className="ResultIdBox">
+                        <span className="ResultIdLabel">아이디</span>
+                        <span className="ResultIdValue">{availid}</span>
+                      </div>
+
+                      <div className="ResultActions">
+                        <button type="button" className="PrimaryBtn" onClick={login_page}>
+                          로그인하러 가기
+                        </button>
+
+                        <button type="button" className="GhostBtn" onClick={return_input}>
+                          다른 정보로 다시 찾기
+                        </button>
+                      </div>
+
+                      <div className="ResultHint">
+                        공용 PC에서는 보안을 위해 로그아웃을 꼭 해주세요.
+                      </div>
+                    </div>
+                  )}
+            {failId && (
+                <div className="ResultCard LoginFinderror">
+                  <div className="ResultTop">
+                    <span className="ErrorBadge">조회 결과</span>
+                    <h3 className="ResultTitle">등록된 정보를 찾을 수 없어요</h3>
+                    <p className="ResultDesc">
+                      입력한 정보와 일치하는 아이디가 없어요.<br />
+                      다시 확인 후 재시도 해주세요.
+                    </p>
                   </div>
-                  <input type="number" onChange={certifinumber} placeholder="인증번호를 입력해주세요"/>
-                  <div className="next">
-                  <button onClick={resetpwhandler} disabled={!phone_certifi}>다음</button>
+
+                  <div className="ErrorIcon">
+                    😕
                   </div>
-                  </div>}
+
+                  <div className="ResultActions">
+                    <button
+                      type="button"
+                      className="PrimaryBtn"
+                      onClick={return_input}
+                    >
+                      다른 정보로 다시 찾기
+                    </button>
+                  </div>
+
+                  <div className="ResultHint">
+                    오타가 없는지 다시 한 번 확인해주세요.
+                  </div>
+                </div>
+              )}
+            {activeTab === "pw" && <div className="pw">
+               <h3>인증 방식</h3>
+                <div className="AuthType">
+                  <button
+                    type="button"
+                    className={`AuthBtn ${authType === "email" ? "active" : ""}`}
+                    onClick={() => setAuthType("email")}
+                  >
+                    이메일 인증
+                  </button>
+
+                  <button
+                    type="button"
+                    className={`AuthBtn ${authType === "phone" ? "active" : ""}`}
+                    onClick={() => setAuthType("phone")}
+                  >
+                    핸드폰 인증
+                  </button>
+                </div>
+              </div>}
+              {(authType ==="email" && activeTab === "pw")  && 
+                  <div className="Form">
+                <label className="Field">
+                  <span className="Label">이메일</span>
+                  <input
+                    className="Input"
+                    type="email"
+                    placeholder="example@domain.com"
+                    onChange={InputEmailHandler}
+                  />
+                </label>
+
+                <label className="Field">
+                  <span className="Label">아이디</span>
+                  <input
+                    className="Input"
+                    type="text"
+                    placeholder="아이디를 입력해주세요"
+                    onChange={InputIdHandler}
+                  />
+                </label>
+
+                <button
+                  type="button"
+                  className="PrimaryBtn"
+                  onClick={SendEmail}
+                >
+                  재설정 링크 발송
+                </button>
+
+                <div className="Hint">입력하신 정보가 일치하면 안내 메일을 보내드립니다.</div>
+                </div>
+                }
+                {(authType ==="phone" && activeTab === "pw") && 
+                  <div className="Form">
+                    <label className="Field">
+                      <span className="Label">아이디</span>
+                      <input
+                        className="Input"
+                        type="text"
+                        placeholder="아이디를 입력해주세요"
+                        onChange={idhandler}
+                      />
+                    </label>
+
+                    <label className="Field">
+                      <span className="Label">이름</span>
+                      <input
+                        className="Input"
+                        type="text"
+                        placeholder="이름을 입력해주세요"
+                        onChange={namehandler}
+                      />
+                    </label>
+
+                    <div className="Inline">
+                      <input
+                        className="Input"
+                        type="tel"
+                        placeholder="전화번호를 입력해주세요"
+                        onChange={firstnumber}
+                      />
+                      <button
+                        type="button"
+                        className="InlineBtn"
+                        onClick={Number_Receive}
+                        disabled={!certifi_button}
+                      >
+                        인증번호
+                      </button>
+                    </div>
+
+                    <label className="Field">
+                      <span className="Label">인증번호</span>
+                      <input
+                        className="Input"
+                        type="number"
+                        placeholder="인증번호를 입력해주세요"
+                        onChange={certifinumber}
+                      />
+                    </label>
+
+                    <button
+                      type="button"
+                      className="PrimaryBtn"
+                      onClick={resetpwhandler}
+                      disabled={!phone_certifi}
+                    >
+                      다음
+                    </button>
+
+                    <div className="Hint">입력하신 정보가 일치하면 다음 단계로 진행됩니다.</div>
+                  </div>
+    }
                   {sendEmail && (<div className="LoginFind_again_input_backdrop" onClick={SendEmailClose}>
                     <div className={Component_Contain} onClick={(e) => e.stopPropagation()}>
                     {isLoading && (<>
@@ -560,7 +712,7 @@ const Loginfind= () =>{
                  {modalopen && (<Certification_pw onClose={closemodal} />)}
                  {certifi && (<Pw_fail onClose={certifi_closemodal} />)}
                  {network && (<Err_Network onClose={network_closemodal}/>)}
-
+      </div>
     </Fragment>
     )
 }

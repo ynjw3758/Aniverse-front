@@ -1,73 +1,152 @@
 
 
 .header{
-    display: block;
-    justify-content: center;
-    text-align: center;
-    margin-top: 0.75rem;
-    margin-bottom: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+.header h2{
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #111;
 }
 .header img{
-    width: 400px;
-    height: 200px;
+    width: 120px;   /* 기존 400 → 줄임 */
+    height: auto;
+    object-fit: contain;
 }
-
+.logoWrap{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 .LoginFind_tag{
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 1rem;
+
+    background: #f3f4f6;
+    border-radius: 999px;
+    padding: 5px;
+    width: 320px;
+    margin: 0 auto 25px auto;
 
 }
-.LoginFind_tag button{
-    overflow: hiddlen;
-    white-space: nowrap;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 90px;
-    padding-right: 90px;
-    color:black;
-    background-color:white;
-}
-.LoginFind_tag button:hover{
-    cursor: pointer;
-    background-color: black;
-    color: white;
+.LoginFind_tag .tab {
+  flex: 1;
+  padding: 10px 0;
+  border: none;
+  background: transparent;
+  border-radius: 999px;
+
+  font-size: 14px;
+  font-weight: 600;
+  color: #6b7280;
+
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
+/* hover는 살짝만 */
+.LoginFind_tag .tab:hover {
+  color: #111;
+}
+
+/* 활성화 상태 */
+.LoginFind_tag .tab.active {
+  background: white;
+  color: #111;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.LoginFind_Body{
+  width: 420px;
+  max-width: 100%;
+  margin: 0 auto;
+
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(229, 231, 235, 0.9);
+  border-radius: 22px;
+
+  padding: 24px;
+  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.10);
+  backdrop-filter: blur(10px);
+}
+
+.LoginFind_Title h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  color: #111827;
+}
+
+.LoginFind_Title p {
+  margin: 8px 0 18px;
+  font-size: 13px;
+  color: #6b7280;
+  line-height: 1.45;
+}
 .LoginFind_id{
-   text-align: center;
-   display: flex;
-   flex-direction: column;
-   justify-content: center;
-   flex-wrap: nowrap;
-   align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+/* 인풋 */
+.LoginFind_Input {
+  width: 85%;
+  padding: 13px 14px;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  margin-bottom: 1vh;
+  font-size: 14px;
+  color: #111827;
+  transition: 0.18s ease;
 }
 
-.LoginFind_id h2{
-    margin-top: 40px;
-    margin-bottom: 40px;
+.LoginFind_Input::placeholder {
+  color: #9ca3af;
 }
-.LoginFind_id input{
-    //display: inline-block;
-    margin-bottom: 15px;
-    width: 30%;
-    padding: 1vw;
-    padding-left: 2vw;
+
+.LoginFind_Input:focus {
+  outline: none;
+  border-color: #4caf7a;
+  box-shadow: 0 0 0 4px rgba(76, 175, 122, 0.16);
 }
-.LoginFind_id button{
-    border-radius: 20px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 30px;
-    padding-right: 30px;
-    margin: 10px;
-    margin-right: 2rem;
-    background-color:rgba(30, 150, 100, 0.5);
-    color: white;
-    cursor: pointer;
+/* 버튼 */
+.LoginFind_Button {
+  margin-top: 6px;
+  padding: 14px;
+  border: none;
+  border-radius: 16px;
+
+  background: linear-gradient(135deg, #4caf7a, #3b9365);
+  color: #fff;
+  font-weight: 800;
+  font-size: 14px;
+
+  cursor: pointer;
+  transition: 0.2s ease;
+  box-shadow: 0 14px 30px rgba(76, 175, 122, 0.22);
 }
+
+.LoginFind_Button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 36px rgba(76, 175, 122, 0.28);
+}
+
+.LoginFind_Button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
 
 
 .pw{
@@ -77,13 +156,293 @@
     justify-content: center;
     align-items: center; 
 }
-.certitype{
-    display: flex;
-    flex-direction: row;
-
+.AuthType {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
 }
-.certitype label{
-    margin-right: 10px;
+
+.AuthBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px 22px;   /* 세로 10, 가로 22 */
+  height: 42px;         /* 고정 높이 주는게 핵심 */
+  
+  border-radius: 999px;
+  border: 1px solid #e5e7eb;
+  background: #f3f4f6;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.AuthBtn.active {
+  background: linear-gradient(135deg, #158f75, #0f766e);
+  color: white;
+  border: none;
+  box-shadow: 0 10px 24px rgba(21, 143, 117, 0.25);
+}
+
+.AuthBtn:hover {
+  transform: translateY(-2px);
+}
+.Form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.Field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.Label {
+  font-size: 12px;
+  font-weight: 800;
+  color: #374151;
+}
+
+.Input {
+  width: 93%;
+  padding: 13px 14px;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  font-size: 14px;
+  transition: 0.18s ease;
+}
+
+.Input::placeholder {
+  color: #9ca3af;
+}
+
+.Input:focus {
+  outline: none;
+  border-color: #158f75;
+  box-shadow: 0 0 0 4px rgba(21, 143, 117, 0.14);
+}
+
+.PrimaryBtn {
+  margin-top: 6px;
+  padding: 14px;
+  border: none;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #158f75, #0f766e);
+  color: #fff;
+  font-weight: 900;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.PrimaryBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(21, 143, 117, 0.26);
+}
+
+.PrimaryBtn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.Hint {
+  margin-top: 8px;
+  text-align: center;
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.Inline {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.InlineBtn {
+  width: 110px;
+  height: 44px; /* 인풋 높이랑 맞춤 */
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.InlineBtn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* ===== 성공 결과 카드 ===== */
+.ResultCard {
+  width: 420px;
+  max-width: 100%;
+  margin: 16px auto 0 auto;
+
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(229, 231, 235, 0.9);
+  border-radius: 22px;
+  padding: 20px 22px;
+
+  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.10);
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  margin-left: -1.5vw;
+}
+
+.ResultTop {
+  text-align: left;
+  margin-bottom: 14px;
+}
+
+.ResultBadge {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 6px 10px;
+  border-radius: 999px;
+
+  font-size: 12px;
+  font-weight: 900;
+
+  background: rgba(21, 143, 117, 0.10);
+  color: #0f766e;
+}
+
+.ResultTitle {
+  margin: 10px 0 0;
+  font-size: 16px;
+  font-weight: 900;
+  color: #111827;
+}
+
+.ResultDesc {
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: #6b7280;
+  line-height: 1.4;
+}
+
+/* 아이디 표시 박스 */
+.ResultIdBox {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 14px 14px;
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+
+  margin-bottom: 14px;
+}
+
+.ResultIdLabel {
+  font-size: 12px;
+  font-weight: 900;
+  color: #6b7280;
+}
+
+.ResultIdValue {
+  font-size: 15px;
+  font-weight: 900;
+  color: #111827;
+  letter-spacing: 0.2px;
+}
+
+/* 버튼 영역 */
+.ResultActions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* 메인 버튼 (없으면 이거 사용) */
+.PrimaryBtn {
+  width: 100%;
+  padding: 14px;
+
+  border: none;
+  border-radius: 16px;
+
+  background: linear-gradient(135deg, #158f75, #0f766e);
+  color: #fff;
+
+  font-size: 14px;
+  font-weight: 900;
+  cursor: pointer;
+
+  transition: 0.2s ease;
+  box-shadow: 0 14px 30px rgba(21, 143, 117, 0.22);
+}
+
+.PrimaryBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 36px rgba(21, 143, 117, 0.28);
+}
+
+/* 보조 버튼 */
+.GhostBtn {
+  width: 100%;
+  padding: 14px;
+
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+
+  background: #fff;
+  color: #111827;
+  font-size: 14px;
+  font-weight: 900;
+
+  cursor: pointer;
+  transition: 0.15s ease;
+}
+
+.GhostBtn:hover {
+  background: #f9fafb;
+}
+
+/* 아래 힌트 */
+.ResultHint {
+  margin-top: 12px;
+  text-align: center;
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+/* 실패 카드만 테두리 톤 변경 */
+.ResultCard.LoginFinderror {
+  border: 1px solid rgba(255, 99, 99, 0.25);
+}
+
+/* 실패 배지(조회 결과) */
+.ErrorBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 999px;
+
+  font-size: 12px;
+  font-weight: 900;
+
+  background: rgba(255, 99, 99, 0.15);
+  color: #d64545;
+}
+
+/* 실패 이모지/아이콘 영역 */
+.ErrorIcon {
+  margin: 24px 0 18px;
+  text-align: center;
+  font-size: 64px;
 }
 
 
@@ -109,12 +468,6 @@
     outline: none;
     border-color: #4f005f;
     background: #f6dbfc;
-}
-#LoginFind_input_id{
-    background-image: url("https://static.thenounproject.com/png/101791-200.png");
-    background-position:-2px center;
-    background-size:30px;
-    background-repeat: no-repeat;
 }
 
 .invalid input{
@@ -240,12 +593,7 @@
     color: white;
     cursor: pointer;
 }
-#LoginFind_input_Email{
-    background-image: url("https://cdn-icons-png.flaticon.com/512/3653/3653846.png");
-    background-position: 3px center;
-    background-size:20px;
-    background-repeat: no-repeat;
-}
+
 .fail{
     //margin-left: 42rem;
     margin: 2rem;

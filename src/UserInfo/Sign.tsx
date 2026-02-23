@@ -156,25 +156,24 @@ const Sign:React.FC=()=> {
 //                             +--------------------
 //#region type
 
-   useEffect(() =>{
+useEffect(() => {
+  console.log("입력값을 삭제하면 중복/사용 가능 메시지 없애기");
 
-    console.log("입력값을 삭제하면 중보/사용 가능 메시지 없애기");
-    if(EnterId == false){
-        setIdisvalid(false) 
-        setDisid(false);
-        
-    }
-    else if(EnterNicName == false){
-        setNickisvalid(false) 
-        setDisnick(false)
-        
-    }
-    else if(EnterId == false){
-        setEmailisvalid(false) 
-        setDisemail(false)
-    }
+  if (EnterId.trim() === "") {
+    setIdisvalid(false);
+    setDisid(false);
+  }
 
-   },[EnterEmail,EnterNicName ,EnterId ])
+  if (EnterNicName.trim() === "") {
+    setNickisvalid(false);
+    setDisnick(false);
+  }
+
+  if (EnterEmail.trim() === "") {
+    setEmailisvalid(false);
+    setDisemail(false);
+  }
+}, [EnterEmail, EnterNicName, EnterId]);
 
     useEffect(() => {
         const identifier = setTimeout(() => {
@@ -239,7 +238,7 @@ const Sign:React.FC=()=> {
                 password:EnterPass,
                 id:EnterId
         }).then((response =>{
-            
+
         }))
         /*
         api.post(`${PUBGATEWAY_URL}/user/sign` ,{

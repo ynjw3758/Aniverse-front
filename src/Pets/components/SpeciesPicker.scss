@@ -39,22 +39,39 @@
 }
 .SpeciesPicker_container{
   display: grid;
-  grid-template-columns: repeat(3, minmax(140px, 170px));
-  justify-content: center; /* 그리드 덩어리 가운데 */
-  gap: 28px;
-  padding: 20px;   
+
+  /* ✅ 카드 한 칸 크기를 고정 범위로: 너무 커지지도/작아지지도 않게 */
+  grid-template-columns: repeat(3, minmax(150px, 190px));
+
+  gap: 22px;
+  padding: 22px;
+
+  /* ✅ 그리드 덩어리 자체를 가운데 */
+  justify-content: center;
+
+  /* ✅ 셀에서 아이템 stretch 방지 */
+  place-items: center;   
 }
 
 .SpeciesPicker_item {
-    display: flex;
-    flex-direction: column;
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(12px);
-    cursor: pointer;
-    transition: 0.2s ease;
-    border-radius: 18px;
-    align-items: center;
-    justify-content: center;
+  /* ✅ 카드 크기 자체를 고정 */
+  width: 100%;
+  aspect-ratio: 1 / 1;      /* 정사각 */
+
+  border-radius: 18px;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  /* ✅ 내용 여백 */
+  gap: 12px;
+
+  /* ✅ 혹시 이미지가 커져도 박스 밖으로 안 튀게 */
+  overflow: hidden;
     /*
   aspect-ratio: 1 / 1;
   border-radius: 18px;
@@ -75,13 +92,15 @@
 }
 
 .SpeciesPicker_item img {
-  width: clamp(60px, 7vw, 92px);
-  height: clamp(60px, 7vw, 92px);
+  /* ✅ 아이콘 크기: 카드가 커지면 같이 커지되 제한 */
+  width: clamp(70px, 7vw, 110px);
+  height: clamp(70px, 7vw, 110px);
   object-fit: contain;
-  display:block;
+  display: block;
 }
 
 .SpeciesPicker_item span {
-  font-size: 14px;
+  font-size: 18px;
   color: white;
+  font-weight: 600;
 }

@@ -22,7 +22,7 @@ import { v4 as uuidv4 } from 'uuid';
 //#region type
 import "./Login.scss";
 import UseInput from "../UseHook/UserInput";
-import {api,COMMON_URL , PUBGATEWAY_URL} from "../API/Api";
+import {api,  PUBGATEWAY_URL} from "../API/Api";
 //#endregion
 
 

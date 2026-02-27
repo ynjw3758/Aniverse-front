@@ -229,18 +229,8 @@ useEffect(() => {
     const response_userinfo = () =>{
 
         console.log("아이디 :" ,EnterId)
-        axios.post("http://localhost:8091/api/auth/sign", {
-                name:EnterName,
-                //phone:phonnumber,
-                email:EnterEmail,
-                address : main_address+" "+Enteraddress,
-                nickname:EnterNicName,
-                password:EnterPass,
-                id:EnterId
-        }).then((response =>{
 
-        }))
-        /*
+        
         api.post(`${PUBGATEWAY_URL}/user/sign` ,{
                 name:EnterName,
                 //phone:phonnumber,
@@ -277,7 +267,7 @@ useEffect(() => {
                 console.log("error response: " , error.response?.data);
          }
             })
-*/
+
     }
 
     const resultcerfitication =() =>{

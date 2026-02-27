@@ -106,15 +106,6 @@ const Login:React.FC= (props : {})=>{
         setIsloading(true);
         const accesstoekn = localStorage.getItem("a_id");
         console.log("엑세스 토큰 :" ,accesstoekn);
-        /*
-        axios.post("http://localhost:8091/api/auth/login", {
-            id: EnterId,
-            password: EnterPass
-        }).then((response) =>{
-
-        })
-        */
-        
         if(accesstoekn ===null){
             axios.post(`${PUBGATEWAY_URL}/login/login`,{
                   id: EnterId,

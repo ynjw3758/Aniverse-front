@@ -7,9 +7,27 @@ import BirdsImg from"../../assets/images/birds.png"
 import RepImg from"../../assets/images/reptile.png"
 import AmphiImg from"../../assets/images/amphibia.png"
 import RodentImg from "../../assets/images/rodent.png"
-import PluseImg from "../../assets/images/petpluse.png"
+import arthropodImg from"../../assets/images/icon_arthropod.png"
+//import PluseImg from "../../assets/images/petpluse.png"
+import { useEffect, useState } from "react";
 
 const SpeciesPicker =() =>{
+    const [selected, setSelected] = useState<string | null>(null);
+
+    const speciesList=[{img : DogImg, text : "개"},
+                {img : CatImg, text : "고양이"},
+                {img : BirdsImg, text : "조류"},
+                {img : FishImg, text : "어류"},
+                {img : RodentImg, text : "설치류"},
+                {img : RepImg, text : "파충류"},
+                {img : AmphiImg, text : "양서류"},
+                {img : arthropodImg, text : "곤충/절지류"},
+    ]
+
+    const handleSelect = (text: string) => {
+        setSelected(prev => (prev === text ? null : text)); // ✅ 같으면 해제, 다르면 선택
+        };
+
 
     return(<>
         <div className="SpeciesPicker_Header">
@@ -17,41 +35,26 @@ const SpeciesPicker =() =>{
                 <h3 className="SpeciesPicker_Title">종 선택</h3>
         </div>
         <div className="SpeciesPicker_container">
-                <div className="SpeciesPicker_item">
-                   <img src={DogImg} alt="개" />
-                   <span>개</span>
+            {speciesList.map((item) => (
+                <div
+                key={item.text}
+                className={`SpeciesPicker_item ${selected === item.text ? "active" : ""}`}
+                onClick={() => handleSelect(item.text)}
+                >
+                <div className="SpeciesPicker_ImgBox">
+                    <img src={item.img} alt={item.text} />
                 </div>
 
-                <div className="SpeciesPicker_item">
-                    <img src={CatImg} alt="고양이" />
-                    <span>고양이</span>
-                </div>
+                <span>{item.text}</span>
 
-                <div className="SpeciesPicker_item">
-                    <img src={BirdsImg} alt="조류" />
-                    <span>조류</span>
+                {selected === item.text && <div className="SpeciesPicker_check">✓</div>}
                 </div>
-                <div className="SpeciesPicker_item">
-                    <img src={FishImg} alt="어류" />
-                    <span>어류</span>
-                </div>
-                <div className="SpeciesPicker_item">
-                    <img src={RodentImg} alt="설치류" />
-                    <span>설치류</span>
-                </div>
-                <div className="SpeciesPicker_item">
-                    <img src={RepImg} alt="파충류" />
-                    <span>파충류</span>
-                </div>
-                <div className="SpeciesPicker_item">
-                    <img src={AmphiImg} alt="양서류" />
-                    <span>양서류</span>
-                </div>
-                <div className="SpeciesPicker_item">
-                    <img src={PluseImg} alt="기타" />
-                    <span>기타</span>
-                </div>
+            ))}
         </div>
+        <div className="SpeciesPicker_Footer">
+           <button className="SpeciesPicker_Btn SpeciesPicker_BtnCancel">취소</button>
+           <button className="SpeciesPicker_Btn SpeciesPicker_BtnNext" disabled={!selected}>다음</button>
+         </div>
     </>)
 
 }

@@ -455,7 +455,7 @@ const Loginfind= () =>{
              onClick={id_button}>아이디</button>
              <button
              className={`tab ${activeTab === "pw" ? "active" : ""}`}
-             typeof="button" 
+             type="button" 
              onClick={pw_button}>비밀번호</button>
            </div>
            <div className="LoginFind_Body">

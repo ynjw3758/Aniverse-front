@@ -41,9 +41,9 @@
   display: grid;
 
   /* ✅ 카드 한 칸 크기를 고정 범위로: 너무 커지지도/작아지지도 않게 */
-  grid-template-columns: repeat(3, minmax(150px, 190px));
+  grid-template-columns: repeat(3, minmax(150px, 150px));
 
-  gap: 22px;
+  gap: 10px;
   padding: 22px;
 
   /* ✅ 그리드 덩어리 자체를 가운데 */
@@ -51,56 +51,155 @@
 
   /* ✅ 셀에서 아이템 stretch 방지 */
   place-items: center;   
+  
 }
 
-.SpeciesPicker_item {
-  /* ✅ 카드 크기 자체를 고정 */
-  width: 100%;
-  aspect-ratio: 1 / 1;      /* 정사각 */
-
-  border-radius: 18px;
-  background: rgba(255,255,255,0.08);
-  backdrop-filter: blur(12px);
-
+.SpeciesPicker_item{
+  width: 8vw;
+  aspect-ratio: 1 / 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
-  /* ✅ 내용 여백 */
-  gap: 12px;
-
-  /* ✅ 혹시 이미지가 커져도 박스 밖으로 안 튀게 */
+  gap: 10px;
+  padding: 12px;
   overflow: hidden;
-    /*
-  aspect-ratio: 1 / 1;
-  border-radius: 18px;
+    border-radius: 18px;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+  position: relative;
+   /* ✅ transition은 기본에 */
+  transition: transform 80ms ease, box-shadow 80ms ease, background 80ms ease;
+  will-change: transform;
+  cursor: pointer;
+  
+}
+/* ✅ 선택 상태: outline 대신 box-shadow */
+.SpeciesPicker_item.active{
+  transform: scale(1.06);
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.95);
+}
+
+/* ✅ active일 때 hover가 덮어쓰지 않게 */
+.SpeciesPicker_item.active:hover{
+  transform: scale(1.06);
+}
+
+/* 체크 표시 */
+.SpeciesPicker_check {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+  width: 26px;
+  height: 26px;
+
+  border-radius: 50%;
+  background: #ffffff;
+  color: #2e9e92;
 
   display: flex;
-  flex-direction: column;  
   align-items: center;
   justify-content: center;
 
-  gap: 12px;
+  font-weight: bold;
+  font-size: 14px;
 
-  background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(12px);
+}
+
+
+.SpeciesPicker_ImgBox{
+  width: 100%;
+  height: 75%;          /* ✅ 핵심: 이미지 영역이 카드의 75%까지만 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.SpeciesPicker_ImgBox img{         /* ✅ ImgBox 높이에 맞춰서 “지금 크기” 유지됨 */
+  width: 8vw;          /* ✅ 가로는 비율대로 */
+  object-fit: contain;
+  display:block;
+}
+
+.SpeciesPicker_item span{
+  flex: 0 0 auto;       /* ✅ 텍스트는 절대 밀리지 않게 */
+  font-size: 20px;
+  color: #fff;
+  font-weight: 600;
+  margin-top: -3vh;
+}
+.SpeciesPicker_Footer{
+  width: 60%;
+  display: flex;
+  gap: 18px;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-top: 22px;     // 카드 그리드랑 간격
+  padding: 0 10px 8px;  // 아래 살짝 여백
+  margin-left: 8vw;
+}
+/* 공통 버튼 */
+.SpeciesPicker_Btn {
+  flex: 1;
+  height: 52px;
+
+  border-radius: 999px;                 // 알약 버튼
+  font-size: 20px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.85);
+
+  background: rgba(255, 255, 255, 0.06);
+  border: 1.5px solid rgba(255, 255, 255, 0.18);
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 
   cursor: pointer;
-  transition: 0.2s ease;
-  */
+
+  transition: transform 80ms ease, box-shadow 120ms ease, background 120ms ease;
 }
 
-.SpeciesPicker_item img {
-  /* ✅ 아이콘 크기: 카드가 커지면 같이 커지되 제한 */
-  width: clamp(70px, 7vw, 110px);
-  height: clamp(70px, 7vw, 110px);
-  object-fit: contain;
-  display: block;
+.SpeciesPicker_Btn:hover {
+  transform: translateY(-1px);
 }
 
-.SpeciesPicker_item span {
-  font-size: 18px;
-  color: white;
-  font-weight: 600;
+.SpeciesPicker_Btn:active {
+  transform: translateY(0px) scale(0.98);
+}
+.SpeciesPicker_Btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.5);
+}
+
+
+/* 취소 버튼(덜 강조) */
+.SpeciesPicker_BtnCancel {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1.5px solid rgba(255, 255, 255, 0.16);
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* 다음으로 버튼(강조 그라데이션) */
+.SpeciesPicker_BtnNext {
+  border: 1.5px solid rgba(255, 255, 255, 0.22);
+  background: linear-gradient(
+    90deg,
+    rgba(150, 255, 210, 0.35),
+    rgba(70, 255, 225, 0.28),
+    rgba(70, 140, 255, 0.22)
+  );
+
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.18);
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.SpeciesPicker_BtnNext:hover {
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.22);
 }

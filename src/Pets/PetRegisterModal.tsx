@@ -4,11 +4,22 @@ import MaleImg from"../assets/images/male.png";
 import FemaleImg from"../assets/images/female.png";
 import { useEffect, useState } from "react";
 import SpeciesPicker from "./components/SpeciesPicker";
+import BreedPicker from "./components/BreedPicker";
+
+type speciesInfo={
+   title:string,
+   code:string
+}
+
 
 const PetRegisterModal =() =>{
     const[isprofile, setIsprofile]=useState<boolean>(false);
     const[isType, setIsType]=useState<string>("form")
     const[imgfile, setimgfile]=useState<string>("")
+    const[breedTitle, setBreedTitle]=useState<speciesInfo>({
+        title:"",
+        code:""
+    })
     const[species, setSpecies]=useState<boolean>(false)
     const [gender, setGender] = useState<'male' | 'female' | null>(null);
 
@@ -29,6 +40,12 @@ const PetRegisterModal =() =>{
 
     const openSpeciesModal =() =>{
          setIsType("species")
+    }
+
+    const NextHandler =(info:speciesInfo) =>{
+        console.log("다음으로 ")
+      setIsType("breed")
+      setBreedTitle(info)
     }
 
     return(<div className="PetRegisterModal_Main">
@@ -85,8 +102,8 @@ const PetRegisterModal =() =>{
             </div>
         </div>
         </>)}
-        {isType == "species" && (<SpeciesPicker />)}
-
+        {isType == "species" && (<SpeciesPicker next={NextHandler}/>)}
+        {isType == "breed" && (<BreedPicker spInfo={breedTitle} />)}
     </div>)
 
 }

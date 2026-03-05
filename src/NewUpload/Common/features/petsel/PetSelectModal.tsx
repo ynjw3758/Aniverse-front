@@ -18,7 +18,7 @@ const PetSelectModal:React.FC<props> =() =>{
           api.defaults.headers.common['Authorization'] = access_token;
           api.post("/gateway/api-proxy" ,{
               service: "common",
-              endpoint: "api/getpets",
+              endpoint: "api/me/pets",
               method: "GET",
               body:{}
           },{

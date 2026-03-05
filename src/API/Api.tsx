@@ -65,7 +65,7 @@ const onRefreshed = (token: string) => {
   refreshQueue = [];
 };
 
-console.log("32323")
+
 // ✅ access_token 자동 갱신 인터셉터
 
 api.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
@@ -91,7 +91,6 @@ api.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
   const exp = Number(expRaw);
   const now = Math.floor(Date.now() / 1000);
   const timeLeft = exp - now;
-  console.log("아니 이게 뭐애")
   // ✅ 만료 60초 전 선제 갱신
   if (timeLeft < 60) {
     if (!isRefreshing) {
@@ -99,8 +98,8 @@ api.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
       console.log("2")
       try {
         // refresh 호출은 refreshClient로 (인터셉터 없는 인스턴스)
-        console.log("1")
         const res = await refreshClient.post("/token/refresh");
+        console.log("리프레쉬 :" , res)
         const newToken = res.data.data.access_token;
         const newExp = res.data.data.exp;
 
@@ -109,8 +108,8 @@ api.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
 
         onRefreshed(newToken);
       } catch (e) {
-        localStorage.clear();
-        window.location.href = "/login";
+        //localStorage.clear();
+        //window.location.href = "/login";
         return Promise.reject(e);
       } finally {
         isRefreshing = false;

@@ -10,7 +10,8 @@ interface props{
 
 type speciesInfo={
    title:string,
-   code:string
+   code:string,
+   id:number
 }
 const BreedPicker:React.FC<props> =({spInfo} : props) =>{
 
@@ -21,11 +22,11 @@ const BreedPicker:React.FC<props> =({spInfo} : props) =>{
      console.log("최초 렌더링 시 서버 요청 : " ,spInfo )
      
           const access_token =localStorage.getItem("a_id")!;
-          const catagori_code = "dog"
+          const catagoryCode:string = spInfo.code
           api.defaults.headers.common['Authorization'] = access_token;
           api.post("/gateway/api-proxy" ,{
               service: "common",
-              endpoint: `api/pet-categories/${catagori_code}/breeds`,
+              endpoint: `api/pet-categories/${catagoryCode}/breeds`,
               method: "GET",
               body:{}
           },{

@@ -100,7 +100,7 @@ const MainPlatform:React.FC =() =>{
               service: "common",
               endpoint: "main/refresh-main",
               method: "GET",
-              body: {Id:id}
+              body: {id:id}
           },{
               withCredentials: true
           }).then(response =>{

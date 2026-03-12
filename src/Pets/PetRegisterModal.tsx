@@ -8,7 +8,8 @@ import BreedPicker from "./components/BreedPicker";
 
 type speciesInfo={
    title:string,
-   code:string
+   code:string,
+   id:number
 }
 
 
@@ -18,7 +19,8 @@ const PetRegisterModal =() =>{
     const[imgfile, setimgfile]=useState<string>("")
     const[breedTitle, setBreedTitle]=useState<speciesInfo>({
         title:"",
-        code:""
+        code:"",
+        id:0
     })
     const[species, setSpecies]=useState<boolean>(false)
     const [gender, setGender] = useState<'male' | 'female' | null>(null);

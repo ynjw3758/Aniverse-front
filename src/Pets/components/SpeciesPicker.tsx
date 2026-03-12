@@ -17,7 +17,8 @@ interface props{
 
 type NextBreedInfo={
    title:string,
-   code:string
+   code:string,
+   id:number
 }
 
 type spicesInfo={
@@ -32,18 +33,19 @@ const SpeciesPicker:React.FC<props> =({next} : props) =>{
     const [selectedCode, setSelectedCode] = useState<string | null>(null);
     const [selInfo, setSelInfo]=useState<NextBreedInfo | null>({
         title:"",
-        code:""
+        code:"",
+        id:0
     })
 
   const speciesList: (NextBreedInfo & { img: string })[] = [
-    { img: DogImg, title: "개", code: "DOG" },
-    { img: CatImg, title: "고양이", code: "CAT" },
-    { img: BirdsImg, title: "조류", code: "BIRD" },
-    { img: FishImg, title: "어류", code: "FISH" },
-    { img: RodentImg, title: "설치류", code: "RODENT" },
-    { img: RepImg, title: "파충류", code: "REPTILE" },
-    { img: AmphiImg, title: "양서류", code: "AMPHIBIAN" },
-    { img: arthropodImg, title: "곤충/절지류", code: "ARTHROPOD" },
+    { img: DogImg, title: "개", code: "dog" , id:1},
+    { img: CatImg, title: "고양이", code: "cat" , id:2},
+    { img: BirdsImg, title: "조류", code: "bird",id:3 },
+    { img: FishImg, title: "어류", code: "fish" ,id:4 },
+    { img: RodentImg, title: "설치류", code: "rodent", id:5 },
+    { img: RepImg, title: "파충류", code: "reptile" ,id:6},
+    { img: AmphiImg, title: "양서류", code: "amphibian", id:7 },
+    { img: arthropodImg, title: "곤충/절지류", code: "arthropod" , id:8},
   ];
 
     useEffect(() =>{
@@ -68,14 +70,10 @@ const SpeciesPicker:React.FC<props> =({next} : props) =>{
 
     const handleSelect = (Item: NextBreedInfo) => {
         setSelectedCode(prev => prev === Item.code ? null : Item.code)
-/*
-        setSelected(prev => ((prev === text ? null : text)); // ✅ 같으면 해제, 다르면 선택
-        };
-        */
     }
     const NextHandler=() =>{
             if (!selectedItem) return; // 선택 안 됐으면 아무것도 안 함
-            next({ title: selectedItem.title, code: selectedItem.code });
+            next({ title: selectedItem.title, code: selectedItem.code, id : selectedItem.id });
     }
 
 
@@ -89,7 +87,7 @@ const SpeciesPicker:React.FC<props> =({next} : props) =>{
                 <div
                 key={item.title}
                 className={`SpeciesPicker_item ${selected === item.title ? "active" : ""}`}
-                onClick={() => handleSelect({title:item.title , code:item.code})}
+                onClick={() => handleSelect({title:item.title , code:item.code, id:item.id})}
                 >
                 <div className="SpeciesPicker_ImgBox">
                     <img src={item.img} alt={item.title} />

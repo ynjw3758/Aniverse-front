@@ -26,7 +26,10 @@ const link =() =>{
     }
     const create_kakaohandler =() =>{
         console.log("카카오 계정 생성");
-        axios.post("http://localhost:8080/Pets-social/kakao/create" , {kakao_info:login_info.kakao_info})
+        const ClientType="WEB";
+        axios.post("http://localhost:8080/Pets-social/kakao/create" , {kakao_info:login_info.kakao_info,
+          clientType:ClientType
+        })
         .then(response =>{
             console.log("response :" , response.data.resultdata);
             localStorage.setItem("a_id" , response.headers.authorization);

@@ -71,12 +71,13 @@ const Callbackkakao =() =>{
 
         if(header !== null){
          console.log("엑세스 토큰 존재");
+         const ClientType = "WEB"
         api.defaults.headers.common['Authorization'] = header;
         api.post("/gateway/api-proxy" ,{
                 service: "common",
                 endpoint: "login/oauth/kakao",
                 method: "GET",
-                body: {code:Code}
+                body: {code:Code ,clientType:ClientType}
             },{
                 withCredentials: true
             }).then(response =>{

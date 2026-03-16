@@ -6,7 +6,7 @@ import MainSearch from "./Search/MainSearch";
 import MainPlatformSide from "./Side/MainPlatformSide";
 import { useNavigate  ,useParams} from "react-router-dom";
 import user_info from "../Context/Userdata";
-import {api } from "../API/Api";
+import {api , GATEWAY_URL} from "../API/Api";
 import baseprofile from "../assets/images/baseimg.png";
 import axios from "axios";
 import Main from "src/Home/Main";
@@ -93,10 +93,10 @@ const MainPlatform:React.FC =() =>{
         else{
           setIsready(true);
           //setIsready(false);
-          access_token =localStorage.getItem("a_id")!;
+          //access_token =localStorage.getItem("a_id")!;
           
-          api.defaults.headers.common['Authorization'] = access_token;
-          api.post("/gateway/api-proxy" ,{
+          //api.defaults.headers.common['Authorization'] = access_token;
+          api.post(`${GATEWAY_URL}/gateway/api-proxy` ,{
               service: "common",
               endpoint: "main/refresh-main",
               method: "GET",

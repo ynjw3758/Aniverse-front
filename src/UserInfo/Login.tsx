@@ -106,24 +106,20 @@ const Login:React.FC= (props : {})=>{
         setIsloading(true);
         const accesstoekn = localStorage.getItem("a_id");
         console.log("엑세스 토큰 :" ,accesstoekn);
+        const clientType = "WEB";
+        
         if(accesstoekn ===null){
             axios.post(`${PUBGATEWAY_URL}/login/login`,{
                   id: EnterId,
-                  password: EnterPass
+                  password: EnterPass,
+                  clientType:clientType
                 }, {
                 headers: { 'Content-Type': 'application/json' },
                 withCredentials: true
                 })
                 .then(response =>{
                         console.log("로그인 결과 :" , response);
-                        localStorage.setItem("a_id" , response.data.data.access_token);
                         localStorage.setItem("id" , response.data.data.id);
-                        
-                        let transe_time:Date = new Date(response.data.exp*1000);
-                        let time:string="";
-                        time =moment(transe_time).format('YYYY-MM-DD HH:mm').toString();
-                        console.log("시간 변환 :" , time);
-                        localStorage.setItem("p_exp" , response.data.data.exp);
                         navigate("/main")
                 })
                 .catch(error =>{
@@ -164,7 +160,8 @@ const Login:React.FC= (props : {})=>{
             api.defaults.headers.common['Authorization'] = access_token;
              axios.post(`${PUBGATEWAY_URL}/login/login`,{
                   id: EnterId,
-                  password: EnterPass
+                  password: EnterPass,
+                  clientType:clientType
                 }, {
                 headers: { 'Content-Type': 'application/json' },
                 withCredentials: true

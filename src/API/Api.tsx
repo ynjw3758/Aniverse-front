@@ -44,6 +44,15 @@ export const COMMON_URL = isProduction
   ? process.env.REACT_APP_API_COMMON_URL
   : process.env.REACT_APP_API_DEV_COMMON_URL;
 
+export const AUTH_API_BASE = GATEWAY_URL;
+export const PUBLIC_API_BASE = PUBGATEWAY_URL;
+export const SEARCH_API_BASE = SEARCH_URL;
+export const NOTE_API_BASE = NOTE_URL;
+export const REACT_API_BASE = REACT_URL;
+export const UPLOAD_API_BASE = UPLOAD_URL;
+export const AI_API_BASE = AI_URL;
+export const WEBSOCKET_BASE = WEBCHAT_URL;
+
 // =====================================================
 // 공통 Axios 인스턴스
 // - access token 직접 첨부 안 함
@@ -73,64 +82,5 @@ const isPublicPath = (url?: string): boolean => {
     url.includes("/public")
   );
 };
-
-// =====================================================
-// Request Interceptor
-// - 토큰 검증은 하지 않음
-// - 필요한 공통 옵션만 유지
-// =====================================================
-/*
-api.interceptors.request.use(
-  (config: InternalAxiosRequestConfig) => {
-    config.withCredentials = true;
-    console.log("아니 여기는 오는ㄴ거야?")
-    // BFF 구조에서는 Authorization 헤더를 프론트에서 넣지 않음
-    if (config.headers) {
-      delete config.headers.Authorization;
-    }
-     console.log("아니 여기는 오는ㄴ거야2?")
-    return config;
-  },
-  (error: AxiosError) => {
-    return Promise.reject(error);
-  }
-);
-*/
-
-// =====================================================
-// Response Interceptor
-// - 세션 만료/인증 실패 공통 처리
-// - 실제 access/refresh 검증 및 재발급은 게이트웨이에서 수행
-// =====================================================
-/*
-api.interceptors.response.use(
-  (response: AxiosResponse) => response,
-  (error: AxiosError) => {
-    const status = error.response?.status;
-    const requestUrl = error.config?.url;
-
-    console.log("API 에러:", {
-      url: requestUrl,
-      status,
-      data: error.response?.data,
-    });
-
-    // 인증 실패 공통 처리
-    if ((status === 401 || status === 403) && !isRedirecting && !isPublicPath(requestUrl)) {
-      isRedirecting = true;
-
-      console.error("세션 만료 또는 인증 실패");
-
-      // 필요한 최소 사용자 정보만 제거
-      localStorage.removeItem("id");
-
-      // 로그인 페이지로 이동
-      window.location.href = "/login";
-    }
-
-    return Promise.reject(error);
-  }
-);
-*/
 
 export default api;

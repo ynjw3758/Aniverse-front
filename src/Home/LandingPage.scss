@@ -1,138 +1,577 @@
-.Header{
-    font-size: xx-large;
-  }
-  
-.HeaderMain{ 
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    background: linear-gradient(to bottom, #faf8f1, #f5f5f5);
-}
-.HeaderMain img{
-  width: 100vw;
-  height: 80vh;
-  object-fit: fill;
-}
-.Landing_Text{
-    text-align: center;
-    margin-top: 3rem;
+.PetLanding {
+  --pet-primary: #ff5b7c;
+  --pet-primary-deep: #f24368;
+  --pet-orange: #ff8b52;
+  --pet-text: #252a33;
+  --pet-muted: #747b86;
+  --pet-line: #f0f1f5;
+  --pet-card: #ffffff;
+
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 73% 18%, rgba(255, 91, 124, 0.1), transparent 24%),
+    radial-gradient(circle at 12% 86%, rgba(255, 139, 82, 0.13), transparent 22%),
+    #ffffff;
+  color: var(--pet-text);
+  font-family: "Pretendard", "Noto Sans KR", "Segoe UI", sans-serif;
+  overflow-x: hidden;
 }
 
-.Landing_Text p{
-  position: absolute;
-  top:8vh;
-  left: 40vw;
-  font-size: clamp(20px, 2vw, 28px);
-  font-weight: 500;
-  color: #fff;
-  margin: 0;
-  line-height: 1;
-  text-shadow: 0 4px 20px rgba(0,0,0,0.4);
-  
+.PetLanding button {
+  font-family: inherit;
 }
-.Landing_Text p .BrandName {
-  display: block;
-  font-size: clamp(40px, 7vw, 80px);
-  font-weight: 800;
-  color: #3DFFB5; /* 네온 민트 */
-  text-shadow: 0 0 10px rgba(61, 255, 181, 0.7),
-               0 0 20px rgba(61, 255, 181, 0.5),
-               0 0 30px rgba(61, 255, 181, 0.4);
-  margin-top: 8px;
-}
-.Landing_Button{
-  position: absolute;
-  top:25vh;
-  left: 45vw;
-  display: flex;
-  justify-content: center;              /* 중앙 정렬 */
+
+.PetLanding_Header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  height: 66px;
+  display: grid;
+  grid-template-columns: 220px 1fr auto;
   align-items: center;
-  gap: clamp(10px, 2vw, 18px);          /* 버튼 사이 간격 */
-  margin-top: clamp(8px, 1.5vw, 16px);  /* 위 여백(선택) */
-  flex-wrap: wrap;                      /* 좁은 화면에서 줄바꿈 */
+  gap: 28px;
+  padding: 0 46px;
+  background: rgba(255, 255, 255, 0.92);
+  border-bottom: 1px solid var(--pet-line);
+  backdrop-filter: blur(18px);
+  box-sizing: border-box;
 }
-#Landing_Sign{
+
+.PetLanding_Brand,
+.PetLanding_Nav button,
+.PetLanding_Auth button,
+.PetLanding_Ctas button,
+.PetLanding_BottomStats button {
+  border: 0;
+  background: transparent;
   cursor: pointer;
-  background-color: #111827; /* 거의 블랙 */
-  color: #fff;
-  padding: 12px 28px;
-  border-radius: 14px;
-  font-size: 18px;
-  font-weight: 700;
-  border: none;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  transition: all 0.2s ease;
-
-}
-#Landing_Sign:hover{
-    background-color: #0f172a;
-  transform: translateY(-2px);
-}
-#Landing_Login{
-  cursor: pointer;
-  background-color: rgba(255,255,255,0.25);
-  color: #0f172a;
-  padding: 12px 28px;
-  border-radius: 14px;
-  font-size: 18px;
-  font-weight: 700;
-  border: 1px solid rgba(255,255,255,0.45);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  box-shadow: 0 4px 12px rgba(16,185,129,0.15);
-  transition: all 0.2s ease;
 }
 
-#Landing_Login:hover{
-  background-color: rgba(255,255,255,0.35);
-  transform: translateY(-2px);
-}
-#Landing_Start{
-    background-color: #000;
-    color: white;
-    padding: 10px 30px 10px 30px;
-    border-radius: 20px;
-    font-size: 20px;
-    margin-bottom: 2vh;
-    margin-left: 3vw;
-}
-#Landing_Start:hover{
-    cursor: pointer;
-    background-color: gray;
-    color: white;
-    padding: 10px 30px 10px 30px;
-    border-radius: 20px;
-    font-size: 20px;
-    margin-bottom: 2vh;
-    margin-left: 3vw;
+.PetLanding_Brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  width: fit-content;
+  padding: 0;
+  color: var(--pet-text);
 }
 
-.login{
-    display: flex;
+.PetLanding_Brand img {
+  width: 32px;
+  height: 32px;
 }
-.login button{
-  border-radius: 15px;
-  background-color:rgba(30, 150, 100, 0.5);
-    font-size: large;
-    padding-left: 50px;
-    padding-right: 2rem;
-    margin-left: -170px;
-    margin-bottom: -60px;
-    outline: none;
-    
+
+.PetLanding_Brand span {
+  font-size: 1.35rem;
+  font-weight: 900;
+  letter-spacing: -0.04em;
 }
-.home{
-  color:black;
-  font-size: medium;
-}
-.nav ul{
+
+.PetLanding_Nav {
   display: flex;
-  list-style: none;
-  cursor: pointer;
-  margin-left: -140px;
+  justify-content: center;
+  gap: 44px;
 }
-.nav li{
-  font-size: large;
-  margin-bottom: -10px;
 
+.PetLanding_Nav button {
+  position: relative;
+  height: 66px;
+  color: #353b45;
+  font-size: 0.94rem;
+  font-weight: 800;
+}
+
+.PetLanding_Nav button.active {
+  color: var(--pet-primary);
+}
+
+.PetLanding_Nav button.active::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  width: 18px;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--pet-primary);
+  transform: translateX(-50%);
+}
+
+.PetLanding_Auth {
+  display: flex;
+  gap: 10px;
+}
+
+.PetLanding_Auth button {
+  min-width: 88px;
+  height: 38px;
+  border-radius: 8px;
+  font-weight: 800;
+}
+
+.PetLanding_Auth .ghost {
+  border: 1px solid #f1c5ce;
+  color: #353b45;
+  background: #fff;
+}
+
+.PetLanding_Auth .solid,
+.PetLanding_Ctas .primary,
+.PetLanding_BottomStats > button {
+  color: #fff;
+  background: linear-gradient(135deg, var(--pet-primary), #ff7896);
+  box-shadow: 0 16px 28px rgba(255, 91, 124, 0.22);
+}
+
+.PetLanding_Hero {
+  max-width: 1520px;
+  min-height: 480px;
+  margin: 0 auto;
+  padding: 58px 72px 46px;
+  display: grid;
+  grid-template-columns: 0.86fr 1.14fr;
+  align-items: center;
+  gap: 38px;
+  box-sizing: border-box;
+}
+
+.PetLanding_Eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0 0 18px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: #fff0f4;
+  color: var(--pet-primary);
+  font-weight: 900;
+  font-size: 0.9rem;
+}
+
+.PetLanding_Eyebrow::before {
+  content: "✦";
+}
+
+.PetLanding_HeroCopy h1 {
+  margin: 0;
+  color: var(--pet-text);
+  font-size: clamp(2.4rem, 4vw, 4.2rem);
+  line-height: 1.16;
+  letter-spacing: -0.065em;
+}
+
+.PetLanding_HeroCopy h1 strong {
+  color: var(--pet-primary);
+}
+
+.PetLanding_Lead {
+  margin: 24px 0 0;
+  color: #5d6570;
+  font-size: 1.05rem;
+  font-weight: 650;
+  line-height: 1.75;
+}
+
+.PetLanding_Ctas {
+  display: flex;
+  gap: 16px;
+  margin-top: 30px;
+}
+
+.PetLanding_Ctas button {
+  min-width: 174px;
+  height: 52px;
+  border-radius: 9px;
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+.PetLanding_Ctas .primary::before {
+  content: "🐾";
+  margin-right: 7px;
+}
+
+.PetLanding_Ctas .secondary {
+  border: 1px solid #ffc3d0;
+  color: var(--pet-primary);
+  background: #fff;
+}
+
+.PetLanding_Ctas .secondary::before {
+  content: "△";
+  margin-right: 7px;
+  font-size: 0.8rem;
+}
+
+.PetLanding_Stats {
+  display: grid;
+  grid-template-columns: repeat(4, max-content);
+  gap: 22px;
+  margin-top: 32px;
+}
+
+.PetLanding_Stats div {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 96px;
+  padding-left: 18px;
+  border-left: 1px solid #edf0f4;
+}
+
+.PetLanding_Stats div::before {
+  content: "";
+  position: absolute;
+  left: -11px;
+  top: 50%;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fff0f4;
+  transform: translateY(-50%);
+}
+
+.PetLanding_Stats strong {
+  color: var(--pet-text);
+  font-size: 1rem;
+}
+
+.PetLanding_Stats span {
+  color: #8a9099;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.PetLanding_HeroVisual {
+  position: relative;
+  min-height: 430px;
+}
+
+.PetLanding_HeroVisual::before {
+  content: "";
+  position: absolute;
+  inset: 18px 4px 0;
+  border-radius: 44% 56% 48% 52%;
+  background: radial-gradient(circle at 50% 45%, #fff0f4 0 34%, transparent 66%);
+}
+
+.PetLanding_HeroAnimals {
+  position: relative;
+  z-index: 4;
+  width: min(100%, 820px);
+  height: 430px;
+  display: block;
+  margin-left: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 22px 42px rgba(55, 45, 60, 0.08));
+}
+
+.PetLanding_Bubble {
+  position: absolute;
+  z-index: 6;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 14px 30px rgba(255, 91, 124, 0.12);
+  color: #ff8aa2;
+  font-weight: 900;
+}
+
+.PetLanding_Bubble.heart {
+  left: 4%;
+  top: 27%;
+  width: 54px;
+  height: 44px;
+  font-size: 2rem;
+}
+
+.PetLanding_Bubble.chat {
+  left: 66%;
+  bottom: 21%;
+  width: 46px;
+  height: 38px;
+  color: #54c9a7;
+  font-size: 1.4rem;
+  letter-spacing: -0.12em;
+}
+
+.PetLanding_Bubble.paw {
+  right: 0;
+  top: 23%;
+  width: 46px;
+  height: 38px;
+  font-size: 1rem;
+}
+
+.PetLanding_Categories,
+.PetLanding_Features {
+  border-top: 1px solid #f2f3f6;
+  padding: 28px 70px 34px;
+}
+
+.PetLanding_Categories h2,
+.PetLanding_Features h2 {
+  margin: 0 0 24px;
+  text-align: center;
+  font-size: 1.45rem;
+  letter-spacing: -0.04em;
+}
+
+.PetLanding_Categories h2::before,
+.PetLanding_Features h2::before {
+  content: "🐾";
+  margin-right: 8px;
+}
+
+.PetLanding_CategoryGrid {
+  max-width: 1320px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(124px, 1fr));
+  gap: 14px;
+}
+
+.PetLanding_Category,
+.PetLanding_FeatureCard {
+  border: 1px solid var(--pet-line);
+  border-radius: 16px;
+  background: var(--pet-card);
+  box-shadow: 0 12px 30px rgba(30, 38, 55, 0.04);
+}
+
+.PetLanding_Category {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 72px;
+  padding: 12px 14px;
+  box-sizing: border-box;
+}
+
+.PetLanding_Category > span {
+  width: 42px;
+  height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  flex: 0 0 auto;
+  font-weight: 900;
+}
+
+.PetLanding_Category.pink > span { background: #ffe8ee; }
+.PetLanding_Category.orange > span { background: #fff0dd; }
+.PetLanding_Category.green > span { background: #e8faef; }
+.PetLanding_Category.blue > span { background: #eaf3ff; }
+.PetLanding_Category.purple > span { background: #f2eaff; }
+.PetLanding_Category.yellow > span { background: #fff6dc; }
+.PetLanding_Category.gray > span { background: #f2f3f5; }
+
+.PetLanding_Category strong {
+  display: block;
+  font-size: 0.98rem;
+}
+
+.PetLanding_Category p {
+  margin: 4px 0 0;
+  color: #8a9099;
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.PetLanding_FeatureGrid {
+  max-width: 1320px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(150px, 1fr));
+  gap: 16px;
+}
+
+.PetLanding_FeatureCard {
+  min-height: 142px;
+  padding: 20px 18px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.PetLanding_FeatureCard > span {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: #fff0f4;
+  color: var(--pet-primary);
+  font-size: 1.4rem;
+}
+
+.PetLanding_FeatureCard strong {
+  display: block;
+  font-size: 1rem;
+}
+
+.PetLanding_FeatureCard p {
+  margin: 8px 0 0;
+  color: var(--pet-muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.PetLanding_BottomCta {
+  min-height: 164px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 30px;
+  padding: 34px 90px;
+  background: linear-gradient(90deg, #fff6ee, #fff);
+  box-sizing: border-box;
+}
+
+.PetLanding_BottomCta h2 {
+  margin: 0;
+  font-size: 1.8rem;
+  letter-spacing: -0.04em;
+}
+
+.PetLanding_BottomCta h2 strong {
+  color: var(--pet-orange);
+}
+
+.PetLanding_BottomCta p {
+  margin: 10px 0 0;
+  color: #707783;
+  font-weight: 700;
+}
+
+.PetLanding_BottomStats {
+  display: grid;
+  grid-template-columns: repeat(3, 130px) 180px;
+  align-items: center;
+  gap: 12px;
+}
+
+.PetLanding_BottomStats span {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 56px;
+  padding: 0 16px;
+  border-radius: 14px;
+  background: #fff;
+  color: #8a9099;
+  font-size: 0.76rem;
+  font-weight: 800;
+  box-shadow: 0 12px 30px rgba(30, 38, 55, 0.05);
+}
+
+.PetLanding_BottomStats span strong {
+  color: var(--pet-text);
+  font-size: 1rem;
+}
+
+.PetLanding_BottomStats > button {
+  height: 56px;
+  border-radius: 12px;
+  font-weight: 900;
+}
+
+.PetLanding_BottomStats > button::before {
+  content: "🐾";
+  margin-right: 7px;
+}
+
+.PetLanding_BottomStats small {
+  grid-column: 4;
+  color: #8a9099;
+  text-align: center;
+}
+
+.PetLanding_BottomStats small button {
+  padding: 0 0 0 8px;
+  color: var(--pet-primary);
+  font-weight: 900;
+}
+
+@media (max-width: 1180px) {
+  .PetLanding_Header {
+    grid-template-columns: auto 1fr auto;
+    padding: 0 24px;
+  }
+
+  .PetLanding_Nav {
+    gap: 18px;
+  }
+
+  .PetLanding_Hero {
+    grid-template-columns: 1fr;
+    padding: 44px 28px;
+  }
+
+  .PetLanding_HeroVisual {
+    min-height: 430px;
+  }
+
+  .PetLanding_CategoryGrid {
+    grid-template-columns: repeat(3, minmax(160px, 1fr));
+  }
+
+  .PetLanding_FeatureGrid {
+    grid-template-columns: repeat(3, minmax(180px, 1fr));
+  }
+
+  .PetLanding_BottomCta,
+  .PetLanding_BottomStats {
+    grid-template-columns: 1fr;
+  }
+
+  .PetLanding_BottomStats small {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 760px) {
+  .PetLanding_Header {
+    grid-template-columns: 1fr auto;
+  }
+
+  .PetLanding_Nav {
+    display: none;
+  }
+
+  .PetLanding_HeroCopy h1 {
+    font-size: 2.3rem;
+  }
+
+  .PetLanding_Ctas {
+    flex-direction: column;
+  }
+
+  .PetLanding_Stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .PetLanding_Categories,
+  .PetLanding_Features,
+  .PetLanding_BottomCta {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .PetLanding_CategoryGrid,
+  .PetLanding_FeatureGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .PetLanding_HeroVisual {
+    transform: scale(0.78);
+    transform-origin: top center;
+    margin-bottom: -80px;
+  }
 }

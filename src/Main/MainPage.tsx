@@ -22,9 +22,16 @@ import axios from "axios";
  import WebSocker_Provider from "../Context/WebSocker_Provider";
  import WebSocketAlarm_Provider from "../Context/WebSocketAlarm_Provider";
 import AlarmMain from "./Alarm/AlarmMain";
-import logimg from "../assets/images/log.png";
+import petBuddyLogo from "../assets/images/petbuddy_logo.svg";
 import baseprofile from "../assets/images/baseimg.png"
 import {api } from "../API/Api";
+import UserUpload from "../Upload/UserUpload";
+import dogAvatar from "../assets/images/dog.png";
+import catAvatar from "../assets/images/cat.png";
+import rabbitAvatar from "../assets/images/Rabbit.png";
+import petPlusIcon from "../assets/images/petpluse.png";
+import feedImage from "../assets/images/test.jpg";
+import eventImage from "../assets/images/log_test.jpg";
 
  //#endregion
 
@@ -98,7 +105,7 @@ type ChatNoti={
       const navigate = useNavigate();
       const login_info = useContext(user_info);
       const param=useParams();
-
+/*
       useEffect(()=>{        
         setIsloading(true);
 
@@ -185,7 +192,7 @@ type ChatNoti={
         }
 
       },[]);
-      
+      */
       const MainClick =() =>{
         console.log("메인 페이지 이동");
         setIsloading(true);
@@ -295,31 +302,178 @@ type ChatNoti={
   const ModalClose =() =>{
    setModal(false);
   }
+  const storyPets = [
+    { name: "스토리 만들기", img: petPlusIcon, isCreate: true },
+    { name: "루이", img: profile || baseprofile, isLive: true },
+    { name: "코코", img: dogAvatar },
+    { name: "몽이", img: rabbitAvatar },
+    { name: "도리", img: catAvatar },
+    { name: "해피", img: dogAvatar },
+    { name: "밤비", img: rabbitAvatar },
+  ];
+
+  const nearbyPets = [
+    { name: "보리", breed: "말티즈", distance: "0.2km", img: rabbitAvatar },
+    { name: "콩이", breed: "푸들", distance: "0.4km", img: dogAvatar },
+    { name: "캔디", breed: "포메라니안", distance: "0.6km", img: rabbitAvatar },
+    { name: "두부", breed: "비숑프리제", distance: "0.7km", img: rabbitAvatar },
+    { name: "레오", breed: "골든 리트리버", distance: "0.8km", img: dogAvatar },
+  ];
+
+  const trendingTags = [
+    { tag: "# 산책스타그램", count: "12.3k 게시물" },
+    { tag: "# 행복한_강아지", count: "8.7k 게시물" },
+    { tag: "# 냥스타그램", count: "6.5k 게시물" },
+    { tag: "# 오늘도_즐겁개", count: "5.2k 게시물" },
+    { tag: "# 펫프렌리", count: "3.8k 게시물" },
+  ];
+
     return(<WebSocketAlarm_Provider>
     <WebSocker_Provider>
-    <div className="MainPage_back">
+    <div className="MainPage_back MainPage_redesign">
         {againlogin && (<LoginExp />)}
-        <div className="MainPage_log" onClick={MainClick}>
-            <img src={logimg} alt="애완멀" ></img>
-            <h3>ALL_Pets</h3>
+        <header className="MainPage_topbar">
+          <button type="button" className="MainPage_brand" onClick={MainClick}>
+            <img src={petBuddyLogo} alt="PetBuddy" />
+            <span>PetBuddy</span>
+          </button>
+          <label className="MainPage_search">
+            <span>⌕</span>
+            <input placeholder="검색어를 입력하세요 (펫, 사람, 해시태그)" />
+          </label>
+          <div className="MainPage_topActions">
+            <button className="active" type="button">홈</button>
+            <button type="button">채팅 <span>3</span></button>
+            <button type="button" onClick={AlarmClick}>알림 <span>5</span></button>
+            <button type="button" className="MainPage_userChip" onClick={contentHandler}>
+              <img src={profile || baseprofile} alt={NickName || "사용자"} />
+              <strong>{NickName || "루미맘"}</strong>
+            </button>
+          </div>
+        </header>
+
+        <main className="MainPage_shell">
+          <MainSide
+            img={profile || baseprofile}
+            nickname={NickName}
+            id={id}
+            onside={SideHandler}
+            onProfile={contentHandler}
+            isReady={isready}
+            Noti={noti}
+            AlarmClick={AlarmClick}
+          />
+
+          <section className="MainPage_feedColumn">
+            <div className="MainPage_storyCard">
+              {storyPets.map((pet) => (
+                <button key={pet.name} type="button" className={`MainPage_story ${pet.isCreate ? "create" : ""}`}>
+                  <span className="MainPage_storyAvatar">
+                    <img src={pet.img} alt={pet.name} />
+                    {pet.isLive && <em>LIVE</em>}
+                  </span>
+                  <strong>{pet.name}</strong>
+                </button>
+              ))}
             </div>
-          <MainSide img={profile}  nickname={NickName} id={id} onside={SideHandler} onProfile={() =>{
-            contentHandler();
-          }} isReady={isready} Noti={noti} AlarmClick={AlarmClick}/>
-          <div className="Main_Contents">
-            <h2>당신의 이야기를 공유해보세요</h2>
-            <input  placeholder="당신에 반려견과의 일상을 공유해보세요"
-              /*disabled={!disable}*/
-              onClick={ModalHandler}/>
-          </div>  
+
+            <div className="MainPage_composer">
+              <div className="MainPage_composerPrompt" onClick={ModalHandler}>
+                <img src={profile || baseprofile} alt="" />
+                <span>무슨 일이 일어나고 있나요, 루미맘?</span>
+              </div>
+              <div className="MainPage_composerActions">
+                <button type="button" onClick={ModalHandler}>사진/동영상</button>
+                <button type="button">위치</button>
+                <button type="button">기분/활동</button>
+                <button type="button">투표</button>
+              </div>
+            </div>
+
+            <article className="MainPage_postCard">
+              <div className="MainPage_postHeader">
+                <img src={profile || baseprofile} alt="" />
+                <div>
+                  <strong>{NickName || "루미맘"}</strong>
+                  <span>@louis_mom · 2시간 전</span>
+                </div>
+                <button type="button">•••</button>
+              </div>
+              <p className="MainPage_postText">
+                오늘 날씨 너무 좋아서 루이랑 공원 산책 다녀왔어요! 🐶✨
+                <br />
+                <span>#산책스타그램 #행복한_루이 #오늘도_즐겁개</span>
+              </p>
+              <div className="MainPage_postImage">
+                <img src={feedImage} alt="공원에서 뛰어노는 반려동물" />
+                <span>1/3</span>
+              </div>
+              <div className="MainPage_postActions">
+                <button type="button">♥ 128</button>
+                <button type="button">댓글 23</button>
+                <button type="button">공유</button>
+                <button type="button">저장</button>
+              </div>
+            </article>
+          </section>
+
+          <aside className="MainPage_rightPanel">
+            <section className="MainPage_sideCard">
+              <div className="MainPage_sideTitle">
+                <h3>근처 펫</h3>
+                <button type="button">더보기 ›</button>
+              </div>
+              {nearbyPets.map((pet) => (
+                <div className="MainPage_nearPet" key={pet.name}>
+                  <img src={pet.img} alt={pet.name} />
+                  <div>
+                    <strong>{pet.name}</strong>
+                    <span>{pet.breed}</span>
+                  </div>
+                  <em>{pet.distance}</em>
+                  <button type="button">인사하기</button>
+                </div>
+              ))}
+            </section>
+
+            <section className="MainPage_sideCard">
+              <div className="MainPage_sideTitle">
+                <h3>실시간 인기 해시태그</h3>
+                <button type="button">더보기 ›</button>
+              </div>
+              <div className="MainPage_tags">
+                {trendingTags.map((item) => (
+                  <button type="button" key={item.tag}>
+                    <strong>{item.tag}</strong>
+                    <span>{item.count}</span>
+                  </button>
+                ))}
+              </div>
+            </section>
+
+            <section className="MainPage_sideCard">
+              <div className="MainPage_sideTitle">
+                <h3>다가오는 이벤트</h3>
+                <button type="button">더보기 ›</button>
+              </div>
+              <div className="MainPage_event">
+                <img src={eventImage} alt="멍멍이 운동회" />
+                <div>
+                  <strong>멍멍이 운동회</strong>
+                  <span>2024.06.01 (토)</span>
+                  <small>서울 반려동물 공원</small>
+                </div>
+                <button type="button">참가 신청</button>
+              </div>
+            </section>
+          </aside>
+        </main>
+
           <Outlet />
           {isAlarm && (<>
           <AlarmMain AlarmData={noti}/>
           </>)}
-          {contentitem && (<div>
-            <MainContentsx img={profile}  nickname={NickName} content={content} onDisActive={ContentDisActive} onload={handleDataLoaded}
-            openmodal={modal} onclose={ModalClose}/>
-            </div>)}
+          {modal && (<UserUpload img={profile || baseprofile} nickname={NickName || "루미맘"} onClose={ModalClose} onComplete={ModalClose}/>)}
           {dropdow===true && dropblur === false ?  (<DropDownItem img={profile}  nickname={NickName} />):<></>}
 
          

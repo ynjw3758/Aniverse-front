@@ -66,10 +66,7 @@ const router = createBrowserRouter([
     element: <Login />,
     errorElement:<Not_found />,
   },
-  {
-    path:"/main" , element : <MainPlatform />
-  },
-  /*
+  
   {
     path:"/main",
     element:<MapinPage />,
@@ -79,7 +76,7 @@ const router = createBrowserRouter([
     ]
 
  },
- */
+ 
  {
   path:"/main/person/",
   element:<PersionPage />,

@@ -29,7 +29,6 @@ type spicesInfo={
 }
 
 const SpeciesPicker:React.FC<props> =({next} : props) =>{
-    const [selected, setSelected] = useState<string | null>(null);
     const [selectedCode, setSelectedCode] = useState<string | null>(null);
     const [selInfo, setSelInfo]=useState<NextBreedInfo | null>({
         title:"",
@@ -77,27 +76,30 @@ const SpeciesPicker:React.FC<props> =({next} : props) =>{
     }
 
 
-    return(<>
+    return(
+      <div className="SpeciesPicker_Main">
         <div className="SpeciesPicker_Header">
-                <img src={beforeImg} />
+                <img src={beforeImg} alt="뒤로가기" />
                 <h3 className="SpeciesPicker_Title">종 선택</h3>
         </div>
-        <div className="SpeciesPicker_container">
-            {speciesList.map((item) => (
-                <div
-                key={item.title}
-                className={`SpeciesPicker_item ${selected === item.title ? "active" : ""}`}
-                onClick={() => handleSelect({title:item.title , code:item.code, id:item.id})}
-                >
-                <div className="SpeciesPicker_ImgBox">
-                    <img src={item.img} alt={item.title} />
-                </div>
+        <div className="SpeciesPicker_Body">
+          <div className="SpeciesPicker_container">
+              {speciesList.map((item) => (
+                  <div
+                  key={item.title}
+                  className={`SpeciesPicker_item ${selectedCode === item.code ? "active" : ""}`}
+                  onClick={() => handleSelect({title:item.title , code:item.code, id:item.id})}
+                  >
+                  <div className="SpeciesPicker_ImgBox">
+                      <img src={item.img} alt={item.title} />
+                  </div>
 
-                <span>{item.title}</span>
+                  <span>{item.title}</span>
 
-                {selectedCode === item.code && <div className="SpeciesPicker_check">✓</div>}
-                </div>
-            ))}
+                  {selectedCode === item.code && <div className="SpeciesPicker_check">✓</div>}
+                  </div>
+              ))}
+          </div>
         </div>
         <div className="SpeciesPicker_Footer">
            <button className="SpeciesPicker_Btn SpeciesPicker_BtnCancel">취소</button>
@@ -105,7 +107,8 @@ const SpeciesPicker:React.FC<props> =({next} : props) =>{
            disabled={!selectedCode}
            onClick={NextHandler}>다음</button>
          </div>
-    </>)
+      </div>
+    )
 
 }
 

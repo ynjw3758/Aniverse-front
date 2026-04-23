@@ -1,429 +1,536 @@
-@media screen and (max-width:1920px) {
-        .MainPage_back{
-           background-color: #FFF7F0;
-            min-height: 100vh;
-            width: 100%;
-            margin-top: -17vh;
-        }
-    .Main_Contents{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        margin-left: 33vw;
-        margin-bottom: 2vh;
-        width: 30vw;
-        width: max-content;
-        height: max-content;
-       
-    }
-    
-    .Main_Contents h2{
-        margin-top:-10px;
-        text-align: center;
-        color: chocolate;
-        margin-top: 3vh;
-        margin-bottom: 4vh;
-    }
-    
-    .Main_Contents > input{
-        margin-left: -3vw;
-        width: 30vw;
-        height: 45px;
-        border-radius: 30px;
-        padding-left: 15px;
-        padding-top: 5px;
-        padding-bottom: 5px;
-        padding-right: 100px;
-        cursor: pointer;
-    }
-
-    .MainPage_log{
-        display: flex;
-       position: fixed;
-       top:10px;
-       left: -5px;
-    }
-    .MainPage_log:hover{
-        display: flex;
-        cursor: pointer;
-    }
-    .MainPage_log img{
-        position:absolute;
-        top:3vh;
-        left: 2vw;
-        width:4vw;
-        height:7vh;
-        object-fit: contain;
-        border-radius: 40px;
-        margin-left: -10px;
-    }
-    .MainPage_log h3{
-        position: absolute;
-        left:7vw;
-        top:25px;
-        font-size: larger;
-    }
-    .nav{
-        display: flex;
-        justify-content:flex-end;
-        gap:40px;
-        align-items: center;
-        font-size: x-large;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background-color:darkorange;
-        
-    }
-    .nav img{
-         padding: 1rem;
-         width: 4rem;
-         height: 4rem;
-         border-radius: 50px;
-         margin-right: 5px;
-    }
-    
-    .nav input{
-        margin-right: 170px;
-        width: 40%;
-        height: 50px;
-        border-radius: 35px;
-        font-size: large;
-        padding-left: 40px;
-    
-    }
-    
-    #Search{
-        background-image: url("https://static.thenounproject.com/png/101791-200.png");
-        background-position:3px center;
-        background-size:30px;
-        background-repeat: no-repeat;
-    }
-    
-    @media screen and (max-width:900px) {
-        .log{
-            position: absolute;
-            top:1vh;
-            left: -2vw;
-        }
-        .log h3{
-            display: none;
-        }
-    }
-    }
-@media screen and (max-width:1536px) {
-    .MainPage_back{
-         background-color: #FFF7F0;
-         margin-top: -17vh;      
-         width: 100%;
-        }
-    .Main_Contents{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        margin-left: 33vw;
-        margin-bottom: 2vh;
-        width: 30vw;
-        width: max-content;
-        height: max-content;
-       
-    }
-    
-    .Main_Contents h2{
-        margin-top:-10px;
-        text-align: center;
-        color: chocolate;
-        margin-top: 3vh;
-        margin-bottom: 4vh;
-    }
-    
-    .Main_Contents > input{
-        margin-left: -3vw;
-        width: 30vw;
-        height: 45px;
-        border-radius: 30px;
-        padding-left: 15px;
-        padding-top: 5px;
-        padding-bottom: 5px;
-        padding-right: 100px;
-        cursor: pointer;
-    }
-        @keyframes loading-dots {
-            0% {
-              content: ".";
-            }
-            20% {
-              content: "..";
-            }
-            40% {
-              content: "...";
-            }
-            60% {
-              content: "....";
-            }
-            80% {
-              content: ".....";
-            }
-            100% {
-              content: "......";
-            }
-          }
-    
-    
-        .login_loading p{
-            margin-left: 1vw;
-            margin-top: 6vh;
-        }
-        .login_loading img{
-            width: 7vw;
-            height: 10vh;
-        }
-    
-    
-        .Mainpage_body{
-            fill: none;
-        }
-        .MainPage_log{
-            display: flex;
-           position: fixed;
-           top:10px;
-           left: -5px;
-        }
-        .MainPage_log:hover{
-            display: flex;
-            cursor: pointer;
-        }
-        .MainPage_log img{
-            position:absolute;
-            top:4vh;
-            left: 3vw;
-            width:4vw;
-            height:7vh;
-            object-fit: contain;
-            border-radius: 40px;
-            margin-left: -10px;
-        }
-        .MainPage_log h3{
-            position: absolute;
-            left:7vw;
-            top:25px;
-            font-size: larger;
-        }
-        .nav{
-            display: flex;
-            justify-content:flex-end;
-            gap:40px;
-            align-items: center;
-            font-size: x-large;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color:darkorange;
-            
-        }
-        .nav img{
-             padding: 1rem;
-             width: 4rem;
-             height: 4rem;
-             border-radius: 50px;
-             margin-right: 5px;
-        }
-        
-        .nav input{
-            margin-right: 170px;
-            width: 40%;
-            height: 50px;
-            border-radius: 35px;
-            font-size: large;
-            padding-left: 40px;
-        
-        }
-        
-        #Search{
-            background-image: url("https://static.thenounproject.com/png/101791-200.png");
-            background-position:3px center;
-            background-size:30px;
-            background-repeat: no-repeat;
-        }
-}
-/*
-@media screen and (max-width:1920px) {
-.MainPage_log{
-    display: flex;
-   position: fixed;
-   top:10px;
-   left: -5px;
-}
-.MainPage_log:hover{
-    display: flex;
-    cursor: pointer;
-}
-.MainPage_log img{
-    position:absolute;
-    top:20px;
-    left: 20px;
-    width:70px;
-    height:70px;
-    object-fit: cover;
-    border-radius: 40px;
-    margin-left: -10px;
-}
-.MainPage_log h3{
-    position: absolute;
-    left:70px;
-    top:25px;
-    font-size: larger;
-}
-.nav{
-    display: flex;
-    justify-content:flex-end;
-    gap:40px;
-    align-items: center;
-    font-size: x-large;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color:darkorange;
-    
-}
-.nav img{
-     padding: 1rem;
-     width: 4rem;
-     height: 4rem;
-     border-radius: 50px;
-     margin-right: 5px;
+.MainPage_back {
+  min-height: 100vh;
+  width: 100%;
+  background: #f7f8fb;
+  color: #222831;
+  box-sizing: border-box;
 }
 
-.nav input{
-    margin-right: 170px;
-    width: 40%;
-    height: 50px;
-    border-radius: 35px;
-    font-size: large;
-    padding-left: 40px;
-
+.MainPage_redesign {
+  --pet-primary: #ff5b7c;
+  --pet-primary-soft: #ffe8ee;
+  --pet-text: #222831;
+  --pet-muted: #8a9099;
+  --pet-line: #eef0f4;
+  --pet-card: #ffffff;
+  --pet-shadow: 0 10px 28px rgba(23, 31, 46, 0.06);
+  font-family: "Pretendard", "Noto Sans KR", "Segoe UI", sans-serif;
+  padding-top: 72px;
 }
 
-#Search{
-    background-image: url("https://static.thenounproject.com/png/101791-200.png");
-    background-position:3px center;
-    background-size:30px;
-    background-repeat: no-repeat;
+.MainPage_topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  height: 72px;
+  display: grid;
+  grid-template-columns: 220px minmax(280px, 1fr) auto;
+  align-items: center;
+  gap: 24px;
+  padding: 0 32px;
+  background: rgba(255, 255, 255, 0.92);
+  border-bottom: 1px solid var(--pet-line);
+  backdrop-filter: blur(16px);
+  box-sizing: border-box;
 }
 
-@media screen and (max-width:900px) {
-    .log{
-        position: absolute;
-        top:1vh;
-        left: -2vw;
-    }
-    .log h3{
-        display: none;
-    }
+.MainPage_brand,
+.MainPage_topActions button,
+.MainPage_menu button,
+.MainPage_composerActions button,
+.MainPage_postActions button,
+.MainPage_sideTitle button,
+.MainPage_tags button,
+.MainPage_nearPet button,
+.MainPage_event button,
+.MainPage_story {
+  border: 0;
+  background: transparent;
+  font-family: inherit;
+  cursor: pointer;
 }
+
+.MainPage_brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0;
+  color: var(--pet-text);
 }
-@media screen and (max-width:1536px) {
-    @keyframes loading-dots {
-        0% {
-          content: ".";
-        }
-        20% {
-          content: "..";
-        }
-        40% {
-          content: "...";
-        }
-        60% {
-          content: "....";
-        }
-        80% {
-          content: ".....";
-        }
-        100% {
-          content: "......";
-        }
-      }
 
-
-    .login_loading p{
-        margin-left: 1vw;
-        margin-top: 6vh;
-    }
-    .login_loading img{
-        width: 7vw;
-        height: 10vh;
-    }
-
-
-    .Mainpage_body{
-        fill: none;
-    }
-    .MainPage_log{
-        display: flex;
-       position: fixed;
-       top:10px;
-       left: -5px;
-    }
-    .MainPage_log:hover{
-        display: flex;
-        cursor: pointer;
-    }
-    .MainPage_log img{
-        position:absolute;
-        top:20px;
-        left: 20px;
-        width:70px;
-        height:70px;
-        object-fit: cover;
-        border-radius: 40px;
-        margin-left: -10px;
-    }
-    .MainPage_log h3{
-        position: absolute;
-        left:70px;
-        top:25px;
-        font-size: larger;
-    }
-    .nav{
-        display: flex;
-        justify-content:flex-end;
-        gap:40px;
-        align-items: center;
-        font-size: x-large;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background-color:darkorange;
-        
-    }
-    .nav img{
-         padding: 1rem;
-         width: 4rem;
-         height: 4rem;
-         border-radius: 50px;
-         margin-right: 5px;
-    }
-    
-    .nav input{
-        margin-right: 170px;
-        width: 40%;
-        height: 50px;
-        border-radius: 35px;
-        font-size: large;
-        padding-left: 40px;
-    
-    }
-    
-    #Search{
-        background-image: url("https://static.thenounproject.com/png/101791-200.png");
-        background-position:3px center;
-        background-size:30px;
-        background-repeat: no-repeat;
-    }
-    
-    @media screen and (max-width:900px) {
-        .log{
-            position: absolute;
-            top:1vh;
-            left: -2vw;
-        }
-        .log h3{
-            display: none;
-        }
-    }
+.MainPage_brand img {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
 }
-    */
+
+.MainPage_brand span {
+  font-size: 1.35rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+}
+
+.MainPage_search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: min(520px, 100%);
+  height: 42px;
+  padding: 0 16px;
+  border-radius: 12px;
+  background: #f5f6f8;
+  color: var(--pet-muted);
+  box-sizing: border-box;
+}
+
+.MainPage_search input {
+  width: 100%;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font-size: 0.92rem;
+  color: var(--pet-text);
+}
+
+.MainPage_topActions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.MainPage_topActions button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #626a75;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.MainPage_topActions button.active {
+  color: var(--pet-primary);
+}
+
+.MainPage_topActions button span {
+  min-width: 17px;
+  height: 17px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--pet-primary);
+  color: #fff;
+  font-size: 0.68rem;
+}
+
+.MainPage_userChip img {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  object-fit: cover;
+}
+
+.MainPage_shell {
+  display: grid;
+  grid-template-columns: 220px minmax(520px, 720px) 340px;
+  gap: 24px;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 24px 32px 48px;
+  box-sizing: border-box;
+}
+
+.MainPage_leftRail {
+  position: sticky;
+  top: 96px;
+  align-self: start;
+  min-height: calc(100vh - 120px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px;
+  border-radius: 18px;
+  background: var(--pet-card);
+  box-shadow: var(--pet-shadow);
+  box-sizing: border-box;
+}
+
+.MainPage_menu {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.MainPage_menu button,
+.MainPage_leftBottom button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  padding: 0 14px;
+  border-radius: 10px;
+  color: #555d68;
+  font-weight: 800;
+  text-align: left;
+}
+
+.MainPage_menu button.selected {
+  color: var(--pet-primary);
+  background: var(--pet-primary-soft);
+}
+
+.MainPage_leftBottom {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.MainPage_petRegister {
+  justify-content: center;
+  min-height: 56px !important;
+  color: var(--pet-primary) !important;
+  background: var(--pet-primary-soft) !important;
+}
+
+.MainPage_feedColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.MainPage_storyCard,
+.MainPage_composer,
+.MainPage_postCard,
+.MainPage_sideCard {
+  background: var(--pet-card);
+  border: 1px solid var(--pet-line);
+  border-radius: 16px;
+  box-shadow: var(--pet-shadow);
+}
+
+.MainPage_storyCard {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-height: 118px;
+  padding: 16px 22px;
+  overflow-x: auto;
+  box-sizing: border-box;
+}
+
+.MainPage_story {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: 72px;
+  color: #434a54;
+  font-weight: 800;
+}
+
+.MainPage_storyAvatar {
+  position: relative;
+  width: 66px;
+  height: 66px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 3px;
+  background: linear-gradient(135deg, var(--pet-primary), #ffb061);
+}
+
+.MainPage_story.create .MainPage_storyAvatar {
+  background: #f3f4f7;
+}
+
+.MainPage_storyAvatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 999px;
+  object-fit: cover;
+  background: #fff;
+}
+
+.MainPage_storyAvatar em {
+  position: absolute;
+  bottom: -5px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: var(--pet-primary);
+  color: #fff;
+  font-size: 0.62rem;
+  font-style: normal;
+  font-weight: 900;
+}
+
+.MainPage_composer {
+  padding: 18px 22px;
+}
+
+.MainPage_composerPrompt {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 54px;
+  border-bottom: 1px solid var(--pet-line);
+  color: var(--pet-muted);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.MainPage_composerPrompt img,
+.MainPage_postHeader img {
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  object-fit: cover;
+}
+
+.MainPage_composerActions {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  padding-top: 14px;
+}
+
+.MainPage_composerActions button {
+  min-height: 34px;
+  color: #59616d;
+  font-weight: 800;
+}
+
+.MainPage_postCard {
+  padding: 20px;
+}
+
+.MainPage_postHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.MainPage_postHeader div {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.MainPage_postHeader strong {
+  color: var(--pet-text);
+}
+
+.MainPage_postHeader span {
+  color: var(--pet-muted);
+  font-size: 0.86rem;
+}
+
+.MainPage_postText {
+  margin: 16px 0 14px;
+  line-height: 1.55;
+  color: #343b45;
+  font-weight: 600;
+}
+
+.MainPage_postText span {
+  color: #4d9dff;
+}
+
+.MainPage_postImage {
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  background: #eef0f4;
+}
+
+.MainPage_postImage img {
+  display: block;
+  width: 100%;
+  height: 330px;
+  object-fit: cover;
+}
+
+.MainPage_postImage span {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.58);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.MainPage_postActions {
+  display: flex;
+  gap: 24px;
+  padding-top: 14px;
+}
+
+.MainPage_postActions button {
+  color: #59616d;
+  font-weight: 800;
+}
+
+.MainPage_rightPanel {
+  position: sticky;
+  top: 96px;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.MainPage_sideCard {
+  padding: 18px;
+}
+
+.MainPage_sideTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.MainPage_sideTitle h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.MainPage_sideTitle button {
+  color: #a0a5ae;
+  font-weight: 800;
+}
+
+.MainPage_nearPet {
+  display: grid;
+  grid-template-columns: 42px 1fr auto auto;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 0;
+}
+
+.MainPage_nearPet img {
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  object-fit: cover;
+}
+
+.MainPage_nearPet div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.MainPage_nearPet span,
+.MainPage_nearPet em,
+.MainPage_event span,
+.MainPage_event small {
+  color: var(--pet-muted);
+  font-size: 0.82rem;
+  font-style: normal;
+}
+
+.MainPage_nearPet button,
+.MainPage_event button {
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: var(--pet-primary-soft);
+  color: var(--pet-primary);
+  font-weight: 900;
+}
+
+.MainPage_tags {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.MainPage_tags button {
+  display: flex;
+  justify-content: space-between;
+  color: var(--pet-primary);
+  font-weight: 900;
+}
+
+.MainPage_tags span {
+  color: var(--pet-muted);
+  font-weight: 700;
+}
+
+.MainPage_event {
+  display: grid;
+  grid-template-columns: 88px 1fr;
+  gap: 12px;
+  align-items: center;
+}
+
+.MainPage_event img {
+  width: 88px;
+  height: 72px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.MainPage_event div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.MainPage_event button {
+  grid-column: 2;
+  justify-self: end;
+}
+
+@media (max-width: 1180px) {
+  .MainPage_shell {
+    grid-template-columns: 190px minmax(0, 1fr);
+  }
+
+  .MainPage_rightPanel {
+    display: none;
+  }
+}
+
+@media (max-width: 820px) {
+  .MainPage_redesign {
+    padding-top: 64px;
+  }
+
+  .MainPage_topbar {
+    height: 64px;
+    grid-template-columns: auto 1fr;
+    padding: 0 16px;
+  }
+
+  .MainPage_search,
+  .MainPage_topActions button:not(.MainPage_userChip) {
+    display: none;
+  }
+
+  .MainPage_shell {
+    grid-template-columns: 1fr;
+    padding: 16px;
+  }
+
+  .MainPage_leftRail {
+    display: none;
+  }
+
+  .MainPage_composerActions {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .MainPage_postImage img {
+    height: 260px;
+  }
+}

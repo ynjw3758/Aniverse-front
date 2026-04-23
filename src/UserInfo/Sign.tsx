@@ -7,6 +7,18 @@ import UseInput from "../UseHook/UserInput";
 import Certification from "../Certification/Certification";
 import Adress from "../address/Adress";
 import Success_Sign from "../Success_Sign/Success_Sign";
+import PetBuddyLogo from "../assets/images/petbuddy_logo.svg";
+import SignupPetDogIcon from "../assets/images/signup_pet_dog.svg";
+import SignupPetCatIcon from "../assets/images/signup_pet_cat.svg";
+import SignupPetReptileIcon from "../assets/images/signup_pet_reptile.svg";
+import SignupPetBirdIcon from "../assets/images/signup_pet_bird.svg";
+import SignupPetRabbitIcon from "../assets/images/signup_pet_rabbit.svg";
+import SignupPetAmphibiaIcon from "../assets/images/signup_pet_amphibia.svg";
+import SignupPetInsectIcon from "../assets/images/signup_pet_insect.svg";
+import GoogleIcon from "../assets/images/btn_google.svg";
+import KakaoIcon from "../assets/images/btn_kakao.svg";
+import NaverIcon from "../assets/images/btn_naver.svg";
+import HeroAnimalsImg from "../assets/images/petbuddy_landing_collage.png";
 //#endregion
 
 //                             +--------------------
@@ -51,6 +63,7 @@ const Sign:React.FC=()=> {
     const[idisvalid , setIdisvalid] = useState<boolean>(false);
     const[nickisvalid ,setNickisvalid] = useState<boolean>(false);
     const[emailisvalid ,setEmailisvalid] = useState<boolean>(false);
+    const[termsAccepted, setTermsAccepted] = useState<boolean>(false);
 
     const[disid , setDisid] = useState<boolean>(false);
     const[disnick , setDisnick] = useState<boolean>(false);
@@ -182,7 +195,7 @@ useEffect(() => {
             setFormIsValid(
                 enterNameIsValid && enterEmailIsValid && enterIdIsValid && 
                 enterPassIsValid && enterNicNameIsValid /*&& ischeckcerfiti*/ && enteraddressIsValid&&
-                idisvalid && nickisvalid
+                idisvalid && nickisvalid && termsAccepted
             );
         }, 500);
         return () => {
@@ -190,7 +203,7 @@ useEffect(() => {
             clearTimeout(identifier);
         };
     }, [enterPassIsValid, enterIdIsValid, enterEmailIsValid, enterNameIsValid, 
-        enterNicNameIsValid /*, ischeckcerfiti*/ , enteraddressIsValid , idisvalid , nickisvalid])
+        enterNicNameIsValid /*, ischeckcerfiti*/ , enteraddressIsValid , idisvalid , nickisvalid, termsAccepted])
 
     useEffect(() =>{
             console.log("중복 버튼!!");
@@ -419,103 +432,191 @@ useEffect(() => {
     const EnterAdressplaceholder = EnteraddressHassError ? "나머지 주소를 입력해주세요." : "상세 주소";
  
 console.log("브라우저 넓이 :" , window.innerWidth);
+    const petPreviewList = [
+        { src: SignupPetDogIcon, alt: "강아지" },
+        { src: SignupPetCatIcon, alt: "고양이" },
+        { src: SignupPetReptileIcon, alt: "파충류" },
+        { src: SignupPetBirdIcon, alt: "조류" },
+        { src: SignupPetRabbitIcon, alt: "토끼" },
+        { src: SignupPetAmphibiaIcon, alt: "양서류" },
+        { src: SignupPetInsectIcon, alt: "절지류" },
+    ];
+
     return (<Fragment>
-       
-            <div className="Signmain">
-                <h2>회원가입</h2>
-                    <div className={EnterIdInputClasses}>
-                        <input placeholder={idplaceholder}
-                            type="text"
-                            value={EnterId}
-                            onChange={IdChangeHandler}
-                            onBlur={IdBlurHandler}
-                            id="input_id"
-                        />
-
-                        <button type="button" onClick={dupl_id} disabled={!duplid}>중복확인</button>           
-                        {idisvalid && <p className="id_success">사용가능</p>}
-                        {disid && <p className="id_fail">중복</p>}
-                        
-                        
-                    </div>
-                    <div className={EnterPassInputClasses}>
-                        <input placeholder={passwordplaceholder}
-                            type="password"
-                            value={EnterPass}
-                            onChange={PassChangeHandler}
-                            onBlur={PassBlurHandler}
-                            id="input_password"                        
-                        />
-                      <div className="pass_msg">
-                        <p>숫자+영문자+특수문자 10자리 이상 입력해주세요!</p>
-                      </div>
-                       
+            <main className="SignPage">
+                <section className="Signmain" aria-label="회원가입">
+                    <div className="SignHeader">
+                        <button type="button" className="SignLogoButton" onClick={back_main} aria-label="홈으로 이동">
+                            <img src={PetBuddyLogo} alt="PetBuddy" />
+                        </button>
+                        <button type="button" className="SignLoginLink" onClick={() => navigate("/login")}>
+                            로그인 하기 <span>›</span>
+                        </button>
                     </div>
 
-                    <div className={EnterNameInputClasses}>
-                        <input placeholder={EnterNameplaceholder}
-                            type="text"
-                            value={EnterName}
-                            onChange={NameChangeHandler}
-                            onBlur={NameBlurHandler}                         
-                            id="input_Name"
-                        />
+                    <div className="SignIntro">
+                        <h2>회원가입</h2>
+                        <p><strong>모든 반려동물</strong>을 위한 특별한 공간,<br />PetBuddy에서 함께해요!</p>
                     </div>
-                    <div className = "adress">
-                        <input placeholder="지역 주소"
-                         type="text"
-                         value={main_address}
-                         id="input_Adrress"
-                         disabled={!disable_input}
-                        />
 
-                        <button type="button" onClick={addressHandler} >주소입력</button>
-                        {address && (<Adress onClose={addressclose} address ={address_data}/>)}
+                    <div className="SignPetPreview" aria-hidden="true">
+                        {petPreviewList.map((pet) => (
+                            <span key={pet.alt}>
+                                <img src={pet.src} alt="" />
+                            </span>
+                        ))}
                     </div>
-                    <div className={EnterAdressInputClasses}>
-                        <input placeholder={EnterAdressplaceholder}
-                         type="text"
-                         value={Enteraddress}
-                         onChange={addressChangeHandler}
-                         onBlur={addressBlurHandler} />
+
+                    <div className="SignForm">
+                        <div className={EnterEmailInputClasses}>
+                            <input
+                                placeholder={EnterEmailplaceholder}
+                                type="email"
+                                value={EnterEmail}
+                                onChange={EmailChangeHandler}
+                                onBlur={EmailBlurHandler}
+                                id="Sign_input_Email"
+                            />
+                            <button type="button" onClick={dupl_email} disabled={!duplemail}>확인</button>
+                            {emailisvalid && <p className="email_success">사용 가능</p>}
+                            {disemail && <p className="email_fail">이미 사용 중</p>}
+                        </div>
+
+                        <div className={EnterIdInputClasses}>
+                            <input
+                                placeholder={idplaceholder}
+                                type="text"
+                                value={EnterId}
+                                onChange={IdChangeHandler}
+                                onBlur={IdBlurHandler}
+                                id="Sign_input_id"
+                            />
+                            <button type="button" onClick={dupl_id} disabled={!duplid}>확인</button>
+                            {idisvalid && <p className="id_success">사용 가능</p>}
+                            {disid && <p className="id_fail">이미 사용 중</p>}
+                        </div>
+
+                        <div className={EnterPassInputClasses}>
+                            <input
+                                placeholder={passwordplaceholder}
+                                type="password"
+                                value={EnterPass}
+                                onChange={PassChangeHandler}
+                                onBlur={PassBlurHandler}
+                                id="Sign_input_password"
+                            />
+                            <div className="pass_msg">
+                                <p>숫자, 영문자, 특수문자를 포함해 10자리 이상 입력해주세요.</p>
+                            </div>
+                        </div>
+
+                        <div className={EnterNameInputClasses}>
+                            <input
+                                placeholder={EnterNameplaceholder}
+                                type="text"
+                                value={EnterName}
+                                onChange={NameChangeHandler}
+                                onBlur={NameBlurHandler}
+                                id="Sign_input_Name"
+                            />
+                        </div>
+
+                        <div className={EnterNicNameInputClasses}>
+                            <input
+                                placeholder={EnterNicNameplaceholder}
+                                type="text"
+                                value={EnterNicName}
+                                onChange={NicNameChangeHandler}
+                                onBlur={NicNameBlurHandler}
+                                id="Sign_input_NicName"
+                            />
+                            <button type="button" onClick={dupl_nickname} disabled={!duplnick}>확인</button>
+                            {nickisvalid && <p className="nick_success">사용 가능</p>}
+                            {disnick && <p className="nick_fail">이미 사용 중</p>}
+                        </div>
+
+                        <div className="adress">
+                            <input
+                                placeholder="지역 주소"
+                                type="text"
+                                value={main_address}
+                                id="Sign_input_Adrress"
+                                disabled={!disable_input}
+                            />
+                            <button type="button" onClick={addressHandler}>주소입력</button>
+                            {address && (<Adress onClose={addressclose} address={address_data}/>)}
+                        </div>
+
+                        <div className={EnterAdressInputClasses}>
+                            <input
+                                placeholder={EnterAdressplaceholder}
+                                type="text"
+                                value={Enteraddress}
+                                onChange={addressChangeHandler}
+                                onBlur={addressBlurHandler}
+                            />
+                        </div>
+
+                        <div className="certifi">
+                            <button type="button" onClick={openmodal} id="verification">본인인증</button>
+                            {ischeckcerfiti && <p className="certification">인증 완료</p>}
+                        </div>
+
+                        {modalopen && (<Certification onClose={closemodal}
+                            oncerfitication={resultcerfitication} onPhonNumber={userNumber}/>)}
+                        {issignvalid && <Success_Sign onClose={closemodal} Name={EnterName}/>}
+
+                        <label className="SignTerms">
+                            <input
+                                type="checkbox"
+                                checked={termsAccepted}
+                                onChange={(event) => setTermsAccepted(event.target.checked)}
+                            />
+                            <span>서비스 이용약관 및 개인정보 처리방침에 동의합니다. <strong>(필수)</strong></span>
+                        </label>
+
+                        <div className="sign">
+                            <button disabled={!formisValid} type="button" onClick={response_userinfo}>회원가입</button>
+                        </div>
                     </div>
-                    <div className={EnterNicNameInputClasses}>
-                        <input placeholder={EnterNicNameplaceholder}
-                            type="text"
-                            value={EnterNicName}
-                            onChange={NicNameChangeHandler}
-                            onBlur={NicNameBlurHandler}
-                            id="input_NicName"
-                        />
-                        <button type="button" onClick={dupl_nickname} disabled={!duplnick}>중복확인</button>
-                        {nickisvalid && <p className="nick_success">사용가능</p>}
-                        {disnick && <p  className="nick_fail">중복</p>}
+
+                    <div className="SignDivider"><span>또는 다른 방법으로 가입하기</span></div>
+                    <div className="SignSocials" aria-label="소셜 회원가입">
+                        <button type="button" aria-label="Google로 가입">
+                            <img src={GoogleIcon} alt="" />
+                        </button>
+                        <button type="button" aria-label="Apple로 가입" className="apple">●</button>
+                        <button type="button" aria-label="Kakao로 가입">
+                            <img src={KakaoIcon} alt="" />
+                        </button>
+                        <button type="button" aria-label="Naver로 가입">
+                            <img src={NaverIcon} alt="" />
+                        </button>
                     </div>
-                    <div className={EnterEmailInputClasses}>
-                        <input
-                            placeholder={EnterEmailplaceholder}
-                            type="email"
-                            value={EnterEmail}
-                            onChange={EmailChangeHandler}
-                            onBlur={EmailBlurHandler}
-                            id="input_Email"
-                        />
-                        <button type="button" onClick={dupl_email} disabled={!duplemail}>중복확인</button>
-                        {emailisvalid && <p className="email_success">사용가능</p>}
-                        {disemail && <p  className="email_fail">중복</p>}
+                </section>
+
+                <section className="SignVisual" aria-label="PetBuddy 소개">
+                    <div className="SignVisualContent">
+                        <span className="SignFloatIcon heart">♥</span>
+                        <span className="SignFloatIcon paw">●●●</span>
+                        <h1>다양한 반려동물과<br /><strong>특별한 일상을 함께해요</strong></h1>
+                        <p>강아지, 고양이부터 파충류, 조류, 양서류, 곤충까지<br />모든 반려동물 보호자들이 모여 소통하는 공간입니다.</p>
+                        <div className="SignHeroAnimalsVisual">
+                            <img
+                                className="SignHeroAnimals"
+                                src={HeroAnimalsImg}
+                                alt="강아지, 고양이, 파충류, 조류, 양서류, 곤충, 토끼가 함께 있는 PetBuddy 소개 이미지"
+                            />
+                        </div>
+                        <div className="SignStats">
+                            <div><strong>20,000+</strong><span>활발한 보호자</span></div>
+                            <div><strong>15,000+</strong><span>다양한 반려동물</span></div>
+                            <div><strong>50,000+</strong><span>정보 & 게시글</span></div>
+                            <div><strong>안전한</strong><span>커뮤니티</span></div>
+                        </div>
                     </div>
-                    <div className="certifi"> 
-                    <button onClick={openmodal} id="verification">본인인증</button>
-                    </div>
-                    {modalopen && (<Certification onClose={closemodal} 
-                    oncerfitication={resultcerfitication} onPhonNumber={userNumber}/>)}
-                    {ischeckcerfiti && <p className="certification">인증 완료</p>}
-                    {issignvalid && <Success_Sign onClose={closemodal} Name={EnterName}/>}
-                    <div className="sign">
-                        <button disabled={!formisValid} type="submit" onClick={response_userinfo}>회원가입</button>
-                        <button onClick={back_main}>취소</button>
-                    </div>
-            </div>
+                </section>
+            </main>
 
     </Fragment >
     )

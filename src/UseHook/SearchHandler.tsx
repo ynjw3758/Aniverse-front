@@ -3,6 +3,7 @@ import axios from 'axios';
 import debounce from 'lodash/debounce';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
+import { AUTH_API_BASE, SEARCH_API_BASE } from '../API/Api';
 
 interface user_info {
   nickname: string;
@@ -28,9 +29,9 @@ function  useMentionHandler (value:string) {
       const access_token = localStorage.getItem("a_id")!;
       axios.defaults.headers.common['Authorization'] = access_token;
 
-      axios.get("http://localhost:8080/Pets-social/acccheck")
+      axios.get(`${AUTH_API_BASE}/acccheck`)
         .then(() => {
-          axios.get("http://localhost:8088/Pets-social/Search/Person", { params: { Word: values } })
+          axios.get(`${SEARCH_API_BASE}/Pets-social/Search/Person`, { params: { Word: values } })
             .then((response) => {
               if (response.status === 200) {
                 setUserinfo(response.data || []);
@@ -48,7 +49,7 @@ function  useMentionHandler (value:string) {
       if (status === 401) {
         const refresh_token = cookies.get("refresh_token");
         const id = localStorage.getItem("id");
-        axios.post("http://localhost:8080/Pets-social/token/refresh", { refresh_token, id })
+        axios.post(`${AUTH_API_BASE}/token/refresh`, { refresh_token, id })
           .then(response => {
             if (response.status === 200) {
               localStorage.setItem("p_exp", response.data.data.exp);

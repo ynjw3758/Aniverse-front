@@ -1,163 +1,182 @@
-.SpeciesPicker_Title{
-  font-size: 1rem;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.95);
-  margin: 0;
+.SpeciesPicker_Main {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
 }
-.SpeciesPicker_Title::after{
-  content: "";
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  transform: translateX(-50%);
 
-  width: 72%;             /* ← 가로선 길이 (조절 포인트) */
-  height: 1px;
-
-  background: linear-gradient(
-    90deg,
-    rgba(255,255,255,0.00),
-    rgba(255,255,255,0.35),
-    rgba(255,255,255,0.00)
-  );
-}
-.SpeciesPicker_Header{
+.SpeciesPicker_Header {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+  min-height: 60px;
+  padding: 4px 8px 12px;
+  box-sizing: border-box;
+}
 
-  height: 56px; /* 모바일 헤더 정석 높이 */
-  padding: 0 16px;
-  margin-bottom: 2vh;
+.SpeciesPicker_Header img {
+  position: absolute;
+  left: 0;
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
 }
-.SpeciesPicker_Header img{
-    position: absolute;
-    top:-3vh;
-    left: -3vw;
-    height:15vh;
+
+.SpeciesPicker_Title {
+  position: relative;
+  margin: 0;
+  font-size: 1.18rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.96);
 }
-.SpeciesPicker_container{
+
+.SpeciesPicker_Title::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -12px;
+  transform: translateX(-50%);
+  width: 72%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0.35),
+    rgba(255, 255, 255, 0)
+  );
+}
+
+.SpeciesPicker_Body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 10px 0 0;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(20, 70, 72, 0.82) transparent;
+}
+
+.SpeciesPicker_Body::-webkit-scrollbar {
+  width: 10px;
+}
+
+.SpeciesPicker_Body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.SpeciesPicker_Body::-webkit-scrollbar-thumb {
+  background: rgba(20, 70, 72, 0.82);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.SpeciesPicker_container {
   display: grid;
-
-  /* ✅ 카드 한 칸 크기를 고정 범위로: 너무 커지지도/작아지지도 않게 */
-  grid-template-columns: repeat(3, minmax(150px, 150px));
-
-  gap: 10px;
-  padding: 22px;
-
-  /* ✅ 그리드 덩어리 자체를 가운데 */
+  grid-template-columns: repeat(3, minmax(0, 160px));
   justify-content: center;
-
-  /* ✅ 셀에서 아이템 stretch 방지 */
-  place-items: center;   
-  
+  gap: 14px;
+  padding: 0 0 12px;
 }
 
-.SpeciesPicker_item{
-  width: 8vw;
+.SpeciesPicker_item {
+  width: 160px;
   aspect-ratio: 1 / 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  padding: 12px;
-  overflow: hidden;
-    border-radius: 18px;
-  background: rgba(255,255,255,0.08);
+  gap: 12px;
+  padding: 14px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   position: relative;
-   /* ✅ transition은 기본에 */
   transition: transform 80ms ease, box-shadow 80ms ease, background 80ms ease;
   will-change: transform;
   cursor: pointer;
-  
-}
-/* ✅ 선택 상태: outline 대신 box-shadow */
-.SpeciesPicker_item.active{
-  transform: scale(1.06);
-  box-shadow: 0 0 0 3px rgba(255,255,255,0.95);
+  box-sizing: border-box;
 }
 
-/* ✅ active일 때 hover가 덮어쓰지 않게 */
-.SpeciesPicker_item.active:hover{
-  transform: scale(1.06);
+.SpeciesPicker_item.active {
+  transform: scale(1.03);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.95);
 }
 
-/* 체크 표시 */
+.SpeciesPicker_item.active:hover {
+  transform: scale(1.03);
+}
+
 .SpeciesPicker_check {
   position: absolute;
   top: 10px;
   right: 10px;
-
   width: 26px;
   height: 26px;
-
   border-radius: 50%;
   background: #ffffff;
   color: #2e9e92;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
-  font-weight: bold;
+  font-weight: 700;
   font-size: 14px;
-
 }
 
-
-.SpeciesPicker_ImgBox{
+.SpeciesPicker_ImgBox {
   width: 100%;
-  height: 75%;          /* ✅ 핵심: 이미지 영역이 카드의 75%까지만 */
+  height: 66px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.SpeciesPicker_ImgBox img{         /* ✅ ImgBox 높이에 맞춰서 “지금 크기” 유지됨 */
-  width: 8vw;          /* ✅ 가로는 비율대로 */
-  object-fit: contain;
-  display:block;
+.SpeciesPicker_ImgBox img {
+  width: 104px;
+  height: 204px;
+  object-fit: cover;
+  display: block;
 }
 
-.SpeciesPicker_item span{
-  flex: 0 0 auto;       /* ✅ 텍스트는 절대 밀리지 않게 */
-  font-size: 20px;
+.SpeciesPicker_item span {
+  font-size: 1rem;
   color: #fff;
-  font-weight: 600;
-  margin-top: -3vh;
+  font-weight: 700;
+  line-height: 1.2;
 }
-.SpeciesPicker_Footer{
-  width: 60%;
+
+.SpeciesPicker_Footer {
+  flex-shrink: 0;
+  width: 100%;
   display: flex;
-  gap: 18px;
-  justify-content: space-between;
+  gap: 16px;
+  justify-content: center;
   align-items: center;
-
-  margin-top: 22px;     // 카드 그리드랑 간격
-  padding: 0 10px 8px;  // 아래 살짝 여백
-  margin-left: 8vw;
+  padding: 16px 0 4px;
+  box-sizing: border-box;
 }
-/* 공통 버튼 */
-.SpeciesPicker_Btn {
-  flex: 1;
-  height: 52px;
 
-  border-radius: 999px;                 // 알약 버튼
-  font-size: 20px;
+.SpeciesPicker_Btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 180px;
+  width: 180px;
+  height: 52px;
+  border-radius: 999px;
+  font-size: 1rem;
   font-weight: 700;
   color: rgba(255, 255, 255, 0.85);
-
   background: rgba(255, 255, 255, 0.06);
   border: 1.5px solid rgba(255, 255, 255, 0.18);
-
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-
   cursor: pointer;
-
   transition: transform 80ms ease, box-shadow 120ms ease, background 120ms ease;
 }
 
@@ -166,8 +185,9 @@
 }
 
 .SpeciesPicker_Btn:active {
-  transform: translateY(0px) scale(0.98);
+  transform: translateY(0) scale(0.98);
 }
+
 .SpeciesPicker_Btn:disabled {
   opacity: 0.4;
   cursor: not-allowed;
@@ -178,15 +198,12 @@
   color: rgba(255, 255, 255, 0.5);
 }
 
-
-/* 취소 버튼(덜 강조) */
 .SpeciesPicker_BtnCancel {
   background: rgba(255, 255, 255, 0.03);
   border: 1.5px solid rgba(255, 255, 255, 0.16);
   color: rgba(255, 255, 255, 0.75);
 }
 
-/* 다음으로 버튼(강조 그라데이션) */
 .SpeciesPicker_BtnNext {
   border: 1.5px solid rgba(255, 255, 255, 0.22);
   background: linear-gradient(
@@ -195,11 +212,21 @@
     rgba(70, 255, 225, 0.28),
     rgba(70, 140, 255, 0.22)
   );
-
   box-shadow: 0 10px 26px rgba(0, 0, 0, 0.18);
   color: rgba(255, 255, 255, 0.92);
 }
 
 .SpeciesPicker_BtnNext:hover {
   box-shadow: 0 14px 34px rgba(0, 0, 0, 0.22);
+}
+
+@media (max-width: 900px) {
+  .SpeciesPicker_container {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .SpeciesPicker_item {
+    width: 100%;
+    max-width: 160px;
+  }
 }

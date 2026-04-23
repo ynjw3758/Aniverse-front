@@ -8,6 +8,32 @@ import PetRegisterModal from "../../../../Pets/PetRegisterModal";
 interface props{
 
 }
+
+type PetRegisterPayload = {
+    name: string
+    profileImage: string
+    species: SpeciesInfo
+    breed: BreedInfo
+    gender: GenderType
+    birthDate: string
+    ageLabel: string
+    traits: string[]
+}
+type SpeciesInfo = {
+  title: string;
+  code: string;
+  id: number;
+};
+
+type BreedInfo = {
+  breedId: number | null;
+  nameKo: string;
+  nameEn: string;
+  code: string;
+};
+
+type GenderType = "male" | "female"
+
 const PetSelectModal:React.FC<props> =() =>{
     const[isData, setIsData]=useState<boolean>(false);
     const[register, setRegister]=useState<boolean>(false);
@@ -34,6 +60,12 @@ const PetSelectModal:React.FC<props> =() =>{
         setRegister(true)
     }
 
+    const registerPetsInfo =(data :PetRegisterPayload ) =>{
+        console.log("펫 등록 데이터 :" , data)
+        setRegister(false)
+        setIsData(true)
+    }
+
     return(<div className="PetSelectModal_BackDrop">
      <div className="PetSelectModal_Main">
             {isData && (<div className="PetSelectModal_Card">
@@ -53,7 +85,11 @@ const PetSelectModal:React.FC<props> =() =>{
                         <button className="PetSelectModal_Btn Confirm">확인</button>
                     </div>
             </div>)}
-            {register && (<PetRegisterModal />)}
+            {register && (
+                <div className="PetSelectModal_RegisterPanel">
+                    <PetRegisterModal FormData={registerPetsInfo}/>
+                </div>
+            )}
      </div>
     </div>)
 }

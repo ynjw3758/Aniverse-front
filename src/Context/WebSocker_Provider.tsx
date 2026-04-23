@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import WebSocketContext from "./WebSocketContext";
+import { WEBSOCKET_BASE } from "../API/Api";
 
 type Props = {
     children?: React.ReactNode
@@ -12,7 +13,9 @@ const WebSocker_Provider:React.FC<Props> =({children}) =>{
     
     useEffect(() => {
         const id = localStorage.getItem("id");
-        const ws = new WebSocket("ws://127.0.0.1:8085/login");
+        const wsProtocol = WEBSOCKET_BASE?.startsWith("https") ? "wss" : "ws";
+        const wsHost = WEBSOCKET_BASE?.replace(/^https?:\/\//, "");
+        const ws = new WebSocket(`${wsProtocol}://${wsHost}/login`);
     
         ws.onopen = () => {
           ws.send(JSON.stringify({ Id: id, type: "login" }));

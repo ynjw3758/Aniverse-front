@@ -2,6 +2,7 @@ import WebSocketAlarmContext from "./WebSocketAlarmContext";
 import { useEffect, useRef, useState } from "react";
 import { Client } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
+import { WEBSOCKET_BASE } from "../API/Api";
 
 
 type Props = {
@@ -45,8 +46,10 @@ type lasgmsg={
 
     useEffect(() =>{
         const UserId:String = localStorage.getItem("id")!;
-        const ws = new WebSocket("ws://127.0.0.1:8085/alarm");
-        const socket = new SockJS(`http://127.0.0.1:8085/ws?userid=${UserId}`);
+        const wsProtocol = WEBSOCKET_BASE?.startsWith("https") ? "wss" : "ws";
+        const wsHost = WEBSOCKET_BASE?.replace(/^https?:\/\//, "");
+        const ws = new WebSocket(`${wsProtocol}://${wsHost}/alarm`);
+        const socket = new SockJS(`${WEBSOCKET_BASE}/ws?userid=${UserId}`);
         ws.onopen =() =>{
          console.log("알람 웹 소켓 연결 확인");
          ws.send(JSON.stringify({ Id: UserId}));

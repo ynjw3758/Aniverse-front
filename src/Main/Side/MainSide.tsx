@@ -1,119 +1,129 @@
 import "./MainSide.scss";
 import { useNavigate } from "react-router-dom";
 import user_info from "../../Context/Userdata";
-import { useContext, useEffect,  useState } from "react";
-import Freindimg from "../../assets/images/friends.png";
-import msgimg from "../../assets/images/message.png"
-import chatimg from "../../assets/images/talk.png"
-import searchimg from "../../assets/images/search.png"
-import alarmimg from "../../assets/images/Alarm.png"
-import favoriteimg from "../../assets/images/favorite.png"
-import Timeimg from "../../assets/images/time.png"
+import { useContext, useEffect, useState } from "react";
+import HomeIcon from "../../assets/images/side_home.svg";
+import ProfileIcon from "../../assets/images/side_profile.svg";
+import PetIcon from "../../assets/images/side_pet.svg";
+import FollowingIcon from "../../assets/images/side_following.svg";
+import BookmarkIcon from "../../assets/images/side_bookmark.svg";
+import NearbyIcon from "../../assets/images/side_nearby.svg";
+import CommunityIcon from "../../assets/images/side_community.svg";
+import EventIcon from "../../assets/images/side_event.svg";
+import MarketIcon from "../../assets/images/side_market.svg";
+import HelpIcon from "../../assets/images/side_help.svg";
+import SettingsIcon from "../../assets/images/side_settings.svg";
+import PetRegisterIcon from "../../assets/images/side_pet_register.svg";
 
+type UserInfos = {
+  img: string;
+  nickname: string;
+  id: string;
+  isReady: boolean;
+  Noti: NotiKind | undefined;
+  onside: (side: any) => void;
+  onProfile: () => void;
+  AlarmClick: (data: boolean) => void;
+};
 
-  type user_infos ={
-    img:string,
-    nickname:string,
-    id:string,
-    isReady:boolean,
-    Noti:Noti_Kind | undefined,
-    onside :(side:any) => void,
-    onProfile :() =>void,
-    AlarmClick :(data:boolean) => void
+type NotiKind = {
+  Chat: ChatInfo[];
+};
 
-}
-type Noti_Kind={
-  Chat:ChatInfo[];
-}
-type ChatInfo={
-  ChatId:string;
-  IsRead:boolean;
-  MessageId:string;
-  RoomName:string;
-  UserId:string;
-  message:string;
-  nickname:string;
-  profile:String;
-  sendId:string;
-  timestamp:string;
-  type:string;
-}
+type ChatInfo = {
+  ChatId: string;
+  IsRead: boolean;
+  MessageId: string;
+  RoomName: string;
+  UserId: string;
+  message: string;
+  nickname: string;
+  profile: String;
+  sendId: string;
+  timestamp: string;
+  type: string;
+};
 
+type MenuItem = {
+  label: string;
+  icon: string;
+  active?: boolean;
+  onClick?: () => void;
+};
 
-const MainSide =(props:user_infos) =>{
+const MainSide = (props: UserInfos) => {
+  const [isNoti, setIsNoti] = useState(false);
 
-  const[isNoti, setIsNoti]=useState<boolean>(false);
-  
   const navigate = useNavigate();
-  const data=useContext(user_info);
+  const data = useContext(user_info);
 
-  useEffect(() =>{
-    console.log("props.Noti.length :" , props.Noti);
-    if(props.Noti?.Chat && props.Noti.Chat.length > 0) {
-      setIsNoti(true)
+  useEffect(() => {
+    if (props.Noti?.Chat && props.Noti.Chat.length > 0) {
+      setIsNoti(true);
     }
-  },[props.Noti])
+  }, [props.Noti]);
 
-  const Myprofile =() =>{
+  const handleMain = () => {
+    navigate("/main");
+  };
+
+  const handleProfile = () => {
     props.onProfile();
-  }
-  const NoteHandler =() =>{
-    navigate(`/main/Note/${props.id}`);
-  }
+  };
 
-  const ChatHandler =() =>{
+  const handleChat = () => {
     data.addeNickName(props.nickname);
     data.addprofile(props.img);
     navigate(`/main/Chat/${props.id}`);
-  }
+  };
 
-  const AlarmClick =() =>{
-     props.AlarmClick(true);
-  }
+  const menuItems: MenuItem[] = [
+    { label: "홈", icon: HomeIcon, active: true, onClick: handleMain },
+    { label: "내 프로필", icon: ProfileIcon, onClick: handleProfile },
+    { label: "내 펫", icon: PetIcon },
+    { label: "팔로잉", icon: FollowingIcon },
+    { label: "저장한 게시물", icon: BookmarkIcon },
+    { label: "근처 펫 찾기", icon: NearbyIcon },
+    { label: "커뮤니티", icon: CommunityIcon },
+    { label: "이벤트", icon: EventIcon },
+    { label: "마켓", icon: MarketIcon },
+    { label: "고객센터", icon: HelpIcon },
+  ];
 
-    return(<>
-            <ul className="Main_side">
-                <button className="Main_myinfo" onClick={Myprofile} disabled={!props.isReady}>
-                    <img src={props.img} />
-                    <h3>{props.nickname}</h3>
-                </button>
-                <button className="Main_FItem" disabled={!props.isReady}>
-                  <img src={Freindimg} />
-                    <h3>친구</h3>
-                </button>
-                <button className="Main_MItem" onClick={NoteHandler} disabled={!props.isReady}>
-                  <img src={msgimg}/>
-                    <h3>쪽지</h3>
-                </button>
-                <button className="Main_CItem" onClick={ChatHandler} disabled={!props.isReady}>
-                  <img src={chatimg} />
-                    <h3>메신져</h3>
-                </button>
-                <button className="Main_SItem" disabled={!props.isReady}>
-                  <img src={searchimg} />
-                    <h3>검색</h3>
-                </button>
-                <button className="Main_AlItem" disabled={!props.isReady} onClick={AlarmClick}>
-                  <img src={alarmimg} />
-                    <h3>알람</h3>
-                    {isNoti && (<div className="MainSide_Alarm_cnt">
-                      <p>{"..."}</p>
-                    </div>)}
-                </button>
-                <button className="Main_LItem" disabled={!props.isReady}>
-                  <img src={favoriteimg} />
-                    <h3>즐겨찾기</h3>
-                </button>
-                <button className="Main_AItem" disabled={!props.isReady}>
-                <img src={Timeimg} />
-                    <h3>활동기록</h3>
-                </button>
-            </ul>
-            <div className="Main_side_vertical"> 
-             <hr />
-            </div>
-    </>
-    )
-}
+  return (
+    <aside className="MainPage_leftRail MainSide_panel">
+      <nav className="MainPage_menu MainSide_menu" aria-label="메인 메뉴">
+        {menuItems.map((item) => (
+          <button
+            key={item.label}
+            type="button"
+            className={item.active ? "selected" : ""}
+            disabled={!props.isReady}
+            onClick={item.onClick}
+          >
+            <img className="MainSide_menuIcon" src={item.icon} alt="" />
+            <span className="MainSide_menuText">{item.label}</span>
+          </button>
+        ))}
+        <button type="button" disabled={!props.isReady} onClick={handleChat}>
+          <img className="MainSide_menuIcon" src={CommunityIcon} alt="" />
+          <span className="MainSide_menuText">채팅</span>
+          {isNoti && <span className="MainSide_notifyDot" aria-label="새 알림" />}
+        </button>
+      </nav>
+
+      <div className="MainPage_leftBottom MainSide_bottom">
+        <button type="button">
+          <img className="MainSide_menuIcon" src={SettingsIcon} alt="" />
+          <span className="MainSide_menuText">설정</span>
+        </button>
+        <button type="button" className="MainPage_petRegister MainSide_petRegister">
+          <img className="MainSide_menuIcon" src={PetRegisterIcon} alt="" />
+          <span className="MainSide_menuText">펫 등록하기</span>
+        </button>
+      </div>
+    </aside>
+  );
+};
 
 export default MainSide;

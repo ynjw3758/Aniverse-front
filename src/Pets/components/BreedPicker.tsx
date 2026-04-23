@@ -8,7 +8,8 @@ import beforeImg from"../../assets/images/begorearrow.png";
 import SearchImg from "../../assets/images/search.png";
 
 interface props{
-    spInfo:speciesInfo
+    spInfo:speciesInfo,
+    onSeleted :(Item:SelectedInfo) => void
 }
 
 interface ResponseDataType {
@@ -27,15 +28,29 @@ type speciesInfo={
 }
 
 type breedInfo={
-   breedId:number,
+   breedId:number | null,
    nameKo:string,
    nameEn:string
 }
-const BreedPicker:React.FC<props> =({spInfo} : props) =>{
+type SelectedInfo={
+   breedId:number | null,
+   nameKo:string,
+   nameEn:string,
+   code:string
+}
+const BreedPicker:React.FC<props> =({spInfo ,onSeleted} : props) =>{
 
-    const [isLoading, setIsLoading] = useState(true);
+    const[isLoading, setIsLoading] = useState(true);
+    const[selectedBreed ,setSlectedBreed]=useState<boolean>(false)
+    const [selectedBreedId, setSelectedBreedId] = useState<number | null>(null);
     const[popular, setPopular]=useState<breedInfo[]>([])
     const[total, setTotal]=useState<breedInfo[]>([])
+    const[subData, setSubData]=useState<breedInfo>({
+        breedId:null,
+        nameKo:"",
+        nameEn:""
+    })
+
 
     const navigate = useNavigate();
     
@@ -57,6 +72,7 @@ const BreedPicker:React.FC<props> =({spInfo} : props) =>{
               const Item:breedInfo[] = response.data.data
               const popularityItem =Item.slice(0,6)
               console.log("인기 품종 :" , popularityItem)
+              setTotal(Item);
               setPopular(popularityItem)
               setIsLoading(false);
               
@@ -90,6 +106,26 @@ const BreedPicker:React.FC<props> =({spInfo} : props) =>{
           
     },[])
 
+    useEffect(() =>{
+      console.log("등록 버튼 상태 변환")
+        if(selectedBreedId !== null) setSlectedBreed(true)
+    },[selectedBreedId])
+
+
+
+    const handleBreedSelect = (item: breedInfo) => {
+       setSelectedBreedId(prev => prev === item.breedId ? null : item.breedId);
+       setSubData(item)
+    };
+
+
+    const handleSubmit =() =>{
+        const Data:SelectedInfo={breedId:subData.breedId,nameKo:subData.nameKo,
+            nameEn:subData.nameEn,code:spInfo.code}
+      onSeleted(Data)
+    }
+
+
     return(<>
         <div className="BreedPicker_Header">
                 <img src={beforeImg} />
@@ -112,7 +148,44 @@ const BreedPicker:React.FC<props> =({spInfo} : props) =>{
         </div>
         <div className="BreedPicker_Popular">
             <h4>인기 품종</h4>
-
+            <div className="BreedPicker_PopularList">
+                {popular.map((value) => (
+                    <button
+                        type="button"
+                        className={`BreedPicker_popular ${selectedBreedId ===value.breedId ? "active" : ""}`}
+                        key={value.breedId}
+                        onClick={() => handleBreedSelect(value)}
+                    >
+                        {value.nameKo}
+                    </button>
+                ))}
+            </div>
+        </div>
+        <div className="BreedPicker_Total">
+          <h4>전체 품종</h4>
+          <div className="BreedPicker_TotalList">
+            {total.map((item) => (
+                <div
+                  key={item.breedId}
+                  className={`BreedPicker_TotalItem ${item.breedId === selectedBreedId 
+                    ? "active" : ""}`}
+                  onClick={() =>handleBreedSelect(item)}>
+                  <p>{item.nameKo}</p>
+                  {item.breedId === selectedBreedId  && <div className="BreedPicker_check">✓</div>}
+                </div>
+                
+              ))}
+          </div>
+        </div>
+       <div className="BreedPicker_Action">
+            <button
+                type="button"
+                className="BreedPicker_Submit"
+                onClick={handleSubmit}
+                disabled={!selectedBreed}
+            >
+                선택
+            </button>
         </div>
         </div>
 

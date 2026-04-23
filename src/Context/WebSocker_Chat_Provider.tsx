@@ -3,6 +3,7 @@ import WebSocketChatContext from "./WebSocketChatContext";
 import { Client, IMessage } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import WebSocketAlarmContext from "./WebSocketAlarmContext";
+import { WEBSOCKET_BASE } from "../API/Api";
 
 //                            +------------------
 //----------------------------+ 타입입
@@ -125,8 +126,10 @@ useEffect(() => {
           }
 
       const userid= localStorage.getItem("id")!;
-        const ws = new WebSocket(`ws://127.0.0.1:8085/chat?userId=${userid}&chatId=${ChatId.current}`);
-        const socket = new SockJS(`http://127.0.0.1:8085/ws?userid=${userid}&chatId=${ChatId.current}`);
+        const wsProtocol = WEBSOCKET_BASE?.startsWith("https") ? "wss" : "ws";
+        const wsHost = WEBSOCKET_BASE?.replace(/^https?:\/\//, "");
+        const ws = new WebSocket(`${wsProtocol}://${wsHost}/chat?userId=${userid}&chatId=${ChatId.current}`);
+        const socket = new SockJS(`${WEBSOCKET_BASE}/ws?userid=${userid}&chatId=${ChatId.current}`);
         ws.onopen = () => {
 
           //setWeb(ws);

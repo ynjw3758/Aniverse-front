@@ -447,8 +447,8 @@ console.log("브라우저 넓이 :" , window.innerWidth);
                 <section className="Signmain" aria-label="회원가입">
                     <div className="SignHeader">
                         <button type="button" className="SignLogoButton" onClick={back_main} aria-label="홈으로 이동">
-                            <img src={PetBuddyLogo} alt="PetBuddy" />
-                            <span>PetBuddy</span>
+                            <img src={PetBuddyLogo} alt="Aniverse" />
+                            <span>Aniverse</span>
                         </button>
                         <button type="button" className="SignLoginLink" onClick={() => navigate("/login")}>
                             로그인 하기 <span>›</span>
@@ -457,7 +457,7 @@ console.log("브라우저 넓이 :" , window.innerWidth);
 
                     <div className="SignIntro">
                         <h2>회원가입</h2>
-                        <p><strong>모든 반려동물</strong>을 위한 특별한 공간,<br />PetBuddy에서 함께해요!</p>
+                        <p><strong>모든 반려동물</strong>을 위한 플랫폼,<br />Aniverse에서 함께해요!</p>
                     </div>
 
                     <div className="SignPetPreview" aria-hidden="true">
@@ -596,17 +596,17 @@ console.log("브라우저 넓이 :" , window.innerWidth);
                     </div>
                 </section>
 
-                <section className="SignVisual" aria-label="PetBuddy 소개">
+                <section className="SignVisual" aria-label="Aniverse 소개">
                     <div className="SignVisualContent">
                         <span className="SignFloatIcon heart">♥</span>
                         <span className="SignFloatIcon paw">●●●</span>
-                        <h1>다양한 반려동물과<br /><strong>특별한 일상을 함께해요</strong></h1>
+                        <h1>Aniverse<br /><strong>모든 반려동물을 위한 플랫폼</strong></h1>
                         <p>강아지, 고양이부터 파충류, 조류, 양서류, 곤충까지<br />모든 반려동물 보호자들이 모여 소통하는 공간입니다.</p>
                         <div className="SignHeroAnimalsVisual">
                             <img
                                 className="SignHeroAnimals"
                                 src={HeroAnimalsImg}
-                                alt="강아지, 고양이, 파충류, 조류, 양서류, 곤충, 토끼가 함께 있는 PetBuddy 소개 이미지"
+                                alt="강아지, 고양이, 파충류, 조류, 양서류, 곤충, 토끼가 함께 있는 Aniverse 소개 이미지"
                             />
                         </div>
                         <div className="SignStats">

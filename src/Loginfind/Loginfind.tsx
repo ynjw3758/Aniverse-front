@@ -314,7 +314,7 @@ const Loginfind = () => {
           <header className="LoginFindHeader">
             <button type="button" className="LoginFindBrand" onClick={() => navigate("/")}>
               <img src={PetBuddyLogo} alt="animal" />
-              <span>animal</span>
+              <span>Aniverse</span>
             </button>
           </header>
 

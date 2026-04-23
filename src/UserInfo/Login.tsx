@@ -139,13 +139,13 @@ const Login: React.FC = () => {
       <section className="LoginShell">
         <header className="LoginHeader">
           <button type="button" className="LoginBrand" onClick={() => navigate("/")}>
-            <img src={PetBuddyLogo} alt="PetBuddy" />
-            <span>PetBuddy</span>
+            <img src={PetBuddyLogo} alt="Aniverse" />
+            <span>Aniverse</span>
           </button>
 
           <p>
             계정이 없으신가요?
-            <button type="button" onClick={() => navigate("/Agree")}>회원가입</button>
+            <button type="button" onClick={() => navigate("/signs")}>회원가입</button>
           </p>
         </header>
 
@@ -154,7 +154,7 @@ const Login: React.FC = () => {
             <div className="LoginTitle">
               <h1>로그인</h1>
               <p>
-                PetBuddy에 오신 것을 환영합니다!
+                Aniverse에 오신 것을 환영합니다!
                 <br />
                 다양한 반려동물 보호자들과 함께 <strong>소통</strong>해보세요.
               </p>
@@ -240,16 +240,16 @@ const Login: React.FC = () => {
             </div>
 
             <p className="LoginNotice">
-              로그인하면 PetBuddy의 다양한 서비스를 이용할 수 있어요.
+              로그인하면 Aniverse의 다양한 서비스를 이용할 수 있어요.
             </p>
           </form>
 
-          <aside className="LoginVisual" aria-label="PetBuddy 소개 이미지">
+          <aside className="LoginVisual" aria-label="Aniverse 소개 이미지">
             <div className="LoginVisualText">
               <span>♡</span>
               <h2>
                 모든 반려동물과
-                <strong>특별한 일상을 함께해요</strong>
+                <strong>모든 반려동물을 위한 플랫폼</strong>
               </h2>
               <p>
                 강아지, 고양이부터 파충류, 조류, 양서류, 곤충까지

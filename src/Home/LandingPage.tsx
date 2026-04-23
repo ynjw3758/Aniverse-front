@@ -78,8 +78,8 @@ const LandingPage: React.FC = () => {
     <main className="PetLanding">
       <header className="PetLanding_Header">
         <button type="button" className="PetLanding_Brand" onClick={startHandler}>
-          <img src={PetBuddyLogo} alt="PetBuddy" />
-          <span>PetBuddy</span>
+          <img src={PetBuddyLogo} alt="Aniverse" />
+          <span>Aniverse</span>
         </button>
 
         <nav className="PetLanding_Nav" aria-label="랜딩 메뉴">
@@ -104,11 +104,11 @@ const LandingPage: React.FC = () => {
 
       <section className="PetLanding_Hero">
         <div className="PetLanding_HeroCopy">
-          <p className="PetLanding_Eyebrow">모든 반려동물을 위한 소통 플랫폼</p>
+          <p className="PetLanding_Eyebrow">Aniverse | All animals, one community</p>
           <h1>
             다양한 반려동물과
             <br />
-            <strong>특별한 일상을 함께해요</strong>
+            <strong>모든 반려동물을 위한 플랫폼</strong>
           </h1>
           <p className="PetLanding_Lead">
             강아지, 고양이부터 파충류, 조류, 양서류, 곤충까지
@@ -137,7 +137,7 @@ const LandingPage: React.FC = () => {
           <img
             className="PetLanding_HeroAnimals"
             src={HeroAnimalsImg}
-            alt="강아지, 고양이, 파충류, 조류, 양서류, 곤충, 토끼가 함께 있는 PetBuddy 소개 이미지"
+            alt="강아지, 고양이, 파충류, 조류, 양서류, 곤충, 토끼가 함께 있는 Aniverse 소개 이미지"
           />
           <span className="PetLanding_Bubble heart">♡</span>
           <span className="PetLanding_Bubble chat">···</span>
@@ -161,7 +161,7 @@ const LandingPage: React.FC = () => {
       </section>
 
       <section className="PetLanding_Features">
-        <h2>PetBuddy에서 할 수 있는 것들</h2>
+        <h2>Aniverse에서 할 수 있는 것들</h2>
         <div className="PetLanding_FeatureGrid">
           {featureCards.map((item) => (
             <article key={item.title} className="PetLanding_FeatureCard">
@@ -178,7 +178,7 @@ const LandingPage: React.FC = () => {
           <h2>
             당신의 <strong>특별한</strong> 반려동물 이야기를 들려주세요
           </h2>
-          <p>PetBuddy는 모든 반려동물과 보호자의 행복한 일상을 응원합니다. 지금 함께 시작해요!</p>
+          <p>Aniverse는 모든 반려동물과 보호자를 하나의 커뮤니티로 연결합니다. 지금 함께 시작해요!</p>
         </div>
         <div className="PetLanding_BottomStats">
           <span><strong>20,000+</strong>함께한 보호자</span>

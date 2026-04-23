@@ -71,7 +71,7 @@ const LandingPage: React.FC = () => {
   };
 
   const startHandler = () => {
-    navigate("/main");
+    navigate("/");
   };
 
   return (
@@ -121,7 +121,7 @@ const LandingPage: React.FC = () => {
               지금 시작하기
             </button>
             <button type="button" className="secondary" onClick={startHandler}>
-              커뮤니티 둘러보기
+              둘러보기
             </button>
           </div>
 

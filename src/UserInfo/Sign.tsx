@@ -236,7 +236,7 @@ useEffect(() => {
     }
 
     const back_main =() =>{
-        navigate("/home");
+        navigate("/");
     }
 
     const response_userinfo = () =>{
@@ -448,6 +448,7 @@ console.log("브라우저 넓이 :" , window.innerWidth);
                     <div className="SignHeader">
                         <button type="button" className="SignLogoButton" onClick={back_main} aria-label="홈으로 이동">
                             <img src={PetBuddyLogo} alt="PetBuddy" />
+                            <span>PetBuddy</span>
                         </button>
                         <button type="button" className="SignLoginLink" onClick={() => navigate("/login")}>
                             로그인 하기 <span>›</span>

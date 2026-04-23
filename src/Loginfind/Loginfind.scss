@@ -1,775 +1,740 @@
-
-
-.header{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    margin-top: 30px;
-    margin-bottom: 20px;
-}
-.header h2{
-  font-size: 20px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  color: #111;
-}
-.header img{
-    width: 120px;   /* 기존 400 → 줄임 */
-    height: auto;
-    object-fit: contain;
-}
-.logoWrap{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.LoginFind_tag{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    background: #f3f4f6;
-    border-radius: 999px;
-    padding: 5px;
-    width: 320px;
-    margin: 0 auto 25px auto;
-
-}
-.LoginFind_tag .tab {
-  flex: 1;
-  padding: 10px 0;
-  border: none;
-  background: transparent;
-  border-radius: 999px;
-
-  font-size: 14px;
-  font-weight: 600;
-  color: #6b7280;
-
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-/* hover는 살짝만 */
-.LoginFind_tag .tab:hover {
-  color: #111;
-}
-
-/* 활성화 상태 */
-.LoginFind_tag .tab.active {
-  background: white;
-  color: #111;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-
-.LoginFind_Body{
-  width: 420px;
-  max-width: 100%;
-  margin: 0 auto;
-
-  background: rgba(255, 255, 255, 0.92);
-  border: 1px solid rgba(229, 231, 235, 0.9);
-  border-radius: 22px;
-
-  padding: 24px;
-  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.10);
-  backdrop-filter: blur(10px);
-}
-
-.LoginFind_Title h3 {
-  margin: 0;
-  font-size: 18px;
-  font-weight: 800;
-  color: #111827;
-}
-
-.LoginFind_Title p {
-  margin: 8px 0 18px;
-  font-size: 13px;
-  color: #6b7280;
-  line-height: 1.45;
-}
-.LoginFind_id{
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-/* 인풋 */
-.LoginFind_Input {
-  width: 85%;
-  padding: 13px 14px;
-  border-radius: 14px;
-  border: 1px solid #e5e7eb;
+.LoginFindPage {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(390px, 50%) minmax(390px, 50%);
   background: #fff;
-  margin-bottom: 1vh;
-  font-size: 14px;
-  color: #111827;
-  transition: 0.18s ease;
+  color: #303139;
+  font-family: "Pretendard", "Noto Sans KR", Arial, sans-serif;
 }
 
-.LoginFind_Input::placeholder {
-  color: #9ca3af;
-}
-
-.LoginFind_Input:focus {
-  outline: none;
-  border-color: #4caf7a;
-  box-shadow: 0 0 0 4px rgba(76, 175, 122, 0.16);
-}
-/* 버튼 */
-.LoginFind_Button {
-  margin-top: 6px;
-  padding: 14px;
-  border: none;
-  border-radius: 16px;
-
-  background: linear-gradient(135deg, #4caf7a, #3b9365);
-  color: #fff;
-  font-weight: 800;
-  font-size: 14px;
-
-  cursor: pointer;
-  transition: 0.2s ease;
-  box-shadow: 0 14px 30px rgba(76, 175, 122, 0.22);
-}
-
-.LoginFind_Button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 18px 36px rgba(76, 175, 122, 0.28);
-}
-
-.LoginFind_Button:disabled {
-  opacity: 0.55;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-}
-
-
-
-.pw{
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center; 
-}
-.AuthType {
+.LoginFindPanel {
+  min-height: 100vh;
+  padding: 38px 58px 40px;
   display: flex;
-  gap: 12px;
-  margin-top: 10px;
+  flex-direction: column;
+  background: #fff;
 }
 
-.AuthBtn {
+.LoginFindHeader {
+  margin-bottom: 38px;
+}
+
+.LoginFindBrand {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #303139;
+  font-size: 20px;
+  font-weight: 800;
+  cursor: pointer;
+
+  img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+  }
+}
+
+.LoginFindHeroText {
+  text-align: center;
+  margin-bottom: 22px;
+
+  h1 {
+    margin: 0 0 14px;
+    color: #303139;
+    font-size: 34px;
+    line-height: 1.2;
+    letter-spacing: 6px;
+    font-weight: 800;
+
+    strong {
+      color: #ff4f76;
+      letter-spacing: 4px;
+    }
+  }
+
+  p {
+    margin: 0;
+    color: #737884;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.7;
+  }
+}
+
+.LoginFind_tag {
+  width: min(100%, 476px);
+  height: 48px;
+  margin: 0 auto 28px;
+  padding: 4px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  border-radius: 999px;
+  background: #f7f7f9;
+
+  .LoginFindTab {
+    position: static;
+    inset: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: #666b76;
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 1;
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
+
+    &.isSelected {
+      position: static;
+      inset: auto;
+      transform: none;
+      background: #fff;
+      color: #ff4f76;
+      box-shadow: 0 8px 24px rgba(120, 45, 62, 0.08);
+    }
+  }
+}
+
+.LoginFind_Body {
+  width: min(100%, 520px);
+  margin: 0 auto;
+  padding: 28px 32px;
+  border: 1px solid #eef0f4;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 18px 42px rgba(57, 60, 72, 0.08);
+}
+
+.LoginFind_Title {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  margin-bottom: 24px;
+
+  h3 {
+    margin: 0 0 7px;
+    color: #303139;
+    font-size: 20px;
+    line-height: 1.25;
+    font-weight: 800;
+  }
+
+  p {
+    margin: 0;
+    color: #888e99;
+    font-size: 13px;
+    line-height: 1.5;
+    font-weight: 700;
+  }
+}
+
+.LoginFindTitleIcon {
+  width: 48px;
+  height: 48px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: #fff3f6;
+  color: #ff4f76;
+  font-size: 22px;
+}
+
+.LoginFind_id,
+.Form,
+.pw {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.LoginFindField,
+.Field {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+
+  span {
+    color: #4a4e58;
+    font-size: 13px;
+    font-weight: 800;
+  }
+}
+
+.LoginFind_Input,
+.Input {
+  width: 100%;
+  height: 50px;
+  border: 1px solid #e4e7ee;
+  border-radius: 7px;
+  background: #fff;
+  padding: 0 15px;
+  color: #303139;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+
+  &::placeholder {
+    color: #b2b7c1;
+  }
+
+  &:focus {
+    border-color: #ff4f76;
+    box-shadow: 0 0 0 3px rgba(255, 79, 118, 0.12);
+  }
+}
+
+.LoginFind_Button,
+.PrimaryBtn {
+  width: 100%;
+  height: 50px;
+  border: 0;
+  border-radius: 7px;
+  background: #ff4f76;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 28px rgba(255, 79, 118, 0.24);
+  }
+
+  &:disabled {
+    background: #f6a8b9;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+}
+
+.AuthType {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.LoginFindAuthBtn {
+  position: static;
+  inset: auto;
+  transform: none;
   display: flex;
   align-items: center;
   justify-content: center;
-
-  padding: 10px 22px;   /* 세로 10, 가로 22 */
-  height: 42px;         /* 고정 높이 주는게 핵심 */
-  
+  height: 42px;
+  width: auto;
+  margin: 0;
+  padding: 0 18px;
+  border: 1px solid #eef0f4;
   border-radius: 999px;
-  border: 1px solid #e5e7eb;
-  background: #f3f4f6;
-
-  font-size: 14px;
-  font-weight: 700;
-
+  background: #fafafa;
+  color: #6d7280;
+  font-weight: 800;
+  line-height: 1;
+  text-align: center;
   cursor: pointer;
-  transition: all 0.2s ease;
+
+  &.isSelected {
+    position: static;
+    inset: auto;
+    transform: none;
+    border-color: #ff4f76;
+    background: #fff3f6;
+    color: #ff4f76;
+  }
 }
 
-.AuthBtn.active {
-  background: linear-gradient(135deg, #158f75, #0f766e);
-  color: white;
-  border: none;
-  box-shadow: 0 10px 24px rgba(21, 143, 117, 0.25);
+.Inline {
+  display: grid;
+  grid-template-columns: 1fr 104px;
+  gap: 10px;
 }
 
-.AuthBtn:hover {
-  transform: translateY(-2px);
+.InlineBtn,
+.GhostBtn {
+  border: 1px solid #eef0f4;
+  border-radius: 7px;
+  background: #fff;
+  color: #555b66;
+  font-weight: 800;
+  cursor: pointer;
+
+  &:disabled {
+    color: #b7bcc7;
+    background: #f6f7f9;
+    cursor: not-allowed;
+  }
 }
-.Form {
+
+.InlineBtn {
+  height: 50px;
+}
+
+.GhostBtn {
+  width: 100%;
+  height: 48px;
+}
+
+.ResultCard {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
 }
 
-.Field {
+.ResultTop {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.Label {
+.ResultBadge,
+.ErrorBadge {
+  width: max-content;
+  padding: 6px 10px;
+  border-radius: 999px;
   font-size: 12px;
-  font-weight: 800;
-  color: #374151;
-}
-
-.Input {
-  width: 93%;
-  padding: 13px 14px;
-  border-radius: 14px;
-  border: 1px solid #e5e7eb;
-  background: #fff;
-  font-size: 14px;
-  transition: 0.18s ease;
-}
-
-.Input::placeholder {
-  color: #9ca3af;
-}
-
-.Input:focus {
-  outline: none;
-  border-color: #158f75;
-  box-shadow: 0 0 0 4px rgba(21, 143, 117, 0.14);
-}
-
-.PrimaryBtn {
-  margin-top: 6px;
-  padding: 14px;
-  border: none;
-  border-radius: 16px;
-  background: linear-gradient(135deg, #158f75, #0f766e);
-  color: #fff;
   font-weight: 900;
-  cursor: pointer;
-  transition: 0.2s ease;
-}
-
-.PrimaryBtn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 14px 28px rgba(21, 143, 117, 0.26);
-}
-
-.PrimaryBtn:disabled {
-  opacity: 0.55;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-}
-
-.Hint {
-  margin-top: 8px;
-  text-align: center;
-  font-size: 12px;
-  color: #9ca3af;
-}
-
-.Inline {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.InlineBtn {
-  width: 110px;
-  height: 44px; /* 인풋 높이랑 맞춤 */
-  border-radius: 14px;
-  border: 1px solid #e5e7eb;
-  background: #fff;
-  font-weight: 900;
-  cursor: pointer;
-}
-
-.InlineBtn:disabled {
-  opacity: 0.55;
-  cursor: not-allowed;
-}
-
-/* ===== 성공 결과 카드 ===== */
-.ResultCard {
-  width: 420px;
-  max-width: 100%;
-  margin: 16px auto 0 auto;
-
-  background: rgba(255, 255, 255, 0.92);
-  border: 1px solid rgba(229, 231, 235, 0.9);
-  border-radius: 22px;
-  padding: 20px 22px;
-
-  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.10);
-  backdrop-filter: blur(10px);
-  display: flex;
-  flex-direction: column;
-  margin-left: -1.5vw;
-}
-
-.ResultTop {
-  text-align: left;
-  margin-bottom: 14px;
 }
 
 .ResultBadge {
-  display: inline-flex;
-  align-items: center;
+  color: #1b9f6a;
+  background: rgba(27, 159, 106, 0.1);
+}
 
-  padding: 6px 10px;
-  border-radius: 999px;
-
-  font-size: 12px;
-  font-weight: 900;
-
-  background: rgba(21, 143, 117, 0.10);
-  color: #0f766e;
+.ErrorBadge {
+  color: #ff4f76;
+  background: #fff3f6;
 }
 
 .ResultTitle {
-  margin: 10px 0 0;
-  font-size: 16px;
+  margin: 0;
+  color: #303139;
+  font-size: 18px;
   font-weight: 900;
-  color: #111827;
 }
 
 .ResultDesc {
-  margin: 6px 0 0;
+  margin: 0;
+  color: #7f8590;
   font-size: 13px;
-  color: #6b7280;
-  line-height: 1.4;
+  line-height: 1.5;
 }
 
-/* 아이디 표시 박스 */
 .ResultIdBox {
+  min-height: 54px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-
-  padding: 14px 14px;
-  border-radius: 16px;
-  border: 1px solid #e5e7eb;
-  background: #ffffff;
-
-  margin-bottom: 14px;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 16px;
+  border-radius: 7px;
+  background: #fff8fa;
+  border: 1px solid #ffe0e7;
 }
 
 .ResultIdLabel {
-  font-size: 12px;
-  font-weight: 900;
-  color: #6b7280;
+  color: #9096a0;
+  font-size: 13px;
+  font-weight: 800;
 }
 
 .ResultIdValue {
-  font-size: 15px;
+  color: #303139;
+  font-size: 16px;
   font-weight: 900;
-  color: #111827;
-  letter-spacing: 0.2px;
 }
 
-/* 버튼 영역 */
 .ResultActions {
-  display: flex;
-  flex-direction: column;
+  display: grid;
   gap: 10px;
 }
 
-/* 메인 버튼 (없으면 이거 사용) */
-.PrimaryBtn {
-  width: 100%;
-  padding: 14px;
-
-  border: none;
-  border-radius: 16px;
-
-  background: linear-gradient(135deg, #158f75, #0f766e);
-  color: #fff;
-
-  font-size: 14px;
-  font-weight: 900;
-  cursor: pointer;
-
-  transition: 0.2s ease;
-  box-shadow: 0 14px 30px rgba(21, 143, 117, 0.22);
-}
-
-.PrimaryBtn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 18px 36px rgba(21, 143, 117, 0.28);
-}
-
-/* 보조 버튼 */
-.GhostBtn {
-  width: 100%;
-  padding: 14px;
-
-  border-radius: 16px;
-  border: 1px solid #e5e7eb;
-
-  background: #fff;
-  color: #111827;
-  font-size: 14px;
-  font-weight: 900;
-
-  cursor: pointer;
-  transition: 0.15s ease;
-}
-
-.GhostBtn:hover {
-  background: #f9fafb;
-}
-
-/* 아래 힌트 */
-.ResultHint {
-  margin-top: 12px;
-  text-align: center;
-  font-size: 12px;
-  color: #9ca3af;
-}
-
-/* 실패 카드만 테두리 톤 변경 */
-.ResultCard.LoginFinderror {
-  border: 1px solid rgba(255, 99, 99, 0.25);
-}
-
-/* 실패 배지(조회 결과) */
-.ErrorBadge {
-  display: inline-flex;
+.LoginFindAlt {
+  width: min(100%, 476px);
+  margin: 28px auto 18px;
+  display: flex;
   align-items: center;
-  padding: 6px 12px;
-  border-radius: 999px;
+  gap: 14px;
+  color: #9aa0aa;
+  font-size: 13px;
+  font-weight: 700;
 
-  font-size: 12px;
-  font-weight: 900;
-
-  background: rgba(255, 99, 99, 0.15);
-  color: #d64545;
+  &::before,
+  &::after {
+    content: "";
+    height: 1px;
+    flex: 1;
+    background: #eef0f4;
+  }
 }
 
-/* 실패 이모지/아이콘 영역 */
-.ErrorIcon {
-  margin: 24px 0 18px;
-  text-align: center;
-  font-size: 64px;
-}
+.LoginFindSupport {
+  width: min(100%, 520px);
+  min-height: 64px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 36px 1fr auto;
+  align-items: center;
+  gap: 14px;
+  padding: 0 18px;
+  border: 1px solid #eef0f4;
+  border-radius: 8px;
+  background: #fff;
+  color: #303139;
+  text-align: left;
+  cursor: pointer;
 
-
-.error_massage{
-    height: 65%;
-    position: relative;
-    top:-39px;
-    left: 350px;
-    background-color:#fddddd;
-}
-.error_massage p{
-    font-size:large;
-    background-color: aqua;
-}
-
-.input.invalid input{
-    border-color:red;
-    background: #fbdada;
-    cursor: pointer;
-}
-
-.id input:focus{
-    outline: none;
-    border-color: #4f005f;
-    background: #f6dbfc;
-}
-
-.invalid input{
-    border: 1px solid #b40e0e;
-    background-color: #fddddd;
+  span {
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    background: #fff3f6;
+    color: #ff4f76;
   }
 
-.useid{
-    //display: inline-block;
-    margin: 2rem;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    flex-wrap: nowrap;
-    align-items: center;
-}
-.phon{
-    margin: 2rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    flex-wrap: nowrap;
-    align-items: center; 
-}
-.phon input{
-    width: 300px;
-    height: 40px;
-    margin-bottom: 15px;
-}
-.divi_input{
-    display: flex;
-    flex-direction: row;
-}
-.divi_input select{
-    width: 50px;
-    height: 35px;
-    border-radius: 4px;
-    outline: 0 none;
-    margin-left: -5px;
-}
-.divi_input button{
-    margin-left: 5px;
-    height: 35px;
-    background-color: black;
-    color: white;
-}
-.divi_input button:hover{
-    cursor: pointer;
-}
-.divi_input button:disabled,
-.divi_input button:focus:disabled,
-.divi_input button:hover:disabled,
-.divi_input button:active:disabled{
-    background: #ccc;
-    border-color: #ccc;
-    color: #666666;
-    cursor: not-allowed;
-}
-.divi_input input{
-    margin-left: 3px;
-    height: 30px;
-    width: 235px;
-}
-.select option{
-    background: black;
-    color: #fff;
-    padding: 3px 0;
-}
-.next button{
-    border-radius: 20px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 60px;
-    padding-right: 60px;
-    margin: 10px;
-    margin-right: 2rem;
-    background-color:rgba(30, 150, 100, 0.5);
-    color: white;
-    cursor: pointer;
-}
-.next button:disabled,
-.next button:focus:disabled,
-.next button:hover:disabled,
-.next button:active:disabled{
-    background: #ccc;
-    border-color: #ccc;
-    color: #666666;
-    cursor: not-allowed;
+  strong {
+    font-size: 14px;
+    font-weight: 900;
+  }
+
+  em {
+    color: #ff4f76;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 800;
+  }
 }
 
-.email{
-    margin: 2rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    flex-wrap: nowrap;
-    align-items: center; 
-}
-.email input{
-    width: 300px;
-    height: 40px;
-    margin-bottom: 15px;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    padding-left: 1vw;
-
-}
-.email button{
-    border-radius: 20px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 30px;
-    padding-right: 30px;
-    margin: 10px;
-    margin-right: 2rem;
-    background-color:rgba(30, 150, 100, 0.5);
-    color: white;
-    cursor: pointer;
+.LoginFindBack {
+  margin: 38px auto 0;
+  border: 0;
+  background: transparent;
+  color: #7c828d;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
 }
 
-.fail{
-    //margin-left: 42rem;
-    margin: 2rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    flex-wrap: nowrap;
-    align-items: center; 
+.LoginFindVisual {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 56px 34px 48px;
+  background: linear-gradient(135deg, #fff7f8 0%, #fffdfc 48%, #fff4f6 100%);
 }
 
-.failbtn{
-    display: flex;
-    flex-direction:row;
+.LoginFindVisualInner {
+  width: min(100%, 620px);
+  text-align: center;
 
-}
-.failbtn button{
-    border-radius: 20px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 30px;
-    padding-right: 30px;
-    margin: 10px;
-    margin-right: 2rem;
-    background-color:rgba(30, 150, 100, 0.5);
-    color: white;
-    cursor: pointer;
-}
-.LoginFind_id button:disabled,
-.LoginFind_id button:focus:disabled,
-.LoginFind_id button:hover:disabled,
-.LoginFind_id button:active:disabled{
-    background: #ccc;
-    border-color: #ccc;
-    color: #666666;
-    cursor: not-allowed;
+  h2 {
+    margin: 0 0 18px;
+    color: #303139;
+    font-size: 30px;
+    line-height: 1.35;
+    font-weight: 800;
+
+    strong {
+      color: #ff4f76;
+    }
+  }
+
+  > p {
+    margin: 0 0 24px;
+    color: #767c88;
+    font-size: 14px;
+    line-height: 1.7;
+    font-weight: 700;
+  }
 }
 
-.useid button{
-    text-align: center;
-    border-radius: 20px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 30px;
-    padding-right: 30px;
-    margin: 10px;
-    margin-right: 2rem;
-    background-color:rgba(30, 150, 100, 0.5);
-    color: white;
-    cursor: pointer;
+.LoginFindPetTrio {
+  width: min(100%, 520px);
+  display: block;
+  margin: 0 auto -6px;
 }
 
-.LoginFind_again_input_backdrop{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    z-index: 30;
-    background-color: rgba(0, 0, 0, 0.75);
-}
-.LoginFind_again_input_modal{
-    position: absolute;
-    top:30vh;
-    left: 30vw;
-    z-index: 50;
-    padding: 2vw;
-    background-color: white;
-}
-.VerifyEmail_Main{
-    position: absolute;
-    left: 35vw;
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    width: 40vw;
-    height: max-content;
-    justify-content: center;
-    align-items: center;
-    border-radius: 24px;
-}
-.LoginFind_Verifi_Email{
-    position: absolute;
-    top:30vh;
-    left: 35vw;
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    width: 30vw;
-    height: max-content;
-    justify-content: center;
-    align-items: center;
-}
-.LoginFind_Verifi_Email h2{
-    margin-top: 0vh;
-}
-
-.LoginFind_Verifi_Email > p{
-    font-size: 17px;
-    line-height: 1.5;
-    margin-top: -2vh;
-}
-.LoginFind_Verifi_Email input{
-width: 100%;
-  max-width: 280px;
-  padding: 12px 16px;
-  font-size: 16px;
-  border: 1px solid #d1d5db; /* light gray border */
+.LoginFindFaq,
+.LoginFindHelp {
+  width: min(100%, 570px);
+  margin: 0 auto;
+  border: 1px solid #eef0f4;
   border-radius: 8px;
-  outline: none;
-  transition: border-color 0.2s ease-in-out, box-shadow 0.2s;
-}
-.LoginFind_Verifi_Email input:focus{
- border-color: #3b82f6; /* blue-500 */
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 18px 42px rgba(57, 60, 72, 0.08);
+  text-align: left;
 }
 
-.LoginFind_Verifi_Email button{
-      background-color: #3b82f6; // Tailwind blue-500
-        color: #ffffff;
-        padding: 12px 20px;
-        font-size: 16px;
-        font-weight: 600;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        margin-bottom: 2vh;
-        transition: background-color 0.2s ease-in-out;
-}
+.LoginFindFaq {
+  padding: 22px 26px;
 
-.LoginFind_Verifi_Email button:hover{
-    background-color: #2563eb;
-}
+  h3 {
+    margin: 0 0 14px;
+    color: #303139;
+    font-size: 16px;
+    font-weight: 900;
+  }
 
-.LoginFind_Verifi_Email button:disabled{
-    background-color: #93c5fd; // Tailwind blue-300
-    cursor: not-allowed;
-}
-.Again_SendEmail,
-.Again_SendEmail:hover{
-    margin-top: -3vh;
-    margin-left: 1vw;
+  button {
+    width: 100%;
+    height: 46px;
+    display: grid;
+    grid-template-columns: 24px 1fr 18px;
+    align-items: center;
+    gap: 12px;
+    border: 0;
+    border-top: 1px solid #f1f2f5;
+    background: transparent;
+    color: #5f6570;
+    font-size: 14px;
+    font-weight: 800;
+    text-align: left;
     cursor: pointer;
+
+    &:first-of-type {
+      border-top: 0;
+    }
+
+    span {
+      color: #ff8aa2;
+    }
+
+    b {
+      color: #9ca2ad;
+      font-size: 20px;
+      font-weight: 500;
+    }
+  }
 }
 
-.Again_SendEmail p{
-     font-size: 15px;
-     font-weight: bold;
-     color :#60a5fa
+.LoginFindHelp {
+  min-height: 78px;
+  margin-top: 26px;
+  display: grid;
+  grid-template-columns: 48px 1fr 124px;
+  align-items: center;
+  gap: 16px;
+  padding: 0 20px;
+
+  > span {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    background: #fff3f6;
+    color: #ff4f76;
+  }
+
+  strong {
+    color: #303139;
+    font-size: 14px;
+    font-weight: 900;
+  }
+
+  p {
+    margin: 4px 0 0;
+    color: #8b919b;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  button {
+    height: 42px;
+    border: 1px solid #ff9aae;
+    border-radius: 7px;
+    background: #fff;
+    color: #ff4f76;
+    font-weight: 900;
+    cursor: pointer;
+  }
 }
 
-.LoginFind_EmailSend_loading{
-    position:absolute;
-    top:40vh;
-    left: 48vw;
-    z-index: 50;
+.LoginFind_again_input_backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(24, 26, 32, 0.55);
 }
-.VerifyLoadinf{
+
+.LoginFind_again_input_modal,
+.LoginFind_Verifi_Email,
+.VerifyEmail_Main {
+  width: min(100%, 420px);
+  max-height: calc(100vh - 48px);
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 28px;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 24px 70px rgba(24, 26, 32, 0.22);
+  text-align: center;
+
+  h2 {
+    margin: 0;
+    color: #303139;
+    font-size: 22px;
+  }
+
+  p {
+    margin: 0;
+    color: #747a85;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  input {
+    width: 100%;
+    height: 46px;
+    border: 1px solid #e4e7ee;
+    border-radius: 7px;
+    padding: 0 14px;
+    outline: none;
+  }
+
+  button {
+    min-height: 42px;
+    border: 0;
+    border-radius: 7px;
+    background: #ff4f76;
+    color: #fff;
+    padding: 0 18px;
+    font-weight: 900;
+    cursor: pointer;
+
+    &:disabled {
+      background: #f6a8b9;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.VerifyLoadinf {
   position: absolute;
-  z-index: 60;
-  top: 31vh;
-  left: 28vw;
-  transform: translate(-50%, -50%);
-  pointer-events: auto; // ✅ 클릭 이벤트 차단용
-  background: rgba(255, 255, 255, 0.5); // 선택 (부드럽게 덮어줄 경우)
-  width: 100%;
-  height: 100%;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.72);
 }
-.Verify_Miss{
-    margin-top: 2vh;
+
+.Verify_Miss,
+.Verify_expired {
+  color: #ff4f76 !important;
+  font-weight: 800;
 }
-.Verify_Miss p{
-    font-size: 15px;
-    color:red;
+
+@media (min-width: 821px) and (max-width: 1100px) {
+  .LoginFindPanel {
+    padding: 34px 36px 36px;
+  }
+
+  .LoginFindHeader {
+    margin-bottom: 34px;
+  }
+
+  .LoginFindHeroText h1 {
+    font-size: 31px;
+    letter-spacing: 5px;
+  }
+
+  .LoginFindHeroText p {
+    font-size: 14px;
+  }
+
+  .LoginFind_Body {
+    padding: 24px;
+  }
+
+  .LoginFindVisual {
+    padding: 50px 22px 42px;
+  }
+
+  .LoginFindVisualInner h2 {
+    font-size: 25px;
+  }
+
+  .LoginFindVisualInner > p {
+    font-size: 13px;
+  }
+
+  .LoginFindFaq {
+    padding: 18px 20px;
+  }
+
+  .LoginFindHelp {
+    grid-template-columns: 42px 1fr;
+    padding: 14px 16px;
+
+    button {
+      grid-column: 1 / -1;
+      width: 100%;
+    }
+  }
 }
-.Verify_expired p{
-    font-size: 15px;
-    color:red;
+
+@media (max-width: 820px) {
+  .LoginFindPage {
+    grid-template-columns: 1fr;
+  }
+
+  .LoginFindPanel {
+    min-height: auto;
+    padding: 32px 24px 42px;
+  }
+
+  .LoginFindVisual {
+    min-height: auto;
+    padding: 42px 24px 54px;
+  }
 }
-.Verify_Success{
-    font-size: 20px;
-    color:#28a745;
-    font-weight: bolder;
+
+@media (max-width: 640px) {
+  .LoginFindHeroText h1 {
+    font-size: 27px;
+    letter-spacing: 3px;
+  }
+
+  .LoginFind_Body {
+    padding: 24px 20px;
+  }
+
+  .LoginFindSupport {
+    grid-template-columns: 34px 1fr;
+
+    em {
+      grid-column: 2;
+    }
+  }
+
+  .LoginFindHelp {
+    grid-template-columns: 44px 1fr;
+    padding: 16px;
+
+    button {
+      grid-column: 1 / -1;
+      width: 100%;
+    }
+  }
 }

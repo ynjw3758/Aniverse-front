@@ -9,7 +9,7 @@
 
 .Signmain {
   min-height: 100vh;
-  padding: 44px 52px 38px;
+  padding: 38px 50px 38px;
   display: flex;
   flex-direction: column;
   background: #fff;
@@ -35,13 +35,21 @@
 
 .SignLogoButton {
   padding: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   background: transparent;
+  color: #2f3037;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1;
   cursor: pointer;
 
   img {
     display: block;
-    width: 142px;
-    height: auto;
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
   }
 }
 
@@ -482,7 +490,12 @@
   }
 
   .SignLogoButton img {
-    width: 124px;
+    width: 28px;
+    height: 28px;
+  }
+
+  .SignLogoButton {
+    font-size: 18px;
   }
 
   .SignIntro h2,

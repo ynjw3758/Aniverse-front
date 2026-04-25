@@ -1,57 +1,68 @@
+html,
+body {
+  overflow-y: scroll;
+}
+
 .PetLanding {
   --pet-primary: #ff5b7c;
-  --pet-primary-deep: #f24368;
-  --pet-orange: #ff8b52;
+  --pet-primary-soft: #fff1f5;
+  --pet-line: #eef1f5;
   --pet-text: #252a33;
-  --pet-muted: #747b86;
-  --pet-line: #f0f1f5;
-  --pet-card: #ffffff;
-
+  --pet-muted: #76808d;
   min-height: 100vh;
   background:
-    radial-gradient(circle at 73% 18%, rgba(255, 91, 124, 0.1), transparent 24%),
-    radial-gradient(circle at 12% 86%, rgba(255, 139, 82, 0.13), transparent 22%),
-    #ffffff;
+    radial-gradient(circle at 74% 18%, rgba(255, 91, 124, 0.08), transparent 22%),
+    radial-gradient(circle at 12% 88%, rgba(255, 171, 102, 0.12), transparent 20%),
+    #fff;
   color: var(--pet-text);
   font-family: "Pretendard", "Noto Sans KR", "Segoe UI", sans-serif;
   overflow-x: hidden;
 }
 
-.PetLanding button {
+.PetLanding button,
+.LandingFeatureSection button,
+.LandingCommunitySection button,
+.LandingEventSection button,
+.LandingGuideSection button,
+.LandingSharedFooter button {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
   font-family: inherit;
 }
 
 .PetLanding_Header {
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 20;
-  height: 66px;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  height: 72px;
+  background: rgba(255, 255, 255, 0.94);
+  border-bottom: 1px solid var(--pet-line);
+  backdrop-filter: blur(18px);
+}
+
+.PetLanding_HeaderInner {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 20px 0 12px;
   display: grid;
   grid-template-columns: 220px 1fr auto;
   align-items: center;
-  gap: 28px;
-  padding: 0 46px;
-  background: rgba(255, 255, 255, 0.92);
-  border-bottom: 1px solid var(--pet-line);
-  backdrop-filter: blur(18px);
+  gap: 36px;
   box-sizing: border-box;
 }
 
-.PetLanding_Brand,
-.PetLanding_Nav button,
-.PetLanding_Auth button,
-.PetLanding_Ctas button,
-.PetLanding_BottomStats button {
-  border: 0;
-  background: transparent;
-  cursor: pointer;
+.PetLanding_Content {
+  padding-top: 72px;
 }
 
 .PetLanding_Brand {
   display: inline-flex;
   align-items: center;
-  gap: 9px;
-  width: fit-content;
+  gap: 10px;
   padding: 0;
   color: var(--pet-text);
 }
@@ -70,28 +81,33 @@
 .PetLanding_Nav {
   display: flex;
   justify-content: center;
-  gap: 44px;
+  gap: 42px;
 }
 
-.PetLanding_Nav button {
+.PetLanding_NavButton {
   position: relative;
-  height: 66px;
-  color: #353b45;
-  font-size: 0.94rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 72px;
+  padding: 0;
+  color: #303642;
+  font-size: 0.95rem;
   font-weight: 800;
+  white-space: nowrap;
 }
 
-.PetLanding_Nav button.active {
+.PetLanding_NavButton.isActive {
   color: var(--pet-primary);
 }
 
-.PetLanding_Nav button.active::after {
+.PetLanding_NavButton.isActive::after {
   content: "";
   position: absolute;
   left: 50%;
   bottom: 12px;
-  width: 18px;
-  height: 2px;
+  width: 36px;
+  height: 3px;
   border-radius: 999px;
   background: var(--pet-primary);
   transform: translateX(-50%);
@@ -99,146 +115,138 @@
 
 .PetLanding_Auth {
   display: flex;
+  align-items: center;
   gap: 10px;
 }
 
 .PetLanding_Auth button {
   min-width: 88px;
   height: 38px;
-  border-radius: 8px;
+  padding: 0 18px;
+  border-radius: 10px;
   font-weight: 800;
 }
 
 .PetLanding_Auth .ghost {
   border: 1px solid #f1c5ce;
-  color: #353b45;
   background: #fff;
+  color: #353b45;
 }
 
 .PetLanding_Auth .solid,
 .PetLanding_Ctas .primary,
-.PetLanding_BottomStats > button {
-  color: #fff;
+.LandingFeatureSection_Intro button,
+.LandingCommunitySection_Aside button,
+.LandingEventSection_Intro button,
+.LandingSharedFooter_CtaActions > button {
   background: linear-gradient(135deg, var(--pet-primary), #ff7896);
-  box-shadow: 0 16px 28px rgba(255, 91, 124, 0.22);
+  color: #fff;
+  box-shadow: 0 16px 28px rgba(255, 91, 124, 0.2);
+}
+
+.PetLanding_ServiceSection,
+.LandingFeatureSection,
+.LandingCommunitySection,
+.LandingEventSection,
+.LandingGuideSection,
+.LandingSharedFooter {
+  max-width: 1520px;
+  margin: 0 auto;
+  padding: 56px 72px 0;
+  box-sizing: border-box;
 }
 
 .PetLanding_Hero {
-  max-width: 1520px;
-  min-height: 480px;
-  margin: 0 auto;
-  padding: 58px 72px 46px;
   display: grid;
-  grid-template-columns: 0.86fr 1.14fr;
+  grid-template-columns: 0.85fr 1.15fr;
   align-items: center;
-  gap: 38px;
-  box-sizing: border-box;
+  gap: 36px;
+  min-height: 520px;
 }
 
 .PetLanding_Eyebrow {
   display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  margin: 0 0 18px;
+  margin: 0 0 20px;
   padding: 7px 12px;
   border-radius: 999px;
-  background: #fff0f4;
+  background: var(--pet-primary-soft);
   color: var(--pet-primary);
+  font-size: 0.88rem;
   font-weight: 900;
-  font-size: 0.9rem;
-}
-
-.PetLanding_Eyebrow::before {
-  content: "✦";
 }
 
 .PetLanding_HeroCopy h1 {
   margin: 0;
-  color: var(--pet-text);
-  font-size: clamp(2.4rem, 4vw, 4.2rem);
-  line-height: 1.16;
-  letter-spacing: -0.065em;
+  font-size: clamp(3rem, 4vw, 4.7rem);
+  line-height: 1.08;
+  letter-spacing: -0.07em;
 }
 
-.PetLanding_HeroCopy h1 strong {
+.PetLanding_HeroCopy h1 strong,
+.LandingFeatureSection_Intro h2 strong,
+.LandingCommunitySection_Aside h2 strong,
+.LandingEventSection_Intro h2 strong,
+.LandingGuideSection_Copy h2 strong,
+.LandingSharedFooter_Cta h2 strong {
   color: var(--pet-primary);
 }
 
-.PetLanding_Lead {
-  margin: 24px 0 0;
-  color: #5d6570;
-  font-size: 1.05rem;
-  font-weight: 650;
-  line-height: 1.75;
+.PetLanding_Lead,
+.LandingFeatureSection_Intro p,
+.LandingCommunitySection_Aside p,
+.LandingEventSection_Intro p,
+.LandingGuideSection_Copy p {
+  margin: 22px 0 0;
+  color: #66707d;
+  font-size: 1rem;
+  line-height: 1.8;
+  font-weight: 700;
 }
 
 .PetLanding_Ctas {
   display: flex;
-  gap: 16px;
-  margin-top: 30px;
+  gap: 14px;
+  margin-top: 28px;
 }
 
-.PetLanding_Ctas button {
-  min-width: 174px;
-  height: 52px;
-  border-radius: 9px;
-  font-size: 1rem;
+.PetLanding_Ctas button,
+.LandingFeatureSection_Intro button,
+.LandingCommunitySection_Aside button,
+.LandingEventSection_Intro button {
+  min-width: 160px;
+  height: 48px;
+  padding: 0 18px;
+  border-radius: 12px;
   font-weight: 900;
 }
 
-.PetLanding_Ctas .primary::before {
-  content: "🐾";
-  margin-right: 7px;
-}
-
 .PetLanding_Ctas .secondary {
-  border: 1px solid #ffc3d0;
-  color: var(--pet-primary);
+  border: 1px solid #ffc7d3;
   background: #fff;
-}
-
-.PetLanding_Ctas .secondary::before {
-  content: "△";
-  margin-right: 7px;
-  font-size: 0.8rem;
+  color: var(--pet-primary);
 }
 
 .PetLanding_Stats {
   display: grid;
   grid-template-columns: repeat(4, max-content);
   gap: 22px;
-  margin-top: 32px;
+  margin-top: 30px;
 }
 
 .PetLanding_Stats div {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  min-width: 96px;
-  padding-left: 18px;
+  min-width: 110px;
+  padding-left: 16px;
   border-left: 1px solid #edf0f4;
 }
 
-.PetLanding_Stats div::before {
-  content: "";
-  position: absolute;
-  left: -11px;
-  top: 50%;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: #fff0f4;
-  transform: translateY(-50%);
-}
-
 .PetLanding_Stats strong {
-  color: var(--pet-text);
+  display: block;
   font-size: 1rem;
 }
 
 .PetLanding_Stats span {
-  color: #8a9099;
+  color: #8a909a;
   font-size: 0.78rem;
   font-weight: 700;
 }
@@ -251,327 +259,886 @@
 .PetLanding_HeroVisual::before {
   content: "";
   position: absolute;
-  inset: 18px 4px 0;
+  inset: 20px 0 0;
   border-radius: 44% 56% 48% 52%;
-  background: radial-gradient(circle at 50% 45%, #fff0f4 0 34%, transparent 66%);
+  background: radial-gradient(circle at 50% 45%, #fff0f4 0 32%, transparent 66%);
 }
 
 .PetLanding_HeroAnimals {
   position: relative;
-  z-index: 4;
-  width: min(100%, 820px);
+  z-index: 3;
+  width: min(100%, 840px);
   height: 430px;
   display: block;
   margin-left: auto;
   object-fit: contain;
-  filter: drop-shadow(0 22px 42px rgba(55, 45, 60, 0.08));
 }
 
 .PetLanding_Bubble {
   position: absolute;
-  z-index: 6;
+  z-index: 4;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border-radius: 16px;
   background: rgba(255, 255, 255, 0.92);
-  box-shadow: 0 14px 30px rgba(255, 91, 124, 0.12);
-  color: #ff8aa2;
-  font-weight: 900;
+  box-shadow: 0 12px 24px rgba(255, 91, 124, 0.12);
+  color: var(--pet-primary);
 }
 
 .PetLanding_Bubble.heart {
-  left: 4%;
-  top: 27%;
-  width: 54px;
-  height: 44px;
-  font-size: 2rem;
-}
-
-.PetLanding_Bubble.chat {
-  left: 66%;
-  bottom: 21%;
+  left: 8%;
+  top: 36%;
   width: 46px;
   height: 38px;
-  color: #54c9a7;
-  font-size: 1.4rem;
-  letter-spacing: -0.12em;
+  font-size: 1.35rem;
 }
 
 .PetLanding_Bubble.paw {
-  right: 0;
-  top: 23%;
+  right: 2%;
+  top: 26%;
   width: 46px;
   height: 38px;
   font-size: 1rem;
 }
 
-.PetLanding_Categories,
-.PetLanding_Features {
-  border-top: 1px solid #f2f3f6;
-  padding: 28px 70px 34px;
+.PetLanding_Categories {
+  padding: 26px 0 8px;
 }
 
-.PetLanding_Categories h2,
-.PetLanding_Features h2 {
-  margin: 0 0 24px;
+.PetLanding_Categories h2 {
+  margin: 0 0 20px;
   text-align: center;
-  font-size: 1.45rem;
+  font-size: 1.35rem;
   letter-spacing: -0.04em;
 }
 
-.PetLanding_Categories h2::before,
-.PetLanding_Features h2::before {
-  content: "🐾";
-  margin-right: 8px;
-}
-
 .PetLanding_CategoryGrid {
-  max-width: 1320px;
-  margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(7, minmax(124px, 1fr));
-  gap: 14px;
-}
-
-.PetLanding_Category,
-.PetLanding_FeatureCard {
-  border: 1px solid var(--pet-line);
-  border-radius: 16px;
-  background: var(--pet-card);
-  box-shadow: 0 12px 30px rgba(30, 38, 55, 0.04);
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 12px;
 }
 
 .PetLanding_Category {
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 56px 1fr;
   gap: 12px;
-  min-height: 72px;
+  align-items: center;
+  min-height: 84px;
   padding: 12px 14px;
+  border: 1px solid var(--pet-line);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 12px 24px rgba(38, 44, 60, 0.04);
   box-sizing: border-box;
 }
 
-.PetLanding_Category > span {
+.PetLanding_CategoryThumb {
+  height: 56px;
+  border-radius: 14px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.PetLanding_CategoryThumb img,
+.LandingFeatureSection_CardImageWrap img,
+.LandingCommunitySection_PostImageWrap img,
+.LandingEventSection_ImageWrap img,
+.LandingGuideSection_CardImageWrap img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+.PetLanding_Category strong {
+  display: block;
+  font-size: 0.95rem;
+}
+
+.PetLanding_Category p {
+  margin: 4px 0 0;
+  color: #7f8894;
+  font-size: 0.74rem;
+  font-weight: 700;
+}
+
+.LandingFeatureSection {
+  display: grid;
+  grid-template-columns: 0.38fr 0.62fr;
+  gap: 28px;
+  align-items: center;
+}
+
+.LandingFeatureSection_Intro h2,
+.LandingCommunitySection_Aside h2,
+.LandingEventSection_Intro h2,
+.LandingGuideSection_Copy h2 {
+  margin: 0;
+  font-size: 3.8rem;
+  line-height: 1.08;
+  letter-spacing: -0.06em;
+}
+
+.LandingFeatureSection_Grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.LandingFeatureSection_Card,
+.LandingCommunitySection_Board,
+.LandingEventSection_Card,
+.LandingGuideSection_Card {
+  border: 1px solid var(--pet-line);
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 18px 34px rgba(38, 44, 60, 0.05);
+}
+
+.LandingFeatureSection_Card {
+  min-height: 224px;
+  padding: 22px;
+  box-sizing: border-box;
+}
+
+.LandingFeatureSection_Card strong {
+  display: block;
+  font-size: 1.18rem;
+}
+
+.LandingFeatureSection_Card p {
+  margin: 10px 0 0;
+  color: #7b8390;
+  font-size: 0.86rem;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.LandingFeatureSection_CardImages {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.LandingFeatureSection_CardImageWrap {
+  height: 78px;
+  border-radius: 16px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.LandingFeatureSection_Card.green .LandingFeatureSection_CardImageWrap {
+  background: #fff;
+}
+
+.LandingFeatureSection_Card.purple .LandingFeatureSection_CardImageWrap {
+  background: #fff;
+}
+
+.LandingFeatureSection_Card.blue .LandingFeatureSection_CardImageWrap {
+  background: #fff;
+}
+
+.LandingFeatureSection_Card.yellow .LandingFeatureSection_CardImageWrap {
+  background: #fff;
+}
+
+.LandingFeatureSection_Card.orange .LandingFeatureSection_CardImageWrap {
+  background: #fff;
+}
+
+.LandingCommunitySection {
+  display: grid;
+  grid-template-columns: 0.33fr 0.67fr;
+  gap: 22px;
+  align-items: start;
+}
+
+.LandingCommunitySection_Aside button {
+  margin-top: 24px;
+  min-width: 164px;
+  height: 48px;
+  border-radius: 12px;
+  font-weight: 900;
+}
+
+.LandingCommunitySection_Stats {
+  display: grid;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.LandingCommunitySection_Stats span {
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 12px 22px rgba(38, 44, 60, 0.04);
+  color: #8a9099;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.LandingCommunitySection_Stats strong {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 1.15rem;
+  color: var(--pet-text);
+}
+
+.LandingCommunitySection_Board {
+  padding: 18px;
+}
+
+.LandingCommunitySection_Tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.LandingCommunitySection_Tabs button {
+  height: 34px;
+  padding: 0 15px;
+  border-radius: 999px;
+  background: #f6f7fb;
+  color: #79818d;
+  font-size: 0.84rem;
+  font-weight: 800;
+}
+
+.LandingCommunitySection_Tabs button.isActive {
+  background: var(--pet-primary-soft);
+  color: var(--pet-primary);
+}
+
+.LandingCommunitySection_Layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 220px;
+  gap: 14px;
+}
+
+.LandingCommunitySection_Posts {
+  display: grid;
+  gap: 14px;
+}
+
+.LandingCommunitySection_Post {
+  padding: 16px;
+  border: 1px solid var(--pet-line);
+  border-radius: 18px;
+}
+
+.LandingCommunitySection_PostTop {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.LandingCommunitySection_Avatar {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--pet-primary-soft);
+  color: var(--pet-primary);
+  font-weight: 900;
+}
+
+.LandingCommunitySection_PostTop strong {
+  display: block;
+  font-size: 0.96rem;
+}
+
+.LandingCommunitySection_PostTop span {
+  color: #8f97a2;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.LandingCommunitySection_PostBody {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 152px;
+  gap: 16px;
+  align-items: center;
+  margin-top: 14px;
+}
+
+.LandingCommunitySection_PostBody p {
+  margin: 0;
+  color: #5c6574;
+  font-size: 0.92rem;
+  line-height: 1.65;
+  font-weight: 700;
+}
+
+.LandingCommunitySection_Reactions {
+  display: flex;
+  gap: 18px;
+  margin-top: 14px;
+  color: #8b919c;
+  font-size: 0.84rem;
+  font-weight: 800;
+}
+
+.LandingCommunitySection_PostImageWrap {
+  height: 116px;
+  border-radius: 16px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.LandingCommunitySection_SideWidgets {
+  display: grid;
+  gap: 14px;
+}
+
+.LandingCommunitySection_Widget {
+  padding: 16px;
+  border: 1px solid var(--pet-line);
+  border-radius: 18px;
+  background: #fff;
+}
+
+.LandingCommunitySection_Widget strong {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.LandingCommunitySection_Widget ul,
+.LandingCommunitySection_Widget ol {
+  margin: 0;
+  padding-left: 18px;
+  color: #707883;
+}
+
+.LandingCommunitySection_Widget li {
+  margin-bottom: 9px;
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.LandingEventSection {
+  display: grid;
+  grid-template-columns: 0.33fr 0.67fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.LandingEventSection_Badge,
+.LandingGuideSection_Copy > span {
+  display: inline-flex;
+  margin-bottom: 18px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: var(--pet-primary-soft);
+  color: var(--pet-primary);
+  font-size: 0.88rem;
+  font-weight: 900;
+}
+
+.LandingEventSection_Intro button {
+  margin-top: 24px;
+  min-width: 160px;
+  height: 48px;
+  border-radius: 12px;
+  font-weight: 900;
+}
+
+.LandingEventSection_MiniStats {
+  display: grid;
+  gap: 12px;
+  margin-top: 26px;
+}
+
+.LandingEventSection_MiniStats div {
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 12px 22px rgba(38, 44, 60, 0.04);
+}
+
+.LandingEventSection_MiniStats strong {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.96rem;
+}
+
+.LandingEventSection_MiniStats p {
+  margin: 0;
+  color: #8a9099;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.LandingEventSection_Cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.LandingEventSection_Card {
+  overflow: hidden;
+}
+
+.LandingEventSection_ImageWrap {
+  position: relative;
+  height: 184px;
+  padding: 16px;
+  box-sizing: border-box;
+  background: #fff;
+}
+
+.LandingEventSection_Card.green .LandingEventSection_ImageWrap {
+  background: #fff;
+}
+
+.LandingEventSection_Card.orange .LandingEventSection_ImageWrap {
+  background: #fff;
+}
+
+.LandingEventSection_Card.olive .LandingEventSection_ImageWrap {
+  background: #fff;
+}
+
+.LandingEventSection_Card.blue .LandingEventSection_ImageWrap {
+  background: #fff;
+}
+
+.LandingEventSection_ImageWrap span {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  font-size: 0.75rem;
+  font-weight: 900;
+}
+
+.LandingEventSection_Body {
+  padding: 18px 18px 12px;
+}
+
+.LandingEventSection_Body strong {
+  display: block;
+  font-size: 1.05rem;
+}
+
+.LandingEventSection_Body small {
+  display: block;
+  margin-top: 8px;
+  color: #9097a2;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.LandingEventSection_Body p {
+  margin: 12px 0 0;
+  color: #757e8a;
+  font-size: 0.84rem;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.LandingEventSection_Footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 18px 18px;
+}
+
+.LandingEventSection_Footer em {
+  color: #8a9099;
+  font-size: 0.8rem;
+  font-style: normal;
+  font-weight: 800;
+}
+
+.LandingEventSection_Footer button {
+  min-width: 82px;
+  height: 34px;
+  border-radius: 999px;
+  background: var(--pet-primary-soft);
+  color: var(--pet-primary);
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
+.LandingGuideSection {
+  display: grid;
+  gap: 22px;
+}
+
+.LandingGuideSection_Header {
+  display: grid;
+  grid-template-columns: 0.36fr 0.64fr;
+  gap: 20px;
+  align-items: center;
+}
+
+.LandingGuideSection_Search {
+  width: min(100%, 360px);
+  height: 46px;
+  margin-top: 26px;
+  padding: 0 14px 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--pet-line);
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 10px 24px rgba(38, 44, 60, 0.04);
+  box-sizing: border-box;
+}
+
+.LandingGuideSection_Search input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #8b929d;
+  font-weight: 700;
+}
+
+.LandingGuideSection_Visual {
+  position: relative;
+  min-height: 330px;
+  border-radius: 30px;
+  background: linear-gradient(180deg, #fffdfd, #fff8fb);
+  overflow: hidden;
+}
+
+.LandingGuideSection_VisualGlow {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.LandingGuideSection_VisualGlow.pink {
+  inset: 36px 140px auto 130px;
+  height: 170px;
+  background: radial-gradient(circle, rgba(255, 191, 212, 0.42), transparent 72%);
+}
+
+.LandingGuideSection_VisualGlow.peach {
+  right: 40px;
+  bottom: 24px;
+  width: 210px;
+  height: 150px;
+  background: radial-gradient(circle, rgba(255, 222, 204, 0.4), transparent 72%);
+}
+
+.LandingGuideSection_VisualBadges span {
+  position: absolute;
+  z-index: 5;
   width: 42px;
   height: 42px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 999px;
-  flex: 0 0 auto;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 12px 24px rgba(255, 91, 124, 0.12);
+  color: var(--pet-primary);
   font-weight: 900;
 }
 
-.PetLanding_Category.pink > span { background: #ffe8ee; }
-.PetLanding_Category.orange > span { background: #fff0dd; }
-.PetLanding_Category.green > span { background: #e8faef; }
-.PetLanding_Category.blue > span { background: #eaf3ff; }
-.PetLanding_Category.purple > span { background: #f2eaff; }
-.PetLanding_Category.yellow > span { background: #fff6dc; }
-.PetLanding_Category.gray > span { background: #f2f3f5; }
+.LandingGuideSection_VisualBadges span:nth-child(1) { left: 28px; top: 110px; }
+.LandingGuideSection_VisualBadges span:nth-child(2) { right: 92px; top: 48px; }
+.LandingGuideSection_VisualBadges span:nth-child(3) { right: 18px; top: 146px; }
 
-.PetLanding_Category strong {
-  display: block;
-  font-size: 0.98rem;
+.LandingGuideSection_HeroImage {
+  position: absolute;
+  inset: 12px 12px 8px 12px;
+  z-index: 4;
+  width: calc(100% - 24px);
+  height: calc(100% - 20px);
+  object-fit: contain;
+  filter: drop-shadow(0 14px 26px rgba(39, 33, 48, 0.1));
 }
 
-.PetLanding_Category p {
-  margin: 4px 0 0;
-  color: #8a9099;
-  font-size: 0.76rem;
-  font-weight: 700;
-}
-
-.PetLanding_FeatureGrid {
-  max-width: 1320px;
-  margin: 0 auto;
+.LandingGuideSection_Cards {
   display: grid;
-  grid-template-columns: repeat(6, minmax(150px, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 16px;
 }
 
-.PetLanding_FeatureCard {
-  min-height: 142px;
-  padding: 20px 18px;
+.LandingGuideSection_Card {
+  min-height: 206px;
+  padding: 20px;
   text-align: center;
   box-sizing: border-box;
 }
 
-.PetLanding_FeatureCard > span {
-  width: 48px;
-  height: 48px;
-  margin: 0 auto 12px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 999px;
-  background: #fff0f4;
-  color: var(--pet-primary);
-  font-size: 1.4rem;
+.LandingGuideSection_CardImageWrap {
+  height: 92px;
+  margin-bottom: 16px;
+  border-radius: 16px;
+  background: #fff;
+  overflow: hidden;
 }
 
-.PetLanding_FeatureCard strong {
+.LandingGuideSection_Card strong {
   display: block;
   font-size: 1rem;
 }
 
-.PetLanding_FeatureCard p {
-  margin: 8px 0 0;
-  color: var(--pet-muted);
-  font-size: 0.8rem;
+.LandingGuideSection_Card p {
+  margin: 10px 0 0;
+  color: #7a8390;
+  font-size: 0.84rem;
   font-weight: 700;
-  line-height: 1.5;
+  line-height: 1.55;
 }
 
-.PetLanding_BottomCta {
-  min-height: 164px;
+.LandingSharedFooter {
+  padding-bottom: 42px;
+}
+
+.LandingSharedFooter_Cta {
+  min-height: 84px;
+  margin-top: 28px;
+  padding: 18px 22px;
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: center;
-  gap: 30px;
-  padding: 34px 90px;
-  background: linear-gradient(90deg, #fff6ee, #fff);
-  box-sizing: border-box;
+  gap: 20px;
+  border-radius: 20px;
+  background: linear-gradient(90deg, #fff2f6, #fff9fb);
 }
 
-.PetLanding_BottomCta h2 {
+.LandingSharedFooter_Cta h2 {
   margin: 0;
-  font-size: 1.8rem;
+  font-size: 1.65rem;
   letter-spacing: -0.04em;
 }
 
-.PetLanding_BottomCta h2 strong {
-  color: var(--pet-orange);
-}
-
-.PetLanding_BottomCta p {
-  margin: 10px 0 0;
-  color: #707783;
+.LandingSharedFooter_Cta p {
+  margin: 8px 0 0;
+  color: #717884;
+  font-size: 0.9rem;
   font-weight: 700;
 }
 
-.PetLanding_BottomStats {
-  display: grid;
-  grid-template-columns: repeat(3, 130px) 180px;
-  align-items: center;
-  gap: 12px;
-}
-
-.PetLanding_BottomStats span {
+.LandingSharedFooter_CtaActions {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  min-height: 56px;
-  padding: 0 16px;
-  border-radius: 14px;
-  background: #fff;
-  color: #8a9099;
-  font-size: 0.76rem;
-  font-weight: 800;
-  box-shadow: 0 12px 30px rgba(30, 38, 55, 0.05);
+  align-items: flex-end;
+  gap: 8px;
 }
 
-.PetLanding_BottomStats span strong {
-  color: var(--pet-text);
-  font-size: 1rem;
-}
-
-.PetLanding_BottomStats > button {
-  height: 56px;
-  border-radius: 12px;
+.LandingSharedFooter_CtaActions > button {
+  min-width: 154px;
+  height: 42px;
+  padding: 0 18px;
+  border-radius: 10px;
   font-weight: 900;
 }
 
-.PetLanding_BottomStats > button::before {
-  content: "🐾";
-  margin-right: 7px;
-}
-
-.PetLanding_BottomStats small {
-  grid-column: 4;
+.LandingSharedFooter_CtaActions small {
   color: #8a9099;
-  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 800;
 }
 
-.PetLanding_BottomStats small button {
-  padding: 0 0 0 8px;
+.LandingSharedFooter_CtaActions small button {
+  padding-left: 6px;
   color: var(--pet-primary);
+  font-weight: 900;
+}
+
+.LandingSharedFooter_Footer {
+  margin-top: 20px;
+  padding: 26px 20px;
+  display: grid;
+  grid-template-columns: 0.9fr 1.4fr 1fr;
+  gap: 26px;
+  border: 1px solid var(--pet-line);
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 18px 32px rgba(38, 44, 60, 0.04);
+}
+
+.LandingSharedFooter_Brand strong {
+  display: block;
+  font-size: 1.15rem;
+}
+
+.LandingSharedFooter_Brand p {
+  margin: 10px 0 0;
+  color: #7d8692;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  font-weight: 700;
+}
+
+.LandingSharedFooter_Socials {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+  color: var(--pet-primary);
+}
+
+.LandingSharedFooter_Links {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.LandingSharedFooter_Links strong,
+.LandingSharedFooter_Subscribe strong {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 0.94rem;
+}
+
+.LandingSharedFooter_Links a {
+  display: block;
+  margin-bottom: 8px;
+  color: #7b8390;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.LandingSharedFooter_Subscribe p {
+  margin: 0 0 14px;
+  color: #7d8692;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  font-weight: 700;
+}
+
+.LandingSharedFooter_SubscribeForm {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+}
+
+.LandingSharedFooter_SubscribeForm input {
+  height: 40px;
+  padding: 0 14px;
+  border: 1px solid var(--pet-line);
+  border-radius: 10px;
+  background: #fafbfc;
+  color: #9298a3;
+  font-weight: 700;
+}
+
+.LandingSharedFooter_SubscribeForm button {
+  min-width: 88px;
+  height: 40px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--pet-primary), #ff7896);
+  color: #fff;
   font-weight: 900;
 }
 
 @media (max-width: 1180px) {
-  .PetLanding_Header {
-    grid-template-columns: auto 1fr auto;
-    padding: 0 24px;
-  }
-
-  .PetLanding_Nav {
-    gap: 18px;
-  }
-
-  .PetLanding_Hero {
-    grid-template-columns: 1fr;
-    padding: 44px 28px;
-  }
-
-  .PetLanding_HeroVisual {
-    min-height: 430px;
-  }
-
-  .PetLanding_CategoryGrid {
-    grid-template-columns: repeat(3, minmax(160px, 1fr));
-  }
-
-  .PetLanding_FeatureGrid {
-    grid-template-columns: repeat(3, minmax(180px, 1fr));
-  }
-
-  .PetLanding_BottomCta,
-  .PetLanding_BottomStats {
+  .PetLanding_Hero,
+  .LandingFeatureSection,
+  .LandingCommunitySection,
+  .LandingEventSection,
+  .LandingGuideSection_Header,
+  .LandingSharedFooter_Footer,
+  .LandingSharedFooter_Cta {
     grid-template-columns: 1fr;
   }
 
-  .PetLanding_BottomStats small {
-    grid-column: auto;
+  .PetLanding_ServiceSection,
+  .LandingFeatureSection,
+  .LandingCommunitySection,
+  .LandingEventSection,
+  .LandingGuideSection,
+  .LandingSharedFooter {
+    padding-left: 28px;
+    padding-right: 28px;
+  }
+
+  .PetLanding_CategoryGrid,
+  .LandingFeatureSection_Grid,
+  .LandingEventSection_Cards,
+  .LandingGuideSection_Cards,
+  .LandingSharedFooter_Links {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .LandingCommunitySection_Layout {
+    grid-template-columns: 1fr;
+  }
+
+  .LandingSharedFooter_CtaActions {
+    align-items: flex-start;
   }
 }
 
 @media (max-width: 760px) {
   .PetLanding_Header {
+    height: 64px;
+  }
+
+  .PetLanding_HeaderInner {
     grid-template-columns: 1fr auto;
+    padding: 0 18px;
+  }
+
+  .PetLanding_Content {
+    padding-top: 64px;
   }
 
   .PetLanding_Nav {
     display: none;
   }
 
-  .PetLanding_HeroCopy h1 {
-    font-size: 2.3rem;
-  }
-
-  .PetLanding_Ctas {
-    flex-direction: column;
-  }
-
-  .PetLanding_Stats {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .PetLanding_Categories,
-  .PetLanding_Features,
-  .PetLanding_BottomCta {
+  .PetLanding_ServiceSection,
+  .LandingFeatureSection,
+  .LandingCommunitySection,
+  .LandingEventSection,
+  .LandingGuideSection,
+  .LandingSharedFooter {
     padding-left: 18px;
     padding-right: 18px;
   }
 
-  .PetLanding_CategoryGrid,
-  .PetLanding_FeatureGrid {
+  .PetLanding_HeroCopy h1,
+  .LandingFeatureSection_Intro h2,
+  .LandingCommunitySection_Aside h2,
+  .LandingEventSection_Intro h2,
+  .LandingGuideSection_Copy h2 {
+    font-size: 2.7rem;
+  }
+
+  .PetLanding_Ctas,
+  .LandingCommunitySection_PostBody,
+  .LandingSharedFooter_SubscribeForm {
     grid-template-columns: 1fr;
   }
 
-  .PetLanding_HeroVisual {
-    transform: scale(0.78);
-    transform-origin: top center;
-    margin-bottom: -80px;
+  .PetLanding_Ctas {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .PetLanding_Stats,
+  .PetLanding_CategoryGrid,
+  .LandingFeatureSection_Grid,
+  .LandingEventSection_Cards,
+  .LandingGuideSection_Cards,
+  .LandingSharedFooter_Links {
+    grid-template-columns: 1fr;
+  }
+
+  .LandingGuideSection_Visual {
+    min-height: 440px;
+  }
+
+  .LandingSharedFooter_CtaActions {
+    width: 100%;
+  }
+
+  .LandingSharedFooter_CtaActions > button {
+    width: 100%;
   }
 }

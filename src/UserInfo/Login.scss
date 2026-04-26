@@ -6,43 +6,43 @@
   --login-line: #edf0f4;
 
   min-height: 100vh;
-  padding: 8px;
-  background:
-    radial-gradient(circle at 82% 18%, rgba(244, 81, 120, 0.08), transparent 26%),
-    radial-gradient(circle at 18% 82%, rgba(255, 164, 103, 0.08), transparent 24%),
-    #f8f8fa;
+  display: grid;
+  grid-template-columns: minmax(420px, 49%) minmax(460px, 51%);
+  background: #fff;
   color: var(--login-text);
   font-family: "Pretendard", "Noto Sans KR", "Segoe UI", sans-serif;
-  box-sizing: border-box;
 }
 
 .LoginPage button {
   font-family: inherit;
 }
 
-.LoginShell {
-  min-height: calc(100vh - 16px);
-  display: grid;
-  grid-template-rows: 76px 1fr;
-  border: 1px solid #eceef2;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.96);
-  overflow: hidden;
-  box-shadow: 0 18px 50px rgba(32, 38, 51, 0.05);
+.Loginmain {
+  min-height: 100vh;
+  padding: 0 50px 38px;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
 }
 
 .LoginHeader {
+  min-height: 72px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 44px;
-  box-sizing: border-box;
+  gap: 18px;
+  margin-left: -30px;
+  margin-right: -30px;
+  padding: 0 20px 0 0;
+  margin-bottom: 42px;
+
 }
 
 .LoginBrand {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+  padding: 0;
   border: 0;
   background: transparent;
   color: var(--login-text);
@@ -52,10 +52,11 @@
 .LoginBrand img {
   width: 30px;
   height: 30px;
+  object-fit: contain;
 }
 
 .LoginBrand span {
-  font-size: 1.28rem;
+  font-size: 1.25rem;
   font-weight: 900;
   letter-spacing: -0.04em;
 }
@@ -77,20 +78,11 @@
   cursor: pointer;
 }
 
-.LoginContent {
-  display: grid;
-  grid-template-columns: minmax(420px, 1fr) minmax(460px, 1fr);
-  min-height: 0;
-}
-
 .LoginPanel {
   width: min(100%, 530px);
   margin: 0 auto;
-  padding: 58px 42px 44px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  box-sizing: border-box;
 }
 
 .LoginTitle {
@@ -320,17 +312,17 @@
 }
 
 .LoginVisual {
-  position: relative;
+  min-height: 100vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 34px 50px 44px;
+  padding: 54px;
   background:
-    radial-gradient(circle at 80% 18%, rgba(244, 81, 120, 0.08), transparent 25%),
-    #fff8fa;
-  box-sizing: border-box;
+    radial-gradient(circle at 18% 24%, rgba(241, 83, 115, 0.08), transparent 22%),
+    linear-gradient(135deg, #fff7f5 0%, #fffdfb 52%, #fff4f5 100%);
+  position: relative;
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 .LoginVisual::before,
@@ -356,10 +348,15 @@
   background: #c5c9f7;
 }
 
+.LoginVisualContent {
+  width: min(100%, 640px);
+  position: relative;
+  text-align: center;
+}
+
 .LoginVisualText {
   position: relative;
   z-index: 2;
-  max-width: 420px;
   text-align: center;
 }
 
@@ -391,10 +388,11 @@
 }
 
 .LoginVisual > img {
+  display: block;
   position: relative;
   z-index: 2;
-  width: min(100%, 520px);
-  margin-top: 28px;
+  width: min(100%, 570px);
+  margin: 28px auto 0;
   object-fit: contain;
   filter: drop-shadow(0 22px 44px rgba(53, 40, 50, 0.08));
 }
@@ -423,44 +421,42 @@
 }
 
 @media (max-width: 1080px) {
-  .LoginContent {
+  .LoginPage {
     grid-template-columns: 1fr;
   }
 
-  .LoginVisual {
-    display: none;
+  .Loginmain {
+    min-height: auto;
+    padding: 0 24px 36px;
   }
 
-  .LoginPanel {
-    padding-top: 40px;
+  .LoginVisual {
+    min-height: auto;
+    padding: 42px 24px 54px;
   }
 }
 
 @media (max-width: 620px) {
-  .LoginPage {
-    padding: 0;
-  }
-
-  .LoginShell {
-    min-height: 100vh;
-    border: 0;
-    border-radius: 0;
-  }
-
   .LoginHeader {
-    padding: 0 20px;
+    margin-bottom: 28px;
+  }
+
+  .LoginBrand img {
+    width: 28px;
+    height: 28px;
+  }
+
+  .LoginBrand span {
+    font-size: 18px;
+  }
+
+  .LoginTitle h1,
+  .LoginVisualText h2 {
+    font-size: 2rem;
   }
 
   .LoginHeader p {
     font-size: 0.78rem;
-  }
-
-  .LoginPanel {
-    padding: 34px 22px;
-  }
-
-  .LoginTitle h1 {
-    font-size: 2rem;
   }
 
   .LoginSocial > div {

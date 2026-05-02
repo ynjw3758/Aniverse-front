@@ -1,11 +1,9 @@
-import { Fragment, useState, useRef, useEffect } from "react";
-import "./Main.scss";
+import { Fragment, useState, useRef} from "react";
 import React from "react";
-import testNote from "../assets/images/Main_Note.png" ;
 import Communication from "../assets/images/communi.png";
 import Share from "../assets/images/Ldshare.png";
 import RealTime from "../assets/images/realtime.png";
-
+import "./Main.scss"
 const services = [
   {
       title: "쪽지",
@@ -47,24 +45,7 @@ const Main = () => {
         return { opacity, transform: `translateY(${translateY}px)` };
     };
 
-/*
-    <h2>왜 이 공간이 필요한가요?</h2>
-                    <div className="service_comumication">
-                        <p className="intro-description">
-                            그래서 우리는 이 공간을 만들었습니다.
-                            <br />
-                            <span className="highlight">
-                                고민을 나누고, 사육 노하우를 공유하며, 같은 관심사를 가진 사람들과
-                                인연을 맺을 수 있는 공간.
-                            </span>
-                            <br />
-                            당신의 이야기를 들려주세요. 그리고 함께 만들어가요.
-                        </p>
-                    </div>
-                    */
-                   /*
 
-                   */
     return (
         <Fragment>
             <main className="Main_Body" onScroll={handleScroll} ref={scrollRef}>

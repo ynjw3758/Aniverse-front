@@ -1,0 +1,890 @@
+.ExplorePreview {
+  --pet-primary: #ff4f75;
+  --pet-primary-soft: #ffe7ee;
+  --pet-primary-pale: #fff5f7;
+  --pet-text: #202631;
+  --pet-muted: #8b93a1;
+  --pet-line: #edf0f5;
+  --pet-card: #ffffff;
+  --pet-bg: #f7f8fb;
+  --pet-shadow: 0 12px 34px rgba(27, 35, 50, 0.07);
+  width: 100%;
+  min-height: 100vh;
+  background: var(--pet-bg);
+  color: var(--pet-text);
+  font-family: "Pretendard", "Noto Sans KR", "Segoe UI", sans-serif;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+html:has(.ExplorePreview),
+body:has(.ExplorePreview) {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.ExplorePreview *,
+.ExplorePreview *::before,
+.ExplorePreview *::after {
+  box-sizing: border-box;
+}
+
+.ExplorePreview button,
+.ExplorePreview input {
+  font-family: inherit;
+}
+
+.ExplorePreview button {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.ExploreTopBar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  height: 80px;
+  display: grid;
+  grid-template-columns: 240px minmax(280px, 520px) 340px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 0 30px 0 38px;
+  border-bottom: 1px solid var(--pet-line);
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(16px);
+  overflow: visible;
+}
+
+.ExploreTopBar_Brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--pet-text);
+  justify-self: start;
+}
+
+.ExploreTopBar_Brand img {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+}
+
+.ExploreTopBar_Brand span {
+  font-size: 1.48rem;
+  font-weight: 900;
+}
+
+.ExploreTopBar_Search {
+  height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 16px;
+  border: 1px solid #e5e8ef;
+  border-radius: 13px;
+  background: #f7f8fb;
+  color: #687180;
+}
+
+.ExploreTopBar_Search svg {
+  flex: 0 0 auto;
+  width: 16px;
+  height: 16px;
+  color: #657083;
+}
+
+.ExploreTopBar_Search span {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.ExploreTopBar_Search input {
+  width: 100%;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: var(--pet-text);
+  font-size: 0.96rem;
+  font-weight: 700;
+}
+
+.ExploreTopBar_Actions {
+  justify-self: end;
+  display: grid;
+  grid-template-columns: 42px 42px 42px 138px;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  width: 318px;
+  min-width: 0;
+  max-width: 318px;
+  overflow: visible;
+}
+
+.ExploreTopBar_Actions button {
+  position: relative;
+  flex: 0 0 auto;
+  min-width: 40px;
+  min-height: 48px;
+  padding: 0;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border-radius: 10px;
+  color: #253041;
+  font-weight: 850;
+  line-height: 1;
+}
+
+.ExploreTopBar_Actions button > svg {
+  width: 19px;
+  height: 19px;
+  color: inherit;
+}
+
+.ExploreTopBar_Actions button > span {
+  color: inherit;
+  font-size: 1.08rem;
+}
+
+.ExploreTopBar_Actions button small {
+  color: inherit;
+  font-size: 0.66rem;
+  font-weight: 850;
+}
+
+.ExploreTopBar_Actions button em {
+  position: absolute;
+  top: 2px;
+  right: 1px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--pet-primary);
+  color: #fff;
+  font-size: 0.58rem;
+  font-style: normal;
+  font-weight: 900;
+}
+
+.ExploreTopBar_Actions button.active {
+  color: var(--pet-primary);
+  position: relative;
+  left: 0px;
+  top:0px
+}
+
+.ExploreTopBar_Actions button.profile {
+  width: 138px;
+  min-width: 138px;
+  max-width: 138px;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: flex-start;
+  display: inline-flex;
+  visibility: visible;
+  opacity: 1;
+  margin-left: 0;
+  top:0px;
+  left: 0px;
+}
+
+.ExploreTopBar_Actions button.profile img {
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  object-fit: cover;
+}
+
+.ExploreTopBar_Actions button.profile strong {
+  font-size: 0.92rem;
+  white-space: nowrap;
+}
+
+.ExploreTopBar_Actions button.profile > svg {
+  width: 12px;
+  height: 12px;
+}
+
+.ExplorePreview_Shell {
+  display: grid;
+  grid-template-columns: 240px minmax(560px, 1fr) 360px;
+  gap: 24px;
+  width: 100%;
+  padding: 18px 28px 48px;
+}
+
+.ExploreSidebar {
+  position: sticky;
+  top: 98px;
+  align-self: start;
+  min-height: calc(100vh - 116px);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding-right: 10px;
+}
+
+.ExploreSidebar_Menu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ExploreSidebar_Menu button {
+  min-height: 46px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-radius: 8px;
+  color: #303847;
+  font-size: 0.96rem;
+  font-weight: 850;
+  text-align: left;
+}
+
+.ExploreSidebar_Menu button svg {
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  color: inherit;
+}
+
+.ExploreSidebar_Menu button span {
+  width: 18px;
+  color: inherit;
+  text-align: center;
+}
+
+.ExploreSidebar_Menu button.selected {
+  background: var(--pet-primary-soft);
+  color: var(--pet-primary);
+}
+
+.ExploreSidebar_Write {
+  min-height: 48px;
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 1px solid #ffd2dc !important;
+  border-radius: 10px;
+  background: var(--pet-primary-pale) !important;
+  color: var(--pet-primary);
+  font-size: 0.98rem;
+  font-weight: 900;
+}
+
+.ExploreSidebar_Write svg {
+  width: 18px;
+  height: 18px;
+}
+
+.ExploreSidebar_Cta {
+  padding: 18px 16px;
+  display: grid;
+  gap: 10px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #fff1f5, #fff);
+  color: var(--pet-primary);
+  box-shadow: var(--pet-shadow);
+}
+
+.ExploreSidebar_Cta strong {
+  font-size: 0.94rem;
+  line-height: 1.45;
+}
+
+.ExploreSidebar_Cta p {
+  margin: 0;
+  color: #6f7785;
+  font-size: 0.78rem;
+  font-weight: 750;
+  line-height: 1.55;
+}
+
+.ExploreSidebar_Cta button {
+  min-height: 40px;
+  border-radius: 8px;
+  background: var(--pet-primary) !important;
+  color: #fff;
+  font-weight: 900;
+}
+
+.ExplorePreview_FeedColumn {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ExploreStoryBar,
+.ExploreCategoryTabs,
+.ExploreComposer,
+.ExplorePostCard,
+.ExploreRightPanel_Card {
+  border: 1px solid var(--pet-line);
+  border-radius: 14px;
+  background: var(--pet-card);
+  box-shadow: var(--pet-shadow);
+}
+
+.ExploreStoryBar {
+  min-height: 142px;
+  padding: 18px 26px;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  overflow-x: auto;
+}
+
+.ExploreStoryBar_Item {
+  flex: 0 0 auto;
+  min-width: 76px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: #1f2734;
+  font-size: 0.78rem;
+  font-weight: 850;
+}
+
+.ExploreStoryBar_Item span {
+  width: 68px;
+  height: 68px;
+  padding: 3px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--pet-primary), #ff9f63);
+}
+
+.ExploreStoryBar_Item.create span {
+  background: var(--pet-primary-soft);
+}
+
+.ExploreStoryBar_Item img {
+  width: 100%;
+  height: 100%;
+  border: 3px solid #fff;
+  border-radius: 999px;
+  object-fit: cover;
+}
+
+.ExploreStoryBar_Item em {
+  color: var(--pet-primary);
+  font-size: 1.8rem;
+  font-style: normal;
+}
+
+.ExploreCategoryTabs {
+  min-height: 68px;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  overflow-x: auto;
+}
+
+.ExploreCategoryTabs button {
+  flex: 0 0 auto;
+  min-width: 66px;
+  height: 38px;
+  padding: 0 18px;
+  border-radius: 999px;
+  color: #202631;
+  font-size: 0.88rem;
+  font-weight: 900;
+}
+
+.ExploreCategoryTabs button.isActive {
+  background: var(--pet-primary);
+  color: #fff;
+}
+
+.ExploreFilterNotice {
+  min-height: 42px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  border-radius: 10px;
+  background: var(--pet-primary-soft);
+  color: #5f6876;
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.ExploreFilterNotice strong {
+  color: var(--pet-primary);
+}
+
+.ExploreFeed {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ExploreComposer {
+  padding: 16px 26px;
+}
+
+.ExploreComposer_Input {
+  width: 100%;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-bottom: 1px solid var(--pet-line) !important;
+  color: #8a93a2;
+  font-size: 0.96rem;
+  font-weight: 800;
+  text-align: left;
+}
+
+.ExploreComposer_Input span {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--pet-primary-soft);
+}
+
+.ExploreComposer_Actions {
+  padding-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.ExploreComposer_Actions button {
+  min-height: 34px;
+  color: #4e5868;
+  font-size: 0.82rem;
+  font-weight: 850;
+}
+
+.ExploreFeed_Header {
+  padding: 2px 4px 0;
+}
+
+.ExploreFeed_Header span {
+  color: var(--pet-primary);
+  font-size: 0.88rem;
+  font-weight: 900;
+}
+
+.ExploreFeed_Header h1 {
+  margin: 6px 0 0;
+  font-size: 1.42rem;
+  letter-spacing: -0.02em;
+}
+
+.ExplorePostCard {
+  padding: 20px 26px;
+}
+
+.ExplorePostCard_Header {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  color: inherit;
+  text-align: left;
+}
+
+.ExplorePostCard_Header img {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  object-fit: cover;
+}
+
+.ExplorePostCard_Header div {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.ExplorePostCard_Header strong {
+  color: var(--pet-text);
+}
+
+.ExplorePostCard_Header span {
+  color: var(--pet-muted);
+  font-size: 0.86rem;
+}
+
+.ExplorePostCard_Header em {
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: var(--pet-primary-soft);
+  color: var(--pet-primary);
+  font-size: 0.78rem;
+  font-style: normal;
+  font-weight: 900;
+}
+
+.ExplorePostCard_Text {
+  width: 100%;
+  margin: 14px 0 14px;
+  display: grid;
+  gap: 7px;
+  color: #303847;
+  line-height: 1.6;
+  text-align: left;
+}
+
+.ExplorePostCard_Text strong {
+  font-size: 1.02rem;
+}
+
+.ExplorePostCard_Text span {
+  font-size: 0.92rem;
+  font-weight: 650;
+}
+
+.ExplorePostCard_Text small {
+  color: #2e94ff;
+  font-size: 0.86rem;
+  font-weight: 850;
+}
+
+.ExplorePostCard_Image {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #eef0f4;
+}
+
+.ExplorePostCard_Image img {
+  display: block;
+  width: 100%;
+  height: clamp(360px, 43vw, 560px);
+  object-fit: cover;
+}
+
+.ExplorePostCard_Image span {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.62);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.ExplorePostCard_Lock {
+  display: none;
+}
+
+.ExplorePostCard_Actions {
+  display: flex;
+  gap: 32px;
+  padding-top: 16px;
+}
+
+.ExplorePostCard_Actions button {
+  color: #343d4d;
+  font-size: 0.86rem;
+  font-weight: 850;
+}
+
+.ExploreEmptyState {
+  min-height: 220px;
+  padding: 28px;
+  display: grid;
+  place-items: center;
+  gap: 8px;
+  border: 1px dashed #ffc3d0;
+  border-radius: 14px;
+  background: #fff;
+  color: var(--pet-muted);
+  text-align: center;
+}
+
+.ExploreEmptyState strong {
+  color: var(--pet-text);
+  font-size: 1.1rem;
+}
+
+.ExploreRightPanel {
+  position: sticky;
+  top: 98px;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ExploreRightPanel_Card {
+  padding: 20px;
+}
+
+.ExploreRightPanel_Title {
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.ExploreRightPanel_Title h3 {
+  margin: 0;
+  font-size: 1.02rem;
+}
+
+.ExploreRightPanel_Title button {
+  color: #9aa2af;
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
+.ExploreRightPanel_Tags {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.ExploreRightPanel_Tags button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--pet-primary);
+  font-size: 0.9rem;
+  font-weight: 900;
+}
+
+.ExploreRightPanel_Tags span,
+.ExploreRightPanel_ListItem small,
+.ExploreRightPanel_Event small,
+.ExploreRightPanel_Event em {
+  color: var(--pet-muted);
+  font-size: 0.8rem;
+  font-style: normal;
+  font-weight: 750;
+}
+
+.ExploreRightPanel_ListItem,
+.ExploreRightPanel_Event {
+  width: 100%;
+  padding: 9px 0;
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  color: inherit;
+  text-align: left;
+}
+
+.ExploreRightPanel_ListItem img {
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  object-fit: cover;
+}
+
+.ExploreRightPanel_ListItem span,
+.ExploreRightPanel_Event span {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.ExploreRightPanel_ListItem strong,
+.ExploreRightPanel_Event strong {
+  overflow: hidden;
+  color: var(--pet-text);
+  font-size: 0.9rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ExploreRightPanel_Event {
+  grid-template-columns: 82px minmax(0, 1fr);
+}
+
+.ExploreRightPanel_Event img {
+  width: 82px;
+  height: 68px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.ExploreCTA {
+  display: none;
+}
+
+.LoginRequiredModal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+}
+
+.LoginRequiredModal_Backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(24, 30, 38, 0.42) !important;
+}
+
+.LoginRequiredModal_Box {
+  position: relative;
+  width: min(100%, 460px);
+  padding: 28px;
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 24px 60px rgba(24, 30, 38, 0.22);
+}
+
+.LoginRequiredModal_Box > span {
+  display: inline-flex;
+  margin-bottom: 12px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: var(--pet-primary-soft);
+  color: var(--pet-primary);
+  font-size: 0.8rem;
+  font-weight: 900;
+}
+
+.LoginRequiredModal_Box h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.LoginRequiredModal_Box p {
+  margin: 12px 0 22px;
+  color: var(--pet-muted);
+  font-weight: 800;
+  line-height: 1.65;
+}
+
+.LoginRequiredModal_Actions {
+  display: flex;
+  gap: 10px;
+}
+
+.LoginRequiredModal_Actions button {
+  min-width: 112px;
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: 10px;
+  font-weight: 900;
+}
+
+.LoginRequiredModal_Actions .primary {
+  background: var(--pet-primary);
+  color: #fff;
+}
+
+.LoginRequiredModal_Actions .secondary,
+.LoginRequiredModal_Actions .ghost {
+  border: 1px solid #ffc6d2;
+  background: #fff;
+  color: var(--pet-primary);
+}
+
+@media (max-width: 1280px) {
+  .ExploreTopBar {
+    grid-template-columns: 220px minmax(280px, 1fr) auto;
+    padding: 0 24px;
+  }
+
+  .ExplorePreview_Shell {
+    grid-template-columns: 220px minmax(0, 1fr);
+    padding: 18px 24px 40px;
+  }
+
+  .ExploreRightPanel {
+    position: static;
+    grid-column: 2;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .ExploreTopBar {
+    grid-template-columns: auto 1fr;
+    height: 68px;
+    padding: 0 16px;
+  }
+
+  .ExploreTopBar_Search {
+    display: none;
+  }
+
+  .ExploreTopBar_Actions button:not(.profile) {
+    display: none;
+  }
+
+  .ExplorePreview_Shell {
+    grid-template-columns: 1fr;
+    padding: 16px;
+  }
+
+  .ExploreSidebar {
+    position: static;
+    min-height: auto;
+  }
+
+  .ExploreSidebar_Menu {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .ExploreSidebar_Cta,
+  .ExploreSidebar_Write {
+    display: none;
+  }
+
+  .ExploreRightPanel {
+    grid-column: auto;
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .ExploreSidebar_Menu {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ExploreComposer_Actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ExplorePostCard_Image img {
+    height: 260px;
+  }
+
+  .LoginRequiredModal_Actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .LoginRequiredModal_Actions button {
+    width: 100%;
+  }
+}

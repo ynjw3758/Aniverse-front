@@ -1,19 +1,18 @@
 html,
 body {
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .PetLanding {
-  --pet-primary: #ff5b7c;
-  --pet-primary-soft: #fff1f5;
+  --pet-primary: #f05d5e;
+  --pet-primary-soft: #fff3ef;
+  --pet-accent: #2f9f8f;
+  --pet-accent-soft: #edf9f6;
   --pet-line: #eef1f5;
   --pet-text: #252a33;
   --pet-muted: #76808d;
   min-height: 100vh;
-  background:
-    radial-gradient(circle at 74% 18%, rgba(255, 91, 124, 0.08), transparent 22%),
-    radial-gradient(circle at 12% 88%, rgba(255, 171, 102, 0.12), transparent 20%),
-    #fff;
+  background: linear-gradient(180deg, #fffaf6 0%, #ffffff 34%, #f7fbfa 100%);
   color: var(--pet-text);
   font-family: "Pretendard", "Noto Sans KR", "Segoe UI", sans-serif;
   overflow-x: hidden;
@@ -496,8 +495,8 @@ body {
 }
 
 .LandingCommunitySection_Tabs button.isActive {
-  background: var(--pet-primary-soft);
-  color: var(--pet-primary);
+  background: var(--pet-accent-soft);
+  color: var(--pet-accent);
 }
 
 .LandingCommunitySection_Layout {
@@ -894,7 +893,7 @@ body {
   align-items: center;
   gap: 20px;
   border-radius: 20px;
-  background: linear-gradient(90deg, #fff2f6, #fff9fb);
+  background: linear-gradient(90deg, #fff4ee, #eef9f6);
 }
 
 .LandingSharedFooter_Cta h2 {
@@ -964,9 +963,12 @@ body {
 
 .LandingSharedFooter_Socials {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   margin-top: 16px;
-  color: var(--pet-primary);
+  color: var(--pet-accent);
+  font-size: 0.78rem;
+  font-weight: 900;
 }
 
 .LandingSharedFooter_Links {

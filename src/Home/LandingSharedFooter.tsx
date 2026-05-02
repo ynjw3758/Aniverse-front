@@ -4,11 +4,7 @@ type LandingSharedFooterProps = {
   onLogin: () => void;
 };
 
-const LandingSharedFooter = ({
-  loggedIn,
-  onPrimaryAction,
-  onLogin,
-}: LandingSharedFooterProps) => {
+const LandingSharedFooter = ({ loggedIn, onPrimaryAction, onLogin }: LandingSharedFooterProps) => {
   return (
     <section className="LandingSharedFooter">
       <div className="LandingSharedFooter_Cta">
@@ -25,7 +21,7 @@ const LandingSharedFooter = ({
           </button>
           {!loggedIn && (
             <small>
-              이미 계정이 있으신가요?
+              이미 계정이 있나요?
               <button type="button" onClick={onLogin}>
                 로그인
               </button>
@@ -37,12 +33,11 @@ const LandingSharedFooter = ({
       <footer className="LandingSharedFooter_Footer">
         <div className="LandingSharedFooter_Brand">
           <strong>Aniverse</strong>
-          <p>모든 반려동물과 보호자가 하나로 만나는 따뜻한 커뮤니티</p>
+          <p>모든 반려동물과 보호자가 함께 만나고 성장하는 따뜻한 커뮤니티</p>
           <div className="LandingSharedFooter_Socials">
-            <span>◎</span>
-            <span>◐</span>
-            <span>◉</span>
-            <span>⌁</span>
+            <span>Instagram</span>
+            <span>YouTube</span>
+            <span>Blog</span>
           </div>
         </div>
 
@@ -58,13 +53,13 @@ const LandingSharedFooter = ({
           <div>
             <strong>커뮤니티</strong>
             <a>자유 게시판</a>
-            <a>질문/답변</a>
+            <a>질문답변</a>
             <a>정보 공유</a>
-            <a>작업하기</a>
+            <a>동네 모임</a>
           </div>
           <div>
             <strong>이벤트</strong>
-            <a>진행중 이벤트</a>
+            <a>진행 중 이벤트</a>
             <a>이벤트 후기</a>
             <a>지난 이벤트</a>
           </div>
@@ -78,7 +73,7 @@ const LandingSharedFooter = ({
 
         <div className="LandingSharedFooter_Subscribe">
           <strong>새로운 소식 받아보기</strong>
-          <p>이벤트와 유용한 반려동물 팁을 메일로 받아보세요.</p>
+          <p>이벤트와 유용한 반려동물 정보를 메일로 받아보세요.</p>
           <div className="LandingSharedFooter_SubscribeForm">
             <input type="text" placeholder="이메일 주소를 입력해주세요" readOnly />
             <button type="button">구독하기</button>

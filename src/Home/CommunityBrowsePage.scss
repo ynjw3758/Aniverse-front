@@ -1,0 +1,646 @@
+.CommunityBrowsePage {
+  --pet-primary: #f05d5e;
+  --pet-primary-soft: #fff3ef;
+  --pet-accent: #2f9f8f;
+  --pet-accent-soft: #edf9f6;
+  --pet-line: #eef1f5;
+  --pet-text: #252a33;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #fffaf6 0%, #ffffff 36%, #f7fbfa 100%);
+  color: var(--pet-text);
+  font-family: "Pretendard", "Noto Sans KR", "Segoe UI", sans-serif;
+  overflow-x: hidden;
+}
+
+.CommunityBrowsePage button,
+.CommunityBrowsePage input {
+  font-family: inherit;
+}
+
+.CommunityBrowsePage button {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.CommunityBrowsePage_Header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  height: 72px;
+  background: rgba(255, 255, 255, 0.94);
+  border-bottom: 1px solid var(--pet-line);
+  backdrop-filter: blur(18px);
+}
+
+.CommunityBrowsePage_HeaderInner {
+  max-width: 1520px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 clamp(18px, 2vw, 28px);
+  display: grid;
+  grid-template-columns: minmax(170px, 220px) minmax(0, 1fr) max-content;
+  align-items: center;
+  gap: clamp(16px, 2vw, 32px);
+  box-sizing: border-box;
+}
+
+.CommunityBrowsePage_Brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--pet-text);
+}
+
+.CommunityBrowsePage_Brand img {
+  width: 30px;
+  height: 30px;
+}
+
+.CommunityBrowsePage_Brand span {
+  font-size: 1.25rem;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+}
+
+.CommunityBrowsePage_Nav {
+  display: flex;
+  justify-content: center;
+  gap: clamp(22px, 3vw, 42px);
+  min-width: 0;
+}
+
+.CommunityBrowsePage_Nav button {
+  position: relative;
+  height: 72px;
+  color: #303642;
+  font-size: 0.95rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.CommunityBrowsePage_Nav button.isActive {
+  color: var(--pet-primary);
+}
+
+.CommunityBrowsePage_Nav button.isActive::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  width: 36px;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--pet-primary);
+  transform: translateX(-50%);
+}
+
+.CommunityBrowsePage_Auth {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: flex-end;
+  min-width: 0;
+}
+
+.CommunityBrowsePage_Auth button {
+  min-width: 88px;
+  height: 38px;
+  padding: 0 18px;
+  border-radius: 10px;
+  font-weight: 800;
+}
+
+.CommunityBrowsePage_Auth .ghost {
+  border: 1px solid #f1c5ce;
+  background: #fff;
+  color: #353b45;
+}
+
+.CommunityBrowsePage_Auth .solid,
+.CommunityBrowsePage_Search > button,
+.CommunityBrowsePage_EventCard button,
+.CommunityBrowsePage_Category.isActive,
+.CommunityBrowsePage_CommunityCard button,
+.CommunityBrowsePage_NearbyBody button {
+  background: linear-gradient(135deg, var(--pet-primary), #ff7896);
+  color: #fff;
+}
+
+.CommunityBrowsePage_Content {
+  max-width: 1520px;
+  margin: 0 auto;
+  padding: 28px clamp(18px, 2vw, 28px) 42px;
+  box-sizing: border-box;
+}
+
+.CommunityBrowsePage_Hero {
+  padding: 10px 10px 28px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 520px);
+  align-items: center;
+  gap: 24px;
+}
+
+.CommunityBrowsePage_TitleBlock {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.CommunityBrowsePage_Icon {
+  width: 46px;
+  height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  background: var(--pet-accent-soft);
+  color: var(--pet-accent);
+  font-size: 1.4rem;
+}
+
+.CommunityBrowsePage_TitleBlock h1 {
+  margin: 0;
+  font-size: 2.8rem;
+  letter-spacing: -0.06em;
+}
+
+.CommunityBrowsePage_TitleBlock p {
+  margin: 10px 0 0;
+  color: #6d7683;
+  line-height: 1.7;
+  font-weight: 700;
+}
+
+.CommunityBrowsePage_Search {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 92px;
+  gap: 12px;
+  align-items: center;
+  justify-self: end;
+  min-width: 0;
+}
+
+.CommunityBrowsePage_SearchField {
+  height: 52px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--pet-line);
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 12px 28px rgba(38, 44, 60, 0.06);
+  min-width: 0;
+}
+
+.CommunityBrowsePage_SearchField span {
+  color: #9ca4af;
+  font-size: 0.95rem;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.CommunityBrowsePage_SearchField input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #4f5865;
+  font-weight: 700;
+}
+
+.CommunityBrowsePage_Search > button {
+  width: 92px;
+  min-width: 0;
+  height: 52px;
+  border-radius: 14px;
+  font-weight: 900;
+  box-shadow: 0 16px 28px rgba(255, 91, 124, 0.18);
+}
+
+.CommunityBrowsePage_CategoryStrip,
+.CommunityBrowsePage_PostCard,
+.CommunityBrowsePage_CommunityCard,
+.CommunityBrowsePage_EventCard,
+.CommunityBrowsePage_MapCard,
+.CommunityBrowsePage_NearbyCard {
+  border: 1px solid var(--pet-line);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 18px 34px rgba(38, 44, 60, 0.05);
+}
+
+.CommunityBrowsePage_CategoryStrip {
+  padding: 14px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
+  gap: 12px;
+  overflow: hidden;
+}
+
+.CommunityBrowsePage_Category {
+  padding: 10px 8px 12px;
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  border-radius: 18px;
+  color: #49515d;
+}
+
+.CommunityBrowsePage_CategoryThumb {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid #f3d6dd;
+  background: #fff;
+}
+
+.CommunityBrowsePage_CategoryThumb img,
+.CommunityBrowsePage_PostImageWrap img,
+.CommunityBrowsePage_CommunityCard img,
+.CommunityBrowsePage_EventCard img,
+.CommunityBrowsePage_NearbyImageWrap img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.CommunityBrowsePage_Category strong {
+  font-size: 0.85rem;
+}
+
+.CommunityBrowsePage_Category.isActive {
+  box-shadow: 0 16px 30px rgba(47, 159, 143, 0.16);
+}
+
+.CommunityBrowsePage_Section {
+  margin-top: 26px;
+}
+
+.CommunityBrowsePage_SectionHeader {
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.CommunityBrowsePage_SectionHeader h2 {
+  margin: 0;
+  font-size: 1.9rem;
+  letter-spacing: -0.05em;
+}
+
+.CommunityBrowsePage_SectionHeader button {
+  color: #7f8793;
+  font-weight: 800;
+}
+
+.CommunityBrowsePage_PostGrid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.CommunityBrowsePage_PostCard {
+  overflow: hidden;
+}
+
+.CommunityBrowsePage_PostImageWrap {
+  position: relative;
+  height: 220px;
+  padding: 12px;
+}
+
+.CommunityBrowsePage_PostImageWrap img {
+  border-radius: 16px;
+}
+
+.CommunityBrowsePage_PostImageWrap .rank {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  z-index: 2;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #ff7b5f, #ff4f84);
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
+.CommunityBrowsePage_PostBody {
+  padding: 0 16px 16px;
+}
+
+.CommunityBrowsePage_PostBody em {
+  display: inline-flex;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: #fff3eb;
+  color: #ff914d;
+  font-size: 0.72rem;
+  font-style: normal;
+  font-weight: 900;
+}
+
+.CommunityBrowsePage_PostBody strong {
+  display: block;
+  margin-top: 10px;
+  line-height: 1.45;
+}
+
+.CommunityBrowsePage_PostBody small,
+.CommunityBrowsePage_CommunityCard span,
+.CommunityBrowsePage_NearbyBody small {
+  display: block;
+  margin-top: 8px;
+  color: #8b93a0;
+  font-weight: 700;
+}
+
+.CommunityBrowsePage_PostMeta {
+  display: flex;
+  gap: 14px;
+  margin-top: 12px;
+  color: #7a8290;
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.CommunityBrowsePage_CommunityGrid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.CommunityBrowsePage_CommunityCard {
+  padding: 18px 16px;
+  text-align: center;
+}
+
+.CommunityBrowsePage_CommunityCard img {
+  width: 88px;
+  height: 88px;
+  margin: 0 auto 14px;
+  border-radius: 50%;
+}
+
+.CommunityBrowsePage_CommunityCard p,
+.CommunityBrowsePage_NearbyBody p {
+  margin: 10px 0 0;
+  color: #6d7683;
+  line-height: 1.6;
+  font-weight: 700;
+}
+
+.CommunityBrowsePage_CommunityCard button,
+.CommunityBrowsePage_NearbyBody button {
+  min-width: 116px;
+  height: 38px;
+  margin-top: 14px;
+  border-radius: 12px;
+  font-weight: 900;
+}
+
+.CommunityBrowsePage_EventRow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.CommunityBrowsePage_EventCard {
+  min-height: 180px;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 120px;
+  align-items: center;
+  gap: 16px;
+  overflow: hidden;
+}
+
+.CommunityBrowsePage_EventCard.rose { background: linear-gradient(135deg, #fff7f8, #fff1f5); }
+.CommunityBrowsePage_EventCard.violet { background: linear-gradient(135deg, #f9f3ff, #f4efff); }
+.CommunityBrowsePage_EventCard.gold { background: linear-gradient(135deg, #fff9e9, #fff4d9); }
+.CommunityBrowsePage_EventCard.mint { background: linear-gradient(135deg, #f2fff5, #ebfff4); }
+
+.CommunityBrowsePage_EventCard strong {
+  display: block;
+  font-size: 1.35rem;
+  line-height: 1.35;
+  letter-spacing: -0.04em;
+}
+
+.CommunityBrowsePage_EventCard small {
+  display: block;
+  margin-top: 10px;
+  color: #6d7683;
+  font-weight: 800;
+}
+
+.CommunityBrowsePage_EventCard button {
+  min-width: 90px;
+  height: 36px;
+  margin-top: 16px;
+  border-radius: 999px;
+  font-weight: 900;
+}
+
+.CommunityBrowsePage_EventCard img {
+  width: 120px;
+  height: 120px;
+  border-radius: 24px;
+}
+
+.CommunityBrowsePage_NearbyLayout {
+  display: grid;
+  grid-template-columns: 1.1fr 2.2fr;
+  gap: 16px;
+}
+
+.CommunityBrowsePage_MapCard {
+  position: relative;
+  min-height: 360px;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.4) 49%, rgba(213, 225, 241, 0.9) 50%, rgba(255, 255, 255, 0.4) 51%),
+    linear-gradient(rgba(255, 255, 255, 0.4) 49%, rgba(213, 225, 241, 0.9) 50%, rgba(255, 255, 255, 0.4) 51%),
+    linear-gradient(135deg, #fff9f3, #f3f7ff);
+  background-size: 120px 120px, 120px 120px, auto;
+  background-position: 20px 0, 0 20px, center;
+}
+
+.CommunityBrowsePage_MapCard::before {
+  content: "";
+  position: absolute;
+  inset: 22px;
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 18% 28%, rgba(139, 200, 255, 0.75) 0 6px, transparent 7px),
+    radial-gradient(circle at 42% 61%, rgba(139, 200, 255, 0.75) 0 6px, transparent 7px),
+    radial-gradient(circle at 71% 24%, rgba(139, 200, 255, 0.75) 0 6px, transparent 7px),
+    radial-gradient(circle at 80% 72%, rgba(139, 200, 255, 0.75) 0 6px, transparent 7px),
+    linear-gradient(120deg, transparent 0 24%, rgba(120, 176, 255, 0.35) 24% 28%, transparent 28% 100%),
+    linear-gradient(28deg, transparent 0 52%, rgba(255, 196, 137, 0.32) 52% 56%, transparent 56% 100%);
+}
+
+.CommunityBrowsePage_MapPins .pin {
+  position: absolute;
+  z-index: 2;
+  width: 52px;
+  height: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 16px 28px rgba(52, 73, 94, 0.12);
+  font-size: 1.5rem;
+}
+
+.CommunityBrowsePage_MapPins .p1 { left: 18%; top: 18%; }
+.CommunityBrowsePage_MapPins .p2 { left: 58%; top: 26%; }
+.CommunityBrowsePage_MapPins .p3 { left: 72%; top: 68%; }
+.CommunityBrowsePage_MapPins .p4 { left: 30%; top: 64%; }
+.CommunityBrowsePage_MapPins .p5 { left: 48%; top: 46%; }
+
+.CommunityBrowsePage_NearbyGrid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.CommunityBrowsePage_NearbyCard {
+  overflow: hidden;
+}
+
+.CommunityBrowsePage_NearbyImageWrap {
+  position: relative;
+  height: 162px;
+}
+
+.CommunityBrowsePage_NearbyImageWrap span {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  color: #4b5563;
+  font-size: 0.75rem;
+  font-weight: 900;
+}
+
+.CommunityBrowsePage_NearbyBody {
+  padding: 14px 14px 16px;
+}
+
+.CommunityBrowsePage_NearbyBody strong {
+  display: block;
+}
+
+.CommunityBrowsePage .LandingSharedFooter {
+  max-width: none;
+  padding: 0;
+}
+
+@media (max-width: 1320px) {
+  .CommunityBrowsePage_PostGrid,
+  .CommunityBrowsePage_CommunityGrid,
+  .CommunityBrowsePage_EventRow,
+  .CommunityBrowsePage_NearbyGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .CommunityBrowsePage_CategoryStrip {
+    grid-template-columns: repeat(auto-fit, minmax(116px, 1fr));
+  }
+
+  .CommunityBrowsePage_NearbyLayout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 980px) {
+  .CommunityBrowsePage_Hero {
+    grid-template-columns: 1fr;
+  }
+
+  .CommunityBrowsePage_HeaderInner {
+    height: auto;
+    min-height: 72px;
+    grid-template-columns: 1fr auto;
+    row-gap: 0;
+  }
+
+  .CommunityBrowsePage_Nav {
+    grid-column: 1 / -1;
+    order: 3;
+    justify-content: flex-start;
+    gap: 22px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+
+  .CommunityBrowsePage_Search {
+    grid-template-columns: 1fr;
+  }
+
+  .CommunityBrowsePage_PostGrid,
+  .CommunityBrowsePage_EventRow,
+  .CommunityBrowsePage_NearbyGrid,
+  .CommunityBrowsePage_CommunityGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 680px) {
+  .CommunityBrowsePage_Content,
+  .CommunityBrowsePage_HeaderInner {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .CommunityBrowsePage_Header {
+    height: auto;
+  }
+
+  .CommunityBrowsePage_Auth {
+    justify-content: flex-start;
+  }
+
+  .CommunityBrowsePage_Auth .ghost {
+    display: none;
+  }
+
+  .CommunityBrowsePage_TitleBlock {
+    flex-direction: column;
+  }
+
+  .CommunityBrowsePage_TitleBlock h1,
+  .CommunityBrowsePage_SectionHeader h2 {
+    font-size: 2rem;
+  }
+
+  .CommunityBrowsePage_CategoryStrip,
+  .CommunityBrowsePage_PostGrid,
+  .CommunityBrowsePage_EventRow,
+  .CommunityBrowsePage_NearbyGrid,
+  .CommunityBrowsePage_CommunityGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .CommunityBrowsePage_EventCard {
+    grid-template-columns: 1fr;
+  }
+}

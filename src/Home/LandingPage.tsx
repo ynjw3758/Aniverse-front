@@ -1,21 +1,16 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import moment from "moment";
 import { Cookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import "./LandingPage.scss";
 import PetBuddyLogo from "../assets/images/petbuddy_logo.svg";
 import HeroAnimalsImg from "../assets/images/petbuddy_landing_collage.png";
-import DogThumb from "../assets/images/landing_generated/pet_thumb_dog.png";
-import CatThumb from "../assets/images/landing_generated/pet_thumb_cat.png";
-import BirdThumb from "../assets/images/landing_generated/pet_thumb_bird.png";
-import RabbitThumb from "../assets/images/landing_generated/pet_thumb_rabbit.png";
-import LizardThumb from "../assets/images/landing_generated/pet_thumb_lizard.png";
-import FishThumb from "../assets/images/landing_generated/pet_thumb_fish.png";
 import LandingFeatureSection from "./LandingFeatureSection";
 import LandingCommunitySection from "./LandingCommunitySection";
 import LandingEventSection from "./LandingEventSection";
 import LandingGuideSection from "./LandingGuideSection";
 import LandingSharedFooter from "./LandingSharedFooter";
+import { serviceCategories } from "./landingData";
 
 type LandingTab = "service" | "feature" | "community" | "event" | "guide";
 
@@ -25,15 +20,6 @@ const navItems: Array<{ key: LandingTab; label: string }> = [
   { key: "community", label: "커뮤니티" },
   { key: "event", label: "이벤트" },
   { key: "guide", label: "가이드" },
-];
-
-const serviceCategories = [
-  { title: "강아지", desc: "산책, 건강, 행동 교정", image: DogThumb },
-  { title: "고양이", desc: "일상 기록, 사료, 케어 정보", image: CatThumb },
-  { title: "파충류", desc: "도마뱀, 거북이, 환경 세팅", image: LizardThumb },
-  { title: "조류", desc: "앵무새, 핀치, 놀이와 훈련", image: BirdThumb },
-  { title: "소동물", desc: "토끼, 햄스터, 소형 반려동물", image: RabbitThumb },
-  { title: "관상어", desc: "수조 관리와 물생활 팁", image: FishThumb },
 ];
 
 const LandingPage: React.FC = () => {
@@ -72,12 +58,13 @@ const LandingPage: React.FC = () => {
   const sign = () => navigate("/sign");
   const goLogin = () => navigate("/login");
   const startHandler = () => navigate("/");
+  const browseCommunity = () => navigate("/explore");
 
   const primaryAction = login ? startHandler : sign;
 
   const renderTabContent = () => {
     if (activeTab === "feature") return <LandingFeatureSection onPrimaryAction={primaryAction} />;
-    if (activeTab === "community") return <LandingCommunitySection onPrimaryAction={primaryAction} />;
+    if (activeTab === "community") return <LandingCommunitySection onBrowseAction={browseCommunity} />;
     if (activeTab === "event") return <LandingEventSection onPrimaryAction={primaryAction} />;
     if (activeTab === "guide") return <LandingGuideSection />;
 
@@ -103,7 +90,7 @@ const LandingPage: React.FC = () => {
               <button type="button" className="primary" onClick={primaryAction}>
                 지금 시작하기
               </button>
-              <button type="button" className="secondary" onClick={startHandler}>
+              <button type="button" className="secondary" onClick={browseCommunity}>
                 둘러보기
               </button>
             </div>
@@ -135,7 +122,7 @@ const LandingPage: React.FC = () => {
               alt="다양한 반려동물이 함께 있는 Aniverse 소개 이미지"
             />
             <span className="PetLanding_Bubble heart">♥</span>
-            <span className="PetLanding_Bubble paw">🐾</span>
+            <span className="PetLanding_Bubble paw">Paw</span>
           </div>
         </div>
 

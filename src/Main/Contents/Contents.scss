@@ -26,6 +26,63 @@
     }
 }
 
+/* MainPage redesign overrides: keep API-rendered feed inside the new center column. */
+.MainPage_feedColumn .MainContents_position {
+    position: static !important;
+    top: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 14px !important;
+}
+
+.MainPage_feedColumn .MainContents_total_content {
+    position: relative !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 20px 26px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    border: 1px solid #edf0f5 !important;
+    border-radius: 14px !important;
+    background: #fff !important;
+    box-shadow: 0 12px 34px rgba(27, 35, 50, 0.07) !important;
+    overflow: hidden !important;
+}
+
+.MainPage_feedColumn .MainContents_position {
+    position: static;
+    top: auto;
+    left: auto;
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.MainPage_feedColumn .MainContents_total_content {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 20px 26px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #edf0f5;
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 12px 34px rgba(27, 35, 50, 0.07);
+    overflow: hidden;
+}
+
+.MainPage_feedColumn .MainContents_total_content h3 {
+    font-size: 1rem;
+}
+
 @media screen and (max-width:1540px) {
     .MainContents_position{
         position: absolute;
@@ -49,4 +106,31 @@
     .MainContents_total_content h3{
         font-size: medium;
     }
+}
+
+/* MainPage redesign overrides: keep API-rendered feed inside the new center column. */
+.MainPage_feedColumn .MainContents_position {
+    position: static !important;
+    top: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 14px !important;
+}
+
+.MainPage_feedColumn .MainContents_total_content {
+    position: relative !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 20px 26px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    border: 1px solid #edf0f5 !important;
+    border-radius: 14px !important;
+    background: #fff !important;
+    box-shadow: 0 12px 34px rgba(27, 35, 50, 0.07) !important;
+    overflow: hidden !important;
 }

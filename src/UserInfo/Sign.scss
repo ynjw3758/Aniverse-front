@@ -41,20 +41,23 @@
   padding: 0;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  border: 0;
   background: transparent;
+  color: #2f3037;
+  cursor: pointer;
+}
+
+.SignLogoButton span {
   color: #2f3037;
   font-size: 1.25rem;
   font-weight: 900;
-  letter-spacing: -0.04ems;
-  cursor: pointer;
+  letter-spacing: -0.04em;
+}
 
-  img {
-    display: block;
-    width: 30px;
-    height: 30px;
-    object-fit: contain;
-  }
+.SignLogoButton img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
 }
 
 .SignLoginLink {

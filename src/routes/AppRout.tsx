@@ -1,6 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LandingPage from "../Home/LandingPage";
-import CommunityBrowsePage from "../Home/CommunityBrowsePage";
 import ExplorePage from "../Home/Explore/ExplorePage";
 import Login from "../UserInfo/Login";
 import Agree from "../Agree/Agree";
@@ -34,11 +33,6 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <LandingPage />,
-    errorElement: <Not_found />,
-  },
-  {
-    path: "/community/browse",
-    element: <CommunityBrowsePage />,
     errorElement: <Not_found />,
   },
   {

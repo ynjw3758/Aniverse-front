@@ -326,95 +326,21 @@ const textareaRef = useRef<HTMLTextAreaElement>(null);
     },[showCommentData])
 
     useEffect(() =>{
-      
-      if(list.current[0] === undefined && isready === false){
-       return;
-      }
-      else{
+      if (!multi || vid.length === 0) return;
 
-       if(img.length == 0){
-         if(page == 1) list.current[0].play();
-         else{
-           
-           if(istype ==="next"){
-             if(page == vid.length){
-              list.current[page-2].pause();
-              list.current[page-1].play();
-             }
-             else{
-              list.current[page-2].pause();
-              list.current[page-1].play();
-             }
+      list.current.forEach((video: HTMLVideoElement | null | undefined) => {
+        if (video) video.pause();
+      });
 
-           }
-           else if(istype ==="before"){
-                if(page ==1){
-                  list.current[page].pause();
-                  list.current[page-1].play();
-                }
-                else{
-                  list.current[page-1].pause(); //3 2 => 2 1
-                  list.current[page-2].play();
-                }
+      const activeVideoIndex = page - img.length - 1;
+      if (activeVideoIndex < 0 || activeVideoIndex >= vid.length) return;
 
-           }
-           else if(istype ===""){
-               return;
-           }
-         }
-           
-        }
-        else{
-         if(vid.length == 0) return;
-           const different = totalcnt- img.length; 
-           setVideo_last(different);
-           if(img.length <page && istype==="next"){
-             if(vid.length ==1){
-              list.current[0].play();
-              return;
-             }
-             else{
-              video_idx.current+=1;
-                if(video_idx.current== video_last){ //2 1, 3 2
-                  list.current[video_idx.current-2].pause();
-                  list.current[video_idx.current-1].play();
-                }
-                else{
-                   list.current[video_idx.current-1].pause();
-                   list.current[video_idx.current].play();
-                }
-             }
+      const activeVideo = list.current[activeVideoIndex];
+      if (!activeVideo || !activeVideo.src) return;
 
-           }
-          else if(img.length <page && istype==="before"){
-
-            if(vid.length ==1){
-              list.current[0].pause();
-              return;
-            }else{
-              video_idx.current-=1;
-              if(video_idx.current ==0){
-                list.current[video_idx.current].pause();
-                list.current[video_idx.current-1].play();
-              }
-              else{
-                list.current[video_idx.current].pause();
-                list.current[video_idx.current-1].play();
-              }
-
-            }
-          }
-          else if(img.length ==page && istype===""){
-                 list.current[0].pause();
-                return;
-          }
-   
-        }
-      }
-      
- 
-         
-     },[isready, page])
+      setRefcount(activeVideoIndex);
+      activeVideo.play().catch(() => {});
+     },[img.length, multi, page, vid.length])
      useEffect(() =>{ //모달창 활성화 시 아래 있는 화면은 고정
       console.log("이제 아래 화면은 움지이면 안된다");
       if(allCommtent == true){
@@ -450,14 +376,17 @@ const textareaRef = useRef<HTMLTextAreaElement>(null);
 
     const playHandler =() =>{
       
-      if(list.current[refcount].currentime !== 0 && isplaying==false){
+      const currentVideo = list.current[refcount];
+      if (!currentVideo || !currentVideo.src) return;
+
+      if(currentVideo.currentTime !== 0 && isplaying==false){
         console.log("11");
-        list.current[refcount].pause();
+        currentVideo.pause();
         setIsplaying(true);
       }
       else if(isplaying== true){
         console.log("22");
-        list.current[refcount].play();
+        currentVideo.play().catch(() => {});
         setIsplaying(false);
       }
         
@@ -643,7 +572,8 @@ const textareaRef = useRef<HTMLTextAreaElement>(null);
         setAllComment(false);
       }
       const SlideHandler =(data:number, type:string) =>{
-        setPage(data);
+        const nextPage = Math.min(Math.max(data, 1), totalcnt || 1);
+        setPage(nextPage);
         setIstype(type);
       }
 
@@ -1138,21 +1068,19 @@ const textareaRef = useRef<HTMLTextAreaElement>(null);
       </>)}
 
        {(multi == true && one == false) && (<>
-        <Slide total={totalcnt} pageChange={SlideHandler}/>
          <div className="Mainpage_Content_MultiItem">
-         {img.map((data, id) =>(<div style={{width:"34vw" ,height: "80vh" , transition:"all 0.3s ease-in-out" ,
-          transform:`translateX(${(page-1)* -34+"vw"})`}}>
+         {img.map((data, id) =>(<div className="Mainpage_Content_SlideItem" style={{transform:`translateX(${(page-1)* -100+"%"})`}}>
            <img src={data} id="image" key={id}/>
           </div>))}
           
-         {vid.map((data ,id) =>(<div style={{width:"34vw" ,height: "80vh" , transition:"all 0.3s ease-in-out" ,
-          transform:`translateX(${(page-1)* -34+"vw"})`}}>
+         {vid.map((data ,id) =>(<div className="Mainpage_Content_SlideItem" style={{transform:`translateX(${(page-1)* -100+"%"})`}}>
             
            <video src={data}  muted={mute} ref={(element) => list.current[id] = element} onClick={playHandler}/>
            <div className="Mainpage_Content_Multimute">
              <img src={muteicon} onClick={muteClick} id="test" />
            </div>
           </div>))}
+          <Slide total={totalcnt} pageChange={SlideHandler}/>
   
           </div>
           <div className="Mainpage_Content_Icon">

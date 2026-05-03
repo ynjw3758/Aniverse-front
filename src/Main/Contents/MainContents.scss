@@ -163,3 +163,46 @@
         height: 20vh;
     }
 }
+
+.MainPage_feedColumn .Main_Contents,
+.MainPage_feedColumn .Maincontents_body_blur {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    filter: none;
+    pointer-events: auto;
+}
+
+.MainPage_feedColumn .login_loading,
+.MainPage_feedColumn .upload_story {
+    position: static;
+    width: 100%;
+    min-height: 220px;
+    margin: 0;
+    padding: 28px;
+    display: grid;
+    place-items: center;
+    border: 1px dashed #ffc3d0;
+    border-radius: 14px;
+    background: #fff;
+    color: #8b93a1;
+}
+
+.MainPage_feedColumn .upload_story img {
+    width: 180px;
+    height: 140px;
+    margin: 0;
+    object-fit: contain;
+}
+
+.MainPage_feedColumn .upload_story p {
+    margin: 0;
+    color: #8b93a1;
+    font-size: 0.95rem;
+    font-weight: 800;
+}

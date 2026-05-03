@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import "./ExplorePage.scss";
 import AniverseLogo from "../../assets/images/petbuddy_logo.svg";
 import ExploreCategoryTabs from "./components/ExploreCategoryTabs";
-import ExploreCTA from "./components/ExploreCTA";
 import ExploreFeed from "./components/ExploreFeed";
 import ExploreRightPanel from "./components/ExploreRightPanel";
 import ExploreSidebar from "./components/ExploreSidebar";
@@ -154,7 +153,6 @@ const ExplorePage: React.FC = () => {
             hasSearch={Boolean(searchKeyword.trim())}
             onRequireLogin={openLoginModal}
           />
-          <ExploreCTA onLogin={openLoginModal} onSign={goSign} />
         </section>
 
         <ExploreRightPanel

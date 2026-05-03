@@ -124,7 +124,7 @@ const MainContentsx=(props:user_info) =>{
                 <img src={loadingimg}/>
                 <p>로딩 중</p>
             </div>)}
-        {(isdata == true && isshow ==false) && (<div className="Maincontents_body_blur">
+        {(isdata == true && isshow ==false) && (<div className="Main_Contents">
             <Contents  contents={props.content} disActive={DisAvtive} Img={props.img} Nickname={props.nickname}/>
         </div>)}
         {(isdata == true && isshow ==true) && (<div className="Main_Contents">
@@ -141,5 +141,4 @@ const MainContentsx=(props:user_info) =>{
 }
 
 export default React.memo(MainContentsx);
-
 

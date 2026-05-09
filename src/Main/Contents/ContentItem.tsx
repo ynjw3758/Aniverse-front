@@ -843,6 +843,8 @@ const textareaRef = useRef<HTMLTextAreaElement>(null);
     }
 
     const SmallProfile = (event:React.MouseEvent<HTMLDivElement>) =>{
+      return;
+      /*
       setMousepoint(event.clientY);
       
       let access_token:string="";
@@ -985,8 +987,7 @@ const textareaRef = useRef<HTMLTextAreaElement>(null);
     return(<>
       {allCommtent && (<ShowComment OnClose={CloseAllComment} ShowData={showCommentData} Owner={owners} Content_cm={content_cm}/>)}
       {isshow && (<div id={props.conntetid} ref={DIVref}>     
-      <div className="Mainpage_Content_userinfo" onMouseOver={SmallProfile}  
-      onMouseLeave={Mouseout} onMouseMove={MouseMoveHandler}>
+      <div className="Mainpage_Content_userinfo">
          <img src={priflelist}  id={props.UserId} ref={imgref} onClick={PeopleProfile}/>
           <h3>{props.nickname}</h3>
           <p>{ct_date}</p>
@@ -1150,13 +1151,13 @@ const textareaRef = useRef<HTMLTextAreaElement>(null);
        </div>    
         </> )}
 
-       {mousecheck && (<div className="Mainpage_Content_smallprofile"
+       {/* {mousecheck && (<div className="Mainpage_Content_smallprofile"
        onMouseOver={Mouseover} > 
         <OtherProfile nickname={smallnickname} 
       profile={smallprofile} content={smallcontent} followers={smallfollowers} 
       following={smallfollowing} checkfl={smallcheckfl} id={otherId} 
       CancelFollower={CancelHandler} Onclose={profileHandler} Oncomplete={Notecompplete} onBlock={BlockRecept} />
-      </div>)}
+      </div>)} */}
 
       {followcheck.isCancel && (<CancelFollower  id={otherId} nickname={smallnickname} 
       profile={smallprofile} onClose={CancelModelHandler}/>)}
